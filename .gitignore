@@ -1,6 +1,7 @@
+.DS_Store
 *.aux
 *.fdb_latexmk
 *.log
 *.out
+*.blg
 skysub.pdf
-
