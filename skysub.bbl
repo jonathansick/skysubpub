@@ -1,4 +1,4 @@
-\begin{thebibliography}{2}
+\begin{thebibliography}{12}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{REV(????)}]{REVTEX41Control}
@@ -6,5 +6,57 @@
 
 \bibitem[{08(1)}]{apsrev41Control}
 08. 1
+
+\bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
+{Adams}, J.~D. \& {Skrutskie}, M.~F. 1996, Airglow and 2MASS Survey Strategy
+
+\bibitem[{{Berriman} {et~al.}(2008){Berriman}, {Good}, {Laity}, \&
+  {Kong}}]{Berriman:2008}
+{Berriman}, G.~B., {Good}, J.~C., {Laity}, A.~C., \& {Kong}, M. 2008, in
+  Astronomical Society of the Pacific Conference Series, Vol. 394, Astronomical
+  Data Analysis Software and Systems XVII, ed. {R.~W.~Argyle, P.~S.~Bunclark,
+  \& J.~R.~Lewis}, 83--+
+
+\bibitem[{{Bertin} \& {Arnouts}(1996)}]{Bertin:1996}
+{Bertin}, E. \& {Arnouts}, S. 1996, \aaps, 117, 393
+
+\bibitem[{{Bertin} {et~al.}(2002){Bertin}, {Mellier}, {Radovich}, {Missonnier},
+  {Didelon}, \& {Morin}}]{Bertin:2002}
+{Bertin}, E., {Mellier}, Y., {Radovich}, M., {Missonnier}, G., {Didelon}, P.,
+  \& {Morin}, B. 2002, in Astronomical Society of the Pacific Conference
+  Series, Vol. 281, Astronomical Data Analysis Software and Systems XI, ed.
+  {D.~A.~Bohlender, D.~Durand, \& T.~H.~Handley}, 228--+
+
+\bibitem[{{Ibata} {et~al.}(2005){Ibata}, {Chapman}, {Ferguson}, {Lewis},
+  {Irwin}, \& {Tanvir}}]{Ibata:2005}
+{Ibata}, R., {Chapman}, S., {Ferguson}, A.~M.~N., {Lewis}, G., {Irwin}, M., \&
+  {Tanvir}, N. 2005, \apj, 634, 287
+
+\bibitem[{{Ibata} {et~al.}(2007){Ibata}, {Martin}, {Irwin}, {Chapman},
+  {Ferguson}, {Lewis}, \& {McConnachie}}]{Ibata:2007}
+{Ibata}, R., {Martin}, N.~F., {Irwin}, M., {Chapman}, S., {Ferguson}, A.~M.~N.,
+  {Lewis}, G.~F., \& {McConnachie}, A.~W. 2007, ArXiv e-prints, 704
+
+\bibitem[{Nelder \& Mead(1965)}]{Nelder:1965}
+Nelder, J.~A. \& Mead, R. 1965, {The Computer Journal}, 7, 308
+
+\bibitem[{{Neumann} \& {Han}(2006)}]{Neumann:2006}
+{Neumann}, M. \& {Han}, L. 2006, {Optimization Methods and Software}, 21, 1055
+
+\bibitem[{{Puget} {et~al.}(2004){Puget}, {Stadler}, {Doyon}, {Gigan},
+  {Thibault}, {Luppino}, {Barrick}, {Benedict}, {Forveille}, {Rambold},
+  {Thomas}, {Vermeulen}, {Ward}, {Beuzit}, {Feautrier}, {Magnard}, {Mella},
+  {Preis}, {Vallee}, {Wang}, {Lin}, {Hall}, \& {Hodapp}}]{Puget:2004}
+{Puget}, P., {Stadler}, E., {Doyon}, R., {Gigan}, P., {Thibault}, S.,
+  {Luppino}, G., {Barrick}, G., {Benedict}, T., {Forveille}, T., {Rambold}, W.,
+  {Thomas}, J., {Vermeulen}, T., {Ward}, J., {Beuzit}, J., {Feautrier}, P.,
+  {Magnard}, Y., {Mella}, G., {Preis}, O., {Vallee}, P., {Wang}, S., {Lin}, C.,
+  {Hall}, D.~N., \& {Hodapp}, K.~W. 2004, in Presented at the Society of
+  Photo-Optical Instrumentation Engineers (SPIE) Conference, Vol. 5492, Society
+  of Photo-Optical Instrumentation Engineers (SPIE) Conference Series, ed.
+  {A.~F.~M.~Moorwood \& M.~Iye}, 978--987
+
+\bibitem[{{Vaduvescu} \& {McCall}(2004)}]{Vaduvescu:2004}
+{Vaduvescu}, O. \& {McCall}, M.~L. 2004, \pasp, 116, 640
 
 \end{thebibliography}
