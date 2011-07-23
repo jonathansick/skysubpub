@@ -1,4 +1,4 @@
-\begin{thebibliography}{12}
+\begin{thebibliography}{11}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{REV(????)}]{REVTEX41Control}
@@ -27,15 +27,10 @@
   Series, Vol. 281, Astronomical Data Analysis Software and Systems XI, ed.
   {D.~A.~Bohlender, D.~Durand, \& T.~H.~Handley}, 228--+
 
-\bibitem[{{Ibata} {et~al.}(2005){Ibata}, {Chapman}, {Ferguson}, {Lewis},
-  {Irwin}, \& {Tanvir}}]{Ibata:2005}
-{Ibata}, R., {Chapman}, S., {Ferguson}, A.~M.~N., {Lewis}, G., {Irwin}, M., \&
-  {Tanvir}, N. 2005, \apj, 634, 287
-
 \bibitem[{{Ibata} {et~al.}(2007){Ibata}, {Martin}, {Irwin}, {Chapman},
   {Ferguson}, {Lewis}, \& {McConnachie}}]{Ibata:2007}
 {Ibata}, R., {Martin}, N.~F., {Irwin}, M., {Chapman}, S., {Ferguson}, A.~M.~N.,
-  {Lewis}, G.~F., \& {McConnachie}, A.~W. 2007, ArXiv e-prints, 704
+  {Lewis}, G.~F., \& {McConnachie}, A.~W. 2007, \apj, 671, 1591
 
 \bibitem[{Nelder \& Mead(1965)}]{Nelder:1965}
 Nelder, J.~A. \& Mead, R. 1965, {The Computer Journal}, 7, 308

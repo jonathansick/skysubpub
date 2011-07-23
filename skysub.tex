@@ -25,7 +25,7 @@
 
 
 % aastex setup
-\shorttitle{NIR Wide-Field Sky Subtraction}
+\shorttitle{Near-IR Imaging of M31}
 \shortauthors{Sick et al.}
 
 \begin{document}
@@ -83,27 +83,26 @@ The reader is encouraged to regard these observational designs as \emph{hypothes
 % 09BC29 Ks 0.5993507925 0.6602451 0.755748975
 
 
+%\begin{figure}[p]{
+%	\centering
+%		\includegraphics[height=8in]{figs/fieldmap.pdf}
+%	\caption[WIRCam survey fields]{WIRCam survey fields in the 2007B (top) and 2009B (bottom) progammes. The fields are plotted on the INT/WFC star count map of \cite{Ibata:2005}.}
+%	\label{fig:fieldmap}
+%\end{figure}
 
-\begin{figure}[p]
-	\centering
-		\includegraphics[height=8in]{figs/fieldmap.pdf}
-	\caption[WIRCam survey fields]{WIRCam survey fields in the 2007B (top) and 2009B (bottom) progammes. The fields are plotted on the INT/WFC star count map of \cite{Ibata:2005}.}
-	\label{fig:fieldmap}
-\end{figure}
+%\begin{figure}[t]
+%    \centering
+%        \includegraphics[width=\textwidth]{figs/sky_target_lag.pdf}
+%    \caption{Time latency between target observations and sky sampling.}
+%    \label{fig:sky_target_lag}
+%\end{figure}
 
-\begin{figure}[t]
-    \centering
-        \includegraphics[width=\textwidth]{figs/sky_target_lag.pdf}
-    \caption{Time latency between target observations and sky sampling.}
-    \label{fig:sky_target_lag}
-\end{figure}
-
-\begin{figure}[t]
-    \centering
-        \includegraphics[width=\textwidth]{figs/sky_target_dist.pdf}
-    \caption{Distance between sky and target observations for 2007B and 2009B.}
-    \label{fig:sky_target_dist}
-\end{figure}
+%\begin{figure}[t]
+%    \centering
+%        \includegraphics[width=\textwidth]{figs/sky_target_dist.pdf}
+%    \caption{Distance between sky and target observations for 2007B and 2009B.}
+%    \label{fig:sky_target_dist}
+%\end{figure}
 
 The initial survey was carried out in the 2007B semester by the CFHT Queue Service Observing under photometric conditions. As the observations were designed for resolved stellar analysis, we requested image quality (IQ) of 0.55\arcsec--0.65\arcsec, and our PSF modeling shows this was generally achieved (see Table \ref{tab:obssummary}). This programme covers M31 with 27 contiguous WIRCam fields covering the entirety of M31 out to the optical radius, $\mu_V=23$ mag arcsec$^{-2}$. The fields are arranged with at least 1\arcmin\ overlap in declination, and approximately 5\arcmin\ overlap in right ascension.
 % FIXME check overlaps
@@ -192,13 +191,13 @@ A solution is to estimate offsets for each frame compared to this first detector
 
 \subsection{Dispersion of surface intensity estimates within a detector field stack}
 
-\begin{figure}[p]
-    \centering
-        \includegraphics[width=\textwidth]{figs/stack_sigma_dist.pdf}
-    \caption[Detector field stack dispersions, $\sigma_s$]{Detector field stack dispersions, $\sigma_s$, for the $J$ (top) and ($K_s$) bands.}
-    \label{fig:sigma_stack}
+%\begin{figure}[p]
+%    \centering
+%        \includegraphics[width=\textwidth]{figs/stack_sigma_dist.pdf}
+%    \caption[Detector field stack dispersions, $\sigma_s$]{Detector field stack dispersions, $\sigma_s$, for the $J$ (top) and ($K_s$) bands.}
+%    \label{fig:sigma_stack}
     % disksky/stack_sigma_plot.py
-\end{figure}
+%\end{figure}
 
 % \begin{figure}[t]
 %     \centering
@@ -220,12 +219,12 @@ This stack dispersion is effectively the uncertainty in the level of a detector 
 
 Each area of the M31 disk is covered by at least one detector field stack. Although these stacks are subjected to $\sigma_s$ systematic intensity uncertainty, each pixel has a random intensity uncertainty governed by Poisson statistics. Such noise can be measured empirically from the pixel standard deviation of stack images that have been cleaned of sources, and background subtracted; the \sw{Source Extractor} package \citep{Bertin:1996} provides such `background RMS' maps. Figure \ref{fig:rmsshape} shows the horizontal trend of pixel noise across representative detector stack images for the $J$ and $K_s$ bands in the 2007B and 2009B semesters.
 
-\begin{figure}[p]
-	\centering
-		\includegraphics[width=\textwidth]{figs/rmsshape.pdf}
-	\caption[Trends of pixel RMS noise across $J$ and $K_s$ detector stacks]{Trends of pixel RMS noise across $J$ (top) and $K_s$ detector stacks, for 2007B (red) and and 2009B (blue) semesters.}
-	\label{fig:rmsshape}
-\end{figure}
+%\begin{figure}[p]
+%	\centering
+%		\includegraphics[width=\textwidth]{figs/rmsshape.pdf}
+%	\caption[Trends of pixel RMS noise across $J$ and $K_s$ detector stacks]{Trends of pixel RMS noise across $J$ (top) and $K_s$ detector stacks, for 2007B (red) and and 2009B (blue) semesters.}
+%	\label{fig:rmsshape}
+%\end{figure}
 
 The 2009B data do not provide any reduction is pixel noise compared to 2007B. The mean pixel noise in the $J$ band is $1.1\times 10^{-10}$ ADU s$^{-1}$ pix$^{-2}$, and $4.0\times10^{-10}$ ADU s$^{-1}$ pix$^{-2}$ in $K_s$ stacks. Noise is uniform across the stack frame, save for the peripheral 2\arcmin, where the dither pattern provides less coverage. In all cases, pixel noise does appears to increase  $\sim 3\times$ towards the stack edge.
 % This suggests that weight maps should be constructed from pixel RMS maps both for mosaic construction (FIXME currently they are not!), and image coupling. Indeed, the image coupling algorithms presented in \S \ref{sec:interdet} are heavily reliant upon these low $S/N$ regions of the stacks to ensure intensity continuity across stack images in the mosaic. TODO: need to use RMS-derived weight maps when computing image differences.
@@ -292,12 +291,12 @@ Abating the second issue, of NM's failure on high-dimension problems, is more st
 \section{Analysis of scalar-sky fitted mosaics}
 \label{sec:scalaranalysis}
 
-\begin{figure}[p]
-    \centering
-        \includegraphics[height=7.75in]{figs/mosaicmaps_dc.png}
-    \caption[Scalar-sky fitted WIRCam $J$ and $K_s$ mosaics of M31]{Scalar-sky fitted WIRCam $J$ and $K_s$ mosaics of M31. Surface intensity is presented in ADU s$^{-1}$ pix$^{-2}$, calibrated against the 2MASS point source catalog (\S\ref{sec:photocal}), for each $0\farcs3\times0\farcs3$ WIRCam pixel.}
-    \label{fig:mosaicmaps_dc}
-\end{figure}
+%\begin{figure}[p]
+%    \centering
+%        \includegraphics[height=7.75in]{figs/mosaicmaps_dc.png}
+%    \caption[Scalar-sky fitted WIRCam $J$ and $K_s$ mosaics of M31]{Scalar-sky fitted WIRCam $J$ and $K_s$ mosaics of M31. Surface intensity is presented in ADU s$^{-1}$ pix$^{-2}$, calibrated against the 2MASS point source catalog (\S\ref{sec:photocal}), for each $0\farcs3\times0\farcs3$ WIRCam pixel.}
+%    \label{fig:mosaicmaps_dc}
+%\end{figure}
 
 Mosaics constructed with scalar-sky fitting to both 2007B and 2009B detector stacks are shown in Figures \ref{fig:mosaicmaps_dc}. The eye is an adept tool for judging near-infrared mosaics, and these scalar-sky fitted mosaics are clearly more uniform than ones derived from immediate \iiwione\ pipeline products. Nonetheless, discontinuities in the outer disk hint at the limitations of scalar sky optimization. Across fields there are overall biases in sky level: the $J$ mosaic is over-subtracted across the minor axis, while the $K_s$ mosaic shows under-subtraction in the vicinity of NGC 205, and a peculiar gradient at the southwest mosaic edge.
 % The $J$ mosaic is more uniform than the $K_s$ image, commensurate with the smaller amplitude of sky and its variations in the $J$ band.
@@ -310,13 +309,13 @@ Mosaics constructed with scalar-sky fitting to both 2007B and 2009B detector sta
 %     % intrafielddcskyoffsetdist.py
 % \end{figure}
 
-\begin{figure}[p]
-    \centering
-        \includegraphics[height=7.5in]{figs/dc/offset_hierarchy.pdf}
-    \caption[Distributions of scalar sky offsets in the three hierarchical stages of sky fitting]{Distributions of scalar sky offsets in the three hierarchical stages of sky fitting: (1--top) fitting WIRCam frames into detector field stacks;  (2--middle) fitting detector field stacks into blocks; (3--bottom) fitting stacks--in blocks--to other blocks in the mosaic.}
-    \label{fig:offset_hierarchy}
+%\begin{figure}[p]
+%    \centering
+%        \includegraphics[height=7.5in]{figs/dc/offset_hierarchy.pdf}
+%    \caption[Distributions of scalar sky offsets in the three hierarchical stages of sky fitting]{Distributions of scalar sky offsets in the three hierarchical stages of sky fitting: (1--top) fitting WIRCam frames into detector field stacks;  (2--middle) fitting detector field stacks into blocks; (3--bottom) fitting stacks--in blocks--to other blocks in the mosaic.}
+%    \label{fig:offset_hierarchy}
     % offset_hierarchy.py
-\end{figure}
+%\end{figure}
 
 \begin{table}[t]
     \centering
@@ -431,12 +430,12 @@ A comparison between the net sky offsets applied to the 2007B and 2009B data set
 %   \label{fig:K0709_offset_sigmastack}
 % \end{figure}
 
-\begin{figure}[t]
-    \centering
-        \includegraphics[width=\textwidth]{figs/dc/offset_sigmastack.pdf}
-    \caption[Acceptability of $J$ and $K_s$ scalar sky offsets between blocks, as measured by the ratio of $\Delta_\mathrm{sky}/\sigma_s$]{Acceptability of $J$ (top) and $K_s$ (bottom) scalar sky offsets between blocks, as measured by the ratio of $\Delta_\mathrm{sky}/\sigma_s$.}
-    \label{fig:offset_sigmastack}
-\end{figure}
+%\begin{figure}[t]
+%    \centering
+%        \includegraphics[width=\textwidth]{figs/dc/offset_sigmastack.pdf}
+%    \caption[Acceptability of $J$ and $K_s$ scalar sky offsets between blocks, as measured by the ratio of $\Delta_\mathrm{sky}/\sigma_s$]{Acceptability of $J$ (top) and $K_s$ (bottom) scalar sky offsets between blocks, as measured by the ratio of $\Delta_\mathrm{sky}/\sigma_s$.}
+%    \label{fig:offset_sigmastack}
+%\end{figure}
 
 
 \paragraph{Residual image level differences.} Although the scalar sky offsets are statistically valid, they are not perfect prescriptions against the sky subtraction uncertainties of each image stack---that much is visually true. A measure of the limitation of sky offset fitting are the residual image level differences between coupled fields, $(\vect{I}_i - \Delta_i) - (\vect{I}_j - \Delta_j)$, after the sky offsets $\Delta_i$ have been optimally fitted.
@@ -447,28 +446,28 @@ Figures \ref{fig:J0709B_net_resid} and \ref{fig:K0709B_net_resid} show networks 
 
 Of course, it is precisely this residual image level difference that was sought to be minimized as part of the optimization's objective function (Eq \ref{eq:objf}). The inability of scalar sky offset optimization to eliminate residual image differences should not be interpreted as a failure to detect the global minimum; the MSRNM optimization algorithm appears robust in arriving at this offset solution set. The correct interpretation is that sky uncertainties are not entirely scalar on the scale of WIRCam fields: there are residual sky shapes associated with each field that make 1\% intensity continuity in the outer M31 disk impossible with a purely scalar error parameterization.
 
-\begin{figure}[p]
-	\centering
-		\includegraphics[width=\textwidth]{figs/dc/J0709B_net_resid.pdf}
-	\caption[Residual intensity difference network in $J$]{Percent residual intensity differences (relative to local surface intensity) between coupled fields in the $J$ scalar sky optimization with both 2007B and 2009B data sets.}
-	\label{fig:J0709B_net_resid}
-\end{figure}
+%\begin{figure}[p]
+%	\centering
+%		\includegraphics[width=\textwidth]{figs/dc/J0709B_net_resid.pdf}
+%	\caption[Residual intensity difference network in $J$]{Percent residual intensity differences (relative to local surface intensity) between coupled fields in the $J$ scalar sky optimization with both 2007B and 2009B data sets.}
+%	\label{fig:J0709B_net_resid}
+%\end{figure}
 
-\begin{figure}[p]
-	\centering
-		\includegraphics[width=\textwidth]{figs/dc/K0709_net_resid.pdf}
-	\caption[Residual intensity difference network in $K_s$]{Percent residual intensity differences (relative to local surface intensity) between coupled fields in the $K_s$ scalar sky optimization with both 2007B and 2009B data sets.}
-	\label{fig:K0709B_net_resid}
-\end{figure}
+%\begin{figure}[p]
+%	\centering
+%		\includegraphics[width=\textwidth]{figs/dc/K0709_net_resid.pdf}
+%	\caption[Residual intensity difference network in $K_s$]{Percent residual intensity differences (relative to local surface intensity) between coupled fields in the $K_s$ scalar sky optimization with both 2007B and 2009B data sets.}
+%	\label{fig:K0709B_net_resid}
+%\end{figure}
 
 \paragraph{Residual sky shape uncertainties in detector field stacks.}
 
-\begin{figure}[t]
-    \centering
-        \includegraphics[width=\textwidth]{figs/slices_137.pdf}
-    \caption[Horizontal slices across the $J$ and $K_s$ mosaics at $\eta=1.1$]{Horizontal slices across the $J$ (top) and $K_s$ (bottom) mosaics at $\eta=1.1$ (see green slice band on inset field map). The black line is the mosaic surface intensity, while the coloured bands are surface intensities of individual blocks.}
-    \label{fig:slices_137}
-\end{figure}
+%\begin{figure}[t]
+%    \centering
+%        \includegraphics[width=\textwidth]{figs/slices_137.pdf}
+%    \caption[Horizontal slices across the $J$ and $K_s$ mosaics at $\eta=1.1$]{Horizontal slices across the $J$ (top) and $K_s$ (bottom) mosaics at $\eta=1.1$ (see green slice band on inset field map). The black line is the mosaic surface intensity, while the coloured bands are surface intensities of individual blocks.}
+%    \label{fig:slices_137}
+%\end{figure}
 
 The role of residual sky shape uncertainties in the mosaic can be seen by analyzing the profiles of individual detector field stacks across the mosaic, and the discontinuities of these profiles between stacks. Figure \ref{fig:slices_137} shows a 0.1\arcdeg -wide horizontal slice through the $K_s$ mosaic across the northern fields, where the M31 surface intensity is low. Not only does this slice show the profile of the median mosaic (black), but is also decomposed into slices through the individual blocks that are composited into the mosaic. Now the source of the residual difference image flux is clear: blocks do not necessarily have continuous shapes. Scalar sky offsets will never produce a perfectly fitting mosaic, as each block has a \emph{residual sky shape} due to the sky fields observingly different shapes of sky structures than the disk observations.
 
@@ -480,6 +479,6 @@ Ultimately, the only remedy for this problem is to optimize against the shape---
 
 % section scalarsky (end)
 
-\bibliography{/Users/jsick/Documents/Papers/master}
+\bibliography{master}
 
 \end{document}
