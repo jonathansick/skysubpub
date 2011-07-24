@@ -1,11 +1,5 @@
-\begin{thebibliography}{11}
+\begin{thebibliography}{9}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
-
-\bibitem[{REV(????)}]{REVTEX41Control}
- ????
-
-\bibitem[{08(1)}]{apsrev41Control}
-08. 1
 
 \bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
 {Adams}, J.~D. \& {Skrutskie}, M.~F. 1996, Airglow and 2MASS Survey Strategy

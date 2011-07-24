@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{epstopdf}
 
+\usepackage{color}
 \usepackage[colorlinks=true,citecolor=black,linkcolor=black,urlcolor=black]{hyperref}
 \usepackage{url}
 
@@ -22,6 +23,8 @@
 \newcommand{\sn}{\ensuremath{S/N}} % signal to noise
 \newcommand{\sersic}{S\'{e}rsic}
 \newcommand{\iiwione}{\sw{`I`iwi 1.0}}
+\newcommand{\awkward}[1]{\textcolor{red}{#1}}
+\newcommand{\todo}[1]{\textcolor{green}{#1}}
 
 
 % aastex setup
@@ -478,6 +481,29 @@ Fields M31-3 and M31-7 have slight shape mis-matches in Fig. \ref{fig:slices_137
 Ultimately, the only remedy for this problem is to optimize against the shape---not just level---of the residual sky in each mosaic block. An attempt at just that is described in Ch \ref{ch:planarsky}.
 
 % section scalarsky (end)
+
+\section{Scalar Sky Optimization}
+
+Despite the best intentions of sky-target nodding (\S obs) and median sky image construction (\S reduction), classical NIR sky subtraction on a target as large as M31 is limited by an uncertainty of 1\% of the sky intensity. Classically, the true value of the sky on the disk of M31 would seem lost by the time and spatial variations of skyglow between disk and sky field samples. In this section we demonstrate that the residual sky bias in each observation can be inferred from information in the overlaps of pairs of images in the mosaic.
+
+Each classically sky subtracted image of the M31 disk is a combination of the true surface intensity, $I_i$, and a residual sky intensity, $\epsilon_i$. Consider a pair of images, $i$ and $j$, that overlap on the galaxy: their difference is $(I_i+\epsilon_i) - (I_j+\epsilon_j) = \epsilon_i - \epsilon_j$. Given this measurement $\epsilon_i - \epsilon_j$ of residual sky intensity, we introduce \emph{sky offsets}, $\Delta$, for each observation so that
+
+\begin{equation}
+    (I_i + \epsilon_i - \Delta_i) - (I_j + \epsilon_j - \Delta_i) \rightarrow 0
+\end{equation}
+
+\noindent where the intrinsic intensities cancel, $I_i - I_j = 0$. Given a single pair of images, the inference of $\Delta_i$ and $\Delta_j$ is degenerate given the single difference image, $\epsilon_i-\epsilon_j$. But in a mosaic, each image is coupled (has overlapping domain) with many other images, and the mosaic itself can be considered as a network of coupled images. If we model the residual sky intensity $\epsilon_i$ as having a simple shape across the observed images, the single offset $\Delta_i$ will minimize all difference images involving image $i$. That is, sky offsets can be chosen by the non-linear optimization of
+
+\begin{equation}
+    \sum_{\forall i,j} [(\epsilon_i - \epsilon_j) - \Delta_i + \Delta_j] \rightarrow 0
+\end{equation}
+
+\noindent over all coupled pairs $i,j$ in the mosaic.
+
+This algorithm, minimizing sky uncertainty by introducing sky offsets that minimize the differences of all image pairs has been implemented in the Montage mosaicing package
+\citep{Berriman:2008}. In that software, 1) images are rectified onto a mosaic pixel grid, 2) difference images are computed, and 3) sky offsets are iteratively chosen by looping through each image pair and choosing the offset needed to minimize the difference image of that pair, counting previous sky offset estimates. \todo{Note why we didn't use Montage.}
+
+
 
 \bibliography{master}
 
