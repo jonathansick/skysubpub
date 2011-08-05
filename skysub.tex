@@ -27,15 +27,15 @@
 \newcommand{\todo}[1]{\textcolor{green}{#1}}
 
 % To track draft versions in git
-%\immediate\write18{sh ./vc}
-\input{vc}
+\IfFileExists{vc.tex}{\input{vc}}{}
 
 % aastex setup
 \shorttitle{Near-IR Imaging of M31}
 \shortauthors{Sick et al.}
 
 \begin{document}
-\slugcomment{Version \VCRevision\ by \VCAuthor\ on \VCDateTEX , \VCTime .}
+\IfFileExists{vc.tex}{\slugcomment{Version \VCRevision\ by \VCAuthor\ on \VCDateTEX , \VCTime .}
+}{\slugcomment{Revision unknown.}}
 \title{Near-Infrared Imaging of M31}
 \author{Jonathan Sick and Stéphane Courteau}
 \affil{Queen's University}
