@@ -218,20 +218,6 @@ If $\Delta_i$ is the scalar sky offset that adjusts frame $i$ to the mean level 
 % \noindent for $n_I$ images in a detector field stack. 
 This stack dispersion is effectively the uncertainty in the level of a detector field stack. Figure \ref{fig:sigma_stack} shows the distribution of $\sigma_s$ for both $J$ and $K_s$ bands in the 2007B and 2009B semesters across all detector field stacks. The stack dispersion of $J$ band fields is roughly half that in the $K_s$ band---commensurate with the smaller sky amplitude in $J$ than $K_s$. Surprisingly, the levels of 2009B detector field stacks are no better constrained than 2007B. This suggests that rapid sky-target nodding with a frequency of 1.2 minutes \emph{does not} decrease the uncertainty in sky level at the target compared to sky sampling on 5 minute frequencies. Rather, simply nodding the telescope on scales of 1\arcdeg--3\arcdeg\ is a significant source of sky level uncertainty. This is commented upon further in \S \ref{sec:strategydiscussion} and Fig \ref{fig:offsets_stationarysky}.
 
-\subsection{Pixel RMS of detector field stacks}
-
-Each area of the M31 disk is covered by at least one detector field stack. Although these stacks are subjected to $\sigma_s$ systematic intensity uncertainty, each pixel has a random intensity uncertainty governed by Poisson statistics. Such noise can be measured empirically from the pixel standard deviation of stack images that have been cleaned of sources, and background subtracted; the \sw{Source Extractor} package \citep{Bertin:1996} provides such `background RMS' maps. Figure \ref{fig:rmsshape} shows the horizontal trend of pixel noise across representative detector stack images for the $J$ and $K_s$ bands in the 2007B and 2009B semesters.
-
-%\begin{figure}[p]
-%	\centering
-%		\includegraphics[width=\textwidth]{figs/rmsshape.pdf}
-%	\caption[Trends of pixel RMS noise across $J$ and $K_s$ detector stacks]{Trends of pixel RMS noise across $J$ (top) and $K_s$ detector stacks, for 2007B (red) and and 2009B (blue) semesters.}
-%	\label{fig:rmsshape}
-%\end{figure}
-
-The 2009B data do not provide any reduction is pixel noise compared to 2007B. The mean pixel noise in the $J$ band is $1.1\times 10^{-10}$ ADU s$^{-1}$ pix$^{-2}$, and $4.0\times10^{-10}$ ADU s$^{-1}$ pix$^{-2}$ in $K_s$ stacks. Noise is uniform across the stack frame, save for the peripheral 2\arcmin, where the dither pattern provides less coverage. In all cases, pixel noise does appears to increase  $\sim 3\times$ towards the stack edge.
-% This suggests that weight maps should be constructed from pixel RMS maps both for mosaic construction (FIXME currently they are not!), and image coupling. Indeed, the image coupling algorithms presented in \S \ref{sec:interdet} are heavily reliant upon these low $S/N$ regions of the stacks to ensure intensity continuity across stack images in the mosaic. TODO: need to use RMS-derived weight maps when computing image differences.
-
 \section{Optimization of inter-field sky offsets}
 \label{sec:interdet}
 
@@ -496,14 +482,14 @@ Each classically sky subtracted image of the M31 disk is a combination of the tr
 
 \begin{equation}
     \sum_{\forall i,j} [(\epsilon_i - \epsilon_j) - \Delta_i + \Delta_j] \rightarrow 0
+    \label{eq:scalartheoryobj}
 \end{equation}
 
 \noindent over all coupled pairs $i,j$ in the mosaic.
 
-This algorithm, minimizing sky uncertainty by introducing sky offsets that minimize the differences of all image pairs has been implemented in the Montage mosaicing package
-\citep{Berriman:2008}. In that software, 1) images are rectified onto a mosaic pixel grid, 2) difference images are computed, and 3) sky offsets are iteratively chosen by looping through each image pair and choosing the offset needed to minimize the difference image of that pair, counting previous sky offset estimates. \todo{Note why we didn't use Montage.}
+This algorithm of introducing sky offsets that minimize the differences of all image pairs previously been implemented in the Montage mosaicing package \citep{Berriman:2008}. In that software, 1) images are rectified onto a mosaic pixel grid, 2) difference images are computed, and 3) sky offsets are iteratively chosen by looping through each image pair and choosing the offset needed to minimize the difference image of that pair, counting previous sky offset estimates. \todo{Note why we didn't use Montage.}
 
-
+The M31 WIRCam data set is a challenge for sky offset optimizers because of the extremely high-dimension of the optimization. Each exposure in the mosaic is a parameter (sky offset $\Delta_i$) in the optimization. 
 
 \bibliography{master}
 
