@@ -139,6 +139,18 @@ Thus in Step 1 we combine the frames in a detector fild to produce a \emph{detec
 
 \todo{Label the sky offsets that are produced in each step.}
 
+\subsection{Construction of detector field stacks}
+
+Scalar sky offsets are most easily computed between the images of a detector field, since individual image frames in a detector field share a common footprint. That is, each image in a detector field is an (approximately) independent random estimate of the true surface brightness of the detector field. The mean surface brightness in the stack of images on a detector field is taken as the best estimate of the actual surface brightness. For each image frame, the difference between the surface brightness of the image and its best-estimate surface brightness of the detector field is taken scalar offset that brings the image to the level of the detector field stack.
+
+The best estimate surface brightness for each detector field stack is first estimated as the mean-combination of all images in a detector field stack.  Since the telescope dithers by a few arcminutes between individual integrations, the edges of the detector field stack have a surface brightness that is estimated from a subset of all the images in a stack. The smaller ensemble of images leads to a visible bias at the stack's edges compared to the middle, where all frames contribute to the surface brightness estimation.
+
+A solution is to estimate offsets for each frame compared to this first detector field stack. Offsets are computed as the median of the difference image between the stack and individual image frames, as described in \todo{Appendix on overlap detection}. The original image frames, now with offsets applied, are re-combined into a detector field stack image. Now edge-effects are smaller. Nonetheless, offsets are estimated a second time to produce a finalized detector field stack image.
+
+\subsection{Non-linear optimization of block and mosaic sky offsets}
+
+
+
 \bibliography{master}
 
 \end{document}
