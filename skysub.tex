@@ -124,9 +124,19 @@ Each classically sky subtracted image of the M31 disk is a combination of the tr
 
 \noindent over all coupled pairs $i,j$ in the mosaic.
 
-This algorithm of introducing sky offsets that minimize the differences of all image pairs previously been implemented in the Montage mosaicing package \citep{Berriman:2008}. In that software, 1) images are rectified onto a mosaic pixel grid, 2) difference images are computed, and 3) sky offsets are iteratively chosen by looping through each image pair and choosing the offset needed to minimize the difference image of that pair, counting previous sky offset estimates. \todo{Note why we didn't use Montage.}
+This algorithm of introducing sky offsets that minimize the differences of all image pairs previously been implemented in the Montage mosaicing package \citep{Berriman:2008}. In that software, 1) images are rectified onto a mosaic pixel grid, 2) difference images are computed, and 3) sky offsets are iteratively chosen by looping through each image pair and choosing the offset needed to minimize the difference image of that pair, counting previous sky offset estimates. Rather than employ Montage for this M31 project, we were motivated to develop a new sky offset optimization algorithms for two reasons: to understand and improve the optimization convergence performance for a large data set, and to deeply understand the systematics and uncertainties of NIR sky subtraction residuals. Given the profound influence of sky residuals on the derived shape of M31's NIR disk, an assessment of uncertainty is crucial. An assessment of errors will be carried out in \todo{\S todo}. The convergence performance of sky optimization algorithms will be address in the proceeding sections.
 
-The M31 WIRCam data set is a challenge for sky offset optimizers because of the extremely high-dimension of the optimization. Each exposure in the mosaic is a parameter (sky offset $\Delta_i$) in the optimization. 
+\subsection{Hierarchical sky offset optimization}
+
+Sky offset optimization is challenging because of dimensionality. Assuming that sky residuals are \emph{constant} across a frame (see \S TODO for the case of planar residuals), each image frame represents a new dimension (\Delta_i) in the optimization. Considering that the WIRCam array produces four image frames for every exposure, the combined 2007B and 2009B data sets consist of 3924 $J$ and 4972 $K_s$ image frames that cover the disk of M31. Such a large optimization is computationally ambitious, but also needless.
+
+Our sky optimization algorithm breaks the optimization of sky offsets into three sequential steps, which we call \emph{hierarchical sky offset optimization}.
+
+The 2007B and 2009B WIRCam surveys observed a total of 39 \emph{fields} across the M31 disk (illustrated in \todo{Figure fieldmap}). Each WIRCam field is imaged with four detectors, arranged in a $2\times 2$ grid. Let us define a \emph{detector field} as the collection of images that are taken with a given detector, at a given field. Images in a detector field have the greatly simplifying property of all overlapping across a dominant section of the image frame.
+
+Thus in Step 1 we combine the frames in a detector fild to produce a \emph{detector field stack}. The combined 2007B and 2009B surveys have 156 such stacks per filter. In Step 2, the four detector field stacks within each field can be fitted into a \emph{block}. A block is a fundamental unit of the mosaic, as all images that are combined within a block were observed under contemporaneous sky conditions. Finally, in Step 3, the 39 blocks can be fitted into a galaxy-wide mosaic for each filter.
+
+\todo{Label the sky offsets that are produced in each step.}
 
 \bibliography{master}
 
