@@ -105,6 +105,206 @@ In their own right, the 2009B sky fields have considerable utility. Over the cou
 
 % subsection obs9 (end)
 
+\section{Image Preparation}
+\label{sec:reduction}
+
+Our goal is to produce an accurate mosaic of M31 from ground-based, CFHT/WIRCam, near-infrared images. As is typical, raw images from the telescope are treated by a pipeline that cleans detector signatures and calibrates flux and astrometry. Here we wish to comment on some of image reduction steps that have a significant impact on the quality of our final mosaic.
+
+WIRCam data are offered by CFHT in three progressive stages of \emph{preprocessing} by their \iiwione\ pipeline to allow programmes, such as this one, to re-implement calibration recipes for potentially higher performance. These data flavours are: a raw image that is essentially untouched after leaving the instrument (\texttt{*o.fits}); an image that has been nonlinearity-corrected, dark subtracted and flat fielded (\texttt{*s.fits}); and an image that has been sky subtracted, in addition to all the previous treatments (\texttt{*p.fits}).
+
+As sky subtraction is the highest source of error in this program, the middle data product, \texttt{*s.fits}, would appear most amenable as a starting point for this program. Nonetheless, two \iiwione\ processing stages included in \texttt{*s.fits} products must be handled carefully.
+
+\paragraph{Cross-talk correction.} WIRCam integrations prior to March 2008 (that is, the 2007B data set, but not the 2009B data) suffered from electronic cross talk within the detector. This cross talk is manifested in repeating rings above and below saturated stars.\footnote{See \url{http://cfht.hawaii.edu/Instruments/Imaging/WIRCam/WIRCamCrosstalks.html}.} By default, the \iiwione\ pipeline removes this cross talk by subtracting a median of the 32 amplifier slices. Unfortunately, this algorithm fails in cases where the background has a surface brightness gradient (such as on the disk of M31) and produces an inverse surface brightness gradient that is stronger than the galaxy surface brightness itself. Loic Albert was kind to re-process the 2007B data set with the cross-talk correction turned off.
+
+\paragraph{Flat fielding.} We discovered that the flat fielding offered by \iiwione\ was only accurate to 2\% of edge-to-edge intensity. This appears to be a discrepancy between dome flat fielding, as employed by \iiwione, and night sky flat fielding. A complete discussion of \iiwione\ flat fielding, and the improvement realized by night sky flat fielding, is made in \S \todo{sec:flats}. The introduction of a new field illumination correction necessitates a re-evaluation of the WIRCam photometric zeropoint, as done in \S\todo{sec:photocal}.
+
+\subsection{Night sky flat fielding}
+\label{sec:flats}
+
+Images flat-fielded by \iiwione\ show a remarkable amount of fixed structure. In most applications of WIRCam, these detector illumination structures are un-noticed since the median sky subtraction step, to produce the `fully pre-processed' \texttt{*p.fits}, will erase these illumination artifacts from blank sky. That is, median sky subtraction is treated as a secondary flat-field treatment. However, this is a dangerous procedure as illumination corrections must be multiplicative (as it is a correction to the relative efficiency of detecting photons across the WIRCam detector). Employing median sky subtraction only removes observed background signal; it does not correct the efficiency of detecting signal across the detector.
+
+The error introduced by dome flat fielding in the \iiwione\ pipeline may be realized by producing a median stack of sky images (\ie, the same procedure to make sky flats) that have been flat fielded by \iiwione\ preprocessing. While astrophysical sources are eliminated in a median stack, a residual detector structure is revealed that appears to be consistent across WIRCam integrations over time scales of months and years. These structures can be categorized as a detector-scale illumination variation, distinct patches hundreds of pixels across, and horizontal banding that appears to coincide with the 32-pixel high amplifier bands.
+
+We attribute the residual unflatness of \iiwione\ preprocessed products to its use of dome flats. The light path and colour of a reflected tungsten lamp,\footnote{CFHT \iiwione\ manual: \url{http://www.cfht.hawaii.edu/Instruments/Imaging/WIRCam/IiwiVersion1Doc.html}} rather than photons originating from the atmosphere, yields a remarkably different detector illumination calibration. For this project we chose to redo the flat fielding using \emph{sky flats}: flat field images that use the abundant near-infrared sky signal to describe the illumination function of the WIRCam detectors. The procedure for building a sky flat is listed in \S\ref{sec:skyflatpro}.
+
+\subsubsection{Sky flat fielding procedure}
+\label{sec:skyflatpro}
+
+\begin{enumerate}
+	\item Begin with  \texttt{s.fits} \iiwione\ products (that are dome flat fielded, but not sky subtracted) to take advantage of the \iiwione\ non-linearity correction and dark subtraction. The dome flat fielding is un-done, losslessly, by multiplying the \texttt{s.fits} image with its associated dome flat.\footnote{Dome flats are made available by CFHT, \url{http://limu.cfht.hawaii.edu:80/detrend/wircam/}.}
+	\item All un-flattened sky images are procured from our proprietary programme's data set (sky flats could be made more efficiently by CFHT on-site using proprietary images from \emph{all} WIRCam programmes, but this program is itself rich in sky data). The differing levels of field illumination from the sky are standardized by sampling the median intensity in a $400\times 400$ pixel region at the centre of each detector image (with source masking). Each sky detector frame is divided by a factor that brings this central region to $10000$ ADU.
+	\item Those standardized sky frames are organized in sets of: filter ($J$ or $K_s$); detector in the array (1--4); and camera run ID (\texttt{QRUNID}) that identifies images taken with continuous WIRCam installation on the telescope. Frames in each group are median combined, pixel-to-pixel. To reduce bias from stars and background galaxies, \sw{Source Extractor} object maps informed weightmaps for each image that effectively mask sources. Median combination of a stack of hundreds of $2048\times2048$ image, each with a weightmap, is computationally expensive. A convenient solution was to use \sw{Swarp} \citep[an image-mosaicing software package,][]{Bertin:2002} in a mode that combined images pixel-to-pixel. These median combined frames were normalized to unit mean intensity.
+	\item These sky flats were divided from each sky and disk frame taken under the same conditions (filter, detector and camera installation) to create an illumination-corrected data set.
+\end{enumerate}
+
+\noindent Table \ref{tab:flattable} lists the sky flats constructed for this survey.
+
+\begin{table}[t]
+    \centering
+    \caption{Properties of night sky flats constructed for each Queue Run (\texttt{QRUNID}).}
+    \label{tab:flattable}
+
+\begin{tabular}{cccc}
+\hline
+Filter & QRUNID & $N$ images & $N$ nights \\
+\hline
+$J$ & 07BQ01 & 24 & 6 \\
+$J$ & 07BQ03 & 141 & 9 \\
+$J$ & 07BQ05 & 43 & 4 \\
+$J$ & 09BQ01 & 111 & 10 \\
+$J$ & 09BQ03 & 55 & 3 \\
+$J$ & 09BQ08 & 396 & 10 \\
+\hline
+$K_s$ & 07BQ01 & 35 & 2 \\
+$K_s$ & 07BQ03 & 25 & 1 \\
+$K_s$ & 07BQ05 & 156 & 6 \\
+$K_s$ & 07BQ07 & 133 & 3 \\
+$K_s$ & 09BQ01 & 113 & 10 \\
+$K_s$ & 09BQ03 & 55 & 3 \\
+$K_s$ & 09BQ08 & 637 & 8 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Sky flat performance}
+\label{sec:skyflatstats}
+
+%\begin{figure}[p]
+%    \centering
+%     \includegraphics[width=\textwidth]{figs/flat/09BQ01_Ks_domeflatratio.pdf}
+%    \caption[Dome - sky flat ratio image.]{Percent difference image of the 09BQ01 $K_s$ sky flat to the \texttt{domeflat\_8302B\_20090728HST143302\_Ks} dome flat used in the \iiwione\ pipeline.}
+%    \label{fig:domeflatratio}
+%    % thesis/flatratio.py
+%\end{figure}
+
+\subsubsection{Comparison to \iiwione\ dome flats}
+
+
+To illustrate the disagreement between the sky and \iiwione\ dome flats, Fig. \todo{fig:domeflatratio} shows a percent difference map of a \iiwione\ dome flat to a sky flat produced via the procedure in \S \todo{sec:skyflatpro}. This map reveals a $\pm2\%$ discrepancy between the two types of flat fields.
+% FIXME see thesis/flatratio.py and thesis_plots/ for the flat ratio image.
+% In Ks I do see 2\% -- 4\% edge-to-edge.
+% TODO repeat this for both $J$ and $K_s$ sky flats.
+In practice, the sky flat appears to be the correct description of the WIRCam illumination as application of sky flats \emph{does} remove all types of residual WIRCam illumination features: large scale, small scale, and amplifier band structures.
+
+\subsubsection{Flatness of sky flats}
+\label{sec:skyflatshapes}
+
+%\begin{figure}[p]
+%	\centering
+%		\includegraphics[width=\textwidth]{figs/flat/07BQ05_Ks.pdf}
+%	\caption[Sky shape composition of 07BQ05 $K_s$ sky flat]{Evolution of the shapes of sky images composed in the 07BQ05 $K_s$ sky flat. Shape is measured as the median trend across the columns (left array) and rows (right array) WIRCam images. These trends are normalizes to the level at the centre of the detector, $I_o$. Axes are arranged to match the $2\times 2$ configuration of WIRCam. Colours highlight the observation sequence of images.}
+%	\label{fig:flat_07BQ05_Ks}
+%	% flatshapes.py
+%\end{figure}
+
+%\begin{figure}[t]
+%	\centering
+%		\includegraphics[width=\textwidth]{figs/flat/09BQ08_Ks.pdf}
+%	\caption[Sky shape composition of 09BQ08 $K_s$ sky flat]{Sky shape composition of 09BQ08 $K_s$ sky flat. See Fig. \ref{fig:flat_07BQ05_Ks} for explanation.}
+%	\label{fig:flat_09BQ08_Ks}
+%	% flatshapes.py
+%\end{figure}
+
+%\begin{figure}[t]
+%    \centering
+%        \includegraphics[width=\textwidth]{figs/flat/07BQ03_J.pdf}
+%    \caption[Sky shape composition of the 07BQ03 $J$ sky flat]{Sky shape composition of the 07BQ03 $J$ sky flat. See Fig. \ref{fig:flat_07BQ05_Ks} for explanation.}
+%    \label{fig:flat_07BQ03_J}
+%    % flatshapes.py
+%\end{figure}
+
+Ultimately, the accuracy of sky flats is limited by the distribution of intrinsic shapes in the NIR sky. Wide-field movies of the near-infrared sky \citep{Adams:1996} show the NIR sky glow to be akin to a moving cloud system. As such, the NIR sky seen by WIRCam is never flat---yet by definition a flat field must necessarily be built from an intrinsically uniform illumination across the telescope focal plane. In producing a NIR sky flat, we hypothesize that the \emph{mean shape} of the NIR sky, over the span of a queue run, is flat.
+
+In \todo{Figures} \ref{fig:flat_07BQ05_Ks}--\ref{fig:flat_07BQ03_J}, I plot the sequences of sky shapes that are combined to produce a sky flat for typical queue runs of this survey. These `sky shapes' are built by median-compressing the sky images down rows and columns to show the general trend of the sky across $x$ and $y$ image axes. The centre-to-edge shape of the sky, across a 10.4\arcmin\ WIRCam detector, typically varies by 0.1\% in $J$, and 0.5\% in $K_s$. \emph{The performance of dome flats---$\pm2\%$ error relative to sky flats---is worse than the typical uncertainty in shape from a single sky frame.} But the ultimate accuracy of sky flats depends upon the distribution of sky shapes composed in a QSO run. And surprisingly, the shapes are not always randomly distributed, in part because of the sporadic bursts of sky observations throughout a queue run, as the CFHT queued observing program balances several difference observing projects at once.
+
+For example, in 07BQ05 ($K_s$) (Fig. \ref{fig:flat_07BQ05_Ks}), we see distinct traces of sky shapes that correspond to the sporadic activation of this observing program over several nights, for 30 minutes to hours at a time (as is the normal structure of queued observing blocks). Over the span of an \emph{observing block}, the sky will vary slowly. Once the sky is observed again on a different night in a queue run, the sky shape will be vastly different, creating the two distinct sets of shapes. In other cases where more observations are made under different sky conditions, such as 09BQ08 ($K_s$), a more continuous set of sky shapes is observed. In the $J$ band (\eg, Fig. \ref{fig:flat_07BQ03_J}), these distinct sky morphologies are not as pronounced because at the 0.1\% level, the edge-edge sky variation is closer to the intrinsic Poisson pixel noise of the sky (which itself is $\sim 0.1\%$ of the typical $J$ sky intensity per pixel).
+
+%\begin{figure}[p]
+%  \centering
+%      \includegraphics[height=8in]{figs/flat/flatslices_07.pdf}
+%  \caption{Shapes of sky flats across WIRCam detector \#2 for each queue run, in $J$ and $K_s$ compiled in 2007B.}
+%  \label{fig:flat_flatslices_07}
+%  % flatslice.py
+%\end{figure}
+
+%\begin{figure}[p]
+%  \centering
+%      \includegraphics[height=8in]{figs/flat/flatslices_09.pdf}
+%  \caption{Shapes of sky flats across WIRCam detector \#2 for each queue run, in $J$ and $K_s$ compiled in 2009B.}
+%  \label{fig:flat_flatslices_09}
+%  % flatslice.py
+%\end{figure}
+
+One test of the robustness of queue sky flats is to compare the shapes of independent flats from different queue runs. Since WIRCam is removed from the telescope between queue runs, this test effectively provides an upper limit on the bias in the shape built from a finite ensemble of sky images. In figures \ref{fig:flat_flatslices_07} and \ref{fig:flat_flatslices_09} I plot the distribution of vertical and horizontal \emph{slices} through the centre of the sky flats assembled for each QSO run in a given semester, along with the residuals against the median shape. These shapes are from the median of 200 pixel-wide (1\arcmin) slices through the centre of the lower-right detector, and thus resolve specific changes in the perceived detector illumination distribution. I find (queue-) run-to-run shape variations of $\pm$ 0.4\% in both $J$ and $K_s$ bands. Given that the amplitude of $J$ sky variations is only 0.1\% (Fig. \ref{fig:flat_07BQ03_J}), most of the run-to-run flat illumination variation must be intrinsic to changes in the light path. This leaves $<0.1$\% flat field illumination variation attributable to biases in sky shape composition.
+
+\subsection{Median sky image subtraction} % (fold)
+\label{sec:mediansky}
+
+Since M31 is much larger than individual WIRCam fields, sky background is subtracted (to first order) using the sky levels found in contemporary sky images. Chapter \ref{ch:obs} describes the sky-target nodding sequences chosen for the 2007B and 2009B observing campaigns. Although a scalar sky level could be estimated from a sky image, and subtracted from the paired target images, it is common to construct a median sky image, the same size as the WIRCam frames, and subtract this 2D image from target images.
+
+This procedure was originally motivated by near-infrared programs where the objects are small, so that the median of several frames in a multi-point dither pattern effortlessly removes the signal flux, leaving only an image of the sky background itself. An advantage of median sky construction is that it not only records the amplitude of a sky signal, but also its \emph{shape}. For large sky-target nods, the recorded shape of the sky will be a less relevant representation of the sky on the target itself. Nonetheless, \iiwione\ retained this practice of median sky construction as a crutch for removing instrumental signals not removed by dome flat fielding (see \S \ref{sec:flats}). With sky flat fielding, this requirement is reduced further. However, median sky subtraction is still useful for building the best images of the sky fields themselves, and it used in the present pipeline. Chapter \ref{ch:planarsky} discusses the influence of median sky subtraction on the shape of residual sky flux on the disk.
+
+Median sky subtraction is implemented as follows:
+
+\begin{enumerate}
+	\item For each sky image (termed the primary sky image), five other sky images taken closest in time to the primary image are collected.
+	\item From the central $800\times 800$ pixels of each image, the median sky intensity is recorded, $I_{S,i}$. A Source Extractor object mask, as used in \S \ref{sec:flats} for flat fielding, removes bias from astrophysical sources.
+	\item Each sky image is additively scaled to a common level of 10,000 ADU, via $\vect{S}_i^\prime =\vect{S}_i + 10000\mathrm{ADU} - I_{S,i}$. This allows differences in overall sky amplitude to be ignored by the median combination.
+	\item The median sky frame is constructed from the six scaled sky images using the \sw{Swarp} engine, as described in \S \ref{sec:flats}. Weightmaps built from \iiwione\ pixel masks and Source Extractor object masks are used.
+	\item The median sky frame is scaled back to the level of the primary: $\vect{S}_\mathrm{prime} = \vect{S}_\mathrm{median} -10000\mathrm{ADU} + I_{S,\mathrm{prime}}$.
+\end{enumerate}
+
+Each image in the data set is sky subtracted by first identifying the median sky frame whose primary image was taken most closely in time. That paired median sky frame is subtracted from the image.
+
+% section mediansky (end)
+
+\subsection{Photometric calibration}
+\label{sec:photocal}
+
+The final link in the primary image reduction pipeline is photometric calibration. The intensity $I_\mathrm{ins}$ of each image pixel, measured in analog-to-digital units (ADU), can be converted into an instrumental magnitude, $m_\mathrm{ins}$, via the standard definition $m_\mathrm{ins} = -2.5\log_{10}I_\mathrm{ins}$. Yet instrumental magnitudes cannot be compared from one WIRCam image to another, nor from this data set to others, because of image-to-image changes in detection efficiency. Instead, instrumental protometry is transformed into a standard photometric system via the introduction of a zeropoint,
+
+\begin{equation}
+    m_\mathrm{cal} = m_\mathrm{ins} + m_o.
+    \label{eq:zpdefinition}
+\end{equation}
+
+Given a zeropoint, and with $I_\mathrm{ins}$ counts integrated over $T_\text{exp}$ seconds, the calibrated image is
+
+\begin{equation}
+    I_\mathrm{cal} = \frac{I_\mathrm{ins}}{T_\text{exp}} 10^{-2m_o/5},
+    \label{eq:fluxcalibration}
+\end{equation}
+
+\noindent in units of ADU s$^{-1}$ pixel$^{-2}$, physically interpreted at the relative count rate per pixel if Vega, the reference star, deposits 1 ADU s$^{-1}$ pixel$^{-2}$. Chapters \ref{ch:dcoffset} and \ref{ch:planarsky} use this system to report residual sky subtraction uncertainties.
+
+For this program, it is most convenient establish $m_o$ for each image by bootstrapping to the photometric system of the Two Micron All Sky Survey (2MASS) point source catalog \citep{Skrutskie:2006}. Any WIRCam pointing in the survey contains $\sim 10^2$ stars measured by 2MASS. Although these are not standard stars, the ensemble of 2MASS stars may be treated as such. Given the ensemble difference between instrumental and 2MASS catalog magnitudes of stars, a zeropoint is estimated.
+
+Since the disk of M31 is crowded, and 2MASS has poor resolution (seeing $> 1\arcsec$), 2MASS point source measurements are considered unreliable on the disk. Instead, all zeropoint measurements are made using sky images, and those calibrations are applied to paired disk images (analogous to the median sky subtraction procedure).
+
+\paragraph{Profile-fitting photometry.} Instrumental photometry of 2MASS stars is done using the DAOPHOT suite of profile-fitting software \citep{Stetson:1987}. The photometry code is run autonomously from the author's Python-language pipeline that interfaces to the DAOPHOT software. Doing so allows the 7696 sky frames compiled for this survey to be measured efficiently, while still allowing customized runtime logic in the Python drivers.
+
+For each sky image, stellar photometry begins with the construction of a spatially-dependent model of the instantaneous point spread function (PSF) of CFHT/WIRCam. Stars are detected, and their magnitudes roughly estimated through circular apertures with DAOPHOT. Of these stars, the 100 brightest are selected as candidates for PSF construction. That list is initially culled of stars near flagged pixels (containing bad pixels, diffraction spikes of bright stars, or galaxies) and stars within 40 pixels of a 2MASS star brighter than 14th magnitude (which are saturated in the WIRCam integrations). Using DAOPHOT, a PSF model is iteratively fit to the list of model stars; upon each iteration the spatial-dependence of the PSF model across the image frame is increased from independent to quadratic.
+
+In each PSF-fitting iteration, model stars flagged by DAOPHOT for having poor fits---typically galaxies or blended stars---are culled. Faint stars can contaminate the wings of stellar profiles. At each iteration, known stars are subtracted from the frame using the current PSF model with ALLSTAR \citep{Stetson:1994}. In this clean frame, faint stars that would otherwise be hidden in the wings of bright stars can be detected. PSF fitting itself is performed on an image where all stars \emph{but} the model stars are subtracted.
+
+\paragraph{Aperture corrections.} Given a quadratically-varying PSF model for each sky frame, a catalog of stellar PSF-fitted instrumental magnitudes is made with ALLSTAR. In principle, PSF fitting does not extract the complete flux of a star; stellar images often have faint and extended wings. Photometry with a large circular aperture could in principle detect the entirety of a star's light, but would be subject to a significant increase in background noise in the large aperture. A scheme to avoid increased noise while estimating the total light of a star was developed by \cite{Stetson:1990}. In each sky image, the 40 brightest PSF model stars are measured in 12 photometric apertures monotonically increasing in radius from 3 to 28 pixels. Using this aperture photometry for all model stars in images of a given band, over the course of a night, DAOGROW is used to build growth curves that extrapolate the light of a star to a \emph{total} instrumental magnitude. For each frame, the aperture correction is estimated as the median difference between the total magnitude and the PSF-fitted magnitude over the 40 program stars:
+
+\begin{equation}
+    \text{apc} = \langle m_{\text{tot},i} - m_{\text{PSF},i}\rangle .
+\end{equation}
+
+\noindent Hence for any arbitrary star in that frame measured by ALLSTAR, its total instrumental magnitude can be estimated as $m_\text{PSF} + \text{apc}$. In this survey, the median aperture correction is $\sim-0.06$ mag, so that $\sim5\%$ of the light of a star is in extended wings not recorded by the PSF model.
+
+\paragraph{2MASS zeropoint estimation.} As discussed, the photometric zeropoint is the systematic difference between WIRCam instrumental and 2MASS photometry. Although several hundred 2MASS stars may be present in a WIRCam frame, only the 2MASS stars corresponding to the PSF model stars are used since these are vetted to be stellar and have clean photometry. Typically $\sim 40$ stars are thus used to estimate the zeropoint for a given frame. For the ensemble of PSF model stars $i$ matched to 2MASS sources, the zeropoint is:
+
+\begin{equation}
+    m_o = \langle m_{\text{2MASS},i} +2.5\log_{10}I_{\text{ins},i} - 2.5 \log_{10} T_\text{exp} - \text{apc} \rangle_{i=0\ldots n}.
+\end{equation}
+
+For a typical frame, the dispersion of zeropoint estimates about the median is 0.10-0.15 magnitudes. With such an uncertainty, image-to-image variations in zeropoint can be confused with variations in sky level. But under the photometric conditions that these data were recorded, strong zeropoint fluctuations are not expected over short periods. Thus I choose to smooth zeropoints by averaging the zeropoints of frames across a Gaussian-weighted sliding window of width $\sigma=15$ minutes. Such time-averaged zeropoints have uncertainties of $\sim 0.05$ magnitudes.
+
+A future revision of this WIRCam pipeline will solve for colour terms in the zeropoint correction to account for differences between the WIRCam and 2MASS filter sets.
+
 \section{Scalar Sky Optimization}
 \label{sec:scalar}
 
@@ -125,7 +325,7 @@ Each classically sky subtracted image of the M31 disk is a combination of the tr
 
 \noindent over all coupled pairs $i,j$ in the mosaic.
 
-This algorithm of introducing sky offsets that minimize the differences of all image pairs previously been implemented in the Montage mosaicing package \citep{Berriman:2008}. In that software, 1) images are rectified onto a mosaic pixel grid, 2) difference images are computed, and 3) sky offsets are iteratively chosen by looping through each image pair and choosing the offset needed to minimize the difference image of that pair, counting previous sky offset estimates. Rather than employ Montage for this M31 project, we were motivated to develop a new sky offset optimization algorithms for two reasons: to understand and improve the optimization convergence performance for a large data set, and to deeply understand the systematics and uncertainties of NIR sky subtraction residuals. Given the profound influence of sky residuals on the derived shape of M31's NIR disk, an assessment of uncertainty is crucial. An assessment of errors will be carried out in \todo{\S todo}. The convergence performance of sky optimization algorithms will be address in the proceeding sections.
+This algorithm of introducing sky offsets that minimize the differences of all image pairs previously been implemented in the Montage mosaicing package \citep{Berriman:2008}. In that software, 1) images are rectified onto a mosaic pixel grid, 2) difference images are computed, and 3) sky offsets are iteratively chosen by looping through each image pair and choosing the offset needed to minimize the difference image of that pair, counting previous sky offset estimates. Rather than employ Montage for this M31 project, we were motivated to develop a new sky offset optimization algorithms for two reasons: to understand and improve the optimization convergence performance for a large data set, and to deeply understand the systematics and uncertainties of NIR sky subtraction residuals. Given the profound influence of sky residuals on the derived shape of M31's NIR disk, an assessment of uncertainty is crucial. An assessment of errors will be carried out in \todo{\S todo}. The convergence performance of sky optimization algorithms will be addressed in the proceeding sections.
 
 \subsection{Hierarchical sky offset optimization}
 
