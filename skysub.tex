@@ -6,8 +6,11 @@
 \usepackage{graphicx}
 \usepackage{epstopdf}
 
+\newcommand{\myshorttitle}{Near-IR Imaging of M31}
+\newcommand{\myshortauthors}{Sick et al.}
+
 \usepackage{color}
-\usepackage[colorlinks=true,citecolor=black,linkcolor=black,urlcolor=black]{hyperref}
+\usepackage[pdfauthor={\myshortauthors},pdftitle={\myshorttitle},colorlinks=true,citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
 \usepackage{url}
 
 \usepackage{amssymb}
@@ -30,8 +33,8 @@
 \IfFileExists{vc.tex}{\input{vc}}{}
 
 % aastex setup
-\shorttitle{Near-IR Imaging of M31}
-\shortauthors{Sick et al.}
+\shorttitle{\myshorttitle}
+\shortauthors{\myshortauthors}
 
 \begin{document}
     \IfFileExists{vc.tex}{\slugcomment{Version \VCRevision\ by \VCAuthor\ on \VCDateTEX , \VCTime .}
