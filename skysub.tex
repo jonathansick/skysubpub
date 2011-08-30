@@ -385,6 +385,29 @@ Given the image coupling records, I optimize the set of $\Delta_i$ using the \ci
 
 But NM has two weaknesses. First, it is a \emph{greedy} optimizer that will converge into any local minimum, without necessarily seeking the global minimum. Second, for high-dimension optimizations (many fields in the mosaic), the NM may fail to converge in a reasonable number of objective function evaluations \citep{Neumann:2006}. Without solving these issues, a minimization of Eq \ref{eq:objf} with an off-the-shelf NM code yields a mosaic with obvious discontinuities across fields. To solve the first problem, I develop a Multi-Start Reconverging NM (MSRNM) downhill simplex driver in Appendix \ref{cha:simplex}. This algorithm allows the NM to cumulatively cover a larger portion of parameter space to probabilistically ensure convergence into a global optimum.
 
+\section{Analysis of Scalar Sky Offsets}
+
+\begin{itemize}
+\item Maps
+\item Hierarchy of offsets
+\item Residual flux network maps
+\end{itemize}
+
+\section{Planar Sky Offsets}
+
+Scalar sky offsets are greatly effective for recovering the galaxy intensity from sky background uncertainties. But the reconstructed galaxy mosaics (Fig. \todo{maps}) reveal field-to-field discontinuities in the outer disk of roughly the same magnitude as the intrinsic disk surface brightness. These discontinuities are not a failure of the scalar sky offset method to converge; rather, they reveal that residual sky flux has a \emph{shape} across blocks.
+
+Figure \todo{horizontal cut} shows cuts of surface intensity across the $K_s$ scalar-sky corrected mosaic. \todo{Comment on the figure, that blocks have slopes that are not continuous}.
+
+Importantly, these residual sky shape are discontinuous only \emph{between} blocks. Figure \todo{todo} shows surface intensity cuts the component stacks of blocks. None of the blocks show surface intensity breaks between stacks. Recall that stacks within a block are simultaneously observed so that the residual sky present in each stack is correlated. In Table \ref{offset hierarchy table} we realized that $\Delta_\mathrm{stack}$ offsets are minor, and again, we see that sky shape discontinuities within blocks are negligible.
+
+This implies that any endeavor to removed residual sky shapes in the final mosaic need only operate at the block level: scalar sky offsets are an acceptable method for \emph{producing} blocks. In this section would outline such a method where we assume that residual sky shapes can be modeled as planes across blocks. This assumption is consistent with out need to be economical in the dimensionality of optimizations. Since a plane is parameterized as two slopes an a level, the optimization of 39 blocks in each M31 mosaic requires 117 parameters.
+
+\subsection{Planar Sky Offset Optimization Algorithm}
+
+Our planar sky offset optimization algorithm is a direct evolution of the scalar case. As before, difference images are assembled from each coupled pair of blocks. For each difference image we fit a plane $\epsilon_{ij} = (m_x, m_y, c)$: that is, $x$- and $y$-axis slopes and the level $c$ at the center of the difference image. The plane fitting is done iteratively with sigma clipping to reduce the influence of stellar PSF differences of bright stars. Our goal is now to find the sky offset planes for each block, $\Delta_\mathrm{block} = (\Delta_x, \Delta_y, \Delta_c)$, that maximally reduce flux in the difference planes.
+
+The multi-start re-converging Nelder-Mead simplex is again a flexible tool for searching parameter space and finding a global minimum. Planar optimization is more challenging because the parameters in the simplex no longer carry the same meanings, and in particular, have different dynamic ranges. We attempted to simultaneously optimizes planar slopes and levels
 
 \bibliography{master}
 
