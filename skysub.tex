@@ -417,14 +417,16 @@ First, planar slopes are optimized. The objective function considers only the mi
 	\mathcal{F}_m(m_x^0,m_y^0,\ldots m_x^n, m_y^n) = \sum_{i,j} \epsilon_x^{ij} - \Delta_x^i - \Delta_x^j + \epsilon_y^{ij} - \Delta_y^i - \Delta_y^j
 \end{equation}
 
-Second, the overall levels of planes are optimized\ldots
+\noindent As done in scalar offset optimization, any converged solution for the best slopes is restarted and reconverged until a stable minimum of the objective functon is found (see \S \todo{restart mechanism}).
+
+Second, the overall levels of offset planes are optimized. This objective function takes the offset slopes derived in the previous step, and seeks to minimize the level, $\epsilon_c$, of difference planes' centers:
 
 \begin{eqnarray}\nonumber
-	\mathcal{F}_c(\Delta_\mathrm{block}^0,\ldots,\Delta_\mathrm{block}^n) = &\sum_{i,j}& \mathcal{W}_{ij} \epsilon^{ij}_c - (\Delta_c^i + D_x^i\Delta_x^i + D_y^i\Delta_y^i) \\
-	&& + (\Delta_c^j + D_x^j\Delta_x^j + D_y^j\Delta_y^j)
+	\mathcal{F}_c(\Delta_\mathrm{block}^0,\ldots,\Delta_\mathrm{block}^n) = &\sum_{i,j}& \mathcal{W}_{ij} [ \epsilon^{ij}_c - (\Delta_c^i + D_x^i\Delta_x^i + D_y^i\Delta_y^i) \\
+	&& +~(\Delta_c^j + D_x^j\Delta_x^j + D_y^j\Delta_y^j) ]
 \end{eqnarray}
 
-$D_x$ and $D_y$ are distances from the center of the offset plane $\Delta$ to the center of the difference image $\epsilon_ij$. Thus $D_x\Delta_x$ and $D_y\Delta_y$ terms account for the slope's effect on the offset planes level at the center of the $\epsilon_{ij}$ difference image.
+$D_x$ and $D_y$ are distances from the center of the offset plane $\Delta$ to the center of the difference image $\epsilon_ij$. Thus $D_x\Delta_x$ and $D_y\Delta_y$ terms account for the slope's effect on the offset planes level at the center of the $\epsilon_{ij}$ difference image. Again, the restart mechanism is used to ensure a robust minimum of the $\mathcal{F}_c$ objective function.
 
 Together, these two optimization steps produce a new generation of $\Delta_\mathrm{block}$ planar offsets. These new offsets are compared to the previous generation (or the initial random planes for the first iteration) and the fractional difference of each slope and offset is measured. If any fractional difference exceedes a convergence tolerance of 10$^{-7}$, another iteration of optimization is performed. In this iteration, the current planes become new seed planes, and the successive slope and level optimizations are performed. Once an iteration produces planes effectively identical to the previous iteration, the optimization is stopped.
 
