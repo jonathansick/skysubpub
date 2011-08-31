@@ -432,6 +432,18 @@ Together, these two optimization steps produce a new generation of $\Delta_\math
 
 The $N$ optimization starts creates $N$ potential sky offset solutions. To choose the best solution, we seek the solution that minimized the level objective function, $\mathcal{F}_c$. This objective is sensitive to the overall surface intensity difference between coupled fields, while still being dependent on the quality of the planar slopes.
 
+Optimized planar offsets can add a arbitrary amount of flux to a mosaic, and this net offset must be subtracted. Both the net levels and net slopes of the offset planes be subtracted. Given the set of opetimized offset planes, $\Delta$, a \emph{net offset plane} $p$ can be constructed:
+
+\begin{eqnarray}
+	p_x & = & n^{-1} \sum_{i=0}^n \Delta_x^i \\
+	p_y & = & n^{-1} \sum_{i=0}^n \Delta_y^i \\
+	p_c & = & n^{-1} \sum_{i=0}^n \Delta_c^i
+\end{eqnarray}
+
+\noindent This net offset plane is subtracted from each optimized offset plane to obtain the final set of planar sky offsets for blocks in the mosaic.
+
+\subsection{Analysis of Planar Sky Offsets}
+
 \bibliography{master}
 
 \end{document}
