@@ -56,6 +56,14 @@ Here are some opening thoughts.
 \section{Observations}
 \label{sec:Observations}
 
+\begin{figure}[t]
+	\centering
+		\includegraphics[height=3in]{figs/fieldmap}
+	\caption{WIRCam field positions on M31.}
+	\label{fig:fieldmap}
+\end{figure}
+
+
 The Andromeda Galaxy (M31) was observed in the NIR using the WIRCam instrument, mounted to the 3.6-meter Canada-France-Hawaii Telescope (CFHT), at the summit of Mauna Kea in Hawaii. Observations were carried out exclusively in the NIR $J$ ($\lambda_0 \sim 1.2 \mu\mathrm{m}$) and $K_s$ ($\lambda_0 \sim 2.2 \mu\mathrm{m}$) bands.
 
 WIRCam itself is an array of four HgCdTe HAWAII-RG2 detectors \citep{Puget:2004}. Each detector comprises $2048\times 2048$ pixels, with a scale of 0\farcs 3. This pixel scale critically samples the typical seeing of 0\farcs 65 seen by CFHT. At this pixel scale, M31 stars are well resolved in the halo and outer disk. For reference, $1\arcmin = 3.7\mathrm{pc}$ across the disk of M31. The detectors are arranged in a $2\times 2$ grid with 45\arcsec\ gaps, so that the entire instrument covers $21.5\arcmin \times 21.5\arcmin$ of sky. It is truly the recent advent of NIR focal plane arrays, like WIRCam, that have enabled relatively efficient studies of M31 in the NIR.
@@ -68,18 +76,14 @@ The reader is encouraged to regard these observational designs as \emph{hypothes
 
 \todo{Insert obssummary table}
 
-\todo{Insert fieldmap}
-
 \todo{ST latency; distance figures}
-
-\todo{Fieldmap figure}
 
 \subsection{2007B Semester} % (fold)
 \label{sec:obs7}
 
 The initial survey was carried out in the 2007B semester by the CFHT Queue Service Observing under photometric conditions. As the observations were designed for resolved stellar analysis, we requested image quality (IQ) of 0.55\arcsec--0.65\arcsec, and our PSF modeling shows this was generally achieved (see \todo{Table obssummary}). This programme covers M31 with 27 contiguous WIRCam fields covering the entirety of M31 out to the optical radius, $\mu_V=23$ mag arcsec$^{-2}$. The fields are arranged with at least 1\arcmin\ overlap in declination, and approximately 5\arcmin\ overlap in right ascension.
 % FIXME check overlaps
-With the dither pattern (see below), this arrangement yields a continuous mosaic that avoids masked pixels that obscure the eastern 3\arcmin\ of the WIRCam array. The field configuration is shown in \todo{Figure fieldmap}.
+With the dither pattern (see below), this arrangement yields a continuous mosaic that avoids masked pixels that obscure the eastern 3\arcmin\ of the WIRCam array. The field configuration is shown in Fig. \ref{fig:fieldmap}.
 
 Each field was integrated for $16\times 47 s = 12.5$ minutes in $J$ and $26\times 25 s = 10.8$ minutes in $K_s$. These integrations are sufficiently deep for resolved stellar photometry to reach at least 1 mag below the tip of the red giant branch, a crucial requirement for decomposing the contributions of red giant and asymptotic giant branch stars to the NIR light.
 
@@ -99,9 +103,9 @@ Although we had not developed yet sky offset optimization technology described i
     % \item \emph{Systematic sky offsets can be discovered by overlapping both disk and sky fields.}
 \end{enumerate}
 
-This reasoning lead to a 2009B observing campaign that included 12 fields on the disk of M31 with 40 repeated observations, integrating for 20 seconds in both the $J$ and $K_s$ bands (13.3 minutes/field/band integration, see \todo{Table obssummary}). Temporal sky variations were minimized with an \emph{inefficient but necessary} ST$^2$S pattern (compared to 2007B: S$^3$T$^8$S$^3$ [$J$] and S$^5$T$^{13}$S$^5$ [$K_s$]). That is, each target observation was directly paired with a sky observation taken within 1.5 minutes (Fig. \todo{lag}). As shown in Figure \todo{fieldmap}, each target field was overlapped with at least one other 2009B target field so that systematic uncertainties in surface intensities could be checked and corrected. Further, each 2007B disk field overlapped with at least one 2009B disk field so that a surface brightness distribution derived from the 2009B data could be directly used to calibrate the 2007B data.
+This reasoning lead to a 2009B observing campaign that included 12 fields on the disk of M31 with 40 repeated observations, integrating for 20 seconds in both the $J$ and $K_s$ bands (13.3 minutes/field/band integration, see \todo{Table obssummary}). Temporal sky variations were minimized with an \emph{inefficient but necessary} ST$^2$S pattern (compared to 2007B: S$^3$T$^8$S$^3$ [$J$] and S$^5$T$^{13}$S$^5$ [$K_s$]). That is, each target observation was directly paired with a sky observation taken within 1.5 minutes (Fig. \todo{lag}). As shown in Fig. \ref{fig:fieldmap}, each target field was overlapped with at least one other 2009B target field so that systematic uncertainties in surface intensities could be checked and corrected. Further, each 2007B disk field overlapped with at least one 2009B disk field so that a surface brightness distribution derived from the 2009B data could be directly used to calibrate the 2007B data.
 
-Throughout the ST nodding pattern, the same sky field was never visited twice for the same target. Nods were semi-randomly assigned towards 53 sky fields, arranged in a ring removed at least 1\arcdeg\ from the optical radius of M31 (Fig. \todo{fieldmap}). In order to maintain rapid telescope nods, only northern sky fields serviced the northern disk, and similar for the southern fields; the maximum offset on the sky was 3\arcdeg\ (see Fig. \todo{todo}). This random sampling of sky fields yielded two possible advantages: 1) when a median sky image is constructed, many \emph{sky shapes} are combined, possibly yielding an intrinsically flatter image of sky (see \S on median sky subtraction), and 2) if there is a coherent structure in the NIR sky, sampling fields of the sky degrees apart in rapid succession should average out these systematic biases in estimating the sky level \emph{on the disk}. Sections \todo{todo} discuss the veracity of these programme design hypotheses.
+Throughout the ST nodding pattern, the same sky field was never visited twice for the same target. Nods were semi-randomly assigned towards 53 sky fields, arranged in a ring removed at least 1\arcdeg\ from the optical radius of M31 (Fig. \ref{fig:fieldmap}). In order to maintain rapid telescope nods, only northern sky fields serviced the northern disk, and similar for the southern fields; the maximum offset on the sky was 3\arcdeg\ (see Fig. \todo{todo}). This random sampling of sky fields yielded two possible advantages: 1) when a median sky image is constructed, many \emph{sky shapes} are combined, possibly yielding an intrinsically flatter image of sky (see \S on median sky subtraction), and 2) if there is a coherent structure in the NIR sky, sampling fields of the sky degrees apart in rapid succession should average out these systematic biases in estimating the sky level \emph{on the disk}. Sections \todo{todo} discuss the veracity of these programme design hypotheses.
 
 In their own right, the 2009B sky fields have considerable utility. Over the course of the the 2009B semester, each sky ring field was visited at least five times. Each visit adopted a position from the WIRCam DP5, five-point, dither pattern.\footnote{Implementing a program of random sky nods, while covering a dither pattern on each sky field, proved to be a challenge in the WIRCam phase two proposal interface.} The 100-second integration over each sky field allows deep source masks to be constructed for superior sky flat fielding and median sky subtraction. As an extension to the basic survey, the sky ring fields \texttt{01}, \texttt{13}, \texttt{27} and \texttt{39} were subjected to focussed integration sequences that document the sky variability at a stationary location on the sky over spans of 60--90 minutes. This study is discussed in \S \todo{shapesurvey}. The 50 (45) minute integration in $J$ (and $K_s$) on these fields also allow deep colour magnitude diagrams to be constructed in the inner halo of M31 that complement the optical PAndAS survey \cite{Ibata:2007}.
 
@@ -336,7 +340,7 @@ Sky offset optimization is challenging because of dimensionality. Assuming that 
 
 Our sky optimization algorithm breaks the optimization of sky offsets into three sequential steps, which we call \emph{hierarchical sky offset optimization}.
 
-The 2007B and 2009B WIRCam surveys observed a total of 39 \emph{fields} across the M31 disk (illustrated in \todo{Figure fieldmap}). Each WIRCam field is imaged with four detectors, arranged in a $2\times 2$ grid. Let us define a \emph{detector field} as the collection of images that are taken with a given detector, at a given field. Images in a detector field have the greatly simplifying property of all overlapping across a dominant section of the image frame.
+The 2007B and 2009B WIRCam surveys observed a total of 39 \emph{fields} across the M31 disk (illustrated in Fig. \ref{fig:fieldmap}). Each WIRCam field is imaged with four detectors, arranged in a $2\times 2$ grid. Let us define a \emph{detector field} as the collection of images that are taken with a given detector, at a given field. Images in a detector field have the greatly simplifying property of all overlapping across a dominant section of the image frame.
 
 Thus in Step 1 we combine the frames in a detector fild to produce a \emph{detector field stack}. The combined 2007B and 2009B surveys have 156 such stacks per filter. In Step 2, the four detector field stacks within each field can be fitted into a \emph{block}. A block is a fundamental unit of the mosaic, as all images that are combined within a block were observed under contemporaneous sky conditions. Finally, in Step 3, the 39 blocks can be fitted into a galaxy-wide mosaic for each filter.
 
