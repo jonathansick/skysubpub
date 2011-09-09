@@ -2,7 +2,7 @@
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
-{Adams}, J.~D. \& {Skrutskie}, M.~F. 1996, Airglow and 2MASS Survey Strategy
+{Adams}, J.~D., \& {Skrutskie}, M.~F. 1996, Airglow and 2MASS Survey Strategy
 
 \bibitem[{{Berriman} {et~al.}(2008){Berriman}, {Good}, {Laity}, \&
   {Kong}}]{Berriman:2008}
@@ -24,22 +24,18 @@
   {Lewis}, G.~F., \& {McConnachie}, A.~W. 2007, \apj, 671, 1591
 
 \bibitem[{Nelder \& Mead(1965)}]{Nelder:1965}
-Nelder, J.~A. \& Mead, R. 1965, {The Computer Journal}, 7, 308
+Nelder, J.~A., \& Mead, R. 1965, {The Computer Journal}, 7, 308
 
 \bibitem[{{Neumann} \& {Han}(2006)}]{Neumann:2006}
-{Neumann}, M. \& {Han}, L. 2006, {Optimization Methods and Software}, 21, 1055
+{Neumann}, M., \& {Han}, L. 2006, {Optimization Methods and Software}, 21, 1055
 
 \bibitem[{{Puget} {et~al.}(2004){Puget}, {Stadler}, {Doyon}, {Gigan},
   {Thibault}, {Luppino}, {Barrick}, {Benedict}, {Forveille}, {Rambold},
   {Thomas}, {Vermeulen}, {Ward}, {Beuzit}, {Feautrier}, {Magnard}, {Mella},
   {Preis}, {Vallee}, {Wang}, {Lin}, {Hall}, \& {Hodapp}}]{Puget:2004}
-{Puget}, P., {Stadler}, E., {Doyon}, R., {Gigan}, P., {Thibault}, S.,
-  {Luppino}, G., {Barrick}, G., {Benedict}, T., {Forveille}, T., {Rambold}, W.,
-  {Thomas}, J., {Vermeulen}, T., {Ward}, J., {Beuzit}, J., {Feautrier}, P.,
-  {Magnard}, Y., {Mella}, G., {Preis}, O., {Vallee}, P., {Wang}, S., {Lin}, C.,
-  {Hall}, D.~N., \& {Hodapp}, K.~W. 2004, in Presented at the Society of
-  Photo-Optical Instrumentation Engineers (SPIE) Conference, Vol. 5492, Society
-  of Photo-Optical Instrumentation Engineers (SPIE) Conference Series, ed.
+{Puget}, P., {et~al.} 2004, in Presented at the Society of Photo-Optical
+  Instrumentation Engineers (SPIE) Conference, Vol. 5492, Society of
+  Photo-Optical Instrumentation Engineers (SPIE) Conference Series, ed.
   {A.~F.~M.~Moorwood \& M.~Iye}, 978--987
 
 \bibitem[{{Skrutskie} {et~al.}(2006){Skrutskie}, {Cutri}, {Stiening},
@@ -48,13 +44,7 @@ Nelder, J.~A. \& Mead, R. 1965, {The Computer Journal}, 7, 308
   {Jarrett}, {Kirkpatrick}, {Gizis}, {Howard}, {Evans}, {Fowler}, {Fullmer},
   {Hurt}, {Light}, {Kopan}, {Marsh}, {McCallon}, {Tam}, {Van Dyk}, \&
   {Wheelock}}]{Skrutskie:2006}
-{Skrutskie}, M.~F., {Cutri}, R.~M., {Stiening}, R., {Weinberg}, M.~D.,
-  {Schneider}, S., {Carpenter}, J.~M., {Beichman}, C., {Capps}, R., {Chester},
-  T., {Elias}, J., {Huchra}, J., {Liebert}, J., {Lonsdale}, C., {Monet}, D.~G.,
-  {Price}, S., {Seitzer}, P., {Jarrett}, T., {Kirkpatrick}, J.~D., {Gizis},
-  J.~E., {Howard}, E., {Evans}, T., {Fowler}, J., {Fullmer}, L., {Hurt}, R.,
-  {Light}, R., {Kopan}, E.~L., {Marsh}, K.~A., {McCallon}, H.~L., {Tam}, R.,
-  {Van Dyk}, S., \& {Wheelock}, S. 2006, \aj, 131, 1163
+{Skrutskie}, M.~F., {et~al.} 2006, \aj, 131, 1163
 
 \bibitem[{{Stetson}(1987)}]{Stetson:1987}
 {Stetson}, P.~B. 1987, \pasp, 99, 191
@@ -66,6 +56,6 @@ Nelder, J.~A. \& Mead, R. 1965, {The Computer Journal}, 7, 308
 ---. 1994, \pasp, 106, 250
 
 \bibitem[{{Vaduvescu} \& {McCall}(2004)}]{Vaduvescu:2004}
-{Vaduvescu}, O. \& {McCall}, M.~L. 2004, \pasp, 116, 640
+{Vaduvescu}, O., \& {McCall}, M.~L. 2004, \pasp, 116, 640
 
 \end{thebibliography}
