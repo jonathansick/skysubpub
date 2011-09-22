@@ -64,20 +64,27 @@ Here are some opening thoughts.
 	\label{fig:fieldmap}
 \end{figure}
 
+% Surface brightness CI from skyoffset/net_sky_level.py
+% 2007B J 19.299762336; 19.0941561216 -- 19.5280265099
+% 2007B Ks 16.8495877807; 16.6760145522 -- 17.1097813362
+% 2009B J dim 17.7944495337; 17.5416983486 -- 17.8828280322
+% 2009B J bright 19.3502676699; 18.8508442666 -- 19.4573079994
+% 2009B Ks 16.5256442792; 16.3699344706 -- 16.6748284633
+
 \begin{table*}[t]
     \caption[Summary of WIRCam observing programs]{Summary of WIRCam observing programs. Efficiency (Eff.) is the percentage of time in a program allocated to integrating the disk of M31, compared from nodding, read out and sky overheads. Seeing is measured from stars in sky images.}
     \label{tab:obssummary}
     
     \centering
-    \begin{tabular}{llllllllll}
-        & & & & $\frac{T_\mathrm{int}}{\mathrm{field}}$ & $T_\mathrm{exp}$ & Eff. & \multicolumn{3}{c}{PSF FWHM (arcsec)} \\ \cline{8-10}
-    Sem. & Band & $N_\mathrm{disk}$ & ST Nods & (min) &  (s) &  (\%) & 25th  & 50th & 75th \\
+    \begin{tabular}{lllllllllll}
+        & & & & $\frac{T_\mathrm{int}}{\mathrm{field}}$ & $T_\mathrm{exp}$ & Eff. & $\mu_\mathrm{sky}$ 95\% C.I. & \multicolumn{3}{c}{PSF FWHM (arcsec)} \\ \cline{9-11}
+    Semester & Band & $N_\mathrm{disk}$ & ST Nods & (min) &  (s) &  (\%) & (mag/arcsec$^2$) & 25th  & 50th & 75th \\
     \hline
-    \multirow{2}{*}{2007B} & $J$ & \multirow{2}{*}{27} & [S$^3$T$^8$S$^3$]$^{2}$S$^3$ & 12.5 & 47 & 49 & 0.68 & 0.75 & 0.84 \\
-     & $K_s$ &  & [S$^5$T$^{13}$S$^5$]${^2}$S$^5$ & 10.8 & 25 & 42 & 0.60 &  0.65 & 0.73 \\
+    \multirow{2}{*}{2007B} & $J$ & \multirow{2}{*}{27} & [S$^3$T$^8$S$^3$]$^{2}$S$^3$ & 12.5 & 47 & 49 & (19.1, 19.5) & 0.68 & 0.75 & 0.84 \\
+     & $K_s$ &  & [S$^5$T$^{13}$S$^5$]${^2}$S$^5$ & 10.8 & 25 & 42 & (16.7, 17.1) & 0.60 &  0.65 & 0.73 \\
      \hline
-     \multirow{2}{*}{2009B} & $J$ & \multirow{2}{*}{12} & \multirow{2}{*}{[ST$^2$S]$^{20}$S} & \multirow{2}{*}{13.3} & \multirow{2}{*}{20} & \multirow{2}{*}{26} & 0.61 & 0.69 & 0.83 \\
-      & $K_s$ & & & & &  & 0.60 & 0.66 & 0.76 \\
+     \multirow{2}{*}{2009B} & $J$ & \multirow{2}{*}{12} & \multirow{2}{*}{[ST$^2$S]$^{20}$S} & \multirow{2}{*}{13.3} & \multirow{2}{*}{20} & \multirow{2}{*}{26} & (17.5,17.9); (18.6, 19.5) & 0.61 & 0.69 & 0.83 \\
+      & $K_s$ & & & & & & (16.4, 16.7) & 0.60 & 0.66 & 0.76 \\
     \end{tabular}
 \end{table*}
 
