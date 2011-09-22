@@ -338,6 +338,13 @@ For a typical frame, the dispersion of zeropoint estimates about the median is 0
 
 A future revision of this WIRCam pipeline will solve for colour terms in the zeropoint correction to account for differences between the WIRCam and 2MASS filter sets.
 
+\begin{figure*}[t]
+	\centering
+		\includegraphics[width=6in]{figs/raw_mosaics}
+	\caption{Median sky subtracted WIRCam $J$ (left) and $K_s$ (right) mosaics of M31.}
+	\label{fig:raw_mosaics}
+\end{figure*}
+
 \section{Scalar Sky Optimization}
 \label{sec:scalar}
 
@@ -422,6 +429,13 @@ But NM has two weaknesses. First, it is a \emph{greedy} optimizer that will conv
 \item Hierarchy of offsets
 \item Residual flux network maps
 \end{itemize}
+
+\begin{figure*}[t]
+	\centering
+		\includegraphics[width=6in]{figs/scalar_mosaics}
+	\caption{Scalar-sky fitted WIRCam $J$ (left) and $K_s$ (right) mosaics of M31. Note the qualitative improvement compared to the original, median sky-subtracted, images in Fig. \ref{fig:raw_mosaics}.}
+	\label{fig:scalar_mosaics}
+\end{figure*}
 
 \section{Planar Sky Offsets}
 
