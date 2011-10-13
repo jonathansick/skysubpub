@@ -181,17 +181,23 @@ Images flat-fielded by \iiwione\ show a remarkable amount of fixed structure. In
 
 The error introduced by dome flat fielding in the \iiwione\ pipeline may be realized by producing a median stack of sky images (\ie, the same procedure to make sky flats) that have been flat fielded by \iiwione\ preprocessing. While astrophysical sources are eliminated in a median stack, a residual detector structure is revealed that appears to be consistent across WIRCam integrations over time scales of months and years. These structures can be categorized as a detector-scale illumination variation, distinct patches hundreds of pixels across, and horizontal banding that appears to coincide with the 32-pixel high amplifier bands.
 
+\changeit{The flat field is also effected by what looks like a 2D pixel gain variation that changes on the order or 0.5\% in a few hours. JCC also detects this. This suggests that sky flats should be made with images windowed within 1 hour, rather than an entire QRUN, as suggested in the thesis.}
+
 We attribute the residual unflatness of \iiwione\ preprocessed products to its use of dome flats. The light path and colour of a reflected tungsten lamp,\footnote{CFHT \iiwione\ manual: \url{http://www.cfht.hawaii.edu/Instruments/Imaging/WIRCam/IiwiVersion1Doc.html}} rather than photons originating from the atmosphere, yields a remarkably different detector illumination calibration. For this project we chose to redo the flat fielding using \emph{sky flats}: flat field images that use the abundant near-infrared sky signal to describe the illumination function of the WIRCam detectors. The procedure for building a sky flat is listed in \S\ref{sec:skyflatpro}.
 
-\subsubsection{Sky flat fielding procedure}
+\subsubsection{Construction of night sky flat fields}
 \label{sec:skyflatpro}
 
-\begin{enumerate}
-	\item Begin with  \texttt{s.fits} \iiwione\ products (that are dome flat fielded, but not sky subtracted) to take advantage of the \iiwione\ non-linearity correction and dark subtraction. The dome flat fielding is un-done, losslessly, by multiplying the \texttt{s.fits} image with its associated dome flat.\footnote{Dome flats are made available by CFHT, \url{http://limu.cfht.hawaii.edu:80/detrend/wircam/}.}
-	\item All un-flattened sky images are procured from our proprietary programme's data set (sky flats could be made more efficiently by CFHT on-site using proprietary images from \emph{all} WIRCam programmes, but this program is itself rich in sky data). The differing levels of field illumination from the sky are standardized by sampling the median intensity in a $400\times 400$ pixel region at the centre of each detector image (with source masking). Each sky detector frame is divided by a factor that brings this central region to $10000$ ADU.
-	\item Those standardized sky frames are organized in sets of: filter ($J$ or $K_s$); detector in the array (1--4); and camera run ID (\texttt{QRUNID}) that identifies images taken with continuous WIRCam installation on the telescope. Frames in each group are median combined, pixel-to-pixel. To reduce bias from stars and background galaxies, \sw{Source Extractor} object maps informed weightmaps for each image that effectively mask sources. Median combination of a stack of hundreds of $2048\times2048$ image, each with a weightmap, is computationally expensive. A convenient solution was to use \sw{Swarp} \citep[an image-mosaicing software package,][]{Bertin:2002} in a mode that combined images pixel-to-pixel. These median combined frames were normalized to unit mean intensity.
-	\item These sky flats were divided from each sky and disk frame taken under the same conditions (filter, detector and camera installation) to create an illumination-corrected data set.
-\end{enumerate}
+Sky flats are made from ensembles of sky field images that have been un-done of \iiwione\ dome flat fielding. We group images into sets of common filer ($J$ or $K_s$), detector (1--4 in WIRCam array) and WIRCam run ID (\texttt{QRUNID}). We presume that the telescope and electronic signatures are stable over these camera mounting periods. Table \ref{tab:flattable} lists the number of images grouped into each sky flat.
+
+The ensemble of sky images being combined into a single sky flat have different illumination levels. Thus each frame is scaled (multiplicatively) so that each has a common median value in its central $400\times400$ pixel region.
+
+For each frame, we also build masks for any pixels that do not sample blank sky. \sw{Source Extractor} \citep{Bertin:1996} is used to define stars and background galaxies, while hand-drawn polygon regions cover diffraction spikes and the diffuse halos around bright galactic stars. A third mask is algorithmically produced to cover persistence signals from preceeding exposures. These masks, along with the \iiwione\ bad pixel mask, are combined with \sw{WeightWatcher} \citep{Marmo:2008}.
+
+The flat itself is built by median combination. Median combination of a stack of hundreds of $2048\times2048$ pixel image, each with a weightmap, is computationally expensive. A convenient solution was to use \sw{Swarp} \citep[an image-mosaicing software package,][]{Bertin:2002} in a mode that combined images pixel-to-pixel. These median combined frames were normalized to unit mean intensity.
+
+These sky flats were divided from each sky and disk frame taken under the same conditions (filter, detector and camera installation) to create an illumination-corrected data set.
+
 
 \noindent Table \ref{tab:flattable} lists the sky flats constructed for this survey.
 
