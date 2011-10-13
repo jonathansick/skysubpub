@@ -196,10 +196,7 @@ For each frame, we also build masks for any pixels that do not sample blank sky.
 
 The flat itself is built by median combination. Median combination of a stack of hundreds of $2048\times2048$ pixel image, each with a weightmap, is computationally expensive. A convenient solution was to use \sw{Swarp} \citep[an image-mosaicing software package,][]{Bertin:2002} in a mode that combined images pixel-to-pixel. These median combined frames were normalized to unit mean intensity.
 
-These sky flats were divided from each sky and disk frame taken under the same conditions (filter, detector and camera installation) to create an illumination-corrected data set.
-
-
-\noindent Table \ref{tab:flattable} lists the sky flats constructed for this survey.
+Table \ref{tab:flattable} lists the sky flats constructed for this survey. These sky flats were divided from each sky and disk frame taken under the same conditions (filter, detector and camera installation) to create an illumination-corrected data set.
 
 \begin{table}[t]
     \centering
@@ -241,8 +238,7 @@ $K_s$ & 09BQ08 & 637 & 8 \\
 
 \subsubsection{Comparison to \iiwione\ dome flats}
 
-
-To illustrate the disagreement between the sky and \iiwione\ dome flats, Fig. \ref{fig:domeflatratio} shows a percent difference map of a \iiwione\ dome flat to a sky flat produced via the procedure in \S \todo{sec:skyflatpro}. This map reveals a $\pm2\%$ discrepancy between the two types of flat fields.
+To illustrate the disagreement between the sky and \iiwione\ dome flats, Fig. \ref{fig:domeflatratio} shows a percent difference map of a \iiwione\ dome flat to a sky flat produced via the procedure in \S \ref{sec:skyflatpro}. This map reveals a $\pm2\%$ discrepancy between the two types of flat fields.
 % FIXME see thesis/flatratio.py and thesis_plots/ for the flat ratio image.
 % In Ks I do see 2\% -- 4\% edge-to-edge.
 % TODO repeat this for both $J$ and $K_s$ sky flats.
@@ -278,9 +274,11 @@ In practice, the sky flat appears to be the correct description of the WIRCam il
    % flatshapes.py
 \end{figure}
 
+\changeit{TODO: This section needs to be revised w.r.t. the detection of gain variability across the WIRCam detectors.}
+
 Ultimately, the accuracy of sky flats is limited by the distribution of intrinsic shapes in the NIR sky. Wide-field movies of the near-infrared sky \citep{Adams:1996} show the NIR sky glow to be akin to a moving cloud system. As such, the NIR sky seen by WIRCam is never flat---yet by definition a flat field must necessarily be built from an intrinsically uniform illumination across the telescope focal plane. In producing a NIR sky flat, we hypothesize that the \emph{mean shape} of the NIR sky, over the span of a queue run, is flat.
 
-In \todo{Figures} \ref{fig:flat_07BQ05_Ks}--\ref{fig:flat_07BQ03_J}, I plot the sequences of sky shapes that are combined to produce a sky flat for typical queue runs of this survey. These `sky shapes' are built by median-compressing the sky images down rows and columns to show the general trend of the sky across $x$ and $y$ image axes. The centre-to-edge shape of the sky, across a 10.4\arcmin\ WIRCam detector, typically varies by 0.1\% in $J$, and 0.5\% in $K_s$. \emph{The performance of dome flats---$\pm2\%$ error relative to sky flats---is worse than the typical uncertainty in shape from a single sky frame.} But the ultimate accuracy of sky flats depends upon the distribution of sky shapes composed in a QSO run. And surprisingly, the shapes are not always randomly distributed, in part because of the sporadic bursts of sky observations throughout a queue run, as the CFHT queued observing program balances several difference observing projects at once.
+In Figures \ref{fig:flat_07BQ05_Ks}--\ref{fig:flat_07BQ03_J}, I plot the sequences of sky shapes that are combined to produce a sky flat for typical queue runs of this survey. These `sky shapes' are built by median-compressing the sky images down rows and columns to show the general trend of the sky across $x$ and $y$ image axes. The centre-to-edge shape of the sky, across a 10.4\arcmin\ WIRCam detector, typically varies by 0.1\% in $J$, and 0.5\% in $K_s$. \emph{The performance of dome flats---$\pm2\%$ error relative to sky flats---is worse than the typical uncertainty in shape from a single sky frame.} But the ultimate accuracy of sky flats depends upon the distribution of sky shapes composed in a QSO run. And surprisingly, the shapes are not always randomly distributed, in part because of the sporadic bursts of sky observations throughout a queue run, as the CFHT queued observing program balances several difference observing projects at once.
 
 For example, in 07BQ05 ($K_s$) (Fig. \ref{fig:flat_07BQ05_Ks}), we see distinct traces of sky shapes that correspond to the sporadic activation of this observing program over several nights, for 30 minutes to hours at a time (as is the normal structure of queued observing blocks). Over the span of an \emph{observing block}, the sky will vary slowly. Once the sky is observed again on a different night in a queue run, the sky shape will be vastly different, creating the two distinct sets of shapes. In other cases where more observations are made under different sky conditions, such as 09BQ08 ($K_s$), a more continuous set of sky shapes is observed. In the $J$ band (\eg, Fig. \ref{fig:flat_07BQ03_J}), these distinct sky morphologies are not as pronounced because at the 0.1\% level, the edge-edge sky variation is closer to the intrinsic Poisson pixel noise of the sky (which itself is $\sim 0.1\%$ of the typical $J$ sky intensity per pixel).
 
@@ -306,19 +304,11 @@ One test of the robustness of queue sky flats is to compare the shapes of indepe
 \subsection{Median sky image subtraction} % (fold)
 \label{sec:mediansky}
 
-Since M31 is much larger than individual WIRCam fields, sky background is subtracted (to first order) using the sky levels found in contemporary sky images. Chapter \ref{ch:obs} describes the sky-target nodding sequences chosen for the 2007B and 2009B observing campaigns. Although a scalar sky level could be estimated from a sky image, and subtracted from the paired target images, it is common to construct a median sky image, the same size as the WIRCam frames, and subtract this 2D image from target images.
+Since M31 is much larger than individual WIRCam fields, sky background is subtracted (to first order) using the sky levels found in contemporary sky images. Section \ref{sec:Observations} describes the sky-target nodding sequences chosen for the 2007B and 2009B observing campaigns. Although a scalar sky level could be estimated from a sky image, and subtracted from the paired target images, it is common to construct a median sky image, the same size as the WIRCam frames, and subtract this 2D image from target images.
 
-This procedure was originally motivated by near-infrared programs where the objects are small, so that the median of several frames in a multi-point dither pattern effortlessly removes the signal flux, leaving only an image of the sky background itself. An advantage of median sky construction is that it not only records the amplitude of a sky signal, but also its \emph{shape}. For large sky-target nods, the recorded shape of the sky will be a less relevant representation of the sky on the target itself. Nonetheless, \iiwione\ retained this practice of median sky construction as a crutch for removing instrumental signals not removed by dome flat fielding (see \S \ref{sec:flats}). With sky flat fielding, this requirement is reduced further. However, median sky subtraction is still useful for building the best images of the sky fields themselves, and it used in the present pipeline. Chapter \ref{ch:planarsky} discusses the influence of median sky subtraction on the shape of residual sky flux on the disk.
+This procedure was originally motivated by near-infrared programs where the objects are small, so that the median of several frames in a multi-point dither pattern effortlessly removes the signal flux, leaving only an image of the sky background itself. An advantage of median sky construction is that it not only records the amplitude of a sky signal, but also its \emph{shape}. For large sky-target nods, the recorded shape of the sky will be a less relevant representation of the sky on the target itself. Nonetheless, \iiwione\ retained this practice of median sky construction as a crutch for removing instrumental signals not removed by dome flat fielding (see \S \ref{sec:flats}). With sky flat fielding, this requirement is reduced further. However, median sky subtraction is still useful for building the best images of the sky fields themselves, and it used in the present pipeline. \todo{Section \ref{ch:planarsky} discusses the influence of median sky subtraction on the shape of residual sky flux on the disk.}
 
-Median sky subtraction is implemented as follows:
-
-\begin{enumerate}
-	\item For each sky image (termed the primary sky image), five other sky images taken closest in time to the primary image are collected.
-	\item From the central $800\times 800$ pixels of each image, the median sky intensity is recorded, $I_{S,i}$. A Source Extractor object mask, as used in \S \ref{sec:flats} for flat fielding, removes bias from astrophysical sources.
-	\item Each sky image is additively scaled to a common level of 10,000 ADU, via $\vect{S}_i^\prime =\vect{S}_i + 10000\mathrm{ADU} - I_{S,i}$. This allows differences in overall sky amplitude to be ignored by the median combination.
-	\item The median sky frame is constructed from the six scaled sky images using the \sw{Swarp} engine, as described in \S \ref{sec:flats}. Weightmaps built from \iiwione\ pixel masks and Source Extractor object masks are used.
-	\item The median sky frame is scaled back to the level of the primary: $\vect{S}_\mathrm{prime} = \vect{S}_\mathrm{median} -10000\mathrm{ADU} + I_{S,\mathrm{prime}}$.
-\end{enumerate}
+A median sky image is produced by choosing a sky image (the primary sky image) and five other sky images taken adjacent time. \changeit{(Need to note that median sky frames are made for each detector.)} From the central $800\times 800$ pixels of each image, the median sky intensity is recorded. A Source Extractor object mask, as used in \S \ref{sec:flats} for flat fielding, removes bias from astrophysical sources. Each sky image is \emph{additively} scaled to a common intensity level. This allows differences in overall sky amplitude to be ignored by the median combination. As described in \S \ref{sec:skyflatpro}, \sw{Swarp} is used to median-combine the sky images, taking into account non-sky pixel masks. This median sky image is additively scaled back to the original level of the primary sky image.
 
 Each image in the data set is sky subtracted by first identifying the median sky frame whose primary image was taken most closely in time. That paired median sky frame is subtracted from the image.
 
