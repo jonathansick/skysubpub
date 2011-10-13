@@ -1,4 +1,4 @@
-\begin{thebibliography}{11}
+\begin{thebibliography}{12}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
@@ -10,6 +10,11 @@
   Astronomical Society of the Pacific Conference Series, Vol. 394, Astronomical
   Data Analysis Software and Systems XVII, ed. {R.~W.~Argyle, P.~S.~Bunclark,
   \& J.~R.~Lewis}, 83--+
+
+\bibitem[{{Bertin}(2006)}]{Bertin:2006}
+{Bertin}, E. 2006, in Astronomical Society of the Pacific Conference Series,
+  Vol. 351, Astronomical Data Analysis Software and Systems XV, ed.
+  {C.~Gabriel, C.~Arviset, D.~Ponz, \& S.~Enrique}, 112--+
 
 \bibitem[{{Bertin} {et~al.}(2002){Bertin}, {Mellier}, {Radovich}, {Missonnier},
   {Didelon}, \& {Morin}}]{Bertin:2002}
