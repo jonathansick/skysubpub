@@ -317,49 +317,16 @@ Each image in the data set is sky subtracted by first identifying the median sky
 \subsection{Photometric calibration}
 \label{sec:photocal}
 
-The final link in the primary image reduction pipeline is photometric calibration. The intensity $I_\mathrm{ins}$ of each image pixel, measured in analog-to-digital units (ADU), can be converted into an instrumental magnitude, $m_\mathrm{ins}$, via the standard definition $m_\mathrm{ins} = -2.5\log_{10}I_\mathrm{ins}$. Yet instrumental magnitudes cannot be compared from one WIRCam image to another, nor from this data set to others, because of image-to-image changes in detection efficiency. Instead, instrumental protometry is transformed into a standard photometric system via the introduction of a zeropoint,
+Since the \androids\ WIRCam dataset uses revised flat fields that differ by 2\% from the \iiwione\ pipeline, new photometric zeropoints must be established. The Two Micron All Sky Survey (2MASS) Point Source Catalog \citep{Skrutskie:2006} provides a convient photometric system to bootstrap against. Any WIRCam pointing in this survey contains $\sim 10^2$ stars measured by 2MASS. Although these are not standards, the ensemble fo 2MASS stars may be treated as such. Given the ensemble difference between instrumental and 2MASS catalog magnitudes of stars, a zeropoint is estimated. Since the disk of M31 is crowded, and 2MASS has poor resolution (seeing $> 1\arcsec$), 2MASS point source measurements are considered unreliable on the disk. Instead, all zeropoint measurements are made using sky images, and those calibrations are applied to paired disk images (analogous to the median sky subtraction procedure).
 
-\begin{equation}
-    m_\mathrm{cal} = m_\mathrm{ins} + m_o.
-    \label{eq:zpdefinition}
-\end{equation}
+Stars are photometered with PSF-fitting photometry using \sw{DAOPHOT} \citep{Stetson:1987} and \sw{ALLSTAR} \citep{Stetson:1994}. A benefit of the PSF-fitting process is that galaxies to be culled from the 2MASS point source sample.
 
-Given a zeropoint, and with $I_\mathrm{ins}$ counts integrated over $T_\text{exp}$ seconds, the calibrated image is
+\sw{DAOGROW} \citep{Stetson:1990} is used to build growth curves that extrapolate the light of a star to a \emph{total} instrumental magnitude. In this survey, the median aperture correction is $\sim-0.06$ mag, so that $\sim5\%$ of the light of a star is in extended wings not captured by the PSF model.
 
-\begin{equation}
-    I_\mathrm{cal} = \frac{I_\mathrm{ins}}{T_\text{exp}} 10^{-2m_o/5},
-    \label{eq:fluxcalibration}
-\end{equation}
+For a typical frame, the dispersion of zeropoint estimates about the median is 0.10--0.15 magnitudes. With such an uncertainty, image-to-image variations in zeropoint can be confused with variations in sky level. But under the photometric conditions that these data were recorded, strong zeropoint fluctuations are not expected over short periods. Thus zeropoints are smoothed by averaging the zeropoints of frames across a Gaussian-weighted sliding window of width $\sigma=15$ minutes. Such time-averaged zeropoints have uncertainties of $\sim 0.05$ magnitudes.
 
-\noindent in units of ADU s$^{-1}$ pixel$^{-2}$, physically interpreted at the relative count rate per pixel if Vega, the reference star, deposits 1 ADU s$^{-1}$ pixel$^{-2}$. Chapters \ref{ch:dcoffset} and \ref{ch:planarsky} use this system to report residual sky subtraction uncertainties.
-
-For this program, it is most convenient establish $m_o$ for each image by bootstrapping to the photometric system of the Two Micron All Sky Survey (2MASS) point source catalog \citep{Skrutskie:2006}. Any WIRCam pointing in the survey contains $\sim 10^2$ stars measured by 2MASS. Although these are not standard stars, the ensemble of 2MASS stars may be treated as such. Given the ensemble difference between instrumental and 2MASS catalog magnitudes of stars, a zeropoint is estimated.
-
-Since the disk of M31 is crowded, and 2MASS has poor resolution (seeing $> 1\arcsec$), 2MASS point source measurements are considered unreliable on the disk. Instead, all zeropoint measurements are made using sky images, and those calibrations are applied to paired disk images (analogous to the median sky subtraction procedure).
-
-\paragraph{Profile-fitting photometry.} Instrumental photometry of 2MASS stars is done using the DAOPHOT suite of profile-fitting software \citep{Stetson:1987}. The photometry code is run autonomously from the author's Python-language pipeline that interfaces to the DAOPHOT software. Doing so allows the 7696 sky frames compiled for this survey to be measured efficiently, while still allowing customized runtime logic in the Python drivers.
-
-For each sky image, stellar photometry begins with the construction of a spatially-dependent model of the instantaneous point spread function (PSF) of CFHT/WIRCam. Stars are detected, and their magnitudes roughly estimated through circular apertures with DAOPHOT. Of these stars, the 100 brightest are selected as candidates for PSF construction. That list is initially culled of stars near flagged pixels (containing bad pixels, diffraction spikes of bright stars, or galaxies) and stars within 40 pixels of a 2MASS star brighter than 14th magnitude (which are saturated in the WIRCam integrations). Using DAOPHOT, a PSF model is iteratively fit to the list of model stars; upon each iteration the spatial-dependence of the PSF model across the image frame is increased from independent to quadratic.
-
-In each PSF-fitting iteration, model stars flagged by DAOPHOT for having poor fits---typically galaxies or blended stars---are culled. Faint stars can contaminate the wings of stellar profiles. At each iteration, known stars are subtracted from the frame using the current PSF model with ALLSTAR \citep{Stetson:1994}. In this clean frame, faint stars that would otherwise be hidden in the wings of bright stars can be detected. PSF fitting itself is performed on an image where all stars \emph{but} the model stars are subtracted.
-
-\paragraph{Aperture corrections.} Given a quadratically-varying PSF model for each sky frame, a catalog of stellar PSF-fitted instrumental magnitudes is made with ALLSTAR. In principle, PSF fitting does not extract the complete flux of a star; stellar images often have faint and extended wings. Photometry with a large circular aperture could in principle detect the entirety of a star's light, but would be subject to a significant increase in background noise in the large aperture. A scheme to avoid increased noise while estimating the total light of a star was developed by \cite{Stetson:1990}. In each sky image, the 40 brightest PSF model stars are measured in 12 photometric apertures monotonically increasing in radius from 3 to 28 pixels. Using this aperture photometry for all model stars in images of a given band, over the course of a night, DAOGROW is used to build growth curves that extrapolate the light of a star to a \emph{total} instrumental magnitude. For each frame, the aperture correction is estimated as the median difference between the total magnitude and the PSF-fitted magnitude over the 40 program stars:
-
-\begin{equation}
-    \text{apc} = \langle m_{\text{tot},i} - m_{\text{PSF},i}\rangle .
-\end{equation}
-
-\noindent Hence for any arbitrary star in that frame measured by ALLSTAR, its total instrumental magnitude can be estimated as $m_\text{PSF} + \text{apc}$. In this survey, the median aperture correction is $\sim-0.06$ mag, so that $\sim5\%$ of the light of a star is in extended wings not recorded by the PSF model.
-
-\paragraph{2MASS zeropoint estimation.} As discussed, the photometric zeropoint is the systematic difference between WIRCam instrumental and 2MASS photometry. Although several hundred 2MASS stars may be present in a WIRCam frame, only the 2MASS stars corresponding to the PSF model stars are used since these are vetted to be stellar and have clean photometry. Typically $\sim 40$ stars are thus used to estimate the zeropoint for a given frame. For the ensemble of PSF model stars $i$ matched to 2MASS sources, the zeropoint is:
-
-\begin{equation}
-    m_o = \langle m_{\text{2MASS},i} +2.5\log_{10}I_{\text{ins},i} - 2.5 \log_{10} T_\text{exp} - \text{apc} \rangle_{i=0\ldots n}.
-\end{equation}
-
-For a typical frame, the dispersion of zeropoint estimates about the median is 0.10-0.15 magnitudes. With such an uncertainty, image-to-image variations in zeropoint can be confused with variations in sky level. But under the photometric conditions that these data were recorded, strong zeropoint fluctuations are not expected over short periods. Thus I choose to smooth zeropoints by averaging the zeropoints of frames across a Gaussian-weighted sliding window of width $\sigma=15$ minutes. Such time-averaged zeropoints have uncertainties of $\sim 0.05$ magnitudes.
-
-A future revision of this WIRCam pipeline will solve for colour terms in the zeropoint correction to account for differences between the WIRCam and 2MASS filter sets.
+\subsection{Zeroth-order Mosaics}
+\label{sec:rawmosaic}
 
 \begin{figure*}[t]
 	\centering
@@ -370,12 +337,12 @@ A future revision of this WIRCam pipeline will solve for colour terms in the zer
 	% + skysubpub/raw_mosaic.py
 \end{figure*}
 
+In Fig. \ref{fig:raw_mosaics} we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed thusfar. Although these basic image preparations dramatically improve image quality the \iiwione\ pipeline (particularly with regards to flat fielding performance), we see that classical NIR sky subtraction on a target as large as M31 is limited by an uncertainty of 1\% of the sky intensity. Classically, the true value of the sky on the disk of M31 is lost by the temporal and spatial variations of skyglow between disk and sky field observations.
+
 \section{Scalar Sky Optimization}
 \label{sec:scalar}
 
-Despite the best intentions of sky-target nodding (\S obs) and median sky image construction (\S reduction), classical NIR sky subtraction on a target as large as M31 is limited by an uncertainty of 1\% of the sky intensity. Classically, the true value of the sky on the disk of M31 is lost by the temporal and spatial variations of skyglow between disk and sky field observations. Here, we demonstrate that the residual sky bias in each observation can be inferred from information in the overlaps of pairs of images in the mosaic.
-
-Each classically sky subtracted image of the M31 disk is a combination of the true surface intensity, $I_i$, and a residual sky intensity, $\epsilon_i$. Consider a pair of images, $i$ and $j$, that overlap on the galaxy: their difference is $(I_i+\epsilon_i) - (I_j+\epsilon_j) = \epsilon_i - \epsilon_j$. Given this measurement $\epsilon_i - \epsilon_j$ of residual sky intensity, we introduce \emph{sky offsets}, $\Delta$, for each observation so that
+In this section, we demonstrate that the residual sky bias in each observation can be inferred from information in the overlaps of pairs of images in the mosaic. Each classically sky subtracted image of the M31 disk is a combination of the true surface intensity, $I_i$, and a residual sky intensity, $\epsilon_i$. Consider a pair of images, $i$ and $j$, that overlap on the galaxy: their difference is $(I_i+\epsilon_i) - (I_j+\epsilon_j) = \epsilon_i - \epsilon_j$. Given this measurement $\epsilon_i - \epsilon_j$ of residual sky intensity, we introduce \emph{sky offsets}, $\Delta$, for each observation so that
 
 \begin{equation}
     (I_i + \epsilon_i - \Delta_i) - (I_j + \epsilon_j - \Delta_i) \rightarrow 0
