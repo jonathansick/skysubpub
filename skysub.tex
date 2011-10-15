@@ -42,7 +42,7 @@
     \IfFileExists{vc.tex}{\slugcomment{Version \VCRevision\ by \VCAuthor\ on \VCDateTEX , \VCTime .}
 }{\slugcomment{Revision unknown.}}
 \title{Near-Infrared Imaging of M31}
-\author{Jonathan Sick and Stéphane Courteau}
+\author{Jonathan Sick, Stéphane Courteau and the \androids\ collaboration}
 \affil{Queen's University}
 \affil{Stirling Hall, Kingston Canada}
 \email{jsick@astro.queensu.ca}
@@ -102,7 +102,7 @@ WIRCam itself is an array of four HgCdTe HAWAII-RG2 detectors \citep{Puget:2004}
 
 The \androids\ WIRCam survey is designed to simultaneously resolve stars and recover the integrated surface brightness of the M31 disk. While the former objective is attained by requesting good seeing in Queued Service Observing mode (see Table \ref{tab:obssummary}), WIRCam has not previously been used to recover surface brightness at the accuracy required---$\mu_{K_s}\lesssim~22$~mag~arcsec$^{-2}$---across entire detector fields. As discussed in \S \ref{sec:intro}, NIR observations require frequent monitoring of the sky background. Since M31, with a $190\arcmin \times 60\arcmin$ optical disk, is much larger than the WIRCam fields of view, monitoring of the sky zeropoint is only possible by periodically pointing the telescope away from M31, towards blank sky---\emph{sky-target} (ST) nodding. 
 
-Observations were taken over two semesters, 2007B and 2009B. The two compaigns employed different observing schemes, particularly sky-target nodding strategies. The reader is encouraged to regard these observational designs as \emph{hypotheses} for how to best conduct a wide-field surface brightness survey in the near-infrared from the ground. An objective of this paper is to discriminate between the virtues of the 2007B and 2009B programmes, and determine if observational design can improve the construction of a wide-field NIR mosaic.
+Observations were taken over two semesters, 2007B and 2009B. The two campaigns employed different observing schemes, particularly sky-target nodding strategies. The reader is encouraged to regard these observational designs as \emph{hypotheses} for how to best conduct a wide-field surface brightness survey in the near-infrared from the ground. An objective of this paper is to discriminate between the virtues of the 2007B and 2009B programmes, and determine if observational design can improve the construction of a wide-field NIR mosaic.
 
 \begin{figure}[t]
 	\centering
@@ -152,17 +152,17 @@ The 2007B ST nodding strategy was motivated by a canonical understanding of NIR 
 \subsection{2009B Semester} % (fold)
 \label{sub:obs9}
 
-Initial analysis data set revealed that the canonical sky-target nodding stategy of the 2007B campaign was not sufficient for recovering the M31 surface brightness due to uncertainties in the sky background. This motivated a 2009B observing campaign informed by our experiences.
+Initial analysis data set revealed that the canonical sky-target nodding strategy of the 2007B campaign was not sufficient for recovering the M31 surface brightness due to uncertainties in the sky background. This motivated a 2009B observing campaign informed by our experiences.
 
 Rather than replicate the 28-field footprint of the 2007B campaign, we observed 12 fields. These fields overlap each other, and all of the 2007B footprints, to form a network of well-sky subtracted fields. That is the 2009B observations augment and calibrate the 2007B NIR mapping.
 
-To improve sky subtraction fidelity, we recognized challenges not fully appreciated in the 2007B survey design. Not only does the sky background change rapidly in time, it possess a signficant spatial structure on the scale of WIRCam fields and larger. This has two ramifications: the sky level sampled at a sky field \emph{will not} necessarily reflect the sky background present at the disk, and that the sky background in each WIRCam frame has a 2D shape, not simply a scalar level.
+To improve sky subtraction fidelity, we recognized challenges not fully appreciated in the 2007B survey design. Not only does the sky background change rapidly in time, it possess a significant spatial structure on the scale of WIRCam fields and larger. This has two ramifications: the sky level sampled at a sky field \emph{will not} necessarily reflect the sky background present at the disk, and that the sky background in each WIRCam frame has a 2D shape, not simply a scalar level.
 
 This resulted in three principle changes to observing strategy. First, we chose to minimize latency between sky and target observations with a ST$^2$S pattern. That is, each target observation was directly paired with a sky observation taken within 1.5 minutes (Fig. \ref{fig:sky_target_lag}).
 
 Second, we also increased the number of repetitions on each field, so that each field is observed 40 times in each band in a [ST$^2$S]$^{20}$S pattern. This repetition permits the opportunity to average over spatial sky background structures on the scale of WIRCam fields.
 
-Finally, we employ an innovative randomized sky-targetting nodding pattern where no sky field is used repeatedly for a disk field. In order to maintain rapid telescope nods, only northern sky fields serviced the northern disk, and similar for the southern fields; the maximum offset on the sky was 3\arcdeg\ (see Fig. \ref{fig:sky_target_dist}). This random sampling of sky fields yielded two possible advantages: 1) when a median sky image is constructed, many \emph{sky shapes} are combined, possibly yielding an intrinsically flatter image of sky (see \S on median sky subtraction), and 2) if there is a coherent structure in the NIR sky, sampling fields of the sky degrees apart in rapid succession should average out these systematic biases in estimating the sky level \emph{on the disk}.
+Finally, we employ an innovative randomized sky-targeting nodding pattern where no sky field is used repeatedly for a disk field. In order to maintain rapid telescope nods, only northern sky fields serviced the northern disk, and similar for the southern fields; the maximum offset on the sky was 3\arcdeg\ (see Fig. \ref{fig:sky_target_dist}). This random sampling of sky fields yielded two possible advantages: 1) when a median sky image is constructed, many \emph{sky shapes} are combined, possibly yielding an intrinsically flatter image of sky (see \S on median sky subtraction), and 2) if there is a coherent structure in the NIR sky, sampling fields of the sky degrees apart in rapid succession should average out these systematic biases in estimating the sky level \emph{on the disk}.
 
 % subsection obs9 (end)
 
@@ -201,7 +201,7 @@ Sky flats are made from ensembles of sky field images that have been un-done of 
 
 The ensemble of sky images being combined into a single sky flat have different illumination levels. Thus each frame is scaled (multiplicatively) so that each has a common median value in its central $400\times400$ pixel region.
 
-For each frame, we also build masks for any pixels that do not sample blank sky. \sw{Source Extractor} \citep{Bertin:1996} is used to define stars and background galaxies, while hand-drawn polygon regions cover diffraction spikes and the diffuse halos around bright galactic stars. A third mask is algorithmically produced to cover persistence signals from preceeding exposures. These masks, along with the \iiwione\ bad pixel mask, are combined with \sw{WeightWatcher} \citep{Marmo:2008}.
+For each frame, we also build masks for any pixels that do not sample blank sky. \sw{Source Extractor} \citep{Bertin:1996} is used to define stars and background galaxies, while hand-drawn polygon regions cover diffraction spikes and the diffuse halos around bright galactic stars. A third mask is algorithmically produced to cover persistence signals from preceding exposures. These masks, along with the \iiwione\ bad pixel mask, are combined with \sw{WeightWatcher} \citep{Marmo:2008}.
 
 The flat itself is built by median combination. Median combination of a stack of hundreds of $2048\times2048$ pixel image, each with a weightmap, is computationally expensive. A convenient solution was to use \sw{Swarp} \citep[an image-mosaicing software package,][]{Bertin:2002} in a mode that combined images pixel-to-pixel. These median combined frames were normalized to unit mean intensity.
 
@@ -326,7 +326,7 @@ Each image in the data set is sky subtracted by first identifying the median sky
 \subsection{Photometric calibration}
 \label{sec:photocal}
 
-Since the \androids\ WIRCam dataset uses revised flat fields that differ by 2\% from the \iiwione\ pipeline, new photometric zeropoints must be established. The Two Micron All Sky Survey (2MASS) Point Source Catalog \citep{Skrutskie:2006} provides a convient photometric system to bootstrap against. Any WIRCam pointing in this survey contains $\sim 10^2$ stars measured by 2MASS. Although these are not standards, the ensemble fo 2MASS stars may be treated as such. Given the ensemble difference between instrumental and 2MASS catalog magnitudes of stars, a zeropoint is estimated. Since the disk of M31 is crowded, and 2MASS has poor resolution (seeing $> 1\arcsec$), 2MASS point source measurements are considered unreliable on the disk. Instead, all zeropoint measurements are made using sky images, and those calibrations are applied to paired disk images (analogous to the median sky subtraction procedure).
+Since the \androids\ WIRCam dataset uses revised flat fields that differ by 2\% from the \iiwione\ pipeline, new photometric zeropoints must be established. The Two Micron All Sky Survey (2MASS) Point Source Catalog \citep{Skrutskie:2006} provides a convenient photometric system to bootstrap against. Any WIRCam pointing in this survey contains $\sim 10^2$ stars measured by 2MASS. Although these are not standards, the ensemble fo 2MASS stars may be treated as such. Given the ensemble difference between instrumental and 2MASS catalog magnitudes of stars, a zeropoint is estimated. Since the disk of M31 is crowded, and 2MASS has poor resolution (seeing $> 1\arcsec$), 2MASS point source measurements are considered unreliable on the disk. Instead, all zeropoint measurements are made using sky images, and those calibrations are applied to paired disk images (analogous to the median sky subtraction procedure).
 
 Stars are photometered with PSF-fitting photometry using \sw{DAOPHOT} \citep{Stetson:1987} and \sw{ALLSTAR} \citep{Stetson:1994}. A benefit of the PSF-fitting process is that galaxies to be culled from the 2MASS point source sample.
 
@@ -346,7 +346,7 @@ For a typical frame, the dispersion of zeropoint estimates about the median is 0
 	% + skysubpub/raw_mosaic.py
 \end{figure*}
 
-In Fig. \ref{fig:raw_mosaics} we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed thusfar. Although these basic image preparations dramatically improve image quality the \iiwione\ pipeline (particularly with regards to flat fielding performance), we see that classical NIR sky subtraction on a target as large as M31 is limited by an uncertainty of 1\% of the sky intensity. Classically, the true value of the sky on the disk of M31 is lost by the temporal and spatial variations of skyglow between disk and sky field observations.
+In Fig. \ref{fig:raw_mosaics} we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed thus far. Although these basic image preparations dramatically improve image quality the \iiwione\ pipeline (particularly with regards to flat fielding performance), we see that classical NIR sky subtraction on a target as large as M31 is limited by an uncertainty of 1\% of the sky intensity. Classically, the true value of the sky on the disk of M31 is lost by the temporal and spatial variations of skyglow between disk and sky field observations.
 
 \section{Scalar Sky Optimization}
 \label{sec:scalar}
@@ -376,7 +376,7 @@ Our sky optimization algorithm breaks the optimization of sky offsets into three
 
 The 2007B and 2009B WIRCam surveys observed a total of 39 \emph{fields} across the M31 disk (illustrated in Fig. \ref{fig:fieldmap}). Each WIRCam field is imaged with four detectors, arranged in a $2\times 2$ grid. Let us define a \emph{detector field} as the collection of images that are taken with a given detector, at a given field. Images in a detector field have the greatly simplifying property of all overlapping across a dominant section of the image frame.
 
-Thus in Step 1 we combine the frames in a detector fild to produce a \emph{detector field stack}. The combined 2007B and 2009B surveys have 156 such stacks per filter. In Step 2, the four detector field stacks within each field can be fitted into a \emph{block}. A block is a fundamental unit of the mosaic, as all images that are combined within a block were observed under contemporaneous sky conditions. Finally, in Step 3, the 39 blocks can be fitted into a galaxy-wide mosaic for each filter.
+Thus in Step 1 we combine the frames in a detector field to produce a \emph{detector field stack}. The combined 2007B and 2009B surveys have 156 such stacks per filter. In Step 2, the four detector field stacks within each field can be fitted into a \emph{block}. A block is a fundamental unit of the mosaic, as all images that are combined within a block were observed under contemporaneous sky conditions. Finally, in Step 3, the 39 blocks can be fitted into a galaxy-wide mosaic for each filter.
 
 \todo{Note how the certainty of sky offsets increases with the number of couplings}
 
@@ -395,7 +395,7 @@ A solution is to estimate offsets for each frame compared to this first detector
 
 The detector field stacking phase (\S \ref{sec:stacks}) created high-\sn\ mosaics of the region covered by a given WIRCam detector at each survey field. Although these detector stacks are best estimates of the galaxy surface intensity at their regions, those stacks have systematic sky surface intensity uncertainties of $\sigma_s$. By combining stacks into blocks (step 2 of the hierarchical offset algorithm) and combining blocks in a mosaic (step 3), those uncertainties are diminished.
 
-Unlike stack production, offseting stacks into blocks and blocks into mosaics requires non-linear optimization since the images do not overlap simultaneously, but rather overlap in a network.
+Unlike stack production, offsetting stacks into blocks and blocks into mosaics requires non-linear optimization since the images do not overlap simultaneously, but rather overlap in a network.
 
 Let us define the objective function that encapsulates the effect of scalar sky offsets on reducing the intensity difference between coupled images:
 
@@ -412,7 +412,7 @@ Let us define the objective function that encapsulates the effect of scalar sky 
 
 \noindent so that more priority is given to couplings of larger areas ($A_{ij}$), and small standard deviations of their difference images ($\sigma_{\Delta ij}$).
 
-Note that the objective function in Eq \ref{eq:objf} puts no constraint on the net sky offset: $\sum \Delta_i$. Assuming that sky subtraction errors are normally distributed, and not biased, sky subtraction offsets should not add a net amount of flux to the mosaic. Fortunately, it is possible to impose this constraint \textit{post facto} by subtracting the mean offset from the sky offsets:
+Note that the objective function in Eq. \ref{eq:objf} puts no constraint on the net sky offset: $\sum \Delta_i$. Assuming that sky subtraction errors are normally distributed, and not biased, sky subtraction offsets should not add a net amount of flux to the mosaic. Fortunately, it is possible to impose this constraint \textit{post facto} by subtracting the mean offset from the sky offsets:
 
 \begin{equation}
     \Delta_i^* = \Delta_i - n^{-1}\sum_{j=1}^n \Delta_j.
@@ -421,7 +421,7 @@ Note that the objective function in Eq \ref{eq:objf} puts no constraint on the n
 
 Given the image coupling records, I optimize the set of $\Delta_i$ using the \cite{Nelder:1965} (NM) downhill simplex algorithm. This NM algorithm has the advantage of being naturally multi-dimensional, and being able to work without knowledge of the gradient of the objective function. Instead, the NM algorithm operates by constructing a geometric simplex of $N+1$ dimensions that samples the sky offset parameter space. By evaluating the objective function at each vertex of the simplex, the NM algorithm adapts simplex's shape to ultimately contract upon a minimum.
 
-But NM has two weaknesses. First, it is a \emph{greedy} optimizer that will converge into any local minimum, without necessarily seeking the global minimum. Second, for high-dimension optimizations (many fields in the mosaic), the NM may fail to converge in a reasonable number of objective function evaluations \citep{Neumann:2006}. Without solving these issues, a minimization of Eq \ref{eq:objf} with an off-the-shelf NM code yields a mosaic with obvious discontinuities across fields. To solve the first problem, I develop a Multi-Start Reconverging NM (MSRNM) downhill simplex driver in Appendix \ref{cha:simplex}. This algorithm allows the NM to cumulatively cover a larger portion of parameter space to probabilistically ensure convergence into a global optimum.
+But NM has two weaknesses. First, it is a \emph{greedy} optimizer that will converge into any local minimum, without necessarily seeking the global minimum. Second, for high-dimension optimizations (many fields in the mosaic), the NM may fail to converge in a reasonable number of objective function evaluations \citep{Neumann:2006}. Without solving these issues, a minimization of Eq. \ref{eq:objf} with an off-the-shelf NM code yields a mosaic with obvious discontinuities across fields. To solve the first problem, I develop a Multi-Start Reconverging NM (MSRNM) downhill simplex driver in Appendix \ref{cha:simplex}. This algorithm allows the NM to cumulatively cover a larger portion of parameter space to probabilistically ensure convergence into a global optimum.
 
 \section{Analysis of Scalar Sky Offsets}
 
@@ -545,7 +545,7 @@ Our planar sky offset optimization algorithm is a direct evolution of the scalar
 
 The multi-start re-converging Nelder-Mead simplex is again a flexible tool for searching parameter space and finding a global minimum. Planar optimization is more challenging because the parameters in the simplex no longer carry the same meanings, and in particular, have different dynamic ranges. Though we attempted to simultaneously optimize planar slopes and levels by scaling slopes to the same order as levels, that optimization apparatus never converged reliably. Instead, we use an algorithm that iteratively alternates between improving planar levels and slopes until convergence is reached.
 
-Working in the framework of a multi-start optimization, we generate a large suite of random planar offsets that serve as starting points for each optmization `start.' Random planar offsets have levels and slopes drawn from Gaussian distributions $N(0, \sigma_{c,\mathrm{init}})$ and $N(0, \sigma_{x,y,\mathrm{init}})$, respectively. From each initial point, the optimization two Nelder Meade simplex optimizations in succession, each with the ensured reconvergence mechanism (previously described for scalar offset optimiation \S \todo{todo}).
+Working in the framework of a multi-start optimization, we generate a large suite of random planar offsets that serve as starting points for each optimization `start.' Random planar offsets have levels and slopes drawn from Gaussian distributions $N(0, \sigma_{c,\mathrm{init}})$ and $N(0, \sigma_{x,y,\mathrm{init}})$, respectively. From each initial point, the optimization two Nelder Meade simplex optimizations in succession, each with the ensured reconvergence mechanism (previously described for scalar offset optimization \S \todo{todo}).
 
 First, planar slopes are optimized. The objective function considers only the minimization of slopes in the difference planes:
 
@@ -553,7 +553,7 @@ First, planar slopes are optimized. The objective function considers only the mi
 	\mathcal{F}_m(m_x^0,m_y^0,\ldots m_x^n, m_y^n) = \sum_{i,j} \epsilon_x^{ij} - \Delta_x^i - \Delta_x^j + \epsilon_y^{ij} - \Delta_y^i - \Delta_y^j
 \end{equation}
 
-\noindent As done in scalar offset optimization, any converged solution for the best slopes is restarted and reconverged until a stable minimum of the objective functon is found (see \S \todo{restart mechanism}).
+\noindent As done in scalar offset optimization, any converged solution for the best slopes is restarted and reconverged until a stable minimum of the objective function is found (see \S \todo{restart mechanism}).
 
 Second, the overall levels of offset planes are optimized. This objective function takes the offset slopes derived in the previous step, and seeks to minimize the level, $\epsilon_c$, of difference planes' centers:
 
@@ -564,11 +564,11 @@ Second, the overall levels of offset planes are optimized. This objective functi
 
 $D_x$ and $D_y$ are distances from the center of the offset plane $\Delta$ to the center of the difference image $\epsilon_ij$. Thus $D_x\Delta_x$ and $D_y\Delta_y$ terms account for the slope's effect on the offset planes level at the center of the $\epsilon_{ij}$ difference image. Again, the restart mechanism is used to ensure a robust minimum of the $\mathcal{F}_c$ objective function.
 
-Together, these two optimization steps produce a new generation of $\Delta_\mathrm{block}$ planar offsets. These new offsets are compared to the previous generation (or the initial random planes for the first iteration) and the fractional difference of each slope and offset is measured. If any fractional difference exceedes a convergence tolerance of 10$^{-7}$, another iteration of optimization is performed. In this iteration, the current planes become new seed planes, and the successive slope and level optimizations are performed. Once an iteration produces planes effectively identical to the previous iteration, the optimization is stopped.
+Together, these two optimization steps produce a new generation of $\Delta_\mathrm{block}$ planar offsets. These new offsets are compared to the previous generation (or the initial random planes for the first iteration) and the fractional difference of each slope and offset is measured. If any fractional difference exceeds a convergence tolerance of 10$^{-7}$, another iteration of optimization is performed. In this iteration, the current planes become new seed planes, and the successive slope and level optimizations are performed. Once an iteration produces planes effectively identical to the previous iteration, the optimization is stopped.
 
 The $N$ optimization starts creates $N$ potential sky offset solutions. To choose the best solution, we seek the solution that minimized the level objective function, $\mathcal{F}_c$. This objective is sensitive to the overall surface intensity difference between coupled fields, while still being dependent on the quality of the planar slopes.
 
-Optimized planar offsets can add a arbitrary amount of flux to a mosaic, and this net offset must be subtracted. Both the net levels and net slopes of the offset planes be subtracted. Given the set of opetimized offset planes, $\Delta$, a \emph{net offset plane} $p$ can be constructed:
+Optimized planar offsets can add a arbitrary amount of flux to a mosaic, and this net offset must be subtracted. Both the net levels and net slopes of the offset planes be subtracted. Given the set of optimized offset planes, $\Delta$, a \emph{net offset plane} $p$ can be constructed:
 
 \begin{eqnarray}
 	p_x & = & n^{-1} \sum_{i=0}^n \Delta_x^i \\
@@ -580,6 +580,12 @@ Optimized planar offsets can add a arbitrary amount of flux to a mosaic, and thi
 
 \subsection{Analysis of Planar Sky Offsets}
 
+\begin{itemize}
+	\item Figure \ref{fig:planar_mosaics} --- mosaics made with planar optimization
+	\item Distribution of planar slopes
+	\item Residual network plot
+\end{itemize}
+
 \begin{figure*}[t]
 	\centering
 		\includegraphics[width=6in]{figs/planar_mosaics}
@@ -588,6 +594,12 @@ Optimized planar offsets can add a arbitrary amount of flux to a mosaic, and thi
 	% made with skysubpub/mosaic_plots.py
 \end{figure*}
 
+\section{Systematic Uncertainties in Surface Brightness Reconstruction}
+
+\begin{itemize}
+	\item Comparison to Montage's solution, e.g. figure \ref{fig:montage_planar_mosaics} and a percent difference map.
+	\item Bootstrap analysis of scalar offset solutions (will result in an RMS pixel map of mosaic constructed from different initial offsets.)
+\end{itemize}
 
 \begin{figure*}[t]
 	\centering
