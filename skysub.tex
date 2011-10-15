@@ -426,9 +426,11 @@ But NM has two weaknesses. First, it is a \emph{greedy} optimizer that will conv
 \section{Analysis of Scalar Sky Offsets}
 
 \begin{itemize}
-\item Maps
-\item Hierarchy of offsets
-\item Residual flux network maps
+\item Figure \ref{fig:scalar_mosaics} --- maps
+\item Table \ref{tab:offset_hierarchy} --- hierarchy of offsets
+\item Figure \ref{fig:scalar_residual_sb_net} --- residual fluxes as surface brightness
+\item Figure \ref{fig:scalar_relresidnet} --- residual fluxes compared to difference image uncertainties
+\item Bootstrap to show uniqueness of solution (perhaps move this to section with comparison to Montage)
 \end{itemize}
 
 \begin{figure*}[t]
@@ -509,8 +511,23 @@ Offset Type & Sem. & $\sigma_\Delta$ & $\frac{\sigma_\Delta}{\langle I_\mathrm{s
     % TODO need to fix colour scheme of the histograms
 \end{figure*}
 
+\begin{figure*}[t]
+    \centering
+        \includegraphics[width=6in]{figs/scalar_residual_sb_net}
+    \caption{Residual surface brightness differences after scalar fitting.}
+    \label{fig:scalar_residual_sb_net}
+    % made with skyoffset/networkmap.py
+    % TODO need to fix colour scheme of the histograms
+\end{figure*}
 
-
+\begin{figure*}[t]
+    \centering
+        \includegraphics[width=6in]{figs/scalar_relresidnet}
+    \caption{Residual surface brightness differences relative to the intensity uncertainty of the coupled difference images.}
+    \label{fig:scalar_relresidnet}
+    % made with skyoffset/networkmap.py
+    % TODO need to fix colour scheme of the histograms
+\end{figure*}
 
 \section{Planar Sky Offsets}
 
