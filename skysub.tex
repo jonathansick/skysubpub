@@ -60,6 +60,50 @@ Here are some opening thoughts.
 \section{Observations}
 \label{sec:Observations}
 
+% Surface brightness CI from skyoffset/net_sky_level.py
+% Median and 95% C.I.
+% 2007B J 15.1195176911 ; 14.9139114767 -- 15.3477818651
+% 2009B J dim 14.5613758489 ; 14.2933487068 -- 14.8544020768
+% 2009B J bright 15.2006801085 ; 15.1336648803 -- 15.2789519627
+% 2007B Ks 13.354737759 ; 13.1811645305 -- 13.6149313145
+% 2009B Ks 13.27306929 ; 13.1173594814 -- 13.4222534742
+
+\begin{table*}[t]
+    \caption[Summary of WIRCam observing programs]{Summary of WIRCam observing programs. Efficiency (Eff.) is the percentage of time in a program allocated to integrating the disk of M31, compared from nodding, read out and sky overheads. Seeing is measured from stars in sky images.}
+    \label{tab:obssummary}
+    
+    \centering
+    \begin{tabular}{lllllllllll}
+        & & & & $\frac{T_\mathrm{int}}{\mathrm{field}}$ & $T_\mathrm{exp}$ & Eff. & $\mu_\mathrm{sky}$ 95\% C.I. & \multicolumn{3}{c}{PSF FWHM (arcsec)} \\ \cline{9-11}
+    Semester & Band & $N_\mathrm{disk}$ & ST Nods & (min) &  (s) &  (\%) & (mag/arcsec$^2$) & 25th  & 50th & 75th \\
+    \hline
+    \multirow{2}{*}{2007B} & $J$ & \multirow{2}{*}{27} & [S$^3$T$^8$S$^3$]$^{2}$S$^3$ & 12.5 & 47 & 49 & (14.9, 15.3) & 0.68 & 0.75 & 0.84 \\
+     & $K_s$ &  & [S$^5$T$^{13}$S$^5$]${^2}$S$^5$ & 10.8 & 25 & 42 & (13.2, 13.6) & 0.60 &  0.65 & 0.73 \\
+     \hline
+     \multirow{2}{*}{2009B} & $J$ & \multirow{2}{*}{12} & \multirow{2}{*}{[ST$^2$S]$^{20}$S} & \multirow{2}{*}{13.3} & \multirow{2}{*}{20} & \multirow{2}{*}{26} & (14.3, 14.6), (15.1, 15.3) & 0.61 & 0.69 & 0.83 \\
+      & $K_s$ & & & & & & (13.1, 13.4) & 0.60 & 0.66 & 0.76 \\
+    \end{tabular}
+\end{table*}
+
+% \begin{deluxetable}{10}
+% % \tabletypesize{\small} % or \footnotesize or \scriptsize
+% % \rotate
+% % \tablewidth{⟨dimen ⟩}
+% % \tablenum{⟨text ⟩}
+% \tablecolumns{⟨num ⟩}
+% \tablecaption{Summary of WIRCam observing programs. Efficiency (Eff.) is the percentage of time in a program allocated to integrating the disk of M31, compared from nodding, read out and sky overheads. Seeing is measured from stars in sky images.
+%     \label{⟨key ⟩}}
+% \tablehead{⟨text ⟩}
+% \end{deluxetable}
+
+The Andromeda Galaxy (M31) was observed in the NIR using the WIRCam instrument, mounted to the 3.6-meter Canada-France-Hawaii Telescope (CFHT), at the summit of Mauna Kea in Hawaii. Observations were carried out exclusively in the NIR $J$ ($\lambda_0 \sim 1.2 \mu\mathrm{m}$) and $K_s$ ($\lambda_0 \sim 2.2 \mu\mathrm{m}$) bands.
+
+WIRCam itself is an array of four HgCdTe HAWAII-RG2 detectors \citep{Puget:2004}. Each detector comprises $2048\times 2048$ pixels, with a scale of 0\farcs 3 . This pixel scale critically samples the typical seeing of 0\farcs 65 seen by CFHT. For reference, $1\arcsec = 3.7~\mathrm{pc}$ across the disk of M31. The detectors are arranged in a $2\times 2$ grid with 45\arcsec\ gaps, so that the entire instrument covers $21.5\arcmin \times 21.5\arcmin$ of sky. It is truly the recent advent of NIR focal plane arrays, like WIRCam, that have enabled relatively efficient studies of M31 in the NIR.
+
+The \androids\ WIRCam survey is designed to simultaneously resolve stars and recover the integrated surface brightness of the M31 disk. While the former objective is attained by requesting good seeing in Queued Service Observing mode (see Table \ref{tab:obssummary}), WIRCam has not previously been used to recover surface brightness at the accuracy required---$\mu_{K_s}\lesssim~22$~mag~arcsec$^{-2}$---across entire detector fields. As discussed in \S \ref{sec:intro}, NIR observations require frequent monitoring of the sky background. Since M31, with a $190\arcmin \times 60\arcmin$ optical disk, is much larger than the WIRCam fields of view, monitoring of the sky zeropoint is only possible by periodically pointing the telescope away from M31, towards blank sky---\emph{sky-target} (ST) nodding. 
+
+Observations were taken over two semesters, 2007B and 2009B. The two compaigns employed different observing schemes, particularly sky-target nodding strategies. The reader is encouraged to regard these observational designs as \emph{hypotheses} for how to best conduct a wide-field surface brightness survey in the near-infrared from the ground. An objective of this paper is to discriminate between the virtues of the 2007B and 2009B programmes, and determine if observational design can improve the construction of a wide-field NIR mosaic.
+
 \begin{figure}[t]
 	\centering
 		\includegraphics[width=3in]{figs/fieldmap}
@@ -84,48 +128,13 @@ Here are some opening thoughts.
     % made with skyoffsets/obs_run_stats.py
 \end{figure}
 
-% Surface brightness CI from skyoffset/net_sky_level.py
-% 2007B J 19.299762336; 19.0941561216 -- 19.5280265099
-% 2007B Ks 16.8495877807; 16.6760145522 -- 17.1097813362
-% 2009B J dim 17.7944495337; 17.5416983486 -- 17.8828280322
-% 2009B J bright 19.3502676699; 18.8508442666 -- 19.4573079994
-% 2009B Ks 16.5256442792; 16.3699344706 -- 16.6748284633
-
-\begin{table*}[t]
-    \caption[Summary of WIRCam observing programs]{Summary of WIRCam observing programs. Efficiency (Eff.) is the percentage of time in a program allocated to integrating the disk of M31, compared from nodding, read out and sky overheads. Seeing is measured from stars in sky images.}
-    \label{tab:obssummary}
-    
+\begin{figure}[t]
     \centering
-    \begin{tabular}{lllllllllll}
-        & & & & $\frac{T_\mathrm{int}}{\mathrm{field}}$ & $T_\mathrm{exp}$ & Eff. & $\mu_\mathrm{sky}$ 95\% C.I. & \multicolumn{3}{c}{PSF FWHM (arcsec)} \\ \cline{9-11}
-    Semester & Band & $N_\mathrm{disk}$ & ST Nods & (min) &  (s) &  (\%) & (mag/arcsec$^2$) & 25th  & 50th & 75th \\
-    \hline
-    \multirow{2}{*}{2007B} & $J$ & \multirow{2}{*}{27} & [S$^3$T$^8$S$^3$]$^{2}$S$^3$ & 12.5 & 47 & 49 & (19.1, 19.5) & 0.68 & 0.75 & 0.84 \\
-     & $K_s$ &  & [S$^5$T$^{13}$S$^5$]${^2}$S$^5$ & 10.8 & 25 & 42 & (16.7, 17.1) & 0.60 &  0.65 & 0.73 \\
-     \hline
-     \multirow{2}{*}{2009B} & $J$ & \multirow{2}{*}{12} & \multirow{2}{*}{[ST$^2$S]$^{20}$S} & \multirow{2}{*}{13.3} & \multirow{2}{*}{20} & \multirow{2}{*}{26} & (17.5,17.9); (18.6, 19.5) & 0.61 & 0.69 & 0.83 \\
-      & $K_s$ & & & & & & (16.4, 16.7) & 0.60 & 0.66 & 0.76 \\
-    \end{tabular}
-\end{table*}
-
-% \begin{deluxetable}{10}
-% % \tabletypesize{\small} % or \footnotesize or \scriptsize
-% % \rotate
-% % \tablewidth{⟨dimen ⟩}
-% % \tablenum{⟨text ⟩}
-% \tablecolumns{⟨num ⟩}
-% \tablecaption{Summary of WIRCam observing programs. Efficiency (Eff.) is the percentage of time in a program allocated to integrating the disk of M31, compared from nodding, read out and sky overheads. Seeing is measured from stars in sky images.
-%     \label{⟨key ⟩}}
-% \tablehead{⟨text ⟩}
-% \end{deluxetable}
-
-The Andromeda Galaxy (M31) was observed in the NIR using the WIRCam instrument, mounted to the 3.6-meter Canada-France-Hawaii Telescope (CFHT), at the summit of Mauna Kea in Hawaii. Observations were carried out exclusively in the NIR $J$ ($\lambda_0 \sim 1.2 \mu\mathrm{m}$) and $K_s$ ($\lambda_0 \sim 2.2 \mu\mathrm{m}$) bands.
-
-WIRCam itself is an array of four HgCdTe HAWAII-RG2 detectors \citep{Puget:2004}. Each detector comprises $2048\times 2048$ pixels, with a scale of 0\farcs 3 . This pixel scale critically samples the typical seeing of 0\farcs 65 seen by CFHT. For reference, $1\arcsec = 3.7~\mathrm{pc}$ across the disk of M31. The detectors are arranged in a $2\times 2$ grid with 45\arcsec\ gaps, so that the entire instrument covers $21.5\arcmin \times 21.5\arcmin$ of sky. It is truly the recent advent of NIR focal plane arrays, like WIRCam, that have enabled relatively efficient studies of M31 in the NIR.
-
-The \androids\ WIRCam survey is designed to simultaneously resolve stars and recover the integrated surface brightness of the M31 disk. While the former objective is attained by requesting good seeing in Queued Service Observing mode (see Table \ref{tab:obssummary}), WIRCam has not previously been used to recover surface brightness at the accuracy required---$\mu_{K_s}\lesssim~22$~mag~arcsec$^{-2}$---across entire detector fields. As discussed in \S \ref{sec:intro}, NIR observations require frequent monitoring of the sky background. Since M31, with a $190\arcmin \times 60\arcmin$ optical disk, is much larger than the WIRCam fields of view, monitoring of the sky zeropoint is only possible by periodically pointing the telescope away from M31, towards blank sky---\emph{sky-target} (ST) nodding. 
-
-Observations were taken over two semesters, 2007B and 2009B. The two compaigns employed different observing schemes, particularly sky-target nodding strategies. The reader is encouraged to regard these observational designs as \emph{hypotheses} for how to best conduct a wide-field surface brightness survey in the near-infrared from the ground. An objective of this paper is to discriminate between the virtues of the 2007B and 2009B programmes, and determine if observational design can improve the construction of a wide-field NIR mosaic.
+        \includegraphics[width=3.25in]{figs/sky_level_hist}
+    \caption{Sky levels observed in the 2007B (red outline) and 2009B (grey filled) programs.}
+    \label{fig:net_sky_level}
+    % made with skyoffset/net_sky_level.py
+\end{figure}
 
 \subsection{2007B Semester} % (fold)
 \label{sec:obs7}
@@ -430,54 +439,66 @@ But NM has two weaknesses. First, it is a \emph{greedy} optimizer that will conv
 	% made with skysubpub/mosaic_plots.py
 \end{figure*}
 
-% \begin{table}[t]
-%     \centering
-%     \caption[Hierarchy of scalar sky offsets]{Hierarchy of scalar sky offsets. The `Total' sky offsets track the net offset of individual WIRCam image frames into the fitted mosaic. $\langle I_\mathrm{sky}\rangle$ is taken as the median sky surface intensity observed in the entire data set: $1.0\times 10^{-7}$ and $4.3\times 10^{-7}$ ADU s$^{-1}$ pix$^{-2}$ in the $J$ and $K_s$ bands, respectively.}
-%     \label{tab:offset_hierarchy}
-% \begin{tabular}{ll|ll|ll}
-% % \hline
-%  &  & \multicolumn{2}{c|}{$J$} & \multicolumn{2}{c}{$K_s$} \\ % \cline{3-4} \cline{5-6}
-% % \hline
-% Offset Type & Sem. & $\sigma_\Delta$ & $\frac{\sigma_\Delta}{\langle I_\mathrm{sky}\rangle }$ & $\sigma_\Delta$ & $\frac{\sigma_\Delta}{\langle I_\mathrm{sky}\rangle }$ \\
-%  & & \tiny{(mag/arcsec$^2$)} &  \tiny{(\%)} & \tiny{(mag/arcsec$^2$)} &  \tiny{(\%)} \\
+\begin{table}[t]
+    \centering
+    \caption[Hierarchy of scalar sky offsets]{Hierarchy of scalar sky offsets. The `Total' sky offsets track the net offset of individual WIRCam image frames into the fitted mosaic. $\langle I_\mathrm{sky}\rangle$ is taken as the typical instantaneous sky level for the images being sampled (see Fig. \ref{fig:net_sky_level} for the distribution of levels).}
+% Fiducial sky values from thesis:
+% J: $1.0\times 10^{-7}$ ADU s$^{-1}$ pix$^{-2}$
+% K: $4.3\times 10^{-7}$ ADU s$^{-1}$ pix$^{-2}$
+    \label{tab:offset_hierarchy}
+% made with skyoffset/scalar_hierarchy.py
+\begin{tabular}{ll|ll|ll}
 % \hline
-% \multirow{2}{*}{Frame to stack} & 07B & 20.0 & 0.50 & 18.1 & 0.26\\
-% % \hline
-%  & 09B  & 20.4 & 0.37 & 18.2 & 0.23\\
+ &  & \multicolumn{2}{c|}{$J$} & \multicolumn{2}{c}{$K_s$} \\ % \cline{3-4} \cline{5-6}
 % \hline
-% \multirow{2}{*}{Stack to block} & 07B & 22.4 & 0.06 & 21.2 & 0.02\\
-% % \hline
-%   & 09B & 24.2 & 0.01 & 22.2 & 0.01\\
+Offset Type & Sem. & $\sigma_\Delta$ & $\frac{\sigma_\Delta}{\langle I_\mathrm{sky}\rangle }$ & $\sigma_\Delta$ & $\frac{\sigma_\Delta}{\langle I_\mathrm{sky}\rangle }$ \\
+ & & \tiny{(mag~arcsec$^{-2}$)} &  \tiny{(\%)} & \tiny{(mag~arcsec$^{-2}$)} &  \tiny{(\%)} \\
+\hline
+\multirow{2}{*}{Frame to stack} & 07B & 20.1 & 1.02 & 18.1 & 1.37 \\
 % \hline
-% \multirow{2}{*}{block to mosaic} & 07B & 20.9 & 0.24 & 19.0 & 0.11\\
-% % \hline
-%   & 09B & 20.9 & 0.24 & 19.0 & 0.11\\
-% % \hline
+ & 09B  & 20.4 & 0.42 & 18.2 & 1.04 \\
+\hline
+\multirow{2}{*}{Stack to block} & 07B & 22.4 & 0.11 & 21.2 & 0.09 \\
 % \hline
-% \multirow{2}{*}{Total} & 07B & $9.7\times 10^{-10}$ & 0.97 & $5.8\times 10^{-9}$ & 1.35 \\
-% % \hline
-%   & 09B & $6.7\times 10^{-10}$ & 0.67 & $5.1\times 10^{-9}$ & 1.19 \\
-% % \hline
-% \end{tabular}
+  & 09B & 24.2 & 0.01 & 22.2 & 0.03\\
+\hline
+\multirow{2}{*}{block to mosaic} & 07B & 20.8 & 0.54 & 19.0 & 0.55 \\
+% \hline
+  & 09B & 21.3 & 0.19 & 19.2 & 0.43 \\
+% \hline
+\hline
+\multirow{2}{*}{Total} & 07B & 19.9 & 1.16 & 18.0 & 1.49 \\
+% \hline
+  & 09B & 20.3 & 0.48 & 18.1 & 1.12 \\
+% \hline
+\end{tabular}
+\end{table}
 
+% made with skyoffset/scalar_hierarchy.py
 % type Band, Semester, mag sigma, sigma/sky
-% frame J 2007 20.0 0.50
-% frame J 2009 20.4 0.37
+% frame J 2007 20.0 1.02
+% frame J 2009 20.4 0.42
 % 
-% stack J 2007 22.4 0.06
+% stack J 2007 22.4 0.11
 % stack J 2009 24.2 0.01
 % 
-% block J 2007 20.9 0.24
-% block J 2009 20.9 0.24
+% block J 2007 20.8 0.54
+% block J 2009 21.3 0.19
+% 
+% total J 2007 19.9 1.16
+% total J 2009 20.3 0.48
 % --
-% frame K 2007 18.1 0.26
-% frame K 2009 18.2 0.23
+% frame K 2007 18.1 1.37
+% frame K 2009 18.2 1.04
 % 
-% stack K 2007 21.2 0.02
-% stack K 2009 22.2 0.01
+% stack K 2007 21.2 0.09
+% stack K 2009 22.2 0.03
 % 
-% block K 2007 19.0 0.11
-% block K 2009 19.0 0.11
+% block K 2007 19.0 0.55
+% block K 2009 19.2 0.43
+% 
+% total K 2007 18.0 1.49
+% total K 2009 18.1 1.12
 
 \begin{figure*}[t]
     \centering
