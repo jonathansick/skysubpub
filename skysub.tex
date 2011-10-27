@@ -48,15 +48,18 @@
 \email{jsick@astro.queensu.ca}
 % \author{Michael McDonald, Brent Tully, Roelof de Jong}
 
+% ============================================================================
 \begin{abstract}
 Here is an abstract.
 \end{abstract}
 
+% ============================================================================
 \section{Introduction}
 \label{sec:intro}
 
 Here are some opening thoughts.
 
+% ============================================================================
 \section{Observations}
 \label{sec:Observations}
 
@@ -166,6 +169,7 @@ Finally, we employ an innovative randomized sky-targeting nodding pattern where 
 
 % subsection obs9 (end)
 
+% ============================================================================
 \section{Image Preparation}
 \label{sec:reduction}
 
@@ -348,6 +352,7 @@ For a typical frame, the dispersion of zeropoint estimates about the median is 0
 
 In Fig. \ref{fig:raw_mosaics} we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed thus far. Although these basic image preparations dramatically improve image quality the \iiwione\ pipeline (particularly with regards to flat fielding performance), we see that classical NIR sky subtraction on a target as large as M31 is limited by an uncertainty of 1\% of the sky intensity. Classically, the true value of the sky on the disk of M31 is lost by the temporal and spatial variations of skyglow between disk and sky field observations.
 
+% ============================================================================
 \section{Scalar Sky Optimization}
 \label{sec:scalar}
 
@@ -423,6 +428,7 @@ Given the image coupling records, I optimize the set of $\Delta_i$ using the \ci
 
 But NM has two weaknesses. First, it is a \emph{greedy} optimizer that will converge into any local minimum, without necessarily seeking the global minimum. Second, for high-dimension optimizations (many fields in the mosaic), the NM may fail to converge in a reasonable number of objective function evaluations \citep{Neumann:2006}. Without solving these issues, a minimization of Eq. \ref{eq:objf} with an off-the-shelf NM code yields a mosaic with obvious discontinuities across fields. To solve the first problem, I develop a Multi-Start Reconverging NM (MSRNM) downhill simplex driver in Appendix \ref{cha:simplex}. This algorithm allows the NM to cumulatively cover a larger portion of parameter space to probabilistically ensure convergence into a global optimum.
 
+% ============================================================================
 \section{Analysis of Scalar Sky Offsets}
 \label{sec:scalaranalysis}
 
@@ -530,6 +536,7 @@ Offset Type & Sem. & $\sigma_\Delta$ & $\frac{\sigma_\Delta}{\langle I_\mathrm{s
     % TODO need to fix colour scheme of the histograms
 \end{figure}
 
+% ============================================================================
 \section{Planar Sky Offsets}
 
 Scalar sky offsets are greatly effective for recovering the galaxy intensity from sky background uncertainties. But the reconstructed galaxy mosaics (Fig. \todo{maps}) reveal field-to-field discontinuities in the outer disk of roughly the same magnitude as the intrinsic disk surface brightness. These discontinuities are not a failure of the scalar sky offset method to converge; rather, they reveal that residual sky flux has a \emph{shape} across blocks.
@@ -595,12 +602,13 @@ Optimized planar offsets can add a arbitrary amount of flux to a mosaic, and thi
 	% made with skysubpub/mosaic_plots.py
 \end{figure}
 
+% ============================================================================
 \section{Systematic Uncertainties in Surface Brightness Reconstruction}
 
 \begin{figure}[t]
     \centering
         \includegraphics[width=3.5in]{figs/sbdiff/scalar_irac36_sbdiff.pdf}
-    \caption{Maps of $J-[3.6]$ and $K_s-[3.6]$ surface colour inferred from the scalar-sky fitted WIRCam mosaics (see \S\ref{sec:scalar}--\ref{sec:scalaranalysis}) and Spitzer/IRAC 3.6~$\mu$m image \citep{Barmby:2006}.}
+    \caption{Maps of $J-[3.6]$ and $K_s-[3.6]$ surface colour inferred from the scalar-sky fitted WIRCam mosaics (see \S\ref{sec:scalar}--\ref{sec:scalaranalysis}) and Spitzer/IRAC 3.6~$\mu$m image \citep{Barmby:2006}. Note that the IRAC map crops the \androids/WIRCam footprint.}
     \label{fig:scalar_irac36_sbdiff}
     % make with skysubpub/diffplots.py
 \end{figure}
@@ -608,24 +616,24 @@ Optimized planar offsets can add a arbitrary amount of flux to a mosaic, and thi
 \begin{figure}[t]
     \centering
         \includegraphics[width=3.5in]{figs/sbdiff/altplanar_irac36_sbdiff.pdf}
-    \caption{Maps of $J-[3.6]$ and $K_s-[3.6]$ surface colour inferred from the scalar-sky fitted WIRCam mosaics (see \S\ref{sec:scalar}--\ref{sec:scalaranalysis}) and Spitzer/IRAC 3.6~$\mu$m image \citep{Barmby:2006}.}
+    \caption{Maps of $J-[3.6]$ and $K_s-[3.6]$ surface colour inferred from the planar-sky fitted WIRCam mosaics (see \S\ref{sec:scalar}--\ref{sec:scalaranalysis}) and Spitzer/IRAC 3.6~$\mu$m image \citep{Barmby:2006}. Note that the IRAC map crops the \androids/WIRCam footprint.}
     \label{fig:altplanar_irac36_sbdiff}
 \end{figure}
 
-Sky offsets produce a mosaic that is rigorously optimal only in the sense of field-to-field surface brightness continuity. The technique does not gaurantee that surface brightness is calibrated in an absolute sense. In this section, we attempt to gauge the systematic surface brightness error inherent in this technique.
+Sky offsets produce a mosaic that is rigorously optimal only in the sense of field-to-field surface brightness continuity---not absolute sky subtraction. In this section, we attempt to gauge the systematic surface brightness error inherent in the sky offset technique.
 
 \subsection{Comparison to Spitzer/IRAC Images}
 
-A template for the old stellar disk, is the 3.6~$\mu$m Spitzer/IRAC map, presented in \cite{Barmby:2006}.
-% Aside from hot dust features in the 10 kpc star forming ring, and radial color gradients, a comparison of the 3.6 \mu m surface brightness against the reconstructed $J$ and $K_s$ mosaics
-In Fig. \ref{fig:scalar_irac36_sbdiff} we compare the scalar-fitted mosaics against the 3.6~$\mu$m image. Generally, $J-[3.6]$ and $K_s-[3.6]$ decreases with disk radius, but increases in the star forming regions because of hot dust emission. Both the scalar-fitted $J$ and $K_s$ mosaics are artificially reddened in the south-eastern corner, which we interpret as a systematic \emph{over-subtraction} of the WIRCam NIR sky. In $J-[3.6]$ and $K_s-[3.6]$ maps realized with planar-fitted sky, Fig. \ref{fig:altplanar_irac36_sbdiff}, a similar, though stronger, systematic sky error is seen. This result qualitatively illustrates the greater potential for sysematic sky errors when planar sky corrections are permitted to the 20 arcmin$^2$ WIRCam blocks.
+Systematic uncertainties can be explored by comparing our WIRCam mosaics to well-calibrated images of M31, and looking for colour discrepancies.
+A template for the old stellar disk, is the 3.6~$\mu$m Spitzer/IRAC map, presented in \cite{Barmby:2006}, which avoids sky subtraction uncertainties inherent in ground-based observation.
+In Fig. \ref{fig:scalar_irac36_sbdiff} we compare the scalar-fitted mosaics against the 3.6~$\mu$m image. Generally the $J-[3.6]$ and $K_s-[3.6]$ colors decrease with disk radius, but increase in the star-forming regions because of hot dust emission. Both the scalar-fitted $J$ and $K_s$ mosaics are reddened in the south-eastern corner, which we interpret as a systematic \emph{over-subtraction} of the WIRCam NIR sky. In $J-[3.6]$ and $K_s-[3.6]$ maps realized with planar-fitted sky, Fig. \ref{fig:altplanar_irac36_sbdiff}, a similar, though stronger, systematic sky error is seen. This result qualitatively illustrates the greater potential for systematic sky errors when planar sky correction freedom is permitted across the $20\times 20$ arcmin WIRCam blocks.
 
 \subsection{Comparison to \sw{Montage}-fitted images}
 
 \begin{figure}[t]
     \centering
         \includegraphics[width=3.5in]{figs/montage_planar_mosaics.pdf}
-    \caption{Montage-generated $J$ and $K_s$ maps. Compare to the equivalent simplex maps, Figs. \ref{fig:scalar_mosaics} and \ref{fig:planar_mosaics}.}
+    \caption{Montage-generated $J$ and $K_s$ maps. Compare to the equivalent simplex maps, Figs. \ref{fig:scalar_mosaics} and \ref{fig:planar_mosaics}. Pixels with negative surface intensity, after sky offset correction, are masked with white.}
     \label{fig:montage_planar_mosaics}
     % make with skysubpub/mosaic_plots.py and skyoffset/montageoffsets.py
 \end{figure}
@@ -647,18 +655,18 @@ In Fig. \ref{fig:scalar_irac36_sbdiff} we compare the scalar-fitted mosaics agai
 \end{figure}
 
 
-Although this paper advocates a sky offset optimization based on the Nelder Mead Downhill Simplex algorithm, other tools exist for solving sky background corrections. A popular package is \sw{Montage} \citep{Berriman:2008}. Like the algorithms presented in this paper, \sw{Montage} uses the network of image-to-image differences to infer sky offsets. Rather than simultaneosly solve for the offsets, \sw{Montage} uses an iterative algorithm: offsets are proposed that arithmetically solves one pair of images, and that change is propagated into the adjacent pair, which are again arithmetically solved, and so forth.
+Although this paper advocates a sky offset optimization based on the \cite{Nelder:1965} Downhill Simplex algorithm, other tools exist for solving sky background corrections. A popular package is \sw{Montage} \citep{Berriman:2008}. Like the algorithms presented in this paper, \sw{Montage} uses the network of image-to-image differences to infer sky offsets. Rather than simultaneously solve for all offsets, \sw{Montage} uses an iterative algorithm: offsets are proposed that arithmetically solve one pair of images, and that offset change is propagated into the adjacent pair, which are again arithmetically offset, and so forth.
 
-Figure \ref{fig:montage_planar_mosaics} shows mosaics generated by Montage, allowing for planar sky offsets. These surface brightness realizations lead to $J-[3.6]$ and $K_s-[3.6]$ maps in Fig. \ref{fig:montage_irac36_sbdiff}. Comparing the simplex-optimized color map (Fig \ref{fig:altplanar_irac36_sbdiff}) against the \sw{Montage} realization, it is plain that the two algorithms find different sets of globally optimum sky offsets. And neither of the solutions is optimizal in the sense of absolute calibration.
+Figure \ref{fig:montage_planar_mosaics} shows mosaics generated by \sw{Montage}, allowing for planar sky offsets. These surface brightness realizations lead to $J-[3.6]$ and $K_s-[3.6]$ maps in Fig. \ref{fig:montage_irac36_sbdiff}. Comparing the simplex-optimized color map (Fig \ref{fig:altplanar_irac36_sbdiff}) against the \sw{Montage} realization, it is plain that the two algorithms find different sets of globally optimum sky offsets. And neither of the solutions is optimal in the sense of absolute calibration.
 
-Another useful comparison is Figure \ref{fig:altplanar_jk_sbdiff}, where $J-K_s$ color maps are realized by both the simplex planar-fiting and \sw{Montage} algorithms. Unlike the comparisons against $[3.6]$, these color maps test the entire \androids\ footprint. Absolute calibration of the NIR surface brightness is a clear requisite before these images are scientifically useful.
+Another useful comparison is Figure \ref{fig:altplanar_jk_sbdiff}, where $J-K_s$ color maps are realized by both the simplex planar-fitting and \sw{Montage} algorithms. Unlike the comparisons against $[3.6]$, these color maps test the entire \androids\ footprint. Absolute calibration of the NIR surface brightness is a clear requisite before these images are scientifically useful beyond the inner disk.
 
 \subsection{Bootstrap analysis of systematic surface brightness uncertainties}
 
 \begin{figure}[t]
     \centering
         \includegraphics[width=3.5in]{figs/bootstrap_sb_rms.pdf}
-    \caption{Maps of bootstrap RMS surface brightness in $J$ (left) and $K_s$ (right) mosaics. White contours demark RMS levels of 0.05 (solid), 0.1 (dashed) and 0.2 (dash-dot) mag arcsec$^{-2}$.}
+    \caption{Maps of bootstrap RMS surface brightness in $J$ (left) and $K_s$ (right) mosaics. White contours identify RMS levels of 0.05 (solid), 0.1 (dashed) and 0.2 (dash-dot) mag arcsec$^{-2}$.}
     \label{fig:bootstrap_sb_rms}
     % made with skyoffset/bootstrap.py BootstrapRMSPlot
 \end{figure}
@@ -666,19 +674,25 @@ Another useful comparison is Figure \ref{fig:altplanar_jk_sbdiff}, where $J-K_s$
 \begin{figure}[t]
     \centering
         \includegraphics[width=3.5in]{figs/bootstrap_recovery_map.pdf}
-    \caption{Maps of dispersions in the difference fo expected and observed sky offsets in bootstrap realizations of the $J$ (left) and $K_s$ (right) mosaics. The 2009B fields are plotted over top of the 2007B fields (see Fig. \ref{fig:fieldmap}).}
+    \caption{Dispersions ($1\sigma$) in the difference of expected and observed sky offsets in bootstrap realizations of the $J$ (left) and $K_s$ (right) mosaics. The 2009B fields are plotted over top of the 2007B fields (see Fig. \ref{fig:fieldmap} for spatial reference).}
     \label{fig:bootstrap_recovery_map}
     % made with skyoffset/bootstrap.py OffsetRecoveryFieldMap
 \end{figure}
 
 
-The difference images presented in the previous section, and particularly Fig \ref{fig:altplanar_jk_sbdiff}, illustrate how the surface brightness reconstructions of identical data can vary depending on the optimization algorithm. Here we pose a slightly different question: how are reconstructions affected by the initial conditions of sky errors? We can answer with a boostrap analysis.
+The difference images presented in the previous section, and particularly Fig \ref{fig:altplanar_jk_sbdiff}, illustrate how the surface brightness reconstructions of identical data can vary depending on the optimization algorithm. Here we pose a slightly different question: how are reconstructions affected by the initial conditions of sky errors? We answer this with a bootstrap analysis.
 
-A bootstrap realization is generated by perturbing the surface brightness of the corrected blocks with a sky error, drawn (with replacement) from the ensemble of block sky offsets observed in the original mosaic (Fig. \ref{fig:scalar_mosaics}). Using the scalar-sky fitting procedure, sky offsets  are optimized against the known sky perturbations. \todo{Several hundred} such realizations are made to compile an ensemble of mosaics.
+A bootstrap realization is generated by perturbing the surface brightness of the corrected blocks with a sky error drawn (with replacement) from the ensemble of block sky offsets observed in the original mosaic (Fig. \ref{fig:scalar_mosaics}). Using the scalar-sky fitting procedure, sky offsets  are optimized against the known sky perturbations. 150 such realizations are made to compile an ensemble of mosaics in both bands.
 
 Figure \ref{fig:bootstrap_sb_rms} shows the RMS deviation of bootstrapped mosaic surface brightness against the original scalar-fitted mosaics. Reconstructed surface brightness in the outer disk can vary $\sim 1$ mag arcsec$^{-2}$, consistent with colour biases in the $J-[3.6]$ and $K_s-[3.6]$ maps.
 
-Another view into this effect is Fig. \ref{fig:bootstrap_recovery_map}, where the standard deviations between expected and realized sky bootstrap offsets is plotted. These maps show that the typical error in realized offset, compared to input sky perturbation, is 0.05\%--0.10\% of the sky intensity. One hypothesis is that this sky offset recovery error is due to flexure in the mosaic---where blocks on the mosaic periphery are forced to conform to the surface brightness of more central and tightly coupled blocks. Yet Fig. \ref{fig:bootstrap_recovery_map} does not show a clear outside-in trend. The $J$ map (Fig \ref{fig:bootstrap_recovery_map} [left]) does a slight north-south trend, but more abudant is the precision with with sky perturbations for the 2009B fields were recovered. \todo{Why?}
+Another view into this effect is Fig. \ref{fig:bootstrap_recovery_map}, where the standard deviations between expected and realized sky bootstrap offsets is plotted. These maps show that the typical error in realized offset, compared to input sky perturbation, is 0.05\%--0.10\% of the sky intensity. One hypothesis is that this sky offset recovery error is due to flexure in the mosaic---where blocks on the mosaic periphery are forced to conform to the surface brightness of more central and tightly coupled blocks. Yet Fig. \ref{fig:bootstrap_recovery_map} does not show a clear outside-in trend. The $J$ map (Fig.~\ref{fig:bootstrap_recovery_map} [left]) does show a slight north-south trend, but more abundant is the precision with with sky perturbations for the 2009B fields were recovered.
+
+Rather than mosaic flexure, a better model for Fig. \ref{fig:bootstrap_recovery_map} is uncertainties in the \textit{post priori} adjustment for zero net offset (Eq.~\ref{eq:netzero}). Since block sky offsets have approximately Gaussian distributions with dispersions given in Table \ref{tab:offset_hierarchy}, the uncertainty in the net offset correction is simply $\sigma(\mathrm{block})/\sqrt{n_\mathrm{blocks}}$. Considering the dispersions among 2007B block offsets, the expected uncertainty of the zero net offset correction is 0.08\% and 0.09\% of the $J$ and $K_s$ sky intensity, respectively. The dominant source of uncertainty shown in the bootstrap simulations, Figs. \ref{fig:bootstrap_sb_rms} and \ref{fig:bootstrap_recovery_map}, is the use of an arithmetic mean of offsets to set an absolute zeropoint, not flexure or uncertainty in the network of offsets. This suggests that external zeropoints could be very useful in replacing Eq.~\ref{eq:netzero}. Since no absolutely-calibrated NIR photometry of M31's surface brightness exists, we will discuss a method using panchromatic resolved stellar populations in a future work.
+
+% ============================================================================
+\section{Conclusions}
+\label{sec:conclusions}
 
 \bibliography{master}
 
