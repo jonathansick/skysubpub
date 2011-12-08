@@ -72,7 +72,7 @@ Here are some opening thoughts.
 % 2009B Ks 13.27306929 ; 13.1173594814 -- 13.4222534742
 
 \begin{table*}[t]
-    \caption[Summary of WIRCam observing programs]{Summary of WIRCam observing programs. Efficiency (Eff.) is the percentage of time in a program allocated to integrating the disk of M31, compared from nodding, read out and sky overheads. Seeing is measured from stars in sky images.}
+    \caption[Summary of WIRCam observing programs]{Summary of WIRCam observing programs. ST Nods are coded with superscripts to denote the number of times an observation is repeated at a given field. Efficiency (Eff.) is the percentage of time in a program allocated to integrating the disk of M31, compared from nodding, read out and sky overheads. Seeing is measured from stars in sky images.}
     \label{tab:obssummary}
     
     \centering
@@ -110,15 +110,16 @@ Observations were taken over two semesters, 2007B and 2009B. The two campaigns e
 \begin{figure}[t]
 	\centering
 		\includegraphics[width=3in]{figs/fieldmap}
-	\caption{WIRCam field positions on M31.}
+	\caption{WIRCam field positions on M31. Grey fields at center at the 27 disk fields observed in 2007B, surrounded by 4 sky fields. Red fields at center are the 12 disk fields observed in 2007B. The red ring of 53 fields is the 2009B sky sampling ring. The blue ellipse marks the M31 disk at $R=20$ kpc along the major axis. Coordinates are centered on the nucleus of M31 with North up, and East towards left.}
 	\label{fig:fieldmap}
 	% made with skyoffsets/chart.py
+    % TODO fix colouring of disk vs sky fields.
 \end{figure}
 
 \begin{figure}[t]
     \centering
         \includegraphics[width=3in]{figs/sky_target_lag}
-    \caption{Time latency between target observations and sky field sampling in the 2007B and 2009B WIRCam observing runs.}
+    \caption{Time latency between target observations and sky field sampling in the 2007B and 2009B WIRCam observing runs. The 2009B program was designed to ensure that no disk sample would be removed by more than 1.5 minutes from a sky sample by using a STTS nodding pattern.}
     \label{fig:sky_target_lag}
     % made with skyoffsets/obs_run_stats.py
 \end{figure}
@@ -126,7 +127,7 @@ Observations were taken over two semesters, 2007B and 2009B. The two campaigns e
 \begin{figure}[t]
     \centering
         \includegraphics[width=3in]{figs/sky_target_dist}
-    \caption{Distance between sky and target observations in the 2007B and 2009B WIRCam observing runs.}
+    \caption{Distance between sky and target observations in the 2007B and 2009B WIRCam observing runs. The larger nodding distance of 2009B is a consequence of sky ring sampling. The maximum nodding distance across the sky ring was purposefully set to $\sim 3$\arcdeg\ to avoid excessive time overheads. As such, a given disk field only samples roughly of the full sky ring.}
     \label{fig:sky_target_dist}
     % made with skyoffsets/obs_run_stats.py
 \end{figure}
