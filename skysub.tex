@@ -41,7 +41,7 @@
 \begin{document}
     \IfFileExists{vc.tex}{\slugcomment{Version \VCRevision\ by \VCAuthor\ on \VCDateTEX , \VCTime .}
 }{\slugcomment{Revision unknown.}}
-\title{Near-Infrared Imaging of M31}
+\title{ANDROIDS I. Near-Infrared Imaging of M31}
 \author{Jonathan Sick, Stéphane Courteau and the \androids\ collaboration}
 \affil{Queen's University}
 \affil{Stirling Hall, Kingston Canada}
@@ -50,18 +50,31 @@
 
 % ============================================================================
 \begin{abstract}
-Here is an abstract.
+Abstract.
 \end{abstract}
 
 % ============================================================================
 \section{Introduction}
 \label{sec:intro}
 
-Here are some opening thoughts.
+Value of NIR imaging\ldots
+
+\cite{Beaton:2007} assembled a 2.8\arcdeg\ $JHK_s$ mosaic centered on M31 with the 2MASS 6X program. Those observations, which trace the stellar galaxy mass, were used by \cite{Athanassoula:2006} as evidence of a bar embedded in a classical bulge. But beyond the bulge, the 2MASS 6X images have limited utility. \cite{Courteau:2011} find sky uncertainty prevents using the 2MASS 6X to infer structural and photometric properties of the disk. Further, the pixel scale of 1\arcsec\ and integration depth of 46.8 seconds prevents point source measurements of the 2MASS 6X images. \cite{Barmby:2006} used Spitzer/IRAC to trace the stellar disk of M31 in 3.6 $\mu$m and 4.5 $\mu$m. Spitzer obviates the issue of sky estimation, although the pixel scale of 0.\farcs86 also prevents point source measurements of individual stars in the M31 disk.
+
+In this paper, we present a survey of the M31 bulge and disk with CFHT/WIRCam in the $J$ and $K_s$ bands. These are the first global near-infrared observations of M31 that simultaneously resolve throughout the mid- and outer-disk, while also recovering attempting to rigorously recover the NIR surface brightness. While future contributions will explore the resolved near-IR stellar populations, our focus here is the surface brightness calibration of the WIRCam data set, and exploration of NIR sky subtraction uncertainties. Section \ref{sec:Observations} describes the novel observational strategies used to reduce sky subtraction uncertainties. Section \ref{sec:reduction} describes the image reduction pipeline; a particularly important aspect of this is night sky flat fielding (\S \ref{sec:flats}). In \S\ref{sec:scalar} we present our method for recovering the galaxy surface brightness by minimizing the image-to-image differences across the mosaic. We estimate the systematic uncertainties in our mosaic solution in \S \ref{sec:systematics}, where we also compare our technique to the Montage package \citep{Berriman:2008} and the Spitzer/IRAC mosaics. Finally in \S \ref{sec:conclusions} we summarize the uncertainty of NIR sky subtraction on the scale of M31.
 
 % ============================================================================
 \section{Observations}
 \label{sec:Observations}
+
+\begin{figure}[t]
+	\centering
+		\includegraphics[width=3in]{figs/fieldmap}
+	\caption{WIRCam field positions on M31. Grey fields at center at the 27 disk fields observed in 2007B, surrounded by 4 sky fields. Red fields at center are the 12 disk fields observed in 2007B. The red ring of 53 fields is the 2009B sky sampling ring. The blue ellipse marks the M31 disk at $R=20$ kpc along the major axis. Coordinates are centered on the nucleus of M31 with North up, and East towards left.}
+	\label{fig:fieldmap}
+	% made with skyoffsets/chart.py
+    % TODO fix colouring of disk vs sky fields.
+\end{figure}
 
 % Surface brightness CI from skyoffset/net_sky_level.py
 % Median and 95% C.I.
@@ -106,15 +119,6 @@ WIRCam itself is an array of four HgCdTe HAWAII-RG2 detectors \citep{Puget:2004}
 The \androids\ WIRCam survey is designed to simultaneously resolve stars and recover the integrated surface brightness of the M31 disk. While the former objective is attained by requesting good seeing in Queued Service Observing mode (see Table \ref{tab:obssummary}), WIRCam has not previously been used to recover surface brightness at the accuracy required---$\mu_{K_s}\lesssim~22$~mag~arcsec$^{-2}$---across entire detector fields. As discussed in \S \ref{sec:intro}, NIR observations require frequent monitoring of the sky background. Since M31, with a $190\arcmin \times 60\arcmin$ optical disk, is much larger than the WIRCam fields of view, monitoring of the sky zeropoint is only possible by periodically pointing the telescope away from M31, towards blank sky---\emph{sky-target} (ST) nodding. 
 
 Observations were taken over two semesters, 2007B and 2009B. The two campaigns employed different observing schemes, particularly sky-target nodding strategies. The reader is encouraged to regard these observational designs as \emph{hypotheses} for how to best conduct a wide-field surface brightness survey in the near-infrared from the ground. An objective of this paper is to discriminate between the virtues of the 2007B and 2009B programmes, and determine if observational design can improve the construction of a wide-field NIR mosaic.
-
-\begin{figure}[t]
-	\centering
-		\includegraphics[width=3in]{figs/fieldmap}
-	\caption{WIRCam field positions on M31. Grey fields at center at the 27 disk fields observed in 2007B, surrounded by 4 sky fields. Red fields at center are the 12 disk fields observed in 2007B. The red ring of 53 fields is the 2009B sky sampling ring. The blue ellipse marks the M31 disk at $R=20$ kpc along the major axis. Coordinates are centered on the nucleus of M31 with North up, and East towards left.}
-	\label{fig:fieldmap}
-	% made with skyoffsets/chart.py
-    % TODO fix colouring of disk vs sky fields.
-\end{figure}
 
 \begin{figure}[t]
     \centering
@@ -605,6 +609,7 @@ Optimized planar offsets can add a arbitrary amount of flux to a mosaic, and thi
 
 % ============================================================================
 \section{Systematic Uncertainties in Surface Brightness Reconstruction}
+\label{sec:systematics}
 
 \begin{figure}[t]
     \centering
