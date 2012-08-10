@@ -57,11 +57,36 @@ Abstract.
 \section{Introduction}
 \label{sec:intro}
 
-Value of NIR imaging\ldots
+Near-infrared (NIR) provides a valuable view into galaxies.
+NIR is a segment of the spectral energy distribution (SED) of galaxies that is only recently gaining attention, mostly due to the immaturity of detectors.
+NIR, in conjunction with ultraviolet and optical bands, offers a partial remedy for the age-metallicity-dust degeneracy that plauge stellar population intepretations. 
+Traditionally the NIR has also been treated as a stellar mass map, tracing the low end of the stellar initial mass function with minimal dust obfuscation.
+Yet the scientific promise of the near-infared as not been realized.
 
-\cite{Beaton:2007} assembled a 2.8\arcdeg\ $JHK_s$ mosaic centered on M31 with the 2MASS 6X program. Those observations, which trace the stellar galaxy mass, were used by \cite{Athanassoula:2006} as evidence of a bar embedded in a classical bulge. But beyond the bulge, the 2MASS 6X images have limited utility. \cite{Courteau:2011} find sky uncertainty prevents using the 2MASS 6X to infer structural and photometric properties of the disk. Further, the pixel scale of 1\arcsec\ and integration depth of 46.8 seconds prevents point source measurements of the 2MASS 6X images. \cite{Barmby:2006} used Spitzer/IRAC to trace the stellar disk of M31 in 3.6 $\mu$m and 4.5 $\mu$m. Spitzer obviates the issue of sky estimation, although the pixel scale of 0.\farcs86 also prevents point source measurements of individual stars in the M31 disk.
+\cite{Marigo:2008} pointed out that most of the NIR light from intermediate age populations is contributed by thermally-pulsating asymptotic giant branch stars (TP-AGBs). These TP-AGB stars are notoriously difficult to model and include in spectral synthesis models. As a result, the optical-NIR SEDs of galaxies cannot be conistently modelled \citep{Taylor:2011}. Consequently, the best practice for stellar mass estimation as advocated by \cite{Taylor:2011} is to omit the NIR SED from fits, and rely upon useful stellar population degenerices that, by coincidence, enforce a $g-i$ vs. $\Upsilon_*$ relation.
 
-In this paper, we present a survey of the M31 bulge and disk with CFHT/WIRCam in the $J$ and $K_s$ bands. These are the first global near-infrared observations of M31 that simultaneously resolve throughout the mid- and outer-disk, while also recovering attempting to rigorously recover the NIR surface brightness. While future contributions will explore the resolved near-IR stellar populations, our focus here is the surface brightness calibration of the WIRCam data set, and exploration of NIR sky subtraction uncertainties. Section \ref{sec:Observations} describes the novel observational strategies used to reduce sky subtraction uncertainties. Section \ref{sec:reduction} describes the image reduction pipeline; a particularly important aspect of this is night sky flat fielding (\S \ref{sec:flats}). In \S\ref{sec:scalar} we present our method for recovering the galaxy surface brightness by minimizing the image-to-image differences across the mosaic. We estimate the systematic uncertainties in our mosaic solution in \S \ref{sec:systematics}, where we also compare our technique to the Montage package \citep{Berriman:2008} and the Spitzer/IRAC mosaics. Finally in \S \ref{sec:conclusions} we summarize the uncertainty of NIR sky subtraction on the scale of M31.
+One means forward for NIR is improved empirical spectral libraies. 
+\todo{Cite X-shooter, other NIR spectral library efforts?}
+Another way to understand, and possibly calibrate, the NIR light is to observe nearby galaxies where stellar populations can be robustly understood (with exhaustive SED coverage and resolved stellar populations).
+Here the Andromeda galaxy stands as a unique and important telescope.
+It is visible to the Northern Hemisphere and thus to the premiere wide-field NIR imager (CFHT/WIRCam), and close enough (785 kpc) that stars can be resolved thoughout the disk without adaptive optics.
+
+\cite{Beaton:2007} assembled a 2.8\arcdeg\ $JHK_s$ mosaic centered on M31 with the 2MASS 6X program.
+Those observations, which trace the stellar galaxy mass, were used by \cite{Athanassoula:2006} as evidence of a bar embedded in a classical bulge.
+But beyond the bulge, the 2MASS 6X images have limited utility.
+\cite{Courteau:2011} find sky uncertainty prevents using the 2MASS 6X to infer structural and photometric properties of the disk.
+Further, the pixel scale of 1\arcsec\ and integration depth of 46.8 seconds prevents point source measurements of the 2MASS 6X images.
+As a result, the defacto state-of-the-art NIR view of M31 is the slightly longer 3.6 $\mu$m Spitzer/IRAC map of \cite{Barmby:2006}.
+Spitzer obviates the issue of sky estimation, although the pixel scale of 0\farcs86 also prevents point source measurements of individual stars in the M31 disk.
+
+In this paper, we present a survey of the M31 bulge and disk with CFHT/WIRCam in the $J$ and $K_s$ bands.
+These are the first global near-infrared observations of M31 that simultaneously resolve throughout the mid- and outer-disk, while also recovering attempting to rigorously recover the NIR surface brightness.
+While future contributions will explore the resolved near-IR stellar populations, our focus here is the surface brightness calibration of the WIRCam data set, and exploration of NIR sky subtraction uncertainties.
+Section~\ref{sec:Observations} describes the novel observational strategies used to reduce sky subtraction uncertainties.
+Section~\ref{sec:reduction} describes the image reduction pipeline; a particularly important aspect of this is night sky flat fielding (\S\ref{sec:flats}).
+In \S\ref{sec:scalar} we present our method for recovering the galaxy surface brightness by minimizing the image-to-image differences across the mosaic.
+We estimate the systematic uncertainties in our mosaic solution in \S\ref{sec:systematics}, where we also compare our technique to the Montage package \citep{Berriman:2008} and the Spitzer/IRAC mosaics.
+Finally in \S\ref{sec:conclusions} we summarize the uncertainty of NIR sky subtraction on the scale of M31.
 
 % ============================================================================
 \section{Observations}

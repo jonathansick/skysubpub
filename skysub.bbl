@@ -1,14 +1,22 @@
-\begin{thebibliography}{15}
+\begin{thebibliography}{20}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
 {Adams}, J.~D., \& {Skrutskie}, M.~F. 1996, Airglow and 2MASS Survey Strategy
+
+\bibitem[{{Athanassoula} \& {Beaton}(2006)}]{Athanassoula:2006}
+{Athanassoula}, E., \& {Beaton}, R.~L. 2006, \mnras, 370, 1499
 
 \bibitem[{{Barmby} {et~al.}(2006){Barmby}, {Ashby}, {Bianchi}, {Engelbracht},
   {Gehrz}, {Gordon}, {Hinz}, {Huchra}, {Humphreys}, {Pahre},
   {P{\'e}rez-Gonz{\'a}lez}, {Polomski}, {Rieke}, {Thilker}, {Willner}, \&
   {Woodward}}]{Barmby:2006}
 {Barmby}, P., {et~al.} 2006, \apjl, 650, L45
+
+\bibitem[{{Beaton} {et~al.}(2007){Beaton}, {Majewski}, {Guhathakurta},
+  {Skrutskie}, {Cutri}, {Good}, {Patterson}, {Athanassoula}, \&
+  {Bureau}}]{Beaton:2007}
+{Beaton}, R.~L., {et~al.} 2007, \apjl, 658, L91
 
 \bibitem[{{Berriman} {et~al.}(2008){Berriman}, {Good}, {Laity}, \&
   {Kong}}]{Berriman:2008}
@@ -31,6 +39,16 @@
   \& {Morin}, B. 2002, in Astronomical Society of the Pacific Conference
   Series, Vol. 281, Astronomical Data Analysis Software and Systems XI, ed.
   {D.~A.~Bohlender, D.~Durand, \& T.~H.~Handley}, 228--+
+
+\bibitem[{{Courteau} {et~al.}(2011){Courteau}, {Widrow}, {McDonald},
+  {Guhathakurta}, {Gilbert}, {Zhu}, {Beaton}, \& {Majewski}}]{Courteau:2011}
+{Courteau}, S., {Widrow}, L.~M., {McDonald}, M., {Guhathakurta}, P., {Gilbert},
+  K.~M., {Zhu}, Y., {Beaton}, R.~L., \& {Majewski}, S.~R. 2011, \apj, 739, 20
+
+\bibitem[{{Marigo} {et~al.}(2008){Marigo}, {Girardi}, {Bressan}, {Groenewegen},
+  {Silva}, \& {Granato}}]{Marigo:2008}
+{Marigo}, P., {Girardi}, L., {Bressan}, A., {Groenewegen}, M.~A.~T., {Silva},
+  L., \& {Granato}, G.~L. 2008, \aap, 482, 883
 
 \bibitem[{{Marmo} \& {Bertin}(2008)}]{Marmo:2008}
 {Marmo}, C., \& {Bertin}, E. 2008, in Astronomical Society of the Pacific
@@ -68,6 +86,15 @@ Nelder, J.~A., \& Mead, R. 1965, {The Computer Journal}, 7, 308
 
 \bibitem[{{Stetson}(1994)}]{Stetson:1994}
 ---. 1994, \pasp, 106, 250
+
+\bibitem[{{Taylor} {et~al.}(2011){Taylor}, {Hopkins}, {Baldry}, {Brown},
+  {Driver}, {Kelvin}, {Hill}, {Robotham}, {Bland-Hawthorn}, {Jones}, {Sharp},
+  {Thomas}, {Liske}, {Loveday}, {Norberg}, {Peacock}, {Bamford}, {Brough},
+  {Colless}, {Cameron}, {Conselice}, {Croom}, {Frenk}, {Gunawardhana},
+  {Kuijken}, {Nichol}, {Parkinson}, {Phillipps}, {Pimbblet}, {Popescu},
+  {Prescott}, {Sutherland}, {Tuffs}, {van Kampen}, \&
+  {Wijesinghe}}]{Taylor:2011}
+{Taylor}, E.~N., {et~al.} 2011, \mnras, 418, 1587
 
 \bibitem[{{Vaduvescu} \& {McCall}(2004)}]{Vaduvescu:2004}
 {Vaduvescu}, O., \& {McCall}, M.~L. 2004, \pasp, 116, 640
