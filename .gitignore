@@ -4,6 +4,7 @@
 *.log
 *.out
 *.blg
+*.fls
 skysub.pdf
 *Notes.bib
 *synctex.gz
