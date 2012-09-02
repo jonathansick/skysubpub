@@ -279,8 +279,61 @@ Finally, while the data has formally been flat fielded and photometrically calib
 Instead we model sky offsets that enforce internal consistency in the sky levels of target frames.
 In \S~\ref{sec:scalar} we discuss the methods for modelling these sky offsets and their analyze their amplitudes.
 
-\section{Sky Flat Fielding and Sky Shapes}
+\section{Sky Flat Fielding}
 \label{sec:flats}
+
+Dome flats fail to properly calibrate WIRCam data, as evidenced by Figs.~\ref{fig:domeflatratio} and \todo{TODO}.
+Sky flats are an appropriate alternative, both because of the of the abundant sky background (any NIR imaging program can use its own images to build sky flats), and because sky flats more aptly trace detector illumination and gain structure.
+The former because skylight traces the same optical path as astronomical sources; the latter because WIRCam's gain structure appears variable.
+Sky flats allow detector gain mapping in real-time.
+We return to the subject of WIRCam's variable gain structure later in this section.
+
+\subsection{Building Sky Flats}
+\label{sec:flatbuilding}
+
+Producing sky flat is principally as simple as median combining integrations of blank sky. 
+The \androids\ sky-target nodding observing strategy provides an abundance of `sky' images for this purpose.
+A fundamental decision is to define the window of sky integrations to be combined into a sky flat.
+
+One choice is to assume that flat fields are stable over a queue run (a continuous installation period of WIRCam).
+In this case, all sky integrations taken during a queue run, and through a given filter, are combined into what we denote as a `QRUN Sky Flat.'
+This choice is reasonable since dust and optical geometry should be stable during a continuous mounting period.
+Further, choosing a large pool of sky images ensures high \sn\, and helps to helps to marginalize over the shape of the sky background.
+Table~\ref{tab:flattable} lists statistics of the QRUN sky flats.
+
+\begin{table}[t]
+\centering
+\caption{Properties of night sky flats constructed for each Queue Run (\texttt{QRUNID}).}
+\label{tab:flattable}
+
+\begin{tabular}{cccc}
+\hline
+Filter & QRUNID & $N$ images & $N$ nights \\
+\hline
+$J$ & 07BQ01 & 24 & 6 \\
+$J$ & 07BQ03 & 141 & 9 \\
+$J$ & 07BQ05 & 43 & 4 \\
+$J$ & 09BQ01 & 111 & 10 \\
+$J$ & 09BQ03 & 55 & 3 \\
+$J$ & 09BQ08 & 396 & 10 \\
+\hline
+$K_s$ & 07BQ01 & 35 & 2 \\
+$K_s$ & 07BQ03 & 25 & 1 \\
+$K_s$ & 07BQ05 & 156 & 6 \\
+$K_s$ & 07BQ07 & 133 & 3 \\
+$K_s$ & 09BQ01 & 113 & 10 \\
+$K_s$ & 09BQ03 & 55 & 3 \\
+$K_s$ & 09BQ08 & 637 & 8 \\
+\hline
+\end{tabular}
+\end{table}
+
+An alternative, more defensive, choice is to assume that WIRCam's illumination function and detector gain structure is unstable even over short periods.
+Here the objective is to make many sky flats that reflect the real-time flat field function---we call these Real-Time Sky Flats.
+We've chosen to RT sky flats such that the pool of sky images contain cumulative sky levels of at least 100,000 ADU, or that the time span from first to last sky integration be no longer than two hours.
+\todo{Include histograms of number of sky images in 100k flats, and window spans.}
+
+\section{(Old) Sky Flat Fielding}
 
 Images flat-fielded by \iiwione\ show a remarkable amount of fixed structure.
 In most applications of WIRCam, these detector illumination structures are un-noticed since the median sky subtraction step, to produce the `fully pre-processed' \texttt{*p.fits}, will erase these illumination artifacts from blank sky.
@@ -315,32 +368,6 @@ The flat itself is built by median combination. Median combination of a stack of
 
 Table \ref{tab:flattable} lists the sky flats constructed for this survey. These sky flats were divided from each sky and disk frame taken under the same conditions (filter, detector and camera installation) to create an illumination-corrected data set.
 
-\begin{table}[t]
-    \centering
-    \caption{Properties of night sky flats constructed for each Queue Run (\texttt{QRUNID}).}
-    \label{tab:flattable}
-
-\begin{tabular}{cccc}
-\hline
-Filter & QRUNID & $N$ images & $N$ nights \\
-\hline
-$J$ & 07BQ01 & 24 & 6 \\
-$J$ & 07BQ03 & 141 & 9 \\
-$J$ & 07BQ05 & 43 & 4 \\
-$J$ & 09BQ01 & 111 & 10 \\
-$J$ & 09BQ03 & 55 & 3 \\
-$J$ & 09BQ08 & 396 & 10 \\
-\hline
-$K_s$ & 07BQ01 & 35 & 2 \\
-$K_s$ & 07BQ03 & 25 & 1 \\
-$K_s$ & 07BQ05 & 156 & 6 \\
-$K_s$ & 07BQ07 & 133 & 3 \\
-$K_s$ & 09BQ01 & 113 & 10 \\
-$K_s$ & 09BQ03 & 55 & 3 \\
-$K_s$ & 09BQ08 & 637 & 8 \\
-\hline
-\end{tabular}
-\end{table}
 
 \subsection{Sky flat performance}
 \label{sec:skyflatstats}
