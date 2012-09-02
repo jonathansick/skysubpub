@@ -1,4 +1,4 @@
-\begin{thebibliography}{20}
+\begin{thebibliography}{17}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
@@ -91,15 +91,6 @@ Nelder, J.~A. \& Mead, R. 1965, {The Computer Journal}, 7, 308
   J.~E., {Howard}, E., {Evans}, T., {Fowler}, J., {Fullmer}, L., {Hurt}, R.,
   {Light}, R., {Kopan}, E.~L., {Marsh}, K.~A., {McCallon}, H.~L., {Tam}, R.,
   {Van Dyk}, S., \& {Wheelock}, S. 2006, \aj, 131, 1163
-
-\bibitem[{{Stetson}(1987)}]{Stetson:1987}
-{Stetson}, P.~B. 1987, \pasp, 99, 191
-
-\bibitem[{{Stetson}(1990)}]{Stetson:1990}
----. 1990, \pasp, 102, 932
-
-\bibitem[{{Stetson}(1994)}]{Stetson:1994}
----. 1994, \pasp, 106, 250
 
 \bibitem[{{Taylor} {et~al.}(2011){Taylor}, {Hopkins}, {Baldry}, {Brown},
   {Driver}, {Kelvin}, {Hill}, {Robotham}, {Bland-Hawthorn}, {Jones}, {Sharp},

@@ -32,7 +32,9 @@
 \newcommand{\changeit}[1]{\textcolor{red}{#1}} % markup bad sections
 \newcommand{\todo}[1]{\textcolor{RedOrange}{#1}} % markup TODOs
 \newcommand{\Fig}[1]{Fig.~\ref{fig:#1}}  % figure reference macro
+\newcommand{\Eq}[1]{Eq.~\ref{eq:#1}}  % equation reference macro
 \newcommand{\Tab}[1]{Table~\ref{tab:#1}}  % table reference macro
+\newcommand{\Sec}[1]{\S\ref{sec:#1}}  % section reference macro
 
 % To track draft versions in git
 \IfFileExists{vc.tex}{\input{vc}}{}
@@ -423,13 +425,55 @@ Each image in the data set is sky subtracted by first identifying the median sky
 \section{Photometric calibration}
 \label{sec:photocal}
 
-Since the \androids\ WIRCam dataset uses revised flat fields that differ by 2\% from the \iiwione\ pipeline, new photometric zeropoints must be established. The Two Micron All Sky Survey (2MASS) Point Source Catalog \citep{Skrutskie:2006} provides a convenient photometric system to bootstrap against. Any WIRCam pointing in this survey contains $\sim 10^2$ stars measured by 2MASS. Although these are not standards, the ensemble fo 2MASS stars may be treated as such. Given the ensemble difference between instrumental and 2MASS catalog magnitudes of stars, a zeropoint is estimated. Since the disk of M31 is crowded, and 2MASS has poor resolution (seeing $> 1\arcsec$), 2MASS point source measurements are considered unreliable on the disk. Instead, all zeropoint measurements are made using sky images, and those calibrations are applied to paired disk images (analogous to the median sky subtraction procedure).
+Since the \androids/WIRCam dataset uses revised flat fields that differ by 2\% from the \iiwione\ pipeline, new photometric zeropoints must be established.
+The Two Micron All Sky Survey (2MASS) Point Source Catalog (PSC) \citep{Skrutskie:2006} provides a convenient photometric system to bootstrap against.
+Typical WIRCam pointings in this survey contains $\sim 10^2$ stars measured by 2MASS.
+Although these are not standards, the ensemble of 2MASS stars may be treated as such.
+Since the disk of M31 is crowded, and 2MASS has poor resolution (seeing $> 1\arcsec$), 2MASS point source measurements are considered unreliable on the disk.
+Instead, all zeropoint measurements are made using sky images, and those calibrations are applied to paired disk images (analogous to the median sky subtraction procedure).
 
-Stars are photometered with PSF-fitting photometry using \sw{DAOPHOT} \citep{Stetson:1987} and \sw{ALLSTAR} \citep{Stetson:1994}. A benefit of the PSF-fitting process is that galaxies to be culled from the 2MASS point source sample.
+Photometry of 2MASS stars in the uncrowded sky fields is done with Source Extractor \citep{Bertin:1996}.
+We use the \texttt{AUTO} photometry mode to capture the full light of stars without using aperture corrections.
+Objects in the 2MASS PSC are matched to Source Extractor detections by position using the author's \sw{Mo'Astro}\footnote{\url{http://moastro.jonathansick.ca}} Python package, that manages the full 2MASS PSC in a MongoDB database.
+The 2MASS PSC contains many galaxies, and many 2MASS sources are saturated in our deeper WIRCam images.
+For our dataset, we find reliable stars have \todo{describe the selection function for J and Ks}.
 
-\sw{DAOGROW} \citep{Stetson:1990} is used to build growth curves that extrapolate the light of a star to a \emph{total} instrumental magnitude. In this survey, the median aperture correction is $\sim-0.06$ mag, so that $\sim5\%$ of the light of a star is in extended wings not captured by the PSF model.
+Typical photometric calibrations attempt to model three numbers---a zeropoint $m_z$, an airmass-dependent extinction factor $K$ and a linear colour transformation coefficient between the instrumental (WIRCam) and reference (2MASS) photometric systems---in the fitting function $m_\mathrm{2MASS} = -2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) + \hat{m_z} + \hat{K} (\sec z -1) + \hat{A} (J-K_s)_\mathrm{2MASS}$.
+With queue service observing it is impossible to constrain a nightly extinction coefficient since observations are taken in short blocks spread over several weeks.
+We instead collapse airmass dependence into an instantaneously zeropoint, $m_0$, that is fit to individual images:
 
-For a typical frame, the dispersion of zeropoint estimates about the median is 0.10--0.15 magnitudes. With such an uncertainty, image-to-image variations in zeropoint can be confused with variations in sky level. But under the photometric conditions that these data were recorded, strong zeropoint fluctuations are not expected over short periods. Thus zeropoints are smoothed by averaging the zeropoints of frames across a Gaussian-weighted sliding window of width $\sigma=15$ minutes. Such time-averaged zeropoints have uncertainties of $\sim 0.05$ magnitudes.
+\begin{equation}
+  \label{eq:photcal}
+  m_\mathrm{2MASS} = -2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) + \hat{m_0} + \hat{A} (J-K_s)_\mathrm{2MASS}.
+\end{equation}
+
+Given that \todo{\#} usable 2MASS stars are visible in each image, and their photometric uncertainties are $\sigma_{J,\mathrm{2MASS}}\sim X$ and $\sigma_{K_s,\mathrm{2MASS}}\sim X$, the typical uncertainty of $m_z$ is \todo{X} mag in a single image. The typical uncertainty of the instantaneous colour transformation is \todo{X}. Since $m_z$ and $A$ are only fit for sky images, zeropoints and colour transformations for science images are interpolated as the median of a sliding window of sky images large enough to statistical uncertainty of the median $m_z$ to be reduced below 0.05 mag.
+
+\subsection{Chip-to-chip zeropoint consistency}
+\label{sec:chip_zp}
+
+Our sky flats is designed to unify the zeropoints of the four WIRCam detectors by scaling according to the modal sky levels seen on each detector (see~\Sec{flats}).
+To prove the chip-to-chip zeropoint consistency generated by the flat fielding procedure, we can use our photometric calibration mechanics.
+While the formal photometric calibration described above pools together 2MASS stars seen in any of the four detectors, we can also generate photometric calibrations in each individual detector.
+\todo{Make figure showing that the chip zeropoints are statistically identical. Could also be useful to compare colour transformations seen in each of the four detectors for completeness' sake.}
+
+\subsection{WIRCam--2MASS colour transformation}
+\label{sec:color_trans}
+
+Our photometric calibration permits the first comparison between the native WIRCam and 2MASS photometric systems (the transformation is ignored in the current \iiwione\ calibration).
+Although this paper ostensibly uses the $A_X$ colour transformation to reduce scatter in the zeropoint fitting function (\Eq{photcal}), presenting colours in the 2MASS system is crucial for future work with stellar population libraries.
+In \Fig{colourtrans} we present the instantaneous colour transformations for ANDROIDS sky images in the $J$ and $K_s$ bands.
+\todo{Comment on the scatter of these histograms, and compare to the uncertainty of instantaneous $A_J$ and $A_{K_s}$ estimates.Given the typical $J-K_s$ colour of an M31 TRGB star, comment on the shift in magnitude due to colour transformations.}
+
+\begin{figure}[t]
+ \centering
+     \includegraphics[width=\columnwidth]{figs/A_hist.png}
+ \caption{Instantaneous colour transformations fitted for individual sky images.
+ \todo{Simplify histograms to total, and embed a 07 vs 09 line histograms.
+ Also plot standard deviation and median colour transformation.}}
+ \label{fig:colourtrans}
+ % flatslice.py FIXME
+\end{figure}
 
 \subsection{Zeroth-order Mosaics}
 \label{sec:rawmosaic}
