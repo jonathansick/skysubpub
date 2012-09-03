@@ -331,7 +331,7 @@ $K_s$ & 09BQ08 & 637 & 8 \\
 An alternative, more defensive, choice is to assume that WIRCam's illumination function and detector gain structure is unstable even over short periods.
 Here the objective is to make many sky flats that reflect the real-time flat field function---we call these Real-Time Sky Flats.
 We've chosen to RT sky flats such that the pool of sky images contain cumulative sky levels of at least 100,000 ADU, or that the time span from first to last sky integration be no longer than two hours.
-In \Fig{fw100k_membercount} we consider the properties of such real-time sky flats.
+In \Fig{fw100k_summary} we consider the properties of such real-time sky flats.
 $J$-band sky flats typically require 15 integrations during the 07B campaign, or 10--25 integrations in the 09B campaign $J$-band sky levels were bimodal (see \Fig{net_sky_level}).
 Given the 07B $J$-band ST nodding pattern, 15 sky integrations are accumulated in 50 minute windows; whereas the more frequent nodding in the 09B campaign shortened this window to 20 minutes (but as long as 50--90 minutes in dark sky conditions).
 The brighter $K_s$ sky calls for just 7--13 integrations in 07B, or 10--20 integrations in the 09B campaign.
@@ -340,9 +340,15 @@ This number of $K_s$ sky samples was accumulated within 10--30 minutes in 07B, o
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/fw100k/member_count}
-\caption{Numbers of sky images in real-time sky flats, meeting criteria of at least 100,000 sky ADU, and spans of less than two hours.}
-\label{fig:fw100k_membercount}
+\includegraphics[width=\columnwidth]{figs/fw100k/fw100k_summary}
+\caption{
+Characteristics of real-time sky flats, meeting criteria of at least 100,000 sky ADU, and spans of less than two hours.
+Distributions of 07B sky flats plotted as red outlined histograms, 09B sky flats are plotted as shaded histograms.
+The number of sky images required to build a sky flat, and the time span from first to last sky image depends on sky brightness and the sky-target nodding pattern.
+Real-time sky flats can consequently be refreshed in as little as 10 minutes, or span the order of an hour.
+}
+\label{fig:fw100k_summary}
+% $andpipe/wircam/skyflat/plot/fw_property_hist.py 
 \end{figure}
 
 Given the ensemble of sky integrations, our next task is to normalize the illumination in each sky image.
