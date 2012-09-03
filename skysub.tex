@@ -345,6 +345,12 @@ This number of $K_s$ sky samples was accumulated within 10--30 minutes in 07B, o
 \label{fig:fw100k_membercount}
 \end{figure}
 
+Given the ensemble of sky integrations, our next task is to normalize the illumination in each sky image.
+We also want to normalize the zeropoints of the four WIRCam detectors.
+This scaling is calibrated by the modal pixel level measured on each detector for each sky integration---denote these modal levels as $\alpha_{i,j}$ for the $i$th sky image's level in detector $j$, $j=1, 2, 3, 4$.
+Modal sky level measurements are aided by sensitive Source Extractor object masks generated from \iiwione\ \texttt{*p.fits} images (which may be mis-calibrated, but provide valuable clean images of sources).
+For each detector, we compute the median sky level seen by that chip: $\beta_j = \mathrm{median}(\alpha_{1,j}, \alpha_{2,j}\ldots \alpha_{n,j} )$.
+Each sky image in detector $j$ is then scaled by the factor $median(\beta_1, \beta_2, \beta_3, \beta_4) / \beta_j$.
 
 \section{(Old) Sky Flat Fielding}
 
