@@ -348,59 +348,15 @@ This number of $K_s$ sky samples was accumulated within 10--30 minutes in 07B, o
 Given the ensemble of sky integrations, our next task is to normalize the illumination in each sky image.
 We also want to normalize the zeropoints of the four WIRCam detectors.
 This scaling is calibrated by the modal pixel level measured on each detector for each sky integration---denote these modal levels as $\alpha_{i,j}$ for the $i$th sky image's level in detector $j$, $j=1, 2, 3, 4$.
-Modal sky level measurements are aided by sensitive Source Extractor object masks generated from \iiwione\ \texttt{*p.fits} images (which may be mis-calibrated, but provide valuable clean images of sources).
+For each frame, we also build masks for any pixels that do not sample blank sky. \sw{Source Extractor} \citep{Bertin:1996} is used to define stars and background galaxies (we use \iiwione\ \texttt{*p.fits} images to detector sources), while hand-drawn polygon regions cover diffraction spikes and the diffuse halos around bright galactic stars. These masks, along with the \iiwione\ bad pixel mask, are combined with \sw{WeightWatcher} \citep{Marmo:2008}.
 For each detector, we compute the median sky level seen by that chip: $\beta_j = \mathrm{median}(\alpha_{1,j}, \alpha_{2,j}\ldots \alpha_{n,j} )$.
-Each sky image in detector $j$ is then scaled by the factor $median(\beta_1, \beta_2, \beta_3, \beta_4) / \beta_j$.
+Each sky image in detector $j$ is then scaled by the factor $\mathcal{F}_j = \mathrm{median}(\beta_1, \beta_2, \beta_3, \beta_4) / \beta_j$.
+In Figure (\todo{TODO histogram of scaling ratios}) we show the distribution of detector-to-detector zeropoint differences (effectively $-2.5 \log_{10}(\mathcal{F}_j / \mathcal{F}_1)$.
+WIRCam detector \#1 (North-West quadrant) is clearly the most sensitive, but note the unexpectedly broad distribution in zeropoint differences that may be indicative of variable gain in the WIRCam detectors.
 
-\section{(Old) Sky Flat Fielding}
+The flat itself is built by median combination. Median combination of a stack of hundreds of $2048\times2048$ pixel image, each with a weightmap masking astronomical sources, is computationally expensive. A convenient solution was to use \sw{Swarp} \citep[an image-mosaicing software package,][]{Bertin:2002} in a mode that combined images pixel-to-pixel.
 
-Images flat-fielded by \iiwione\ show a remarkable amount of fixed structure.
-In most applications of WIRCam, these detector illumination structures are un-noticed since the median sky subtraction step, to produce the `fully pre-processed' \texttt{*p.fits}, will erase these illumination artifacts from blank sky.
-That is, median sky subtraction is treated as a secondary flat-field treatment.
-However, this is a dangerous procedure as illumination corrections must be multiplicative (as it is a correction to the relative efficiency of detecting photons across the WIRCam detector).
-Employing median sky subtraction only removes observed background signal; it does not correct the efficiency of detecting signal across the detector.
-
-The error introduced by dome flat fielding in the \iiwione\ pipeline may be realized by producing a median stack of sky images (\ie, the same procedure to make sky flats) that have been flat fielded by \iiwione\ preprocessing.
-While astrophysical sources are eliminated in a median stack, a residual detector structure is revealed that appears to be consistent across WIRCam integrations over time scales of months and years.
-These structures can be categorized as a detector-scale illumination variation, distinct patches hundreds of pixels across, and horizontal banding that appears to coincide with the 32-pixel high amplifier bands.
-
-\changeit{The flat field is also effected by what looks like a 2D pixel gain variation that changes on the order or 0.5\% in a few hours. JCC also detects this. This suggests that sky flats should be made with images windowed within 1 hour, rather than an entire QRUN, as suggested in the thesis.}
-
-We attribute the residual unflatness of \iiwione\ preprocessed products to its use of dome flats.
-The light path and colour of a reflected tungsten lamp,\footnote{CFHT \iiwione\ manual: \url{http://www.cfht.hawaii.edu/Instruments/Imaging/WIRCam/IiwiVersion1Doc.html}} rather than photons originating from the atmosphere, yields a remarkably different detector illumination calibration.
-For this project we chose to redo the flat fielding using \emph{sky flats}: flat field images that use the abundant near-infrared sky signal to describe the illumination function of the WIRCam detectors.
-The procedure for building a sky flat is listed in \S\ref{sec:skyflatpro}.
-
-\subsubsection{Construction of night sky flat fields}
-\label{sec:skyflatpro}
-
-Sky flats are made from ensembles of sky field images that have been un-done of \iiwione\ dome flat fielding.
-We group images into sets of common filer ($J$ or $K_s$), detector (1--4 in WIRCam array) and WIRCam run ID (\texttt{QRUNID}).
-We presume that the telescope and electronic signatures are stable over these camera mounting periods.
-Table \ref{tab:flattable} lists the number of images grouped into each sky flat.
-
-The ensemble of sky images being combined into a single sky flat have different illumination levels. Thus each frame is scaled (multiplicatively) so that each has a common median value in its central $400\times400$ pixel region.
-
-For each frame, we also build masks for any pixels that do not sample blank sky. \sw{Source Extractor} \citep{Bertin:1996} is used to define stars and background galaxies, while hand-drawn polygon regions cover diffraction spikes and the diffuse halos around bright galactic stars. A third mask is algorithmically produced to cover persistence signals from preceding exposures. These masks, along with the \iiwione\ bad pixel mask, are combined with \sw{WeightWatcher} \citep{Marmo:2008}.
-
-The flat itself is built by median combination. Median combination of a stack of hundreds of $2048\times2048$ pixel image, each with a weightmap, is computationally expensive. A convenient solution was to use \sw{Swarp} \citep[an image-mosaicing software package,][]{Bertin:2002} in a mode that combined images pixel-to-pixel. These median combined frames were normalized to unit mean intensity.
-
-Table \ref{tab:flattable} lists the sky flats constructed for this survey. These sky flats were divided from each sky and disk frame taken under the same conditions (filter, detector and camera installation) to create an illumination-corrected data set.
-
-
-\subsection{Sky flat performance}
-\label{sec:skyflatstats}
-
-
-\subsubsection{Comparison to \iiwione\ dome flats}
-
-To illustrate the disagreement between the sky and \iiwione\ dome flats, Fig. \ref{fig:domeflatratio} shows a percent difference map of a \iiwione\ dome flat to a sky flat produced via the procedure in \S \ref{sec:skyflatpro}. This map reveals a $\pm2\%$ discrepancy between the two types of flat fields.
-% FIXME see thesis/flatratio.py and thesis_plots/ for the flat ratio image.
-% In Ks I do see 2\% -- 4\% edge-to-edge.
-% TODO repeat this for both $J$ and $K_s$ sky flats.
-In practice, the sky flat appears to be the correct description of the WIRCam illumination as application of sky flats \emph{does} remove all types of residual WIRCam illumination features: large scale, small scale, and amplifier band structures.
-
-\subsubsection{Flatness of sky flats}
+\subsection{Flatness of sky flats}
 \label{sec:skyflatshapes}
 
 \begin{figure}[t]
@@ -457,7 +413,7 @@ For example, in 07BQ05 ($K_s$) (Fig. \ref{fig:flat_07BQ05_Ks}), we see distinct 
 
 One test of the robustness of queue sky flats is to compare the shapes of independent flats from different queue runs. Since WIRCam is removed from the telescope between queue runs, this test effectively provides an upper limit on the bias in the shape built from a finite ensemble of sky images. In figures \ref{fig:flat_flatslices_07} and \ref{fig:flat_flatslices_09} I plot the distribution of vertical and horizontal \emph{slices} through the centre of the sky flats assembled for each QSO run in a given semester, along with the residuals against the median shape. These shapes are from the median of 200 pixel-wide (1\arcmin) slices through the centre of the lower-right detector, and thus resolve specific changes in the perceived detector illumination distribution. I find (queue-) run-to-run shape variations of $\pm$ 0.4\% in both $J$ and $K_s$ bands. Given that the amplitude of $J$ sky variations is only 0.1\% (Fig. \ref{fig:flat_07BQ03_J}), most of the run-to-run flat illumination variation must be intrinsic to changes in the light path. This leaves $<0.1$\% flat field illumination variation attributable to biases in sky shape composition.
 
-\subsection{Median sky image subtraction} % (fold)
+\section{Median sky image subtraction} % (fold)
 \label{sec:mediansky}
 
 Since M31 is much larger than individual WIRCam fields, sky background is subtracted (to first order) using the sky levels found in contemporary sky images. Section \ref{sec:Observations} describes the sky-target nodding sequences chosen for the 2007B and 2009B observing campaigns. Although a scalar sky level could be estimated from a sky image, and subtracted from the paired target images, it is common to construct a median sky image, the same size as the WIRCam frames, and subtract this 2D image from target images.
