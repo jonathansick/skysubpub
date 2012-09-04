@@ -362,6 +362,25 @@ WIRCam detector \#1 (North-West quadrant) is clearly the most sensitive, but not
 
 The flat itself is built by median combination. Median combination of a stack of hundreds of $2048\times2048$ pixel image, each with a weightmap masking astronomical sources, is computationally expensive. A convenient solution was to use \sw{Swarp} \citep[an image-mosaicing software package,][]{Bertin:2002} in a mode that combined images pixel-to-pixel.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/fw100k/fw100k_betadiff}
+\caption{WIRCam detector zeropoint differences (relative to detector \#1) as measured by the median sky level seen in each detector during real-time skyflat construction (\Sec{flatbuilding}).
+Zeropoint offset of detectors numbers 2, 3 and 4 relative to detector \#1 are shown as red, green and blue histograms, respectively.
+\todo{Offsets are remarkably different between $J$ and $K_s$; what does this imply? True colour dependence, or the stochasticity of this method of scaling zeropoints in skyflats?}}
+\label{fig:fw100k_betadiff}
+\end{figure}
+
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/fw100k/fw100k_zpdiff}
+\caption{Distribution of real-time sky flat scaling factors, $\mathcal{F}_j$, as zeropoint differences relative to detector \#1 (compare to \Fig{fw100k_betadiff}).
+Unlike the $\beta$ differences, flux scaling factors are not offset between detectors and to have little scatter.
+\todo{This is troubling; why do flux scaling factors work this way? They should look much like \Fig{fw100k_betadiff}.}}
+\label{fig:fw100k_zpdiff}
+\end{figure}
+
 \subsection{Flatness of sky flats}
 \label{sec:skyflatshapes}
 
