@@ -291,7 +291,7 @@ We return to the subject of WIRCam's variable gain structure later in this secti
 \subsection{Building Sky Flats}
 \label{sec:flatbuilding}
 
-Producing sky flat is principally as simple as median combining integrations of blank sky. 
+Producing sky flats is principally as simple as median combining integrations of blank sky. 
 The \androids\ sky-target nodding observing strategy provides an abundance of `sky' images for this purpose.
 A fundamental decision is to define the window of sky integrations to be combined into a sky flat.
 
@@ -330,13 +330,12 @@ $K_s$ & 09BQ08 & 637 & 8 \\
 
 An alternative, more defensive, choice is to assume that WIRCam's illumination function and detector gain structure is unstable even over short periods.
 Here the objective is to make many sky flats that reflect the real-time flat field function---we call these Real-Time Sky Flats.
-We've chosen to RT sky flats such that the pool of sky images contain cumulative sky levels of at least 100,000 ADU, or that the time span from first to last sky integration be no longer than two hours.
+We've chosen to make RT sky flats such that the pool of sky images contain cumulative sky levels of at least 100,000 ADU, or that the time span from first to last sky integration be no longer than two hours.
 In \Fig{fw100k_summary} we consider the properties of such real-time sky flats.
 $J$-band sky flats typically require 15 integrations during the 07B campaign, or 10--25 integrations in the 09B campaign $J$-band sky levels were bimodal (see \Fig{net_sky_level}).
 Given the 07B $J$-band ST nodding pattern, 15 sky integrations are accumulated in 50 minute windows; whereas the more frequent nodding in the 09B campaign shortened this window to 20 minutes (but as long as 50--90 minutes in dark sky conditions).
 The brighter $K_s$ sky calls for just 7--13 integrations in 07B, or 10--20 integrations in the 09B campaign.
 This number of $K_s$ sky samples was accumulated within 10--30 minutes in 07B, or 10--70 minutes in 09B.
-\todo{Redo this plot to incorporate 1) total flux 2) number of sky images, and 3) window span. Remove sky flats associated with the staring fields, and with 11B.}
 
 \begin{figure}[t]
 \centering
@@ -454,7 +453,8 @@ Each image in the data set is sky subtracted by first identifying the median sky
 
 Since the \androids/WIRCam dataset uses revised flat fields that differ by 2\% from the \iiwione\ pipeline, new photometric zeropoints must be established.
 The Two Micron All Sky Survey (2MASS) Point Source Catalog (PSC) \citep{Skrutskie:2006} provides a convenient photometric system to bootstrap against.
-Typical WIRCam pointings in this survey contains $\sim 10^2$ stars measured by 2MASS.
+Typical WIRCam pointings in this survey contains 500 stars measured by 2MASS.
+% see python $andpipe/wircam/calibset/photcal/tmass_source_count.py
 Although these are not standards, the ensemble of 2MASS stars may be treated as such.
 Since the disk of M31 is crowded, and 2MASS has poor resolution (seeing $> 1\arcsec$), 2MASS point source measurements are considered unreliable on the disk.
 Instead, all zeropoint measurements are made using sky images, and those calibrations are applied to paired disk images (analogous to the median sky subtraction procedure).
@@ -463,18 +463,19 @@ Photometry of 2MASS stars in the uncrowded sky fields is done with Source Extrac
 We use the \texttt{AUTO} photometry mode to capture the full light of stars without using aperture corrections.
 Objects in the 2MASS PSC are matched to Source Extractor detections by position using the author's \sw{Mo'Astro}\footnote{\url{http://moastro.jonathansick.ca}} Python package, that manages the full 2MASS PSC in a MongoDB database.
 The 2MASS PSC contains many galaxies, and many 2MASS sources are saturated in our deeper WIRCam images.
-For our dataset, we find reliable stars have \todo{describe the selection function for J and Ks}.
+Thus we select stars with $m_J < 14$ or $m_{K_s} < 15$ magnitudes, and stars with FWHM $<1$\arcsec.
+After filtering, roughly $sim 300$ matched 2MASS sources remain in typical WIRCam images.
 
 Typical photometric calibrations attempt to model three numbers---a zeropoint $m_z$, an airmass-dependent extinction factor $K$ and a linear colour transformation coefficient between the instrumental (WIRCam) and reference (2MASS) photometric systems---in the fitting function $m_\mathrm{2MASS} = -2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) + \hat{m_z} + \hat{K} (\sec z -1) + \hat{A} (J-K_s)_\mathrm{2MASS}$.
 With queue service observing it is impossible to constrain a nightly extinction coefficient since observations are taken in short blocks spread over several weeks.
-We instead collapse airmass dependence into an instantaneously zeropoint, $m_0$, that is fit to individual images:
+We instead collapse airmass dependence into an instantaneous zeropoint, $m_0$, that is fit to individual images:
 
 \begin{equation}
   \label{eq:photcal}
   m_\mathrm{2MASS} = -2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) + \hat{m_0} + \hat{A} (J-K_s)_\mathrm{2MASS}.
 \end{equation}
 
-Given that \todo{\#} usable 2MASS stars are visible in each image, and their photometric uncertainties are $\sigma_{J,\mathrm{2MASS}}\sim X$ and $\sigma_{K_s,\mathrm{2MASS}}\sim X$, the typical uncertainty of $m_z$ is \todo{X} mag in a single image. The typical uncertainty of the instantaneous colour transformation is \todo{X}. Since $m_z$ and $A$ are only fit for sky images, zeropoints and colour transformations for science images are interpolated as the median of a sliding window of sky images large enough to statistical uncertainty of the median $m_z$ to be reduced below 0.05 mag.
+Given that $\sim 300$ usable 2MASS stars are visible in each image, and their photometric uncertainties are $\sigma_{J,\mathrm{2MASS}}\sim X$ and $\sigma_{K_s,\mathrm{2MASS}}\sim X$, the typical uncertainty of $m_z$ is \todo{X} mag in a single image. The typical uncertainty of the instantaneous colour transformation is \todo{X}. Since $m_z$ and $A$ are only fit for sky images, zeropoints and colour transformations for science images are interpolated as the median of a sliding window of sky images large enough to statistical uncertainty of the median $m_z$ to be reduced below 0.05 mag.
 
 \subsection{Chip-to-chip zeropoint consistency}
 \label{sec:chip_zp}
@@ -487,19 +488,17 @@ While the formal photometric calibration described above pools together 2MASS st
 \subsection{WIRCam--2MASS colour transformation}
 \label{sec:color_trans}
 
-Our photometric calibration permits the first comparison between the native WIRCam and 2MASS photometric systems (the transformation is ignored in the current \iiwione\ calibration).
-Although this paper ostensibly uses the $A_X$ colour transformation to reduce scatter in the zeropoint fitting function (\Eq{photcal}), presenting colours in the 2MASS system is crucial for future work with stellar population libraries.
+Our photometric calibration permits the first comparison between the native WIRCam and 2MASS photometric systems (this transformation is ignored in the current \iiwione\ calibration).
+Although this work ostensibly uses the $A_X$ colour transformation to reduce scatter in the zeropoint fitting function (\Eq{photcal}), presenting colours in the 2MASS system is crucial for future work with stellar population libraries.
 In \Fig{colourtrans} we present the instantaneous colour transformations for ANDROIDS sky images in the $J$ and $K_s$ bands.
-\todo{Comment on the scatter of these histograms, and compare to the uncertainty of instantaneous $A_J$ and $A_{K_s}$ estimates.Given the typical $J-K_s$ colour of an M31 TRGB star, comment on the shift in magnitude due to colour transformations.}
+These colour transformations are surprisingly influential, shifting instrumental $J-K_s$ colours by $\sim 30$\%.\footnote{Theoretical colour transformation estimates, based on WIRCam filter transmission curves and NIR stellar spectra, are much smaller than those presented here: $A_J\sim 0.05$, $A_{K_s}\sim 0.005$ (K. Thanjavur, private comm.). These estimates have not been reconciled.}
 
 \begin{figure}[t]
  \centering
-     \includegraphics[width=\columnwidth]{figs/A_hist.png}
- \caption{Instantaneous colour transformations fitted for individual sky images.
- \todo{Simplify histograms to total, and embed a 07 vs 09 line histograms.
- Also plot standard deviation and median colour transformation.}}
- \label{fig:colourtrans}
- % flatslice.py FIXME
+\includegraphics[width=\columnwidth]{figs/fw100k/A_hist}
+\caption{Instantaneous colour transformation coefficients, converting instrumental WIRCam photometry to the 2MASS VEGAMAG system, fitted for individual sky images (see \Eq{photcal}).}
+\label{fig:colourtrans}
+%  wircam/calibset/photcal/singleimg/colour_trans_hist.py
 \end{figure}
 
 \subsection{Zeroth-order Mosaics}
