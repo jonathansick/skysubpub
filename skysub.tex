@@ -475,7 +475,7 @@ We instead collapse airmass dependence into an instantaneous zeropoint, $m_0$, t
   m_\mathrm{2MASS} = -2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) + \hat{m_0} + \hat{A} (J-K_s)_\mathrm{2MASS}.
 \end{equation}
 
-Given that $\sim 300$ usable 2MASS stars are visible in each image, and their photometric uncertainties are $0.05 \lesssim \sigma_{\mathrm{2MASS}} \lesssim 0.3$, the typical uncertainty of $m_z$ is 0.03 mag in a single image. The typical uncertainty of the instantaneous colour transformation coefficient is 0.03. Since $m_z$ and $A$ are only fit for sky images, zeropoints and colour transformations for science images are interpolated as the median of a sliding window of sky images large enough to statistical uncertainty of the median $m_z$ to be reduced below 0.05 mag.
+Given that $\sim 300$ usable 2MASS stars are visible in each image, and their photometric uncertainties are $0.05 \lesssim \sigma_{\mathrm{2MASS}} \lesssim 0.3$, the typical uncertainty of $m_z$ is 0.03 mag in a single image. The typical uncertainty of the instantaneous colour transformation coefficient is 0.03. Since $m_z$ and $A$ are only fit for sky images, zeropoints and colour transformations for science images are interpolated as the median of a sliding window of sky images large enough to statistical uncertainty of the median $m_z$ to be reduced below 0.01 mag.
 % see $andpipe/wircam/calibset/photcal/singleimg/uncertainty_dists.py for photometry properties 
 
 \subsection{Chip-to-chip zeropoint consistency}
