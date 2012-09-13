@@ -381,62 +381,9 @@ Unlike the $\beta$ differences, flux scaling factors are not offset between dete
 \label{fig:fw100k_zpdiff}
 \end{figure}
 
-\subsection{Flatness of sky flats}
-\label{sec:skyflatshapes}
+\subsection{Stability of WIRCam Sky Flats}
+\label{sec:skyflatstability}
 
-\begin{figure}[t]
-    \centering
-        \includegraphics[width=3in]{figs/07BQ05_Ks.pdf}
-    \caption{Evolution of the shapes of sky images composed in the 07BQ05 $K_s$ sky flat. Shape is measured as the median trend across the columns (left array) and rows (right array) WIRCam images. These trends are normalized to the level at the centre of the detector, $I_o$. Axes are arranged to match the $2 \times 2$ configuration of WIRCam. Colours highlight the observation sequence of images.}
-    \label{fig:flat_07BQ05_Ks}
-    % flatshapes.py
-    % need to import code used to generate this type of plot
-    % TODO label the colourbar as "Sky Image Index", note that its ordered
-    % but not necessarily time proportional
-\end{figure}
-
-%\begin{figure}[t]
-%	\centering
-%		\includegraphics[width=\textwidth]{figs/flat/09BQ08_Ks.pdf}
-%	\caption[Sky shape composition of 09BQ08 $K_s$ sky flat]{Sky shape composition of 09BQ08 $K_s$ sky flat. See Fig. \ref{fig:flat_07BQ05_Ks} for explanation.}
-%	\label{fig:flat_09BQ08_Ks}
-%	% flatshapes.py
-%\end{figure}
-
-\begin{figure}[t]
-   \centering
-       \includegraphics[width=3in]{figs/07BQ03_J.pdf}
-   \caption[Sky shape composition of the 07BQ03 $J$ sky flat]{Sky shape composition of the 07BQ03 $J$ sky flat. See Fig. \ref{fig:flat_07BQ05_Ks} for explanation.}
-   \label{fig:flat_07BQ03_J}
-   % flatshapes.py
-\end{figure}
-
-\changeit{TODO: This section needs to be revised w.r.t. the detection of gain variability across the WIRCam detectors.}
-
-Ultimately, the accuracy of sky flats is limited by the distribution of intrinsic shapes in the NIR sky. Wide-field movies of the near-infrared sky \citep{Adams:1996} show the NIR sky glow to be akin to a moving cloud system. As such, the NIR sky seen by WIRCam is never flat---yet by definition a flat field must necessarily be built from an intrinsically uniform illumination across the telescope focal plane. In producing a NIR sky flat, we hypothesize that the \emph{mean shape} of the NIR sky, over the span of a queue run, is flat.
-
-In Figures \ref{fig:flat_07BQ05_Ks}--\ref{fig:flat_07BQ03_J}, I plot the sequences of sky shapes that are combined to produce a sky flat for typical queue runs of this survey. These `sky shapes' are built by median-compressing the sky images down rows and columns to show the general trend of the sky across $x$ and $y$ image axes. The centre-to-edge shape of the sky, across a 10.4\arcmin\ WIRCam detector, typically varies by 0.1\% in $J$, and 0.5\% in $K_s$. \emph{The performance of dome flats---$\pm2\%$ error relative to sky flats---is worse than the typical uncertainty in shape from a single sky frame.} But the ultimate accuracy of sky flats depends upon the distribution of sky shapes composed in a QSO run. And surprisingly, the shapes are not always randomly distributed, in part because of the sporadic bursts of sky observations throughout a queue run, as the CFHT queued observing program balances several difference observing projects at once.
-
-For example, in 07BQ05 ($K_s$) (Fig. \ref{fig:flat_07BQ05_Ks}), we see distinct traces of sky shapes that correspond to the sporadic activation of this observing program over several nights, for 30 minutes to hours at a time (as is the normal structure of queued observing blocks). Over the span of an \emph{observing block}, the sky will vary slowly. Once the sky is observed again on a different night in a queue run, the sky shape will be vastly different, creating the two distinct sets of shapes. In other cases where more observations are made under different sky conditions, such as 09BQ08 ($K_s$), a more continuous set of sky shapes is observed. In the $J$ band (\eg, Fig. \ref{fig:flat_07BQ03_J}), these distinct sky morphologies are not as pronounced because at the 0.1\% level, the edge-edge sky variation is closer to the intrinsic Poisson pixel noise of the sky (which itself is $\sim 0.1\%$ of the typical $J$ sky intensity per pixel).
-
-\begin{figure}[t]
- \centering
-     \includegraphics[width=3in]{figs/flatslices_07.pdf}
- \caption{Shapes of sky flats across WIRCam detector \#2 for each queue run, in $J$ and $K_s$ compiled in 2007B.}
- \label{fig:flat_flatslices_07}
- % flatslice.py
- % TODO generate the code that makes this
-\end{figure}
-
-% \begin{figure}[p]
-%  \centering
-%      \includegraphics[height=8in]{figs/flat/flatslices_09.pdf}
-%  \caption{Shapes of sky flats across WIRCam detector \#2 for each queue run, in $J$ and $K_s$ compiled in 2009B.}
-%  \label{fig:flat_flatslices_09}
-%  % flatslice.py
-% \end{figure}
-
-One test of the robustness of queue sky flats is to compare the shapes of independent flats from different queue runs. Since WIRCam is removed from the telescope between queue runs, this test effectively provides an upper limit on the bias in the shape built from a finite ensemble of sky images. In figures \ref{fig:flat_flatslices_07} and \ref{fig:flat_flatslices_09} I plot the distribution of vertical and horizontal \emph{slices} through the centre of the sky flats assembled for each QSO run in a given semester, along with the residuals against the median shape. These shapes are from the median of 200 pixel-wide (1\arcmin) slices through the centre of the lower-right detector, and thus resolve specific changes in the perceived detector illumination distribution. I find (queue-) run-to-run shape variations of $\pm$ 0.4\% in both $J$ and $K_s$ bands. Given that the amplitude of $J$ sky variations is only 0.1\% (Fig. \ref{fig:flat_07BQ03_J}), most of the run-to-run flat illumination variation must be intrinsic to changes in the light path. This leaves $<0.1$\% flat field illumination variation attributable to biases in sky shape composition.
 
 \section{Median sky image subtraction} % (fold)
 \label{sec:mediansky}
