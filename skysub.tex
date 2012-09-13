@@ -384,6 +384,45 @@ Unlike the $\beta$ differences, flux scaling factors are not offset between dete
 \subsection{Stability of WIRCam Sky Flats}
 \label{sec:skyflatstability}
 
+Our construction of skyflats permits one significant choice: how broad should the window of sky images be to reliably capture both pixel-to-pixel sensitivity, and the large scale illumination of the WIRCam detector.
+The robustness of skyflats is, on one hand, tempered by the flatness of the NIR sky itself.
+Wide-field movies of the NIR sky \citep{Adams:1996} show the NIR sky glow to be akin to a moving cloud system. As such, the NIR sky seen by WIRCam is never flat—yet by definition a flat field must necessarily be built from an intrinsically uniform illumination across the telescope focal plane.
+In producing a NIR sky flat, we hypothesize that the mean shape of the NIR sky, over the span of a queue run, is flat.
+By maximizing the time window we can marginalize over as many sky shapes as possible to produce an unbiased skyflat. This notion is embodied in the QRUN sky flats that combine hundreds of sky shapes captured across several days.
+But this also assumes that WIRCam is a \emph{stable} detector over the period of several days.
+In this section, consider the stability of WIRCam flat fields and argue for the optimal window for building WIRCam sky flats that is both responsive to changes in the WIRCam detector, and robust against sky shape biases.
+
+A simple test of WIRCam's flatfield stability is to monitor how the real-time (RT) skyflats evolve on scales of hours.
+In Fig. \todo{TODO} we plot the percent difference images between RT sky flats made at intervals of 15, 30, 60 and 90 minutes after an initial RT sky flat.
+After just 30 minutes, the shape of the RT skyflats deviate by 0.5\% from the initial flat field shape. By 60 minutes, the deviation exceeds 1\%.
+The shape of deviation is puzzling.
+The Eastern detectors (\#3--4) tend to increase in large-scale flat level, while the Western detectors tend to decrease in level (flux normalization demands this symmetry).
+Nonetheless, the spatiotemporal evolution takes many forms.
+In some cases, just the exterior edges of the detectors \#3--4 deviate (case 55137 $J$), while in others (case 55130 $K_s$) the flat tends to deviate symmetrically from the centre of the array, while in others there is a large-scale East-West deviation pattern across the detectors (case 55136 $K_s$).
+In some cases there is a discontinuity between detectors (case 55137 $J$), while in other cases the deviation is continuous across the detector array (cases 55130 and 55136 $K_s$).
+
+Are these skyflat deviations a consequence of sky shape bias in the flat fields?
+
+An alternative interpretation is that these skyflat deviations are instabilities in the WIRCam detector.
+If so, the form of these instabilities is peculiar.
+The dominant macroscopic electronic feature in WIRCam flat fields are the amplifier bands.
+Each WIRCam detector is divided into 32 horizontal bands (64 pixels high) that are each read out into independent amplifiers.
+These amplifiers have gains that result in levels that differ by 10\% in flat field images.
+But these different gains appear stable: over the course of an observing plot, the mean flat field level of each amplifier band evolved by less than 0.5\% relative to other amplifiers (see \Fig{fw100k_globalamp_timeseries_55136_Ks}) over three hours.
+Indeed, the amplifier band signature is absent from the RT skyflat difference images (Fig \todo{todo})\footnote{Quite unlike \Fig{domeflatratio} that compared dome flat and QRUN sky flat shapes.}
+
+My operative conclusion, then, is that these flat deviations are the result of a large scale glow within WIRCam. If so, then are the WIRCam RT flats picking up an additive signal (a thermal background), or a proportional signal (a large scale variability in 2D detector efficiency).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/fw100k/fw100k_globalamp_timeseries_55136_Ks.pdf}
+\caption{Time evolution of the mean flat field level of amplifier bands in the four WIRCam detectors in RT sky flats made over three hours. Amplifier bands colours are mapped to their order on the array: red lines at the bottom, green in the middle, and red at the top. Although the levels of individual amplifiers differ by 10\%, their order is consistent, indicating that amplifier gain is extremely stable. The jitter is due to chip-to-chip zeropoint normalization (\Sec{sec:flatbuilding}) uncertainty, or measurement biases.}
+\label{fig:fw100k_globalamp_timeseries_55136_Ks}
+% wircam/skyflat/plots/amp_level_global.py
+\end{figure}
+
+\todo{Include a back-of-the envelope of how flat field errors ultimately effect the sky-subtracted flux of the galaxy. Perhaps map out SB error vs galaxy SB given typical sky SB.}
+
 
 \section{Median sky image subtraction} % (fold)
 \label{sec:mediansky}
