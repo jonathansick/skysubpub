@@ -432,16 +432,24 @@ My operative conclusion, then, is that these flat deviations are the result of a
 \todo{Include a back-of-the envelope of how flat field errors ultimately effect the sky-subtracted flux of the galaxy. Perhaps map out SB error vs galaxy SB given typical sky SB.}
 
 
-\section{Median sky image subtraction} % (fold)
+\section{Median sky image subtraction}
 \label{sec:mediansky}
 
-Since M31 is much larger than individual WIRCam fields, sky background is subtracted (to first order) using the sky levels found in contemporary sky images. Section \ref{sec:Observations} describes the sky-target nodding sequences chosen for the 2007B and 2009B observing campaigns. Although a scalar sky level could be estimated from a sky image, and subtracted from the paired target images, it is common to construct a median sky image, the same size as the WIRCam frames, and subtract this 2D image from target images.
+Since M31 is much larger than individual WIRCam fields, sky background is subtracted (to first order) using the sky levels found in contemporary sky images.
+Section \ref{sec:Observations} describes the sky-target nodding sequences chosen for the 2007B and 2009B observing campaigns. 
+Although a scalar sky level could be estimated from a sky image, and subtracted from the paired target images, it is common to construct a median sky image, the same size as the WIRCam frames, and subtract this 2D image from target images.
 
-A median sky image is produced by choosing a sky image (the primary sky image) and five other sky images taken adjacent time. \changeit{(Need to note that median sky frames are made for each detector.)} From the central $800\times 800$ pixels of each image, the median sky intensity is recorded. A Source Extractor object mask, as used in \S \ref{sec:flats} for flat fielding, removes bias from astrophysical sources. Each sky image is \emph{additively} scaled to a common intensity level. This allows differences in overall sky amplitude to be ignored by the median combination. As described in \S \ref{sec:skyflatpro}, \sw{Swarp} is used to median-combine the sky images, taking into account non-sky pixel masks. This median sky image is additively scaled back to the original level of the primary sky image.
+Independent median sky images for each WIRCam detector are produced by choosing a sky image (the primary sky image) and five other sky images taken adjacent time.
+Across each frame, the modal sky intensity is recorded.
+A Source Extractor object mask, as used in \Sec{flatbuilding} for flat fielding, removes bias from astrophysical sources.
+Each sky image is \emph{additively} scaled to a common intensity level, allowing differences in overall sky amplitude to be ignored by the median combination.
+As described in \S \ref{sec:skyflatpro}, \sw{Swarp} is used to median-combine the sky images, taking into account non-sky pixel masks.
+This median sky image is additively scaled back to the original level of the primary sky image.
 
-Each image in the data set is sky subtracted by first identifying the median sky frame whose primary image was taken most closely in time. That paired median sky frame is subtracted from the image.
+Each image in the data set is sky subtracted by first identifying the median sky frame whose primary image was taken most closely in time.
+That paired median sky frame is subtracted from the image.
 
-% section mediansky (end)
+\todo{Describe the shapes of the median sky frames. Indeed, this is crucial in the discussion of \Sec{skyflatstability}. Perhaps it would be appropriate to move that section \emph{after} \Sec{mediansky} to combine the discussion of both flat fielding and the residual median sky effects.}
 
 \section{Photometric calibration}
 \label{sec:photocal}
@@ -499,7 +507,7 @@ Our photometric calibration permits the first comparison between the native WIRC
 Although this work ostensibly uses the $A_X$ colour transformation to reduce scatter in the zeropoint fitting function (\Eq{photcal}), presenting colours in the 2MASS system is crucial for future work with stellar population libraries.
 In \Fig{colourtrans} we present the instantaneous colour transformations for \androids\ sky images in the $J$ and $K_s$ bands.
 These colour transformations are surprisingly influential, shifting instrumental $J-K_s$ colours by $\sim 30$\%.\footnote{Theoretical colour transformation estimates, based on WIRCam filter transmission curves and NIR stellar spectra, are much smaller than those presented here: $A_J\sim 0.05$, $A_{K_s}\sim 0.005$ (K. Thanjavur, private comm.). These estimates have not been reconciled.}
-The scatter of instanteous colour transformation estimates can be explained almost entirely by the typical statistical uncertainty of $A_X$ estimates, suggesting that $A_X$ coefficients are constant and do not depend on atmospheric conditions.
+The scatter of instantaneous colour transformation estimates can be explained almost entirely by the typical statistical uncertainty of $A_X$ estimates, suggesting that $A_X$ coefficients are constant and do not depend on atmospheric conditions.
 
 \begin{figure}[t]
  \centering
