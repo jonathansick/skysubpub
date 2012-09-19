@@ -235,9 +235,9 @@ Users of fully-processed \iiwione\ \texttt{*p.fits} images do not directly notic
 Yet since pixel gain changes the signal in proportion to incident flux, subtraction is fundamentally the wrong operation to use.
 Our remedy is to adopt night sky flats, which use the median night sky as the illumination reference rather than a dome lamp.
 Comparing the dome and night sky flats, as in \Fig{domeflatratio}, shows how profound the choice of flat field can be.
-Our confidence in night sky flats as the \textit{correct} choice for flat fielding WIRCam lays in its ability to remove both large scale illumination features and pixel-to-pixel gain changes across WIRCam (see Fig \todo{TODO}).
-But the production of WIRCam sky flats is subtle as we find the gain structure of WIRCam to be time dependent on scales of hours, and of course the NIR night sky itself is not flat.
-A comprehensive discussion of WIRCam flat fielding is made in \S~\ref{sec:flats}.
+Our confidence in night sky flats as the \textit{correct} choice for flat fielding WIRCam lies in their ability to remove both large scale illumination features and pixel-to-pixel gain changes across WIRCam (see Fig \todo{TODO}).
+But the production of WIRCam sky flats is subtle as we find the flat field structure to be time dependent on sub-hour scales, and of course the NIR night sky itself is not flat.
+A comprehensive discussion of WIRCam flat fielding is made in \Sec{skyflatstability}.
 
 \begin{figure}[t]
    \centering
@@ -466,7 +466,7 @@ red, green and blue histograms, respectively, for the $J$-band (top) and $K_s$-b
 Our photometric calibration permits the first comparison between the native WIRCam and 2MASS photometric systems (this transformation is ignored in the current \iiwione\ calibration).
 Although this work ostensibly uses the $A_X$ colour transformation to reduce scatter in the zeropoint fitting function (\Eq{photcal}), presenting colours in the 2MASS system is crucial for future work with stellar population libraries.
 In \Fig{colourtrans} we present the instantaneous colour transformations for \androids\ sky images in the $J$ and $K_s$ bands.
-These colour transformations are surprisingly influential, shifting instrumental $J-K_s$ colours by $\sim 30$\%.\footnote{Theoretical colour transformation estimates, based on WIRCam filter transmission curves and NIR stellar spectra, are much smaller than those presented here: $A_J\sim 0.05$, $A_{K_s}\sim 0.005$ (K. Thanjavur, private comm.). These estimates have not been reconciled.}
+These colour transformations are surprisingly influential, shifting instrumental $J-K_s$ colours by $\sim 30$\%.\footnote{Theoretical colour transformation estimates, based on WIRCam filter transmission curves and NIR stellar spectra, are much smaller than those presented here: $A_J\sim 0.05$, $A_{K_s}\sim -0.005$ (K. Thanjavur, private comm.). These estimates have not been reconciled.}
 The scatter of instantaneous colour transformation estimates can be explained almost entirely by the typical statistical uncertainty of $A_X$ estimates, suggesting that $A_X$ coefficients are constant and do not depend on atmospheric conditions.
 
 \begin{figure}[t]
@@ -483,7 +483,7 @@ The width of these distributions is largely driven by the statistical uncertaint
 \label{sec:skyflatstability}
 
 Let us now consider the consequences of the WIRCam reduction pipeline described thus far in \Sec{reduction}--\ref{sec:photocal}.
-In particular, we are interested in the design choices surrounding flat fielding and median sky subtraction.
+In particular, we are interested in the consequences of flat field design choices.
 Our construction of skyflats permits one significant choice: how broad should the window of sky images be to reliably capture both pixel-to-pixel sensitivity, and the large scale illumination of the WIRCam detector.
 The robustness of skyflats is, on one hand, tempered by the flatness of the NIR sky itself.
 Wide-field movies of the NIR sky \citep{Adams:1996} show the NIR sky glow to be akin to a moving cloud system.
@@ -494,26 +494,40 @@ This notion is embodied in the \texttt{QRUN} sky flats that combine hundreds of 
 But this also assumes that WIRCam is a \emph{stable} detector over the period of several days.
 In this section, we consider the stability of WIRCam flat fields and argue for the optimal window for building WIRCam sky flats that is both responsive to changes in the WIRCam detector, and robust against sky shape biases.
 
+A first test of the accuracy of the different skyflats is their ability to produce an unbiased sky.
+In this test, measuring the median sky shape of flattened sky images, the \texttt{QRUN} sky flats readily fail (see \Fig{qrun_median_sky}).
+The axis symmetry, and presence of dust donuts imprinted on the sky indicates that WIRCam is not mechanically stable over a queue run.
+Real-time sky flats, on the other hand, do produce flat median sky images to within a high accuracy.
+But since RT sky flats, such as \texttt{FW100K}, median sky images over similar timescales as the median sky images themselves, this test is less useful.
+Instead, in \todo{Fig. TODO} we show a typical sky frame flattened by an \texttt{FW100k} sky flat.
+Such images are flat at a level of \todo{TODO}\% of the NIR sky.
+Of course, the flattness of the sky is by design! We must ask how these RT sky flats evolve, and whether such flats are actually calibrating the WIRCam gain structure and illumination function, and not simply enforcing a flat sky.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/1129459_1129489_Ks_queuesky_medsky}
+\caption{A typical median sky image from images calibrated by \texttt{QRUN} sky flats. Although the median sky images vary,  the axis symmetry and dust patterns are indicative of flat fielding bias. As shown, flat-fielding errors impose sky subtraction biases on the order of 1\% of the NIR sky level, which is unacceptable for this M31 survey.}
+\label{fig:qrun_median_sky}
+\end{figure}
+
 A simple test of WIRCam's flatfield stability is to monitor how the real-time (RT) skyflats evolve on scales of hours.
 In Fig. \todo{TODO} we plot the percent difference images between RT sky flats made at intervals of 15, 30, 60 and 90 minutes after an initial RT sky flat.
 After just 30 minutes, the shape of the RT skyflats deviate by 0.5\% from the initial flat field shape. By 60 minutes, the deviation exceeds 1\%.
-The shape of deviation is puzzling.
-The Eastern detectors (\#3--4) tend to increase in large-scale flat level, while the Western detectors tend to decrease in level (flux normalization demands this symmetry).
+Evidently, the WIRCam flat field function is stable on timescales less than 30 minutes, much less than a queue run!
+
 Nonetheless, the spatiotemporal evolution takes many forms.
+The Eastern detectors (\#3--4) tend to increase in large-scale flat level, while the Western detectors tend to decrease in level (flux normalization demands this symmetry).
 In some cases, just the exterior edges of the detectors \#3--4 deviate (case 55137 $J$), while in others (case 55130 $K_s$) the flat tends to deviate symmetrically from the centre of the array, while in others there is a large-scale East-West deviation pattern across the detectors (case 55136 $K_s$).
 In some cases there is a discontinuity between detectors (case 55137 $J$), while in other cases the deviation is continuous across the detector array (cases 55130 and 55136 $K_s$).
+Generally, the axis symmetry of the sky flat evolution, along with continuity across detectors, is further evidence of mechanical instabilities that change the WIRCam illumination function on scales of minutes.
 
-Are these skyflat deviations a consequence of sky shape bias in the flat fields?
-
-An alternative interpretation is that these skyflat deviations are instabilities in the WIRCam detector.
-If so, the form of these instabilities is peculiar.
+An alternative interpretation is that these sky flat deviations are instabilities in the WIRCam detector electronics.
 The dominant macroscopic electronic feature in WIRCam flat fields are the amplifier bands.
 Each WIRCam detector is divided into 32 horizontal bands (64 pixels high) that are each read out into independent amplifiers.
 These amplifiers have gains that result in levels that differ by 10\% in flat field images.
-But these different gains appear stable: over the course of an observing plot, the mean flat field level of each amplifier band evolved by less than 0.5\% relative to other amplifiers (see \Fig{fw100k_globalamp_timeseries_55136_Ks}) over three hours.
+But these different gains appear stable: over the course of an observing block, the mean flat field level of each amplifier band evolved by less than 0.1\% relative to other amplifiers (see \Fig{fw100k_globalamp_timeseries_55136_Ks}) over three hours.
 Indeed, the amplifier band signature is absent from the RT skyflat difference images (Fig \todo{todo})\footnote{Quite unlike \Fig{domeflatratio} that compared dome flat and QRUN sky flat shapes.}
-
-My operative conclusion, then, is that these flat deviations are the result of a large scale glow within WIRCam. If so, then are the WIRCam RT flats picking up an additive signal (a thermal background), or a proportional signal (a large scale variability in 2D detector efficiency).
+Sky flat evolution does appear driven by changes in the large scale detector illumination function, not electronic instabilities.
 
 \begin{figure}[t]
 \centering
@@ -522,6 +536,8 @@ My operative conclusion, then, is that these flat deviations are the result of a
 \label{fig:fw100k_globalamp_timeseries_55136_Ks}
 % wircam/skyflat/plots/amp_level_global.py
 \end{figure}
+
+Though we have determined that real-time sky flats are crucial for tracking the WIRCam flat fielding function, we are also confronted with the practical limit for WIRCam flat fielding.
 
 \todo{Include a back-of-the envelope of how flat field errors ultimately effect the sky-subtracted flux of the galaxy. Perhaps map out SB error vs galaxy SB given typical sky SB.}
 
