@@ -588,24 +588,26 @@ Individual integrations are coloured by their time after the first disk integrat
 \label{fig:frame_residuals_M31-37_Ks_QRUN}
 \end{figure*}
 
-\subsection{Zeroth-order Mosaics}
-\label{sec:rawmosaic}
 
-\begin{figure}[t]
-	\centering
-		\includegraphics[width=3.5in]{figs/raw_mosaics}
-	\caption{Median sky subtracted WIRCam $J$ (left) and $K_s$ (right) mosaics of M31.}
-	\label{fig:raw_mosaics}
-	% made with skysubpub/mosaic_plots.py
-	% + skysubpub/raw_mosaic.py
-\end{figure}
-
-In Fig. \ref{fig:raw_mosaics} we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed thus far. Although these basic image preparations dramatically improve image quality the \iiwione\ pipeline (particularly with regards to flat fielding performance), we see that classical NIR sky subtraction on a target as large as M31 is limited by an uncertainty of 1\% of the sky intensity. Classically, the true value of the sky on the disk of M31 is lost by the temporal and spatial variations of skyglow between disk and sky field observations.
-
-\section{Scalar Sky Optimization}
+\section{Sky Offset Optimization}
 \label{sec:scalar}
 
-In this section, we demonstrate that the residual sky bias in each observation can be inferred from information in the overlaps of pairs of images in the mosaic. Each classically sky subtracted image of the M31 disk is a combination of the true surface intensity, $I_i$, and a residual sky intensity, $\epsilon_i$. Consider a pair of images, $i$ and $j$, that overlap on the galaxy: their difference is $(I_i+\epsilon_i) - (I_j+\epsilon_j) = \epsilon_i - \epsilon_j$. Given this measurement $\epsilon_i - \epsilon_j$ of residual sky intensity, we introduce \emph{sky offsets}, $\Delta$, for each observation so that
+\begin{figure}[t]
+\centering
+\includegraphics[width=3.5in]{figs/raw_mosaics}
+\caption{Median sky subtracted WIRCam $J$ (left) and $K_s$ (right) mosaics of M31.}
+\label{fig:raw_mosaics}
+% made with skysubpub/mosaic_plots.py
+% + skysubpub/raw_mosaic.py
+\end{figure}
+
+Despite our attention thusfar to real-time sky flat fielding, and median sky image subtraction, we have not achieved our goal of recovering the true NIR surface brightness of M31.
+In \Fig{raw_mosaics} we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed thus far.
+Although these basic image preparations dramatically improve image quality the \iiwione\ pipeline (particularly with regards to flat fielding performance), we see that classical NIR sky subtraction has fundamentally limited accuracy.
+Classically, the true value of the sky on the disk of M31 is lost by the temporal and spatial variations of skyglow between disk and sky field observations.
+
+To advance on our goal, we demonstrate in this section how the residual sky bias in each observation can be inferred from information in the overlaps of pairs of images in the mosaic.
+Each classically sky subtracted image of the M31 disk is a combination of the true surface intensity, $I_i$, and a residual sky intensity, $\epsilon_i$. Consider a pair of images, $i$ and $j$, that overlap on the galaxy: their difference is $(I_i+\epsilon_i) - (I_j+\epsilon_j) = \epsilon_i - \epsilon_j$. Given this measurement $\epsilon_i - \epsilon_j$ of residual sky intensity, we introduce \emph{sky offsets}, $\Delta$, for each observation so that
 
 \begin{equation}
     (I_i + \epsilon_i - \Delta_i) - (I_j + \epsilon_j - \Delta_i) \rightarrow 0
