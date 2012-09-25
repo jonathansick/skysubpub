@@ -602,7 +602,7 @@ Individual integrations are coloured by their time after the first disk integrat
 \end{figure}
 
 Despite our attention thus far to real-time sky flat fielding, and median sky image subtraction, we have not achieved our goal of recovering the true NIR surface brightness of M31.
-In \Fig{raw_mosaics} we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed thus far.
+In \Fig{raw_mosaics} we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed thus far with the pipeline discussed in \Sec{reduction}--\Sec{photocal}.
 Although these basic image preparations dramatically improve image quality the \iiwione\ pipeline (particularly with regards to flat fielding performance), we see that classical NIR sky subtraction has fundamentally limited accuracy.
 Classically, the true value of the sky on the disk of M31 is lost by the temporal and spatial variations of skyglow between disk and sky field observations.
 
@@ -619,21 +619,86 @@ Given this measurement $\epsilon_i - \epsilon_j$ of residual sky intensity, we i
 Given a single pair of images, the inference of $\Delta_i$ and $\Delta_j$ is degenerate given the single difference image, $\epsilon_i-\epsilon_j$.
 But in a mosaic, each image is coupled (has overlapping domain) with many other images, and the mosaic itself can be considered as a network of coupled images.
 If we model the residual sky intensity $\epsilon_i$ as having a simple shape across the observed images, the single offset $\Delta_i$ will minimize all difference images involving image $i$.
-That is, sky offsets can be chosen by the non-linear optimization of
+That is, sky offsets can be chosen by the optimization of
 
 \begin{equation}
     \sum_{\forall i,j} [(\epsilon_i - \epsilon_j) - \Delta_i + \Delta_j] \rightarrow 0
     \label{eq:scalartheoryobj}
 \end{equation}
 
-\noindent over all coupled pairs $i,j$ in the mosaic.
+\noindent over all coupled image pairs $(i,j)$ in the mosaic.
 Note that absolute uniqueness is not guaranteed.
 In the limit that sky offsets $\Delta_i$ are drawn from a Gaussian distribution, with standard deviation $\sigma_\Delta$, the absolute brightness of the whole mosaic will be uncertain by $\sigma_\Delta / \sqrt{N_\mathrm{images}}$.
 The consequences of this uncertainty are revisited in \S\todo{TODO}.
 
-This algorithm of introducing sky offsets that minimize the differences of all image pairs previously been implemented in the Montage mosaicing package \citep{Berriman:2008}. In that software, 1) images are rectified onto a mosaic pixel grid, 2) difference images are computed, and 3) sky offsets are iteratively chosen by looping through each image pair and choosing the offset needed to minimize the difference image of that pair, counting previous sky offset estimates. Rather than employ Montage for this M31 project, we were motivated to develop a new sky offset optimization algorithms for two reasons: to understand and improve the optimization convergence performance for a large data set, and to deeply understand the systematics and uncertainties of NIR sky subtraction residuals. Given the profound influence of sky residuals on the derived shape of M31's NIR disk, an assessment of uncertainty is crucial. An assessment of errors will be carried out in \todo{\S todo}. The convergence performance of sky optimization algorithms will be addressed in the proceeding sections.
+\subsection{Implementations}
+\label{sec:offset_algos}
+
+The sky offset optimization summarized in \Eq{scalartheoryobj} is difficult to implement because it is over-constrained, requiring a non-linear optimization.
+Any single image is connected in a network (visualized in Fig. \todo{todo}) with others; and any error in the surface brightness \emph{shapes} of fields will result in an imperfect match.
+In this work, we consider two implementations of \Eq{scalartheoryobj}.
+First, we review the \sw{Montage} software package in \Sec{montage_algo}, and then introduce an alternative in \Sec{msrnm_algo}.
+
+\subsubsection{Montage}
+\label{sec:montage_algo}
+
+\sw{Montage} is a FITS mosaicing package \citep{Berriman:2008} originally written for the 2MASS survey, and includes sky offset estimation (background rectification, in their terminology) functionality.
+In that software, images are rectified onto a mosaic pixel grid, and difference images are computed among overlapping images.
+Sky offsets are then chosen iteratively by looping through each image pair and choosing the offset needed to minimize the difference image of that pair, counting previous sky offset estimates.
+That is, at each step the sky levels of the two images are increased and decreased by half the total intensity difference.
+Sky offsets are refined over several loops through the entire set of overlapping image pairs until convergence is reached (adjustments to sky offsets diminish below a threshold).
+Although this iterative implementation of sky offset optimization is elegant, its accuracy has never been formally analyzed in literature.
+In particular, we are interested in the robustness of Montage sky offsets against local minima in the $N$-dimensional solution space of sky offsets, given a mosaic of $N$ independent images.
+
+\subsubsection{Multi-Start Reconverging Downhill Simplex}
+\label{sec:msrnm_algo}
+
+The detector field stacking phase (\S \ref{sec:stacks}) created high-\sn\ mosaics of the region covered by a given WIRCam detector at each survey field.
+Although these detector stacks are best estimates of the galaxy surface intensity at their regions, those stacks have systematic sky surface intensity uncertainties of $\sigma_s$.
+By combining stacks into blocks (step 2 of the hierarchical offset algorithm) and combining blocks in a mosaic (step 3), those uncertainties are diminished.
+
+Unlike stack production, offsetting stacks into blocks and blocks into mosaics requires non-linear optimization since the images do not overlap simultaneously, but rather overlap in a network.
+
+Let us define the objective function that encapsulates the effect of scalar sky offsets on reducing the intensity difference between coupled images:
+
+\begin{equation}
+    \mathcal{F} \left(\Delta_1,\ldots,\Delta_n \right) = \sum_{i,j} \mathcal{W}_{ij} \left( \langle \vect{I}_i - \vect{I}_j \rangle - \Delta_i + \Delta_j \right)^2,
+    \label{eq:objf}
+\end{equation}
+
+\noindent which we intend to minimize by finding the optimal set of scalar sky offsets $\Delta_i$ for each of the detector fields $i$.
+Note that each coupled image pair is its own term in the objective summation, and that there are as many degrees of freedom ($\Delta_i$) as there are images in the mosaic.
+Each coupling is tempered by a weighting term $\mathcal{W}_{ij}$:
+
+\begin{equation}
+    \mathcal{W}_{ij} = \frac{A_{ij}}{\sigma_{\mathrm{\Delta ij}}},
+\end{equation}
+
+\noindent so that more priority is given to couplings of larger areas ($A_{ij}$), and small standard deviations of their difference images ($\sigma_{\Delta ij}$).
+
+Note that the objective function in Eq. \ref{eq:objf} puts no constraint on the net sky offset: $\sum \Delta_i$.
+Assuming that sky subtraction errors are normally distributed, and not biased, sky subtraction offsets should not add a net amount of flux to the mosaic.
+Fortunately, it is possible to impose this constraint \textit{post facto} by subtracting the mean offset from the sky offsets:
+
+\begin{equation}
+    \Delta_i^* = \Delta_i - n^{-1}\sum_{j=1}^n \Delta_j.
+    \label{eq:netzero}
+\end{equation}
+
+Given the image coupling records, I optimize the set of $\Delta_i$ using the \cite{Nelder:1965} (NM) downhill simplex algorithm.
+This NM algorithm has the advantage of being naturally multi-dimensional, and being able to work without knowledge of the gradient of the objective function.
+Instead, the NM algorithm operates by constructing a geometric simplex of $N+1$ dimensions that samples the sky offset parameter space.
+By evaluating the objective function at each vertex of the simplex, the NM algorithm adapts simplex's shape to ultimately contract upon a minimum.
+
+But NM has two weaknesses.
+First, it is a \emph{greedy} optimizer that will converge into any local minimum, without necessarily seeking the global minimum.
+Second, for high-dimension optimizations (many fields in the mosaic), the NM may fail to converge in a reasonable number of objective function evaluations \citep{Neumann:2006}.
+Without solving these issues, a minimization of Eq. \ref{eq:objf} with an off-the-shelf NM code yields a mosaic with obvious discontinuities across fields.
+To solve the first problem, I develop a Multi-Start Reconverging NM (MSRNM) downhill simplex driver in Appendix \ref{cha:simplex}.
+This algorithm allows the NM to cumulatively cover a larger portion of parameter space to probabilistically ensure convergence into a global optimum.
 
 \subsection{Hierarchical sky offset optimization}
+\label{sec:hierarchical_algo}
 
 Sky offset optimization is challenging because of dimensionality. Assuming that sky residuals are \emph{constant} across a frame (see \S TODO for the case of planar residuals), each image frame represents a new dimension ($\Delta_i$) in the optimization. Considering that the WIRCam array produces four image frames for every exposure, the combined 2007B and 2009B data sets consist of 3924 $J$ and 4972 $K_s$ image frames that cover the disk of M31. Such a large optimization is computationally ambitious, but also needless.
 
@@ -648,7 +713,7 @@ Thus in Step 1 we combine the frames in a detector field to produce a \emph{dete
 \todo{Label the sky offsets that are produced in each step.}
 
 \subsection{Construction of detector field stacks}
-\label{sec:stacks}
+\label{sec:stack_algo}
 
 Scalar sky offsets are most easily computed between the images of a detector field, since individual image frames in a detector field share a common footprint. That is, each image in a detector field is an (approximately) independent random estimate of the true surface brightness of the detector field. The mean surface brightness in the stack of images on a detector field is taken as the best estimate of the actual surface brightness. For each image frame, the difference between the surface brightness of the image and its best-estimate surface brightness of the detector field is taken scalar offset that brings the image to the level of the detector field stack.
 
@@ -656,37 +721,8 @@ The best estimate surface brightness for each detector field stack is first esti
 
 A solution is to estimate offsets for each frame compared to this first detector field stack. Offsets are computed as the median of the difference image between the stack and individual image frames, as described in \todo{Appendix on overlap detection}. The original image frames, now with offsets applied, are re-combined into a detector field stack image. Now edge-effects are smaller. Nonetheless, offsets are estimated a second time to produce a finalized detector field stack image.
 
-\subsection{Non-linear optimization of block and mosaic sky offsets}
+\todo{Summarize production of blocks and mosaics}.
 
-The detector field stacking phase (\S \ref{sec:stacks}) created high-\sn\ mosaics of the region covered by a given WIRCam detector at each survey field. Although these detector stacks are best estimates of the galaxy surface intensity at their regions, those stacks have systematic sky surface intensity uncertainties of $\sigma_s$. By combining stacks into blocks (step 2 of the hierarchical offset algorithm) and combining blocks in a mosaic (step 3), those uncertainties are diminished.
-
-Unlike stack production, offsetting stacks into blocks and blocks into mosaics requires non-linear optimization since the images do not overlap simultaneously, but rather overlap in a network.
-
-Let us define the objective function that encapsulates the effect of scalar sky offsets on reducing the intensity difference between coupled images:
-
-\begin{equation}
-    \mathcal{F} \left(\Delta_1,\ldots,\Delta_n \right) = \sum_{i,j} \mathcal{W}_{ij} \left( \langle \vect{I}_i - \vect{I}_j \rangle - \Delta_i + \Delta_j \right)^2,
-    \label{eq:objf}
-\end{equation}
-
-\noindent which we intend to minimize by finding the optimal set of scalar sky offsets $\Delta_i$ for each of the detector fields $i$. Note that each coupled image pair is its own term in the objective summation, and that there are as many degrees of freedom ($\Delta_i$) as there are images in the mosaic. Each coupling is tempered by a weighting term $\mathcal{W}_{ij}$:
-
-\begin{equation}
-    \mathcal{W}_{ij} = \frac{A_{ij}}{\sigma_{\mathrm{\Delta ij}}},
-\end{equation}
-
-\noindent so that more priority is given to couplings of larger areas ($A_{ij}$), and small standard deviations of their difference images ($\sigma_{\Delta ij}$).
-
-Note that the objective function in Eq. \ref{eq:objf} puts no constraint on the net sky offset: $\sum \Delta_i$. Assuming that sky subtraction errors are normally distributed, and not biased, sky subtraction offsets should not add a net amount of flux to the mosaic. Fortunately, it is possible to impose this constraint \textit{post facto} by subtracting the mean offset from the sky offsets:
-
-\begin{equation}
-    \Delta_i^* = \Delta_i - n^{-1}\sum_{j=1}^n \Delta_j.
-    \label{eq:netzero}
-\end{equation}
-
-Given the image coupling records, I optimize the set of $\Delta_i$ using the \cite{Nelder:1965} (NM) downhill simplex algorithm. This NM algorithm has the advantage of being naturally multi-dimensional, and being able to work without knowledge of the gradient of the objective function. Instead, the NM algorithm operates by constructing a geometric simplex of $N+1$ dimensions that samples the sky offset parameter space. By evaluating the objective function at each vertex of the simplex, the NM algorithm adapts simplex's shape to ultimately contract upon a minimum.
-
-But NM has two weaknesses. First, it is a \emph{greedy} optimizer that will converge into any local minimum, without necessarily seeking the global minimum. Second, for high-dimension optimizations (many fields in the mosaic), the NM may fail to converge in a reasonable number of objective function evaluations \citep{Neumann:2006}. Without solving these issues, a minimization of Eq. \ref{eq:objf} with an off-the-shelf NM code yields a mosaic with obvious discontinuities across fields. To solve the first problem, I develop a Multi-Start Reconverging NM (MSRNM) downhill simplex driver in Appendix \ref{cha:simplex}. This algorithm allows the NM to cumulatively cover a larger portion of parameter space to probabilistically ensure convergence into a global optimum.
 
 % ============================================================================
 \section{Analysis of Scalar Sky Offsets}
