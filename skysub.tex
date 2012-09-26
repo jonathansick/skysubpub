@@ -650,14 +650,17 @@ Sky offsets are refined over several loops through the entire set of overlapping
 Although this iterative implementation of sky offset optimization is elegant, its accuracy has never been formally analyzed in literature.
 In particular, we are interested in the robustness of Montage sky offsets against local minima in the $N$-dimensional solution space of sky offsets, given a mosaic of $N$ independent images.
 
-\subsubsection{Multi-Start Reconverging Downhill Simplex}
+\subsubsection{A New Implementation based on the Multi-Start Reconverging Downhill Simplex}
 \label{sec:msrnm_algo}
 
-The detector field stacking phase (\S \ref{sec:stacks}) created high-\sn\ mosaics of the region covered by a given WIRCam detector at each survey field.
-Although these detector stacks are best estimates of the galaxy surface intensity at their regions, those stacks have systematic sky surface intensity uncertainties of $\sigma_s$.
-By combining stacks into blocks (step 2 of the hierarchical offset algorithm) and combining blocks in a mosaic (step 3), those uncertainties are diminished.
+As an alternative to the iterative algorithm used by \sw{Montage}, we introduce here an implementation based on the \cite{Nelder:1965} Downhill-Simplex algorithm.
+Like \sw{Montage}, our pipeline begins with a set of images resampled to a common pixel grid in an Aitoff projection with the native WIRCam pixel scale (0.3 \arcsec/pixel).
+For this we use \sw{Swarp} \citep{Bertin:2002} in resample-only mode.
+We identify overlaps between images in a brute-force fashion according to their frames in the mosaic pixel space, defined by the \texttt{CRPIX} and \texttt{NAXIS}$i$ header values of the resampled images.
 
-Unlike stack production, offsetting stacks into blocks and blocks into mosaics requires non-linear optimization since the images do not overlap simultaneously, but rather overlap in a network.
+For each overlapping image pair, we compute a difference image, and ultimately a median difference, $\langle \vect{I}_i - \vect{I}_j \rangle$.
+While computing the median difference, we mask bad pixels using weight maps (propagated by \sw{Swarp}) and expand this mask with sigma clipping.
+Along with a difference estimate, we also record the area $A_{ij}$ of unmasked pixels in the overlap, and the standard deviation of the difference, $\sigma_{ij}$.
 
 Let us define the objective function that encapsulates the effect of scalar sky offsets on reducing the intensity difference between coupled images:
 
@@ -671,12 +674,12 @@ Note that each coupled image pair is its own term in the objective summation, an
 Each coupling is tempered by a weighting term $\mathcal{W}_{ij}$:
 
 \begin{equation}
-    \mathcal{W}_{ij} = \frac{A_{ij}}{\sigma_{\mathrm{\Delta ij}}},
+    \mathcal{W}_{ij} = \frac{A_{ij}}{\sigma_{ij}},
 \end{equation}
 
-\noindent so that more priority is given to couplings of larger areas ($A_{ij}$), and small standard deviations of their difference images ($\sigma_{\Delta ij}$).
+\noindent so that more priority is given to couplings of larger areas ($A_{ij}$), and small standard deviations of their difference images ($\sigma_{ij}$).
 
-Note that the objective function in Eq. \ref{eq:objf} puts no constraint on the net sky offset: $\sum \Delta_i$.
+Note that the objective function in \Eq{objf} puts no constraint on the net sky offset: $\sum \Delta_i$.
 Assuming that sky subtraction errors are normally distributed, and not biased, sky subtraction offsets should not add a net amount of flux to the mosaic.
 Fortunately, it is possible to impose this constraint \textit{post facto} by subtracting the mean offset from the sky offsets:
 
@@ -685,7 +688,7 @@ Fortunately, it is possible to impose this constraint \textit{post facto} by sub
     \label{eq:netzero}
 \end{equation}
 
-Given the image coupling records, I optimize the set of $\Delta_i$ using the \cite{Nelder:1965} (NM) downhill simplex algorithm.
+Given the image coupling records, we optimize the set of $\Delta_i$ using the \cite{Nelder:1965} (NM) downhill simplex algorithm.
 This NM algorithm has the advantage of being naturally multi-dimensional, and being able to work without knowledge of the gradient of the objective function.
 Instead, the NM algorithm operates by constructing a geometric simplex of $N+1$ dimensions that samples the sky offset parameter space.
 By evaluating the objective function at each vertex of the simplex, the NM algorithm adapts simplex's shape to ultimately contract upon a minimum.
@@ -693,36 +696,85 @@ By evaluating the objective function at each vertex of the simplex, the NM algor
 But NM has two weaknesses.
 First, it is a \emph{greedy} optimizer that will converge into any local minimum, without necessarily seeking the global minimum.
 Second, for high-dimension optimizations (many fields in the mosaic), the NM may fail to converge in a reasonable number of objective function evaluations \citep{Neumann:2006}.
-Without solving these issues, a minimization of Eq. \ref{eq:objf} with an off-the-shelf NM code yields a mosaic with obvious discontinuities across fields.
-To solve the first problem, I develop a Multi-Start Reconverging NM (MSRNM) downhill simplex driver in Appendix \ref{cha:simplex}.
+Without solving these issues, a minimization of \Eq{objf} with an off-the-shelf NM code yields a mosaic with obvious discontinuities across fields.
+To solve the first problem, we develop a Multi-Start Reconverging NM (MSRNM) downhill simplex driver.
 This algorithm allows the NM to cumulatively cover a larger portion of parameter space to probabilistically ensure convergence into a global optimum.
+
+Several approaches have been made in the literature to globalize the NM algorithm in the high-dimensional case.
+\cite{Harris:2001} use the NM simplex to fit stellar populations, of roughly 50 parameters, to colour magnitude diagrams in their \sw{StarFISH} application.
+Solving for scalar sky offsets in this WIRCam survey has roughly the same degree of complexity.
+In the case of \sw{StarFISH}, \citeauthor{Harris:2001} combine the NM simplex optimization with brute force line searches.
+
+An initial grid search indicates a rough starting point for the simplex.
+The simplex is allowed to converge upon as minimum through the standard NM algorithm.
+Retaining the best point, the other points in the simplex are inflated, and the simplex is again allowed to converge upon a minimum---hopefully the original.
+Yet this minimum may still be a local minimum.
+To guard against this, points near the minimum are probed.
+If the point is more ideal, then that direction of parameter space is searched until the objective function begins to increase.
+This random linear search through parameter space is repeated several thousand times.
+
+Another globalization recipe is to start the simplex from a large ensemble of starting positions in parameter space. The global minimum of the objective function should be accessible to the NM algorithm from some portion of the imaginable starting parameter space. An advantage of this is that each start of the downhill simplex can be carried out in parallel on a computing cluster. There are recipes in the literature for choosing the best ensemble of starting simplexes: some based upon a running memory of past downhill simplex runs, and others simply based upon having a uniform coverage of parameter space \citep[\eg][]{Luersen:2004,Wolff:2004}.
+
+The globalization strategy developed here is borrows from the techniques in the literature.
+\todo{(add citations.)}
+While it is not proven ideal, or most efficient, algorithm, this strategy is easy to implement and provides adequate results.
+This strategy wraps the core NM algorithm with multiple random starting positions, and multiple restarts at each converged location until a stable---and global---minimum is found.
+Hence this technique is informally termed the Multi-start Reconverging Nelder Mead Simplex (MSRNM).
+
+\paragraph{Multi-start:} First, a total of $N_s$ starts of the NM algorithm are designated.
+Each start is intended to be run independently across multiple CPU cores.
+For each start, an initial simplex is generated randomly.
+Since each point in the $N$ by $N+1$ simplex is a suggested sky offset for a given field, each offset is randomly sampled from the expected distribution of image-to-image sky offsets.
+That is, a normal distribution of mean zero intensity, and standard deviation of $\sigma_\mathrm{s}$ (\todo{update that symbol}).
+
+Each initial simplex is allowed to converge according to the NM algorithm.
+A simplex is deemed converged once each point has changed by no more than $10^{-4}$ of the previous iteration, or the objective function's value has changed by no more than $10^{-4}$ of the previous iteration. 
+
+\paragraph{Restart:} Upon convergence, the optimal point in the simplex, $\vect{p}$, is recorded.
+A new simplex is then generated where one vertex is $\vect{p}$, and the rest are $\vect{p}+\vect{\delta}$ where $\vect{\delta}$ is a normal random variable of mean zero, and standard deviation $\sigma_\mathrm{restart}$.
+That is, the simplex of the restart retains one vertex upon the previously found minimum, while the other vertices surround that minimum.
+If the minimum is indeed the global minimum, then the NM algorithm will quickly reconverge.
+But more often than not, the other random vertices will probe an even better parameter space, causing the NM restart to converge upon a new minimum.
+When a new minimum is found, the process of restarting is repeated until the same minimum is consecutively arrived upon.
+
+\todo{Update this discussion: The choice of $\sigma_\mathrm{restart}$ has not been studied.
+In the scalar sky optimizations presented here, a restart dispersion half the size of the original point distribution is used.
+The number of simplex starts, $N_s$, is also highly application specific.
+For scalar sky offsets, the number of optimization dimensions is used ($N_d$); but planar sky optimizations appears to require at least $100N_d$.
+Rather than starting a fixed number of optimizations, it may be better to continue creating new simplex starting points until the objective function decreases below a physically reasonable target level.}
 
 \subsection{Hierarchical sky offset optimization}
 \label{sec:hierarchical_algo}
 
-Sky offset optimization is challenging because of dimensionality. Assuming that sky residuals are \emph{constant} across a frame (see \S TODO for the case of planar residuals), each image frame represents a new dimension ($\Delta_i$) in the optimization. Considering that the WIRCam array produces four image frames for every exposure, the combined 2007B and 2009B data sets consist of 3924 $J$ and 4972 $K_s$ image frames that cover the disk of M31. Such a large optimization is computationally ambitious, but also needless.
+Sky offset optimization is challenging because of dimensionality. Assuming that sky residuals are \emph{constant} across a frame, each image frame represents a new dimension ($\Delta_i$) in the optimization. Considering that the WIRCam array produces four image frames for every exposure, the combined 2007B and 2009B data sets consist of 3924 $J$ and 4972 $K_s$ image frames that cover the disk of M31. Such a large optimization is computationally ambitious, but also needless.
 
 Our sky optimization algorithm breaks the optimization of sky offsets into three sequential steps, which we call \emph{hierarchical sky offset optimization}.
 
-The 2007B and 2009B WIRCam surveys observed a total of 39 \emph{fields} across the M31 disk (illustrated in Fig. \ref{fig:fieldmap}). Each WIRCam field is imaged with four detectors, arranged in a $2\times 2$ grid. Let us define a \emph{detector field} as the collection of images that are taken with a given detector, at a given field. Images in a detector field have the greatly simplifying property of all overlapping across a dominant section of the image frame.
+The 2007B and 2009B WIRCam surveys observed a total of 39 \emph{fields} across the M31 disk (illustrated in \Fig{fieldmap}).
+Each WIRCam field is imaged with four detectors, arranged in a $2\times 2$ grid.
+Let us define a \emph{detector field} as the collection of images that are taken with a given detector, at a given field.
+Images in a detector field have the greatly simplifying property of all overlapping across a dominant section of the image frame.
 
-Thus in Step 1 we combine the frames in a detector field to produce a \emph{detector field stack}. The combined 2007B and 2009B surveys have 156 such stacks per filter. In Step 2, the four detector field stacks within each field can be fitted into a \emph{block}. A block is a fundamental unit of the mosaic, as all images that are combined within a block were observed under contemporaneous sky conditions. Finally, in Step 3, the 39 blocks can be fitted into a galaxy-wide mosaic for each filter.
+Thus our M31 WIRCam mosaics are assembled in three steps.
+In Step 1 we combine the frames in a detector field to produce a \emph{detector field stack}.
+The combined 2007B and 2009B surveys have 156 such stacks per filter.
+In Step 2, the four detector field stacks within each field can be fitted into a \emph{block}.
+A block is a fundamental unit of the mosaic, as all images that are combined within a block were observed under contemporaneous sky conditions.
+Finally, in Step 3, the 39 blocks can be fitted into a galaxy-wide mosaic for each filter.
 
-\todo{Note how the certainty of sky offsets increases with the number of couplings}
+Note that detector field stacks cannot be made with a simple median-combination of frames in a detector field.
+Since the frames are dithered, the periphery of the detector field is covered by subsets of the frames.
+A simple median combination, then, produces edges that have background levels that are biased compared to the central pixels that are covered by the entire frame set.
+A solution is to estimate offsets for each frame compared to this first detector field stack.
+Offsets are computed as the median of the difference image between the stack and individual image frames.
+The original image frames, now with offsets applied, are re-combined into a detector field stack image.
+Now edge-effects are smaller.
+Nonetheless, offsets are estimated a second time to produce a finalized detector field stack image.
+Let us denote the offsets applied to individual frames at this first stage as $\Delta_F$.
 
-\todo{Label the sky offsets that are produced in each step.}
-
-\subsection{Construction of detector field stacks}
-\label{sec:stack_algo}
-
-Scalar sky offsets are most easily computed between the images of a detector field, since individual image frames in a detector field share a common footprint. That is, each image in a detector field is an (approximately) independent random estimate of the true surface brightness of the detector field. The mean surface brightness in the stack of images on a detector field is taken as the best estimate of the actual surface brightness. For each image frame, the difference between the surface brightness of the image and its best-estimate surface brightness of the detector field is taken scalar offset that brings the image to the level of the detector field stack.
-
-The best estimate surface brightness for each detector field stack is first estimated as the mean-combination of all images in a detector field stack.  Since the telescope dithers by a few arcminutes between individual integrations, the edges of the detector field stack have a surface brightness that is estimated from a subset of all the images in a stack. The smaller ensemble of images leads to a visible bias at the stack's edges compared to the middle, where all frames contribute to the surface brightness estimation.
-
-A solution is to estimate offsets for each frame compared to this first detector field stack. Offsets are computed as the median of the difference image between the stack and individual image frames, as described in \todo{Appendix on overlap detection}. The original image frames, now with offsets applied, are re-combined into a detector field stack image. Now edge-effects are smaller. Nonetheless, offsets are estimated a second time to produce a finalized detector field stack image.
-
-\todo{Summarize production of blocks and mosaics}.
-
+In the second hierarchical level, we combine sets of four detector field stacks into blocks.
+Here we must use the non-linear optimization algorithms detailed in \Sec{montage_algo} or \Sec{msrnm_algo}.
+Let us denote the offsets of stacks into blocks as $\Delta_S$. Finally, we again use our offset optimization algorithms to combine blocks into a mosaic. The sky offsets applied to blocks at this stage are labelled $\Delta_B$.
 
 % ============================================================================
 \section{Analysis of Scalar Sky Offsets}
