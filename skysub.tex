@@ -791,15 +791,19 @@ Let us denote the offsets of stacks into blocks as $\Delta_S$. Finally, we again
 \section{Analysis of Scalar Sky Offsets}
 \label{sec:scalaranalysis}
 
-\todo{In prep.}
+% \comment{
+% \begin{itemize}
+% \item \Fig{scalar_mosaics} --- maps
+% \item \Tab{offset_hierarchy} --- hierarchy of offsets
+% \item \Fig{scalar_residual_sb_net} --- residual fluxes as surface brightness
+% \item \Fig{scalar_relresidnet} --- residual fluxes compared to difference image uncertainties
+% \item Bootstrap to show uniqueness of solution (perhaps move this to section with comparison to Montage)
+% \end{itemize}
+% }
 
-\begin{itemize}
-\item \Fig{scalar_mosaics} --- maps
-\item \Tab{offset_hierarchy} --- hierarchy of offsets
-\item \Fig{scalar_residual_sb_net} --- residual fluxes as surface brightness
-\item \Fig{scalar_relresidnet} --- residual fluxes compared to difference image uncertainties
-\item Bootstrap to show uniqueness of solution (perhaps move this to section with comparison to Montage)
-\end{itemize}
+We can now present the fruits of our WIRCam pipeline and sky offset optimization with \Fig{scalar_mosaics}.
+Compared to our mosaics without sky offsets, \Fig{raw_mosaics}, its becomes clear that sky offset optimization is essential for assembling wide-field NIR mosaics.
+Note that these mosaics are not yet perfect; field-to-field discontinuities remain, and the large-scale sky residuals perturb the outer M31 disk.
 
 \begin{figure}[t]
 	\centering
@@ -809,37 +813,58 @@ Let us denote the offsets of stacks into blocks as $\Delta_S$. Finally, we again
 	% made with skysubpub/mosaic_plots.py
 \end{figure}
 
+\subsection{Amplitudes of Sky Offsets}
+\label{sec:offset_amplitudes}
+
+The distribution of scalar sky offsets provide an excellent characterization of sky subtraction uncertainties when using sky-target nodding.
+Recall that sky offsets are optimized hierarchically: WIRCam frames are fitted to stacks, stacks are fitted into blocks of four contemporaneously-observed WIRCam detector fields, and these blocks are fitted into a mosaic.
+Table~\ref{tab:offset_hierarchy} lists the standard deviations of these offset distributions with respect to the typical sky level observed in the $J$ and $K_s$ bands.
+
+Sky glow tends to be $\sim 4\times$ greater in the $K_s$ band than $J$ (see \Fig{net_sky_level}).
+\todo{TODO: Verify this.}
+% Sky offsets, then, are also commensurately larger in $K_s$ than $J$.
+Yet even relative to the typical sky level, $K_s$ sky offsets are larger than $J$ offsets, indicating that the $K_s$ sky has greater contrast in its sky glow structures.
+
+Within the hierarchy of sky fitting, simply fitting frames to a stack (with $\Delta_F$) is most significant: a correction on the order of 1\% of the sky intensity.
+Fitting these blocks into a mosaic ($\Delta_B$) is a further $\sim 0.5\%$ correction.
+The offsets to fit a stack into a block ($\Delta_S$) of four detector field stacks are smallest: 0.01\% of the sky level.
+This suggests that on the scale of the $2\times 2$ WIRCam array, the contemporaneously observed detector frames are subjected to nearly identical biases in sky background.
+
+A comparison between the net sky offsets applied to the 2007B and 2009B data sets is provocative.
+The net uncertainty in sky level due to sky-target nodding, as measured by the total sky offset applied to each frame, decreased by 30\% and 12\% in the 2009B $J$ and $K_s$ data sets, respectively.
+The performance of the two observational strategies will be further discussed in \S\todo{TODO}.
+
 \begin{table}[t]
-    \centering
-    \caption[Hierarchy of scalar sky offsets]{Hierarchy of scalar sky offsets. The `Total' sky offsets track the net offset of individual WIRCam image frames into the fitted mosaic. $\langle I_\mathrm{sky}\rangle$ is taken as the typical instantaneous sky level for the images being sampled (see \Fig{net_sky_level} for the distribution of levels).}
+\centering
+\caption[Hierarchy of scalar sky offsets]{Hierarchy of scalar sky offsets. The `Total' sky offsets track the net offset of individual WIRCam image frames into the fitted mosaic. $\langle I_\mathrm{sky}\rangle$ is taken as the typical instantaneous sky level for the images being sampled (see \Fig{net_sky_level} for the distribution of levels).}
 % Fiducial sky values from thesis:
 % J: $1.0\times 10^{-7}$ ADU s$^{-1}$ pix$^{-2}$
 % K: $4.3\times 10^{-7}$ ADU s$^{-1}$ pix$^{-2}$
-    \label{tab:offset_hierarchy}
+\label{tab:offset_hierarchy}
 % made with skyoffset/scalar_hierarchy.py
 \begin{tabular}{ll|ll|ll}
 % \hline
- &  & \multicolumn{2}{c|}{$J$} & \multicolumn{2}{c}{$K_s$} \\ % \cline{3-4} \cline{5-6}
+&  & \multicolumn{2}{c|}{$J$} & \multicolumn{2}{c}{$K_s$} \\ % \cline{3-4} \cline{5-6}
 % \hline
 Offset Type & Sem. & $\sigma_\Delta$ & $\frac{\sigma_\Delta}{\langle I_\mathrm{sky}\rangle }$ & $\sigma_\Delta$ & $\frac{\sigma_\Delta}{\langle I_\mathrm{sky}\rangle }$ \\
- & & \tiny{(mag~arcsec$^{-2}$)} &  \tiny{(\%)} & \tiny{(mag~arcsec$^{-2}$)} &  \tiny{(\%)} \\
+& & \tiny{(mag~arcsec$^{-2}$)} &  \tiny{(\%)} & \tiny{(mag~arcsec$^{-2}$)} &  \tiny{(\%)} \\
 \hline
 \multirow{2}{*}{$\Delta_F$} & 07B & 20.1 & 1.02 & 18.1 & 1.37 \\
 % \hline
- & 09B  & 20.4 & 0.42 & 18.2 & 1.04 \\
+& 09B  & 20.4 & 0.42 & 18.2 & 1.04 \\
 \hline
 \multirow{2}{*}{$\Delta_S$} & 07B & 22.4 & 0.11 & 21.2 & 0.09 \\
 % \hline
-  & 09B & 24.2 & 0.01 & 22.2 & 0.03\\
+& 09B & 24.2 & 0.01 & 22.2 & 0.03\\
 \hline
 \multirow{2}{*}{$\Delta_B$} & 07B & 20.8 & 0.54 & 19.0 & 0.55 \\
 % \hline
-  & 09B & 21.3 & 0.19 & 19.2 & 0.43 \\
+& 09B & 21.3 & 0.19 & 19.2 & 0.43 \\
 % \hline
 \hline
 \multirow{2}{*}{Total} & 07B & 19.9 & 1.16 & 18.0 & 1.49 \\
 % \hline
-  & 09B & 20.3 & 0.48 & 18.1 & 1.12 \\
+& 09B & 20.3 & 0.48 & 18.1 & 1.12 \\
 % \hline
 \end{tabular}
 \end{table}
@@ -870,13 +895,23 @@ Offset Type & Sem. & $\sigma_\Delta$ & $\frac{\sigma_\Delta}{\langle I_\mathrm{s
 % total K 2007 18.0 1.49
 % total K 2009 18.1 1.12
 
+\subsection{Acceptability of Sky Offsets}
+\label{sec:offset_acceptability}
+
+Recall that scalar sky offsets were initially introduced as nudges in intensity to overcome uncertainty in the sky level of detector field stacks.
+For sky offsets to be considered acceptable, we demand that the offsets applied to blocks, $\Delta_B$ be consistent with the sky level uncertainty of the blocks themselves.
+We can conservatively measure the sky uncertainty as the dispersion of $\Delta_F$ frame offsets in a stack: $\sigma_{\Delta_F}$.
+Thus if sky offsets fitted between blocks are statistically permissible, then $\Delta_B \lesssim \sigma_{\Delta_F}$.
+In \Fig{offset_ratio_map}, we plot a field map (in the same spatial configuration as \Fig{fieldmap}) painted with the values of $\Delta_B / \sigma_{\Delta_F}$ for each detector field in the $J$ and $K_s$ mosaics.
+The sky offsets are indeed distributed within the uncertainty budgeted by $\sigma_{\Delta_F}$: the sky offsets are statistically acceptable.
+
 \begin{figure}[t]
-    \centering
-        \includegraphics[width=3.5in]{figs/offset_ratio_map_enhanced}
-    \caption{Acceptability of $J$ and $K_s$ scalar sky offsets between blocks, as measured by the ratio of $\Delta_\mathrm{block}/\sigma_\mathrm{stack}$.}
-    \label{fig:offset_ratio_map}
-    % made with skyoffset/offsetratiomap.py
-    % TODO need to fix colour scheme of the histograms
+\centering
+\includegraphics[width=\columnwidth]{figs/offset_ratio_map_enhanced}
+\caption{Acceptability of $J$ and $K_s$ scalar sky offsets between blocks, as measured by the ratio of $\Delta_B/\sigma_{\Delta_F}$.}
+\label{fig:offset_ratio_map}
+% made with skyoffset/offsetratiomap.py
+% TODO need to fix colour scheme of the histograms
 \end{figure}
 
 \begin{figure}[t]
