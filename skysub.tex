@@ -733,27 +733,24 @@ While it is not proven ideal, or most efficient, algorithm, this strategy is eas
 This strategy wraps the core NM algorithm with multiple random starting positions, and multiple restarts at each converged location until a stable---and global---minimum is found.
 Hence this technique is informally termed the Multi-start Reconverging Nelder Mead Simplex (MSRNM).
 
-\paragraph{Multi-start:} First, a total of $N_s$ starts of the NM algorithm are designated.
-Each start is intended to be run independently across multiple CPU cores.
+\paragraph{Multi-start} First, a total of $N_s$ starts of the NM algorithm are designated.
+We find that $N_s=1000$ is quite sufficient for an optimization with 39 parameters (such as the fitting of $\Delta_B$ block offsets in mosaic, see \Sec{hierarchical_algo}).
 For each start, an initial simplex is generated randomly.
 Since each point in the $N$ by $N+1$ simplex is a suggested sky offset for a given field, each offset is randomly sampled from the expected distribution of image-to-image sky offsets.
-That is, a normal distribution of mean zero intensity, and standard deviation of $\sigma_\mathrm{s}$ (\todo{update that symbol}).
+That is, a normal distribution of mean zero intensity, and standard deviation of $\sigma_\mathrm{start}$.
+To ensure that the parameter space is well covered, we design $\sigma_\mathrm{start}$ to be $10\times$ greater than the dispersion of image-to-image differences.
 
 Each initial simplex is allowed to converge according to the NM algorithm.
 A simplex is deemed converged once each point has changed by no more than $10^{-4}$ of the previous iteration, or the objective function's value has changed by no more than $10^{-4}$ of the previous iteration. 
 
-\paragraph{Restart:} Upon convergence, the optimal point in the simplex, $\vect{p}$, is recorded.
+\paragraph{Restart} Upon convergence, the optimal point in the simplex, $\vect{p}$, is recorded.
 A new simplex is then generated where one vertex is $\vect{p}$, and the rest are $\vect{p}+\vect{\delta}$ where $\vect{\delta}$ is a normal random variable of mean zero, and standard deviation $\sigma_\mathrm{restart}$.
 That is, the simplex of the restart retains one vertex upon the previously found minimum, while the other vertices surround that minimum.
 If the minimum is indeed the global minimum, then the NM algorithm will quickly reconverge.
 But more often than not, the other random vertices will probe an even better parameter space, causing the NM restart to converge upon a new minimum.
 When a new minimum is found, the process of restarting is repeated until the same minimum is consecutively arrived upon.
-
-\todo{Update this discussion: The choice of $\sigma_\mathrm{restart}$ has not been studied.
-In the scalar sky optimizations presented here, a restart dispersion half the size of the original point distribution is used.
-The number of simplex starts, $N_s$, is also highly application specific.
-For scalar sky offsets, the number of optimization dimensions is used ($N_d$); but planar sky optimizations appears to require at least $100N_d$.
-Rather than starting a fixed number of optimizations, it may be better to continue creating new simplex starting points until the objective function decreases below a physically reasonable target level.}
+Like $\sigma_\mathrm{start}$, there is flexibility in choosing $\sigma_\mathrm{restart}$; generally $\sigma_\mathrm{start}$ should be on the order of the observed image-to-image difference dispersion, not not necessarily as large as $\sigma_\mathrm{start}$.
+\todo{Cite numerical recipes for this algorithm design? Or it is from elsewhere?}
 
 \subsection{Hierarchical sky offset optimization}
 \label{sec:hierarchical_algo}
