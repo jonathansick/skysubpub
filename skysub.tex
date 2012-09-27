@@ -914,23 +914,83 @@ The sky offsets are indeed distributed within the uncertainty budgeted by $\sigm
 % TODO need to fix colour scheme of the histograms
 \end{figure}
 
+\subsection{Residual image level differences}
+\label{sec:residual_diffs}
+
+Although the scalar sky offsets are statistically valid, they are not perfect prescriptions against the sky subtraction uncertainties of each image stack---that much is visually true.
+A measure of the limitation of sky offset fitting are the residual image level differences between coupled blocks, $(\vect{I}_i - \Delta_i) - (\vect{I}_j - \Delta_j)$, after the sky offsets $\Delta_i$ have been optimally fitted to each block.
+
+Table~\ref{tab:resid_diffs} shows the distributions of both image level differences between coupled blocks, and residual differences after application of scalar sky offsets.
+Uncorrected, the ensemble of coupled blocks have a median intensity difference of $\sim 0.4\%$ of the typical sky background intensity.
+Scalar sky offsets decrease the differences between overlapping fields to $\sim 0.02\%$.
+
+% Figures \ref{fig:J0709B_net_resid} and \ref{fig:K0709B_net_resid} show networks of residual image differences as a percentage of local surface intensity in the $J$ and $K_s$ mosaics.
+% This visualization mimics the spatial distribution of the 2007B and 2009B WIRCam fields (Fig \ref{fig:fieldmap}), but the field boxes have been exploded to allow room for lines to connect coupled detector fields.
+% The thickness and colour of the line is modulated against the size of the residual image difference compared to the local surface intensity in the image overlap region.
+% Where disk \sn\ is high in the inner M31 disk, the residual image differences are $\lesssim 1\%$ of the local surface intensity.
+% But in the outer disk, residual image differences can become formidable: 50\%--100\% of the local surface intensity.
+
+% Figure~\ref{fig:scalar_residual_sb_net} are visualizations of the block-to-block coupling networks in the $J$ and $K_s$ mosaics.
+% Connections in this network are shown as 
+
+\todo{Update \Fig{scalar_residual_sb_net} with residuals as a percentage of the sky, or as a percentage of the disk SB in the overlap. This residual SB measurement isn't terribly useful.}
+
+Of course, it is precisely this residual image level difference that was sought to be minimized as part of the optimization's objective function (Eq \ref{eq:objf}).
+The inability of scalar sky offset optimization to eliminate residual image differences should not be interpreted as a failure to detect the global minimum; the MSRNM optimization algorithm appears robust in arriving at this offset solution set.
+Evidence of this can be seen in \Fig{scalar_relresidnet}, where block-to-block network connections are coloured by the ratio of the residual block-to-block intensity difference to the uncertainty in the block-to-block difference image.
+The sky offsets solved by the MSRNM algorithm are within the uncertainties of the difference images themselves; better scalar sky offsets \emph{cannot} be made with the WIRCam blocks our pipeline has produced.
+Nonetheless, block-to-block surface brightness discontinuities are plainly seen in \Fig{scalar_mosaics}.
+
+An interpretation of this failure is that sky background residuals are not entirely scalar across WIRCam blocks.
+Our discussion in \Sec{skyflatstability}, and particularly \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}, indicate that flat field variability, and sky background variability can affect the shape of WIRCam fields.
+% If so, then the minimization of the median block-to-block image difference through sky offsets will no longer minimize surface brightness discontinuities between blocks.
+
+\begin{table}[t]
+\centering
+\caption[Coupled block differences and residual differences after
+scalar sky offsets]{Coupled block intensity differences and residual intensity differences after application of scalar sky offsets: 25th, 50th and 75th percentiles of distribution.
+Differences are presented as a percent of the mean sky level seen by individual blocks.}
+\label{tab:resid_diffs}
+\begin{tabular}{lccc}
+& \multicolumn{3}{c}{Coupled Block $\langle I_i - I_j\rangle / \langle I_\mathrm{sky} \rangle$ (\%)} \\
+& 25th & 50th & 75th \\
+\hline
+$J$, uncorrected & 0.18 & 0.35 & 0.67 \\
+$J$, scalar offset & 0.01 & 0.03 & 0.06 \\
+\hline
+$K_s$, uncorrected & 0.21 & 0.46 & 0.81 \\
+$K_s$, scalar offset & 0.01 & 0.02 & 0.05 \\
+\hline
+\end{tabular}
+\end{table}
+
 \begin{figure}[t]
-    \centering
-        \includegraphics[width=3.5in]{figs/scalar_residual_sb_net}
-    \caption{Residual surface brightness differences after scalar fitting.}
-    \label{fig:scalar_residual_sb_net}
-    % made with skyoffset/networkmap.py
-    % TODO need to fix colour scheme of the histograms
+\centering
+\includegraphics[width=3.5in]{figs/scalar_residual_sb_net}
+\caption{Residual surface brightness differences after scalar fitting.}
+\label{fig:scalar_residual_sb_net}
+% made with skyoffset/networkmap.py
+% TODO need to fix colour scheme of the histograms
 \end{figure}
 
 \begin{figure}[t]
-    \centering
-        \includegraphics[width=3.5in]{figs/scalar_relresidnet}
-    \caption{Residual surface brightness differences relative to the intensity uncertainty of the coupled difference images.}
-    \label{fig:scalar_relresidnet}
-    % made with skyoffset/networkmap.py
-    % TODO need to fix colour scheme of the histograms
+\centering
+\includegraphics[width=3.5in]{figs/scalar_relresidnet}
+\caption{Residual surface brightness differences relative to the intensity uncertainty of the coupled difference images.}
+\label{fig:scalar_relresidnet}
+% made with skyoffset/networkmap.py
+% TODO need to fix colour scheme of the histograms
 \end{figure}
+
+\subsection{Usefulness of Planar Sky Offsets}
+\label{sec:planar_offset_analysis}
+
+\todo{\begin{enumerate}
+    \item mosaic plot of montage planar offsets
+    \item table or histogram with distribution of planar slopes in units of mag per arcsec? or percent of sky per arcsec?
+    \item residual network plot showing block-to-block residuals in percent of sky. Compare to \Fig{scalar_relresidnet}.
+\end{enumerate}
+}
 
 \section{Systematic Uncertainties in Surface Brightness Reconstruction}
 \label{sec:systematics}
