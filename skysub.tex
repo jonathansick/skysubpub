@@ -531,7 +531,7 @@ Evidently, the WIRCam flat field function is stable on timescales less than 30 m
 
 Nonetheless, the spatiotemporal evolution takes many forms.
 In some cases (\Fig{fw100k_movie}b) the flat field deviations are axis symmetric, while in others there is a distinct East-West deviation (\Fig{fw100k_movie}ac).
-We interpret these patterns as a instability in the WIRCam illumination function on the scales of minutes.
+We interpret these patterns as instabilities in the WIRCam illumination function on the scales of minutes.
 \comment{It will be interesting to see if there is always asymmetry in staring/07B sky flats where the same sky field is consistently used, and circular symmetry in the 09B ST-nodding fields. I'm not sure what this means, but would imply a correlation with telescope movement or spatial sampling of the sky.}
 
 \begin{figure*}[t]
@@ -546,7 +546,7 @@ The dominant macroscopic electronic feature in WIRCam flat fields are the amplif
 Each WIRCam detector is divided into 32 horizontal bands (64 pixels high) that are each read out into independent amplifiers.
 These amplifiers have gains that result in levels that differ by 10\% in flat field images.
 But these different gains appear stable: over the course of an observing block, the mean flat field level of each amplifier band evolved by less than 0.1\% relative to other amplifiers (see \Fig{fw100k_globalamp_timeseries_55136_Ks}) over three hours.
-Indeed, the amplifier band signature is absent from the RT skyflat difference images (Fig \todo{todo})\footnote{Quite unlike \Fig{domeflatratio} that compared dome flat and QRUN sky flat shapes.}
+Indeed, the amplifier band signature is absent from the RT skyflat difference images (\Fig{fw100k_movie})\footnote{Quite unlike \Fig{domeflatratio} that compared dome flat and QRUN sky flat shapes.}
 Sky flat evolution does appear driven by changes in the large scale detector illumination function, not electronic instabilities.
 
 \begin{figure}[t]
@@ -557,11 +557,7 @@ Sky flat evolution does appear driven by changes in the large scale detector ill
 % wircam/skyflat/plots/amp_level_global.py
 \end{figure}
 
-% \todo{Include a back-of-the envelope of how flat field errors ultimately effect the sky-subtracted flux of the galaxy. Perhaps map out SB error vs galaxy SB given typical sky SB.}
-
-% \todo{Add figs frame residuals and discuss.}
-
-Although the WIRCam illumination function appears to vary rapidly, and strongly, we do not see extreme strong sky residuals (\ie \Fig{qrun_median_sky}) in the \texttt{QRUN}-calibrated mosaic (ultimately presented in \todo{\S TODO}).
+Although the WIRCam illumination function appears to vary rapidly, and strongly, we do not see extremely strong sky residuals (\ie \Fig{qrun_median_sky}) in the \texttt{QRUN}-calibrated mosaic (ultimately presented in \todo{\S TODO}).
 This can be attributed to the functionality of median sky subtraction (\Sec{mediansky}).
 Suppose the disk has a flux of $N$ counts, while the sky brightness is $S$ counts, before flat fielding.
 Suppose that both the disk and the paired median sky subtraction image are calibrated with the same flat field, $\mathcal{F}$.
@@ -572,15 +568,14 @@ That is, a 1\% error in the flat field will only perturb the observed disk surfa
 So long as the disk and sky are observed with the same flat field function, median sky subtraction will nonetheless subtract, and effectively flatten, the sky background of the disk image.
 
 Although the median sky subtraction is effective at flattening the sky background shape induced by bias flat fields, we can nonetheless detect how incorrect flat fielding changes disk surface brightness.
+Any time-varying flat-field function that is inadequately measured should be revealed as a distribution of surface brightness estimates on the bright bulge of M31, where flat fielding is more important than sky subtraction accuracy.
 In Figures~\ref{fig:frame_residuals_M31-37_Ks_fw100k_medsky} and~\ref{fig:frame_residuals_M31-37_Ks_QRUN} we see the residuals shapes of individual WIRCam frames against the median shape of the mosaic, given \texttt{FW100K} and \texttt{QRUN} sky flattening, respectively.
-The frames studied in this figure cover the centre of M31, the only region of the mosaic where M31 surface brightness exceeds sky brightness.
-In detector \#2, the where the core of M31 resides, there are strong surface brightness residuals.
-These clearly point out flaws in the flat field itself, since the surface brightness residuals are proportional to surface brightness.
-Residuals of individual frames in Figures \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}~and~\ref{fig:frame_residuals_M31-37_Ks_QRUN} are colour-coded by time.
+In detector \#2 (lower-right), where the core of M31 resides, there are strong surface brightness residuals that clearly point out flaws in the flat field itself.
+Residuals of individual frames in Figures~\Fig{frame_residuals_M31-37_Ks_fw100k_medsky}~and~\ref{fig:frame_residuals_M31-37_Ks_QRUN} are colour-coded by time.
 The time scale residual evolution clearly matches that of flat field evolution indicated in \Fig{fw100k_movie}.
 Thus despite the intention for RT sky flats to track the instantaneous flat field signature of WIRCam, they are not \emph{perfect}.
-Casual comparison between \Fig{frame_residuals_M31-37_Ks_fw100k_medsky} and \Fig{frame_residuals_M31-37_Ks_QRUN} shows on slight gains in absolute flat fielding performance from RT sky flats.
-\comment{These plots are shown in ADU/s/pixel, with a zeropoint of 25 mag. An alternative is to plot a residual in SB.}
+Casual comparison between \Fig{frame_residuals_M31-37_Ks_fw100k_medsky} and \Fig{frame_residuals_M31-37_Ks_QRUN} shows only slight gains in absolute flat fielding performance from RT sky flats.
+\comment{These plots are shown in ADU/s/pixel, with a zeropoint of 25 mag. An alternative is to plot a residual in SB. But SB residuals actually downplay the flat field error in detector 2 of M31-37 since those flux errors are minuscule compared to the surface brightness of the bulge.}
 
 
 \begin{figure*}[t]
