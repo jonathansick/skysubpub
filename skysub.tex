@@ -5,6 +5,7 @@
 \usepackage{multirow}
 
 \usepackage{graphicx}
+\usepackage{subfig}
 \usepackage{epstopdf}
 
 \newcommand{\myshorttitle}{Near-IR Imaging of M31}
@@ -534,7 +535,7 @@ In some cases (\Fig{fw100k_movie}b) the flat field deviations are axis symmetric
 We interpret these patterns as instabilities in the WIRCam illumination function on the scales of minutes.
 \comment{It will be interesting to see if there is always asymmetry in staring/07B sky flats where the same sky field is consistently used, and circular symmetry in the 09B ST-nodding fields. I'm not sure what this means, but would imply a correlation with telescope movement or spatial sampling of the sky.}
 
-\begin{figure*}[t]
+\begin{figure*}[p]
 \centering
 \includegraphics[width=7in]{figs/fw100k/fw100k_movie}
 \caption{Spatio-temporal evolution of \texttt{FW100K} sky flats, shown as percent difference of the flat fields 15, 30, 60 and 90 minutes after the initial sky flat of the night. Sky flat evolution on three nights is shown: (a) 2009B $K_s$ observing block when the telescope `stared' at a sky field, (b) 2009B $K_s$ observing block with regular sky-target nodding, and (c) a 2007B observing block with sky-target nodding.}
@@ -577,8 +578,7 @@ Thus despite the intention for RT sky flats to track the instantaneous flat fiel
 Casual comparison between \Fig{frame_residuals_M31-37_Ks_fw100k_medsky} and \Fig{frame_residuals_M31-37_Ks_QRUN} shows only slight gains in absolute flat fielding performance from RT sky flats.
 \comment{These plots are shown in ADU/s/pixel, with a zeropoint of 25 mag. An alternative is to plot a residual in SB. But SB residuals actually downplay the flat field error in detector 2 of M31-37 since those flux errors are minuscule compared to the surface brightness of the bulge.}
 
-
-\begin{figure*}[t]
+\begin{figure*}[p]
 \centering
 \includegraphics[width=7in]{figs/frame_residuals/M31-37_Ks_fw100k_medsky}
 \caption{Residual shapes of individual WIRCam integrations of the M31 disk to the median (mosaic) shape for the field M31-37, $K_s$-band, 2009B semester calibrated with \texttt{FW100K} sky flats.
@@ -588,11 +588,41 @@ Individual integrations are coloured by their time after the first disk integrat
 \label{fig:frame_residuals_M31-37_Ks_fw100k_medsky}
 \end{figure*}
 
-\begin{figure*}[t]
+\begin{figure*}[p]
 \centering
 \includegraphics[width=7in]{figs/frame_residuals/M31-37_Ks_queuesky_medsky}
 \caption{Same as \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}, but calibrated with \texttt{QRUN} sky flats.}
 \label{fig:frame_residuals_M31-37_Ks_QRUN}
+\end{figure*}
+
+\subsection{Tracking surface brightness errors, frame-by-frame}
+\label{sec:diskframeresiduals}
+
+In prior paragraphs we introduced the technique of plotting surface brightness residuals of individual frames compared to the surface brightness of a block (the median of frames, as produced in \Sec{hierarchical_algo}).
+While this demonstrated that RT sky flats show minimal improvement over \texttt{QRUN} sky flats, this visualization can be applied across the mosaic to investigate the circumstances of surface brightness errors in blocks.
+\begin{enumerate}
+  \item Some days are more stable than others (\eg 54317 and 54318 in M31-1 \texttt{QRUN} and \texttt{FW100k}). On 54317 the disk residuals were exceptionally small ($\Delta m \lesssim 0.1$~mag), while on 54318 the residuals bloomed to $Delta m \sim 0.5$ centre-to-edge. We see no discernible different between \texttt{FW100K} and \texttt{QRUN} sky flats.
+\end{enumerate}
+
+\begin{figure*}[p]
+\centering
+\subfloat[M31-1 $K_s$ on 54317 (\texttt{QRUN} flat).]{
+\includegraphics[width=0.46\textwidth]{figs/frame_residuals/M31-1_Ks_queuesky_medsky_54317.pdf}
+\label{fig:m311Ks_frameresiduals_54317_qrun}}
+\qquad
+\subfloat[M31-1 $K_s$ on 54318 (\texttt{QRUN} flat).]{
+\includegraphics[width=0.46\textwidth]{figs/frame_residuals/M31-1_Ks_queuesky_medsky_54318.pdf}
+\label{fig:m311Ks_frameresiduals_54318_qrun}}
+
+\subfloat[M31-1 $K_s$ on 54317 (\texttt{FW100K} flat).]{
+\includegraphics[width=0.46\textwidth]{figs/frame_residuals/M31-1_Ks_fw100k_medsky_54317.pdf}
+\label{fig:m311Ks_frameresiduals_54317_fw100k}}
+\qquad
+\subfloat[M31-1 $K_s$ on 54318 (\texttt{FW100K} flat).]{
+\includegraphics[width=0.46\textwidth]{figs/frame_residuals/M31-1_Ks_fw100k_medsky_54318.pdf}
+\label{fig:m311Ks_frameresiduals_54318_fw100k}}
+\caption{Comparison of frame surface brightness residuals for M31-1 $K_s$.}
+\label{fig:m311Ks_frameresiduals}
 \end{figure*}
 
 
