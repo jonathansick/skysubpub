@@ -5,7 +5,6 @@
 \usepackage{multirow}
 
 \usepackage{graphicx}
-\usepackage{subfig}
 \usepackage{epstopdf}
 
 \newcommand{\myshorttitle}{Near-IR Imaging of M31}
@@ -601,30 +600,59 @@ Individual integrations are coloured by their time after the first disk integrat
 In prior paragraphs we introduced the technique of plotting surface brightness residuals of individual frames compared to the surface brightness of a block (the median of frames, as produced in \Sec{hierarchical_algo}).
 While this demonstrated that RT sky flats show minimal improvement over \texttt{QRUN} sky flats, this visualization can be applied across the mosaic to investigate the circumstances of surface brightness errors in blocks.
 \begin{enumerate}
-  \item Some days are more stable than others (\eg 54317 and 54318 in M31-1 \texttt{QRUN} and \texttt{FW100k}). On 54317 the disk residuals were exceptionally small ($\Delta m \lesssim 0.1$~mag), while on 54318 the residuals bloomed to $Delta m \sim 0.5$ centre-to-edge. We see no discernible different between \texttt{FW100K} and \texttt{QRUN} sky flats.
+  \item Some days are more stable than others (\eg 54317 and 54318 in M31-1 \texttt{QRUN} and \texttt{FW100k}). On 54317 the disk residuals were exceptionally small ($\Delta m \lesssim 0.1$~mag), while on 54318 the residuals bloomed to $Delta m \sim 0.5$ centre-to-edge. We see no discernible difference between \texttt{FW100K} and \texttt{QRUN} sky flats. See Figures~\ref{fig:m311Ks_frameresiduals_54317_qrun}--\ref{fig:m311Ks_frameresiduals_54318_fw100k}.
 \end{enumerate}
 
 \begin{figure*}[p]
-\centering
-\subfloat[M31-1 $K_s$ on 54317 (\texttt{QRUN} flat).]{
-\includegraphics[width=0.46\textwidth]{figs/frame_residuals/M31-1_Ks_queuesky_medsky_54317.pdf}
-\label{fig:m311Ks_frameresiduals_54317_qrun}}
-\qquad
-\subfloat[M31-1 $K_s$ on 54318 (\texttt{QRUN} flat).]{
-\includegraphics[width=0.46\textwidth]{figs/frame_residuals/M31-1_Ks_queuesky_medsky_54318.pdf}
-\label{fig:m311Ks_frameresiduals_54318_qrun}}
+\begin{minipage}[b]{0.46\linewidth}
+  \centering
+\includegraphics[width=\textwidth]{figs/frame_residuals/M31-1_Ks_queuesky_medsky_54317.pdf}
+\caption{M31-1 $K_s$ on 54317 (\texttt{QRUN} flat).}
+\label{fig:m311Ks_frameresiduals_54317_qrun}
+\end{minipage}
+% \hfill
+\begin{minipage}[b]{0.46\linewidth}
+  \centering
+\includegraphics[width=\textwidth]{figs/frame_residuals/M31-1_Ks_queuesky_medsky_54318.pdf}
+\caption{M31-1 $K_s$ on 54318 (\texttt{QRUN} flat).}
+\label{fig:m311Ks_frameresiduals_54318_qrun}
+\end{minipage} \\
+\begin{minipage}[b]{0.46\linewidth}
+\includegraphics[width=\textwidth]{figs/frame_residuals/M31-1_Ks_fw100k_medsky_54317.pdf}
+\caption{M31-1 $K_s$ on 54317 (\texttt{FW100K} flat).}
+\label{fig:m311Ks_frameresiduals_54317_fw100k}
+\end{minipage}
+%
+\begin{minipage}[b]{0.46\linewidth}
+\includegraphics[width=\textwidth]{figs/frame_residuals/M31-1_Ks_fw100k_medsky_54318.pdf}
+\caption{M31-1 $K_s$ on 54318 (\texttt{FW100K} flat).}
+\label{fig:m311Ks_frameresiduals_54318_fw100k}
+\end{minipage}
 
-\subfloat[M31-1 $K_s$ on 54317 (\texttt{FW100K} flat).]{
-\includegraphics[width=0.46\textwidth]{figs/frame_residuals/M31-1_Ks_fw100k_medsky_54317.pdf}
-\label{fig:m311Ks_frameresiduals_54317_fw100k}}
-\qquad
-\subfloat[M31-1 $K_s$ on 54318 (\texttt{FW100K} flat).]{
-\includegraphics[width=0.46\textwidth]{figs/frame_residuals/M31-1_Ks_fw100k_medsky_54318.pdf}
-\label{fig:m311Ks_frameresiduals_54318_fw100k}}
-\caption{Comparison of frame surface brightness residuals for M31-1 $K_s$.}
-\label{fig:m311Ks_frameresiduals}
+% \caption{Comparison of frame surface brightness residuals for M31-1 $K_s$.}
+% \label{fig:m311Ks_frameresiduals}
 \end{figure*}
 
+% \begin{figure}
+% \begin{minipage}[b]{.3\linewidth}
+% \centering%
+% \includegraphics[width=100pt]{test}
+% \subcaption{First image}\label{fig:1a}
+% \end{minipage}%
+% \hfill%
+% \begin{minipage}[b]{.3\linewidth}
+% \centering%
+% \includegraphics[width=100pt]{test}
+% \subcaption{Second image}\label{fig:1b}
+% \end{minipage}
+% \hfill%
+% \begin{minipage}[b]{.3\linewidth}
+% \centering%
+% \includegraphics[width=100pt]{test}
+% \subcaption{Third image}\label{fig:1b}
+% \end{minipage}
+% \caption{Multiple images}\label{fig:1}
+% \end{figure}
 
 \section{Sky Offset Optimization}
 \label{sec:scalar}
