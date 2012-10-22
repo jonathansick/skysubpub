@@ -601,6 +601,10 @@ In prior paragraphs we introduced the technique of plotting surface brightness r
 While this demonstrated that RT sky flats show minimal improvement over \texttt{QRUN} sky flats, this visualization can be applied across the mosaic to investigate the circumstances of surface brightness errors in blocks.
 \begin{enumerate}
   \item Some days are more stable than others (\eg 54317 and 54318 in M31-1 \texttt{QRUN} and \texttt{FW100k}). On 54317 the disk residuals were exceptionally small ($\Delta m \lesssim 0.1$~mag), while on 54318 the residuals bloomed to $\Delta m \sim 0.5$ centre-to-edge. We see no discernible difference between \texttt{FW100K} and \texttt{QRUN} sky flats. See Figures~\ref{fig:m311Ks_frameresiduals_54317_qrun}--\ref{fig:m311Ks_frameresiduals_54318_fw100k}. This particular result is also surprising since MJD 54318 is a `redo' of observations on 54317.
+    \begin{itemize}
+      \item No evidence (yet) that this is a flat variability problem. It occurs for both \texttt{QRUN} and \texttt{FW100K} flats. The `bad' night shows very little flat variability; the stable image shows only minor flat shape variations over 40 minutes on 54318. See \texttt{nightmovie\_allframes}.
+      \item Variability in sky shapes? Yes, there is a distinct possibility that sky shape variability drives the disk residuals. On 54317, the median sky -- frame residuals are modest (10 sky ADU centre to edge on each detector; 0.5\% centre-to-edge of sky brightness; see \texttt{median sky frame residuals}.
+    \end{itemize}
 \end{enumerate}
 
 \begin{figure*}[p]
