@@ -29,9 +29,9 @@
 \newcommand{\sersic}{S\'{e}rsic}
 \newcommand{\iiwione}{\sw{`I`iwi 1.0}}
 \newcommand{\androids}{\textsc{androids}}
-\newcommand{\changeit}[1]{\textcolor{red}{#1}} % markup bad sections
-\newcommand{\todo}[1]{\textcolor{RedOrange}{#1}} % markup TODOs
-\newcommand{\comment}[1]{\textcolor{purple}{#1}} % markup TODOs
+\newcommand{\changeit}[1]{\textcolor{red}{\underline{#1}}} % markup bad sections
+\newcommand{\todo}[1]{\textcolor{BurntOrange}{\textsf{#1}}} % markup TODOs
+\newcommand{\comment}[1]{\textcolor{OliveGreen}{#1}} % markup TODOs
 \newcommand{\Fig}[1]{Fig.~\ref{fig:#1}}  % figure reference macro
 \newcommand{\Eq}[1]{Eq.~\ref{eq:#1}}  % equation reference macro
 \newcommand{\Tab}[1]{Table~\ref{tab:#1}}  % table reference macro
@@ -659,7 +659,7 @@ In Step 2, the four detector field stacks within each field can be fitted into a
 A block is a fundamental unit of the mosaic, as all images that are combined within a block were observed under contemporaneous sky conditions.
 Finally, in Step 3, the 39 blocks can be fitted into a galaxy-wide mosaic for each filter.
 
-Note that detector field stacks cannot be made with a simple median-combination of frames in a detector field.
+Note that detector field stacks can be made with a simple median-combination of frames in a detector field.
 Since the frames are dithered, the periphery of the detector field is covered by subsets of the frames.
 A simple median combination, then, produces edges that have background levels that are biased compared to the central pixels that are covered by the entire frame set.
 A solution is to estimate offsets for each frame compared to this first detector field stack.
@@ -1005,7 +1005,7 @@ In this section, we consider the stability of WIRCam flat fields and argue for t
 
 A first test of the accuracy of the different skyflats is their ability to produce an unbiased sky.
 In this test, measuring the median sky shape of flattened sky images, the \texttt{QRUN} sky flats readily fail (see \Fig{qrun_median_sky}).
-The axis symmetry, and presence of dust donuts imprinted on the sky indicates that WIRCam is not mechanically stable over a queue run.
+Axis symmetry, and presence of dust donuts imprinted on the sky, indicate that WIRCam is not mechanically stable over a queue run.
 Real-time (RT) sky flats, on the other hand, do produce flat median sky images to within a high accuracy.
 But since RT sky flats, such as \texttt{FW100K}, median sky images over similar timescales as the median sky images themselves, this test is less useful.
 Instead, in \todo{Fig. TODO} we show a typical sky frame flattened by an \texttt{FW100k} sky flat.
@@ -1067,7 +1067,7 @@ So long as the disk and sky are observed with the same flat field function, medi
 
 Although the median sky subtraction is effective at flattening the sky background shape induced by bias flat fields, we can nonetheless detect how incorrect flat fielding changes disk surface brightness.
 Any time-varying flat-field function that is inadequately measured should be revealed as a distribution of surface brightness estimates on the bright bulge of M31, where flat fielding is more important than sky subtraction accuracy.
-In Figures~\ref{fig:frame_residuals_M31-37_Ks_fw100k_medsky} and~\ref{fig:frame_residuals_M31-37_Ks_QRUN} we see the residuals shapes of individual WIRCam frames against the median shape of the mosaic, given \texttt{FW100K} and \texttt{QRUN} sky flattening, respectively.
+In Figures~\ref{fig:frame_residuals_M31-37_Ks_fw100k_medsky} and~\ref{fig:frame_residuals_M31-37_Ks_QRUN} we see the residual shapes of individual WIRCam frames against the median shape of the mosaic, given \texttt{FW100K} and \texttt{QRUN} sky flattening, respectively.
 In detector \#2 (lower-right), where the core of M31 resides, there are strong surface brightness residuals that clearly point out flaws in the flat field itself.
 Residuals of individual frames in Figures~\Fig{frame_residuals_M31-37_Ks_fw100k_medsky}~and~\ref{fig:frame_residuals_M31-37_Ks_QRUN} are colour-coded by time.
 The time scale residual evolution clearly matches that of flat field evolution indicated in \Fig{fw100k_movie}.
