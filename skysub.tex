@@ -29,7 +29,7 @@
 \newcommand{\sersic}{S\'{e}rsic}
 \newcommand{\iiwione}{\sw{`I`iwi 1.0}}
 \newcommand{\androids}{\textsc{androids}}
-\newcommand{\changeit}[1]{\textcolor{red}{\underline{#1}}} % markup bad sections
+\newcommand{\changeit}[1]{\textcolor{BrickRed}{\underline{#1}}} % markup bad sections
 \newcommand{\todo}[1]{\textcolor{BurntOrange}{\textsf{#1}}} % markup TODOs
 \newcommand{\comment}[1]{\textcolor{OliveGreen}{#1}} % markup TODOs
 \newcommand{\Fig}[1]{Fig.~\ref{fig:#1}}  % figure reference macro
@@ -1083,6 +1083,7 @@ Residuals have been marginalized across the $x$ (left) and ($y$) (right) axes to
 Axes are split among the four WIRCam detectors, arranged to match the WIRCam footprint.
 Individual integrations are coloured by their time after the first disk integration.}
 \label{fig:frame_residuals_M31-37_Ks_fw100k_medsky}
+% Made with python $andpipe/wircam/shape/diskresidual_movie.py
 \end{figure*}
 
 \begin{figure*}[p]
@@ -1090,6 +1091,7 @@ Individual integrations are coloured by their time after the first disk integrat
 \includegraphics[width=7in]{figs/frame_residuals/M31-37_Ks_queuesky_medsky}
 \caption{Same as \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}, but calibrated with \texttt{QRUN} sky flats.}
 \label{fig:frame_residuals_M31-37_Ks_QRUN}
+% Made with python $andpipe/wircam/shape/diskresidual_movie.py
 \end{figure*}
 
 \subsection{Tracking surface brightness errors, frame-by-frame}
@@ -1104,6 +1106,15 @@ While this demonstrated that RT sky flats show minimal improvement over \texttt{
       \item Variability in sky shapes? Yes, there is a distinct possibility that sky shape variability drives the disk residuals. On 54317, the median sky -- frame residuals are modest (10 sky ADU centre to edge on each detector; 0.5\% centre-to-edge of sky brightness; see \texttt{median sky frame residuals}.
     \end{itemize}
 \end{enumerate}
+
+Shape variability across WIRCam frames (such as plotted in \Fig{frame_residuals_M31-37_Ks_QRUN}) can be reduced to a single variable by measuring the maxima of the those difference image marginalization.
+Distributions of these maximum shape residuals are plotted in \Fig{max_shapelevels_hist}.
+Note that the magnitude of shape variation is stronger in the $K_s$ band, indicating that these shape variations are driven by sky background variability.
+
+\comment{Note that shape variability appears uncorrelated with sky level or time since sunset (unlike sky level; see \texttt{python andpipe/wircam/skyanalysis/shapevar\_correlations.py}.
+There may be a correlation against airmass, but it is weak.}
+
+\todo{TODO: correlate against a measure of sky variability, or against a measure of flat quality, or a measure of field surface brightness}.
 
 \begin{figure*}[p]
 \begin{minipage}[b]{0.46\linewidth}
@@ -1129,11 +1140,25 @@ While this demonstrated that RT sky flats show minimal improvement over \texttt{
 \includegraphics[width=\textwidth]{figs/frame_residuals/M31-1_Ks_fw100k_medsky_54318.pdf}
 \caption{M31-1 $K_s$ on 54318 (\texttt{FW100K} flat).}
 \label{fig:m311Ks_frameresiduals_54318_fw100k}
+% Made with python $andpipe/wircam/shape/diskresidual_movie.py
 \end{minipage}
+
 
 % \caption{Comparison of frame surface brightness residuals for M31-1 $K_s$.}
 % \label{fig:m311Ks_frameresiduals}
+
 \end{figure*}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/frame_residuals/fw100k_medsky_max_shapelevels}
+\caption{Maximum residual level between individual frames and the mosaic block, in $J$ and $K_s$ bands.
+This measurement is a dimensional reduction of the frame residual shape plots (\eg \Fig{frame_residuals_M31-37_Ks_QRUN}), and is useful for measuring the shape variability in disk frames.
+\comment{Levels are measured in ADU~s$^{-1}$, with a zeropoint of 25 mag. (TODO: best way to report this flux? Janskys?)}
+}
+% Made with python $andpipe/wircam/shape/diskresidual_movie.py
+\label{fig:max_shapelevels_hist}
+\end{figure}
 
 % \begin{figure}
 % \begin{minipage}[b]{.3\linewidth}
