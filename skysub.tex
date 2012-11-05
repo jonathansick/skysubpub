@@ -31,7 +31,7 @@
 \newcommand{\androids}{\textsc{androids}}
 \newcommand{\changeit}[1]{\textcolor{BrickRed}{\underline{#1}}} % markup bad sections
 \newcommand{\todo}[1]{\textcolor{BurntOrange}{\textsf{#1}}} % markup TODOs
-\newcommand{\comment}[1]{\textcolor{OliveGreen}{#1}} % markup TODOs
+\newcommand{\comment}[1]{\textcolor{OliveGreen}{\textit{#1}}} % markup comments
 \newcommand{\Fig}[1]{Fig.~\ref{fig:#1}}  % figure reference macro
 \newcommand{\Eq}[1]{Eq.~\ref{eq:#1}}  % equation reference macro
 \newcommand{\Tab}[1]{Table~\ref{tab:#1}}  % table reference macro
@@ -370,12 +370,16 @@ Real-time sky flats can consequently be refreshed in as little as 10 minutes, or
 \subsection{Building Sky Flats}
 \label{sec:flatbuilding}
 
-Given the ensemble of sky integrations, our next task is to normalize the illumination in each sky image.
-We also want to normalize the zeropoints of the four WIRCam detectors.
-This scaling is calibrated by the modal pixel level measured on each detector for each sky integration---denote these modal levels as $\alpha_{i,j}$ for the $i$th sky image's level in detector $j$, $j=1, 2, 3, 4$.
+Given the ensemble of sky integrations, our next task is to scale the intensity of each image.
+This scaling achieves three requirements: 1) each image frame in the median stack is at the same level, 2) each WIRCam detector has a unified zeropoint, and 3) the sky flat across the whole array is flux normalized.
+This scaling is determined by the modal pixel level measured on each detector for each sky integration---denote these modal levels as $\alpha_{i,j}$ for the $i$th sky image's level in detector $j$, $j=1, 2, 3, 4$.
 For each frame, we also build masks for any pixels that do not sample blank sky. \sw{Source Extractor} \citep{Bertin:1996} is used to define stars and background galaxies (we use \iiwione\ \texttt{*p.fits} images to detector sources), while hand-drawn polygon regions cover diffraction spikes and the diffuse halos around bright galactic stars. These masks, along with the \iiwione\ bad pixel mask, are combined with \sw{WeightWatcher} \citep{Marmo:2008}.
 For each detector, we compute the median sky level seen by that chip: $\beta_j = \mathrm{median}(\alpha_{1,j}, \alpha_{2,j}\ldots \alpha_{n,j} )$.
-Each sky image in detector $j$ is then scaled by the factor $\mathcal{F}_j = \mathrm{median}(\beta_1, \beta_2, \beta_3, \beta_4) / \beta_j$.
+Further, we also compute $S$, the median of all levels $\alpha_{i,j}$.
+Then each the sky image is scaled by the factor $\mathcal{F}_{ij} = \mathrm{median}(\beta_1, \beta_2, \beta_3, \beta_4) / (\alpha_{ij} S)$.
+Note that the ratio of $\mathrm{median}(\beta_1, \beta_2, \beta_3, \beta_4) / \alpha_{ij}$ scales each frame to a common level is a detector stack, and unifies the zeropoints across all detectors.
+The factor of $S$ normalizes the sky flat.
+\todo{TODO: recompute these figures with new scaling factor math.}
 In Figure (\todo{TODO histogram of scaling ratios}) we show the distribution of detector-to-detector zeropoint differences (effectively $-2.5 \log_{10}(\mathcal{F}_j / \mathcal{F}_1)$.
 WIRCam detector \#1 (North-West quadrant) is clearly the most sensitive, but note the unexpectedly broad distribution in zeropoint differences that may be indicative of variable gain in the WIRCam detectors.
 
@@ -386,8 +390,9 @@ The flat itself is built by median combination. Median combination of a stack of
 \includegraphics[width=\columnwidth]{figs/fw100k/fw100k_betadiff}
 \caption{WIRCam detector zeropoint differences (relative to detector \#1) as measured by the median sky level seen in each detector during real-time skyflat construction (\Sec{flatbuilding}).
 Zeropoint offset of detectors numbers 2, 3 and 4 relative to detector \#1 are shown as red, green and blue histograms, respectively.
-\todo{Offsets are remarkably different between $J$ and $K_s$; what does this imply? True colour dependence, or the stochasticity of this method of scaling zeropoints in skyflats?}}
+\todo{Offsets are remarkably different between $J$ and $K_s$; what does this imply? True colour dependence, or the stochasticity of this method of scaling zeropoints in skyflats?}. \todo{TODO: deprecate this plot}}
 \label{fig:fw100k_betadiff}
+% $andpipe/wircam/skyflat/plot/chip_zp_diff.py
 \end{figure}
 
 
@@ -396,8 +401,10 @@ Zeropoint offset of detectors numbers 2, 3 and 4 relative to detector \#1 are sh
 \includegraphics[width=\columnwidth]{figs/fw100k/fw100k_zpdiff}
 \caption{Distribution of real-time sky flat scaling factors, $\mathcal{F}_j$, as zeropoint differences relative to detector \#1 (compare to \Fig{fw100k_betadiff}).
 Unlike the $\beta$ differences, flux scaling factors are not offset between detectors and to have little scatter.
-\todo{This is troubling; why do flux scaling factors work this way? They should look much like \Fig{fw100k_betadiff}.}}
+\todo{This is troubling; why do flux scaling factors work this way? They should look much like \Fig{fw100k_betadiff}.}.
+\todo{TODO: update this plot}}
 \label{fig:fw100k_zpdiff}
+% $andpipe/wircam/skyflat/plot/chip_zp_diff.py
 \end{figure}
 
 \section{Median sky image subtraction}
