@@ -673,18 +673,8 @@ Let us denote the offsets of stacks into blocks as $\Delta_S$. Finally, we again
 \section{Analysis of Scalar Sky Offsets}
 \label{sec:scalaranalysis}
 
-% \comment{
-% \begin{itemize}
-% \item \Fig{scalar_mosaics} --- maps
-% \item \Tab{offset_hierarchy} --- hierarchy of offsets
-% \item \Fig{scalar_residual_sb_net} --- residual fluxes as surface brightness
-% \item \Fig{scalar_relresidnet} --- residual fluxes compared to difference image uncertainties
-% \item Bootstrap to show uniqueness of solution (perhaps move this to section with comparison to Montage)
-% \end{itemize}
-% }
-
 We can now present the fruits of our WIRCam pipeline and sky offset optimization with \Fig{scalar_mosaics}.
-Compared to our mosaics without sky offsets, \Fig{raw_mosaics}, its becomes clear that sky offset optimization is essential for assembling wide-field NIR mosaics.
+Compared to our mosaics without sky offsets, \Fig{raw_mosaics}, it is clear that sky offset optimization is essential for assembling wide-field NIR mosaics.
 Note that these mosaics are not yet perfect; field-to-field discontinuities remain, and the large-scale sky residuals perturb the outer M31 disk.
 
 \begin{figure}[t]
@@ -700,7 +690,7 @@ Note that these mosaics are not yet perfect; field-to-field discontinuities rema
 
 The distribution of scalar sky offsets provide an excellent characterization of sky subtraction uncertainties when using sky-target nodding.
 Recall that sky offsets are optimized hierarchically: WIRCam frames are fitted to stacks, stacks are fitted into blocks of four contemporaneously-observed WIRCam detector fields, and these blocks are fitted into a mosaic.
-Table~\ref{tab:offset_hierarchy} lists the standard deviations of these offset distributions with respect to the typical sky level observed in the $J$ and $K_s$ bands.
+\Tab{offset_hierarchy} lists the standard deviations of these offset distributions with respect to the typical sky level observed in the $J$ and $K_s$ bands.
 
 Sky glow tends to be $\sim 4\times$ greater in the $K_s$ band than $J$ (see \Fig{net_sky_level}).
 \todo{TODO: Verify this.}
