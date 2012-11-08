@@ -688,6 +688,8 @@ Note that these mosaics are not yet perfect; field-to-field discontinuities rema
 \subsection{Amplitudes of Sky Offsets}
 \label{sec:offset_amplitudes}
 
+\todo{TODO: update discussion here with new table.}
+
 The distribution of scalar sky offsets provide an excellent characterization of sky subtraction uncertainties when using sky-target nodding.
 Recall that sky offsets are optimized hierarchically: WIRCam frames are fitted to stacks, stacks are fitted into blocks of four contemporaneously-observed WIRCam detector fields, and these blocks are fitted into a mosaic.
 \Tab{offset_hierarchy} lists the standard deviations of these offset distributions with respect to the typical sky level observed in the $J$ and $K_s$ bands.
@@ -713,59 +715,9 @@ The performance of the two observational strategies will be further discussed in
 % J: $1.0\times 10^{-7}$ ADU s$^{-1}$ pix$^{-2}$
 % K: $4.3\times 10^{-7}$ ADU s$^{-1}$ pix$^{-2}$
 \label{tab:offset_hierarchy}
-% made with skyoffset/scalar_hierarchy.py
-\begin{tabular}{ll|ll|ll}
-% \hline
-&  & \multicolumn{2}{c|}{$J$} & \multicolumn{2}{c}{$K_s$} \\ % \cline{3-4} \cline{5-6}
-% \hline
-Offset Type & Sem. & $\sigma_\Delta$ & $\frac{\sigma_\Delta}{\langle I_\mathrm{sky}\rangle }$ & $\sigma_\Delta$ & $\frac{\sigma_\Delta}{\langle I_\mathrm{sky}\rangle }$ \\
-& & \tiny{(mag~arcsec$^{-2}$)} &  \tiny{(\%)} & \tiny{(mag~arcsec$^{-2}$)} &  \tiny{(\%)} \\
-\hline
-\multirow{2}{*}{$\Delta_F$} & 07B & 20.1 & 1.02 & 18.1 & 1.37 \\
-% \hline
-& 09B  & 20.4 & 0.42 & 18.2 & 1.04 \\
-\hline
-\multirow{2}{*}{$\Delta_S$} & 07B & 22.4 & 0.11 & 21.2 & 0.09 \\
-% \hline
-& 09B & 24.2 & 0.01 & 22.2 & 0.03\\
-\hline
-\multirow{2}{*}{$\Delta_B$} & 07B & 20.8 & 0.54 & 19.0 & 0.55 \\
-% \hline
-& 09B & 21.3 & 0.19 & 19.2 & 0.43 \\
-% \hline
-\hline
-\multirow{2}{*}{Total} & 07B & 19.9 & 1.16 & 18.0 & 1.49 \\
-% \hline
-& 09B & 20.3 & 0.48 & 18.1 & 1.12 \\
-% \hline
-\end{tabular}
+% made with $andpipe/wircam/calibset/mosaic/scalar_offset_hierarchy.py
+\input{tables/fw100k_medsky_offset_hierarchy.tex}
 \end{table}
-
-% made with skyoffset/scalar_hierarchy.py
-% type Band, Semester, mag sigma, sigma/sky
-% frame J 2007 20.0 1.02
-% frame J 2009 20.4 0.42
-% 
-% stack J 2007 22.4 0.11
-% stack J 2009 24.2 0.01
-% 
-% block J 2007 20.8 0.54
-% block J 2009 21.3 0.19
-% 
-% total J 2007 19.9 1.16
-% total J 2009 20.3 0.48
-% --
-% frame K 2007 18.1 1.37
-% frame K 2009 18.2 1.04
-% 
-% stack K 2007 21.2 0.09
-% stack K 2009 22.2 0.03
-% 
-% block K 2007 19.0 0.55
-% block K 2009 19.2 0.43
-% 
-% total K 2007 18.0 1.49
-% total K 2009 18.1 1.12
 
 \subsection{Acceptability of Sky Offsets}
 \label{sec:offset_acceptability}
