@@ -667,7 +667,7 @@ Let us denote the offsets applied to individual frames at this first stage as $\
 
 In the second hierarchical level, we combine sets of four detector field stacks into blocks.
 Here we must use the non-linear optimization algorithms detailed in \Sec{montage_algo} or \Sec{msrnm_algo}.
-Let us denote the offsets of stacks into blocks as $\Delta_S$. Finally, we again use our offset optimization algorithms to combine blocks into a mosaic. The sky offsets applied to blocks at this stage are labelled $\Delta_B$.
+Let us denote the offsets of stacks into blocks as $\Delta_S$. Finally, we again use our offset optimization algorithms to combine blocks into a mosaic. The sky offsets applied to blocks at this stage are labelled $\Delta_B$. We also measure a net offset: $\Delta_\Sigma = \Delta_F + \Delta_S + \Delta_B$ for each frame.
 
 
 \section{Analysis of Scalar Sky Offsets}
@@ -688,8 +688,6 @@ Note that these mosaics are not yet perfect; field-to-field discontinuities rema
 \subsection{Amplitudes of Sky Offsets}
 \label{sec:offset_amplitudes}
 
-\todo{TODO: update discussion here with new table.}
-
 The distribution of scalar sky offsets provide an excellent characterization of sky subtraction uncertainties when using sky-target nodding.
 Recall that sky offsets are optimized hierarchically: WIRCam frames are fitted to stacks, stacks are fitted into blocks of four contemporaneously-observed WIRCam detector fields, and these blocks are fitted into a mosaic.
 \Tab{offset_hierarchy} lists the standard deviations of these offset distributions with respect to the typical sky level observed in the $J$ and $K_s$ bands.
@@ -700,26 +698,29 @@ Recall that sky offsets are optimized hierarchically: WIRCam frames are fitted t
 % But note that in WIRCam instrumental ADU/s, teh mean sky levels are:
 % J: 122 ADU/s, Ks: 488 ADU/s. see $andpipe/wircam/skyanalysis/mean_sky_level.py
 
-Sky glow tends to be $\sim 20\times$ greater in the $K_s$ band than $J$ (see \Fig{net_sky_level}).
-\todo{TODO: Verify this.}
-% Sky offsets, then, are also commensurately larger in $K_s$ than $J$.
-Yet even relative to the typical sky level, $K_s$ sky offsets are larger than $J$ offsets, indicating that the $K_s$ sky has greater contrast in its sky glow structures.
+Note that the sky offsets, as a percentage of sky level, are comparable in the $J$ and $K_s$ bands, despite the sky glow being $\sim 4\times$ brighter in $K_s$ than $J$ (see \Fig{net_sky_level}).
+This indicates that spatiotemporal variations in the NIR sky are monochromatic.
 
-Within the hierarchy of sky fitting, simply fitting frames to a stack (with $\Delta_F$) is most significant: a correction on the order of 1\% of the sky intensity.
-Fitting these blocks into a mosaic ($\Delta_B$) is a further $\sim 0.5\%$ correction.
-The offsets to fit a stack into a block ($\Delta_S$) of four detector field stacks are smallest: 0.01\% of the sky level.
+Within the hierarchy of sky fitting, simply fitting frames to a stack (with $\Delta_F$) is most significant: a correction on the order of 2\% of the sky intensity.
+Fitting these blocks into a mosaic ($\Delta_B$) is a further $\sim 1$\% correction.
+The offsets to fit a stack into a block ($\Delta_S$) of four detector field stacks are smallest: 0.1\% of the sky level.
 This suggests that on the scale of the $2\times 2$ WIRCam array, the contemporaneously observed detector frames are subjected to nearly identical biases in sky background.
+But overall, the temporal and spatial lags of sky-target nodding induce a 2\% uncertainty in the sky level at the target.
+It is this level of uncertainty that sky offset optimization that must be diminished to transform uncorrected mosaics (\Fig{raw_mosaics}) to ones that show the disk with fidelity (\Fig{scalar_mosaics}).
 
 A comparison between the net sky offsets applied to the 2007B and 2009B data sets is provocative.
-The net uncertainty in sky level due to sky-target nodding, as measured by the total sky offset applied to each frame, decreased by 30\% and 12\% in the 2009B $J$ and $K_s$ data sets, respectively.
-The performance of the two observational strategies will be further discussed in \S\todo{TODO}.
+Although the 2009B dataset employed rapid sky-target nodding to minimize temporal lags between disk and sky sampling, the magnitude of sky offsets in the 2007B and 2009B semesters is comparable.
+This implies a limit to the absolute sky level accuracy that can be expected: the minimal 40~sec lag between sky and target samples, combined with a 1--$2\arcdeg$ nod across the sky, allows the sky level to change by 2\%.
+Reducing this latency, and this nodding distance, is impossible in WIRCam observations of M31.
+Thus by the metric of \Tab{offset_hierarchy}, the expensive 2009B observing approach does not return full dividends.
+
 
 \begin{table}[t]
 \centering
-\caption[Hierarchy of scalar sky offsets]{Hierarchy of scalar sky offsets. The `Total' sky offsets track the net offset of individual WIRCam image frames into the fitted mosaic. $\langle I_\mathrm{sky}\rangle$ is taken as the typical instantaneous sky level for the images being sampled (see \Fig{net_sky_level} for the distribution of levels).}
-% Fiducial sky values from thesis:
-% J: $1.0\times 10^{-7}$ ADU s$^{-1}$ pix$^{-2}$
-% K: $4.3\times 10^{-7}$ ADU s$^{-1}$ pix$^{-2}$
+\caption[Hierarchy of scalar sky offsets]{Hierarchy of scalar sky offsets (using \texttt{FW100K} RT flat fielding, and median sky subtraction).
+The `Total' sky offsets track the net offset of individual WIRCam image frames into the fitted mosaic.
+$\langle I_\mathrm{sky}\rangle$ is taken as the instantaneous sky level for the images being sampled (see \Fig{net_sky_level} for the distribution of levels).
+Offset distributions are also presented in units of the instrumental count rate, ADU $s^{-1}$, of CFHT/WIRCam.}
 \label{tab:offset_hierarchy}
 % made with $andpipe/wircam/calibset/mosaic/scalar_offset_hierarchy.py
 \input{tables/fw100k_medsky_offset_hierarchy.tex}
