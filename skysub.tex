@@ -694,7 +694,13 @@ The distribution of scalar sky offsets provide an excellent characterization of 
 Recall that sky offsets are optimized hierarchically: WIRCam frames are fitted to stacks, stacks are fitted into blocks of four contemporaneously-observed WIRCam detector fields, and these blocks are fitted into a mosaic.
 \Tab{offset_hierarchy} lists the standard deviations of these offset distributions with respect to the typical sky level observed in the $J$ and $K_s$ bands.
 
-Sky glow tends to be $\sim 4\times$ greater in the $K_s$ band than $J$ (see \Fig{net_sky_level}).
+% NOTE ON MEAN SKY LEVELS
+% According to andpipe/wircam/calibset/mosaic/scalar_offset_hierarchy.py:
+% Mean J Level: 894.19 muJy. Mean Ks Level: 19902.80 muJy
+% But note that in WIRCam instrumental ADU/s, teh mean sky levels are:
+% J: 122 ADU/s, Ks: 488 ADU/s. see $andpipe/wircam/skyanalysis/mean_sky_level.py
+
+Sky glow tends to be $\sim 20\times$ greater in the $K_s$ band than $J$ (see \Fig{net_sky_level}).
 \todo{TODO: Verify this.}
 % Sky offsets, then, are also commensurately larger in $K_s$ than $J$.
 Yet even relative to the typical sky level, $K_s$ sky offsets are larger than $J$ offsets, indicating that the $K_s$ sky has greater contrast in its sky glow structures.
