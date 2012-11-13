@@ -756,10 +756,9 @@ The variability of the sky in these timeseries will be further pursued in \S \to
 Although the scalar sky offsets are statistically valid, they are not perfect prescriptions against the sky subtraction uncertainties of each image stack---that much is visually true.
 A measure of the limitation of sky offset fitting are the residual image level differences between coupled blocks, $(\vect{I}_i - \Delta_{B,i}) - (\vect{I}_j - \Delta_{B,j})$, after the sky offsets $\Delta_{B,i}$ have been optimally fitted to each block.
 
-\Tab{resid_diffs} lists distributions of both image level differences between coupled blocks, before and after the application of scalar sky offsets.
-Uncorrected, the ensemble of coupled blocks have a median intensity difference of $\sim 0.4\%$ of the typical sky background intensity.
-Scalar sky offsets decrease the differences between overlapping fields to $\sim 0.02\%$.
-\todo{TODO: update table}.
+\Tab{fw100k_medsky_scalar_resid_diffs} lists distributions of both image level differences between coupled blocks, before and after the application of scalar sky offsets.
+Uncorrected, the ensemble of coupled blocks have a mean intensity difference of $\sim 1\%$ of the typical sky background intensity.
+Scalar sky offsets decrease the differences between overlapping fields to $\sim 0.2\%$.
 
 With \Fig{fw100k_medsky_scalar_resid_sbfrac} we can visualize these block-to-block residual differences as a fraction of the local surface brightness.
 Note that throughout the bright inner disk of M31, block-to-block residuals are negligible compared to the disk signal; but at the mosaic periphery ($R\sim 20$~kpc), the field-to-field residuals become comparable to, or greater than, the disk surface brightness.
@@ -781,20 +780,11 @@ Our discussion in \Sec{skyflatstability}, and particularly \Fig{frame_residuals_
 \centering
 \caption[Coupled block differences and residual differences after
 scalar sky offsets]{Coupled block intensity differences and residual intensity differences after application of scalar sky offsets: 25th, 50th and 75th percentiles of distribution.
-Differences are presented as a percent of the mean sky level seen by individual blocks.
+Differences are presented as a percent of the mean sky level seen by observations in each band.
 }
-\label{tab:resid_diffs}
-\begin{tabular}{lccc}
-& \multicolumn{3}{c}{Coupled Block $\langle I_i - I_j\rangle / \langle I_\mathrm{sky} \rangle$ (\%)} \\
-& 25th & 50th & 75th \\
-\hline
-$J$, uncorrected & 0.18 & 0.35 & 0.67 \\
-$J$, scalar offset & 0.01 & 0.03 & 0.06 \\
-\hline
-$K_s$, uncorrected & 0.21 & 0.46 & 0.81 \\
-$K_s$, scalar offset & 0.01 & 0.02 & 0.05 \\
-\hline
-\end{tabular}
+\input{tables/fw100k_medsky_scalar_resid_diffs}
+\label{tab:fw100k_medsky_scalar_resid_diffs}
+% $andpipe/wircam/calibset/mosaic/residuals_table.py
 \end{table}
 
 \begin{figure}[t]
@@ -834,6 +824,8 @@ $K_s$, scalar offset & 0.01 & 0.02 & 0.05 \\
     \item residual network plot showing block-to-block residuals in percent of sky. Compare to \Fig{scalar_relresidnet}.
 \end{enumerate}
 }
+
+
 
 \section{Systematic Uncertainties in Surface Brightness Reconstruction}
 \label{sec:systematics}
