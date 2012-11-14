@@ -64,7 +64,16 @@
 
 % ============================================================================
 \begin{abstract}
-\todo{In prep.}
+\comment{PROVISIONAL}.
+We present near-infrared $J$ and $K_s$ images of the Andromeda Galaxy made with WIRCam on the Canada-France-Hawaii Telescope.
+These images provide the highest resolution of M31's entire bulge and disk (within $R=22$~kpc) to date, simultaneously resolving stars and recovering M31's near-infrared surface brightness.
+This work extensively develops and tests our WIRCam calibrations, which are complicated by the brightness of near-infrared sky glow (which is 3 dex brighter than M31's disk at $R=20$~kpc), spatiotemporal variations in the sky glow and instrumental calibrations, and by the exceptionally large area of the M31 disk that we survey.
+We find that WIRCam data should be calibrated with real-time sky flats, to overcome flat field variability of order 1\% over 20 minutes.
+Two sky-target nodding strategies were tested, and we find that strictly minimizing sky sampling latency does not maximize sky subtraction accuracy, which is at best 1\% of certainty.
+Instead, our final surface brightness calibration relies upon solving for sky offsets, nudges of flux to each WIRCam image, that reduce image-to-image differences.
+Sky offset optimizations reduce image-to-image residuals  to 0.02\% of the sky brightness.
+Monte Carlo simulations show that the absolute surface brightness level of the disk at $R=15$~kpc is uncertain by \todo{TODO}, necessitating independent surface brightness calibration based on resolved stellar populations.
+\todo{ADD SCIENCE CONTEXT? ADD DISCUSSION OF SHAPE VARIABILITY.}
 \end{abstract}
 
 % ============================================================================
@@ -1140,7 +1149,7 @@ In this work, we have presented near-infrared ($J$ and $K_s$) images of M31's en
 
 The paramount task of this paper has been to establish procedures for accurately recovering near-infrared surface brightness across a target FIXME sq. deg. mosaic surface using a sky target nodding observing strategy with the WIRCam instrument on CFHT. The NIR sky is challenging because it is roughly 3 dex brighter than the disk at $R=20 kpc$; only the central bulge is brighter than the sky in the NIR. This problem is compounded by the fact that M31 is a large target on the sky, so that the NIR sky brightness \emph{at} M31 cannot be directly measured.
 
-We find that our NIR SB reconstruction is limited on two regimes. On a large scale, the absolute surface brightness of the mosaic is uncertain by $\sim \sigma_{\Delta_B} / \sqrt{N_blocks}$, a consequence of the uncertainty in sky level induced by  not measuring the sky level directly on M31's disk. This zeropoint can ultimately be established using resolved stellar populations, the subject of a future \androids\ work. A more delicate SB error regime occurs on small scales, where the 2D SB shapes of WIRCam blocks ($20\arcmin\times20\arcmin$) are uncertain by FIXME\% of the sky intensity, centre-to-edge. These shape errors are a consequence of strong variations in WIRCam flat fields (FIXME 1\% over 30 minutes), and spatial patterns in the NIR skyglow itself. 
+We find that our NIR SB reconstruction is limited on two regimes. On a large scale, the absolute surface brightness of the mosaic is uncertain by $\sim \sigma_{\Delta_B} / \sqrt{N_\mathrm{blocks}}$, a consequence of the uncertainty in sky level induced by  not measuring the sky level directly on M31's disk. This zeropoint can ultimately be established using resolved stellar populations, the subject of a future \androids\ work. A more delicate SB error regime occurs on small scales, where the 2D SB shapes of WIRCam blocks ($20\arcmin\times20\arcmin$) are uncertain by FIXME\% of the sky intensity, centre-to-edge. These shape errors are a consequence of strong variations in WIRCam flat fields (FIXME 1\% over 30 minutes), and spatial patterns in the NIR skyglow itself. 
 
 In this work we have developed an in-house pipeline for processing CFHT/WIRCam data to preserve surface brightness information. Our pipeline begins with unflat WIRCam frames that have been dark subtracted and linearity-corrected by CFHT's I'iwi pipeline. We find that skyflats are superior to dome and twilight flats in that they capture electronic structure of WIRCam amplifier bands with high fidelity. In existing WIRCam data, electronic amplifier band signatures are removed by median sky subtraction, which is a misuse of the method.\footnote{In our pipeline, median sky subtraction is only employed for removing large scale background shapes.} Furthermore, we have adopted \emph{real-time} sky flat fielding (flats built in a window of $\sim 30$ minutes) over flats built over a broader baseline (a WIRCam queue run) as we find evidence for WIRCam flat field evolution on the scale of tens of minutes. The exact source of WIRCam flat field evolution remains unknown (\ie, driven by optical geometry or electronics).
 
