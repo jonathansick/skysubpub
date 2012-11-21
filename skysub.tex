@@ -435,7 +435,7 @@ The Two Micron All Sky Survey (2MASS) Point Source Catalog (PSC) \citep{Skrutski
 Typical WIRCam pointings (20\arcmin by 20\arcmin) in this survey contain $\sim 500$ stars measured by 2MASS.
 % see python $andpipe/wircam/calibset/photcal/tmass_source_count.py
 Although these are not standards, the ensemble of 2MASS stars may be treated as such.
-Since the disk of M31 is crowded, and 2MASS has poor resolution (seeing $> 1\arcsec$), 2MASS point source measurements are considered unreliable on the disk.
+Since the disk of M31 is crowded, and 2MASS has poor resolution (seeing $> 1\arcsec$), we consider 2MASS point source measurements to be unreliable on the disk.
 Instead, all zeropoint measurements are made using sky images, and those calibrations are applied to paired disk images (analogous to the median sky subtraction procedure).
 
 Photometry of 2MASS stars in the uncrowded sky fields is done with Source Extractor \citep{Bertin:1996}.
@@ -443,6 +443,7 @@ We use the \texttt{AUTO} photometry mode to capture the full light of stars with
 Objects in the 2MASS PSC are matched to Source Extractor detections by position using the author's \sw{Mo'Astro}\footnote{\url{http://moastro.jonathansick.ca}} Python package, that manages the full 2MASS PSC in a MongoDB database.
 The 2MASS PSC contains many galaxies, and many 2MASS sources are saturated in our deeper WIRCam images.
 Thus we select stars with $m_J < 14$ or $m_{K_s} < 15$ magnitudes, and stars with FWHM $<1$\arcsec.
+Additionally, we select stars with $J-K_s < 0.8$ (typical of the foreground Milky Way stellar population) as we observe larger zeropoint residuals in redder stars.
 After filtering, roughly $sim 300$ matched 2MASS sources remain in typical WIRCam images.
 
 Typical photometric calibrations attempt to model three numbers---a zeropoint $m_z$, an airmass-dependent extinction factor $K$ and a linear colour transformation coefficient between the instrumental (WIRCam) and reference (2MASS) photometric systems---in the fitting function $m_\mathrm{2MASS} = -2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) + \hat{m_z} + \hat{K} (\sec z -1) + \hat{A} (J-K_s)_\mathrm{2MASS}$.
@@ -454,7 +455,12 @@ We instead collapse airmass dependence into an instantaneous zeropoint, $m_0$, t
   m_\mathrm{2MASS} = -2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) + \hat{m_0} + \hat{A} (J-K_s)_\mathrm{2MASS}.
 \end{equation}
 
-Given that $\sim 300$ usable 2MASS stars are visible in each image, and their photometric uncertainties are $0.05 \lesssim \sigma_{\mathrm{2MASS}} \lesssim 0.3$, the typical uncertainty of $m_z$ is 0.03 mag in a single image. The typical uncertainty of the instantaneous colour transformation coefficient is 0.03. Since $m_z$ and $A$ are only fit for sky images, zeropoints and colour transformations for science images are interpolated as the median of a sliding window of sky images large enough to statistical uncertainty of the median $m_z$ to be reduced below 0.01 mag.
+Given that $\sim 175$ usable 2MASS stars are visible in each image, and their photometric uncertainties are $0.05 \lesssim \sigma_{\mathrm{2MASS}} \lesssim 0.3$, the typical statistical zeropoint uncertainty, $\sigma_{\hat{m_0}}$, is 0.1 mag in a single image.
+
+The typical uncertainty of the instantaneous colour transformation coefficient is 0.03.
+Although we could fit a colour transformation coefficient $\hat{A}$ for each image, the short $J-K_s$ colour baseline makes such measurements unreliable. Instead we adopt $A_J = 0.05$ and $A_{K_s} = -0.05$ (K. Thanjuvar, priv.\ comm.) based on modelling stellar spectra with the 2MASS and CFHT/WIRCam transmission functions.
+
+Since $m_0$ is fit for sky images, zeropoints and colour transformations for science images are interpolated as the median of a sliding window of sky images large enough to statistical uncertainty of the median $m_z$ to be reduced below 0.01 mag.
 % see $andpipe/wircam/calibset/photcal/singleimg/uncertainty_dists.py for photometry properties 
 
 \subsection{Chip-to-chip zeropoint consistency}
