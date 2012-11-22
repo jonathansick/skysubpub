@@ -382,15 +382,16 @@ Real-time sky flats can consequently be refreshed in as little as 10 minutes, or
 
 Given the ensemble of sky integrations, our next task is to scale the intensity of each image.
 This scaling achieves three requirements: 1) each image frame in the median stack is at the same level, 2) each WIRCam detector has a unified zeropoint, and 3) the sky flat across the whole array is flux normalized.
-This scaling is determined by the modal pixel level measured on each detector for each sky integration---denote these modal levels as $\alpha_{i,j}$ for the $i$th sky image's level in detector $j$, $j=1, 2, 3, 4$.
+This scaling is determined by the median pixel level measured on each detector for each sky integration---denote these median levels as $\alpha_{i,j}$ for the $i$th sky image's level in detector $j$, $j=1, 2, 3, 4$.
 To avoid bias in the sky estimate, we also build masks for any pixels that do not sample blank sky.
 \sw{Source Extractor} \citep{Bertin:1996} is used to define stars and background galaxies (we use \iiwione\ \texttt{*p.fits} images to detector sources), while hand-drawn polygon regions cover diffraction spikes and the diffuse halos around bright galactic stars. These masks, along with the \iiwione\ bad pixel mask, are combined with \sw{WeightWatcher} \citep{Marmo:2008}.
 For each detector, we compute the median sky level seen by that chip: $\beta_j = \mathrm{median}(\alpha_{1,j}, \alpha_{2,j}\ldots \alpha_{n,j} )$.
 Further, we also compute $S$, the median of median chip levels: $S=\mathrm{median}(\beta_j)$.
-Then each the sky image is scaled by the factor $\mathcal{F}_{ij} = \mathrm{median}(\beta_1, \beta_2, \beta_3, \beta_4) / (\alpha_{ij} S)$.
+Then each the sky image is scaled by the factor $f_{ij} = \mathrm{median}(\beta_1, \beta_2, \beta_3, \beta_4) / (\alpha_{ij} S)$.
 Note that the factor $\alpha_{ij}^{-1}$ normalizes each image to the same level for stacking, while the ratio $\beta_j / S$ adjusts the level of each chip according to chip-to-chip zeropoint offsets.
 Indeed, chip-to-chip zeropoint offsets can be measured as $-2.5 \log_{10}(\beta_i / \beta_1)$, as done in \Fig{fw100k_zpdiff}.
-WIRCam detector \#1 (North-West quadrant) is clearly the most sensitive, but the unexpectedly broad distribution in zeropoint differences that may be indicative of variable gain in the WIRCam detectors.
+WIRCam detector \#1 (North-West quadrant) is clearly the most sensitive, while the dispersion indicates the level of gain variability in WIRCam.
+We also note systematic differences in spectral response of WIRCam detectors in the $J$ and $K_s$ on the order of 0.05 mag.
 
 The flat itself is built by median combination.
 Median combination of a stack of hundreds of $2048\times2048$ pixel image, each with a weightmap masking astronomical sources, is computationally expensive.
@@ -398,8 +399,8 @@ A convenient solution was to use \sw{Swarp} \citep[an image-mosaicing software p
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/fw100k/fw100k_zpdiff}
-\caption{Distribution of real-time sky flat scaling factors, $\mathcal{F}_j$, as zeropoint differences relative to detector \#1 (red: \#2, green: \#3, blue: \#4) in $J$ and $K_s$ bands.
+\includegraphics[width=\columnwidth]{figs/fw100k/fw100k_betadiff}
+\caption{Distribution of real-time sky flat scaling factors, measuring chip-to-chip zeropoint differences relative to detector \#1 (red: \#2, green: \#3, blue: \#4) in $J$ and $K_s$ bands.
 }
 \label{fig:fw100k_zpdiff}
 % $andpipe/wircam/skyflat/plot/chip_zp_diff.py
