@@ -699,11 +699,13 @@ Note that the sky offsets, as a percentage of sky level, are comparable in the $
 This indicates that spatiotemporal variations in the NIR sky are monochromatic.
 
 Within the hierarchy of sky fitting, simply fitting frames to a stack (with $\Delta_F$) is most significant: a correction on the order of 2\% of the sky intensity.
-Fitting these blocks into a mosaic ($\Delta_B$) is a further $\sim 1$\% correction.
-The offsets to fit a stack into a block ($\Delta_S$) of four detector field stacks are smallest: 0.1\% of the sky level.
-This suggests that on the scale of the $2\times 2$ WIRCam array, the contemporaneously observed detector frames are subjected to nearly identical biases in sky background.
+Fitting blocks into a mosaic ($\Delta_B$) is a further $\sim 1$\% correction.
 But overall, the temporal and spatial lags of sky-target nodding induce a 2\% uncertainty in the sky level at the target.
-It is this level of uncertainty that sky offset optimization that must be diminished to transform uncorrected mosaics (\Fig{raw_mosaics}) to ones that show the disk with fidelity (\Fig{scalar_mosaics}).
+It is this level of uncertainty that sky offset optimization must diminish to transform uncorrected mosaics (\Fig{raw_mosaics}) to ones that show the disk with fidelity (\Fig{scalar_mosaics}).
+
+Note that offsets to fit a stack into a block ($\Delta_S$) of four detector field stacks are smallest: 0.1\% of the sky level.
+This suggests that on the scale of the $2\times 2$ WIRCam array, the contemporaneously observed detector frames are subjected to nearly identical biases in sky background.
+Stack offsets, then, arise from uncertainties in the pipeline's measurement of the sky level from single frames in two stages: estimating chip-to-chip zeropoint offsets from frame sky levels (\Sec{flatbuilding}) and again when subtracting a median sky frame (\Sec{mediansky}).  \comment{Come back to this statement after the analysis of sky shape variations; it could be a consequence of background sky shape uncertainty.}
 
 A comparison between the net sky offsets applied to the 2007B and 2009B data sets is provocative.
 Although the 2009B dataset employed rapid sky-target nodding to minimize temporal lags between disk and sky sampling, the magnitude of sky offsets in the 2007B and 2009B semesters is comparable.
@@ -717,7 +719,7 @@ Thus by the metric of \Tab{offset_hierarchy}, the expensive 2009B observing appr
 \caption[Hierarchy of scalar sky offsets]{Hierarchy of scalar sky offsets (using \texttt{FW100K} RT flat fielding, and median sky subtraction).
 The `Total' sky offsets track the net offset of individual WIRCam image frames into the fitted mosaic.
 $\langle I_\mathrm{sky}\rangle$ is taken as the instantaneous sky level for the images being sampled (see \Fig{net_sky_level} for the distribution of levels).
-Offset distributions are also presented in units of the instrumental count rate, ADU $s^{-1}$, of CFHT/WIRCam.}
+Offset distributions are also presented in units of the WIRCam mosaics, DN, corresponding to a zeropoint of 25 mag.}
 \label{tab:offset_hierarchy}
 % made with $andpipe/wircam/calibset/mosaic/scalar_offset_hierarchy.py
 \input{tables/fw100k_medsky_offset_hierarchy.tex}
@@ -729,17 +731,16 @@ Offset distributions are also presented in units of the instrumental count rate,
 Recall that scalar sky offsets were initially introduced as nudges in intensity to overcome uncertainty in the sky level of detector field stacks.
 For sky offsets to be considered acceptable, we demand that the offsets applied to blocks, $\Delta_B$ be consistent with the sky level uncertainty of the blocks themselves.
 We can conservatively measure the sky uncertainty as the dispersion of $\Delta_F$ frame offsets in a stack: $\sigma_{\Delta_F}$.
-Thus if sky offsets fitted between blocks are statistically permissible, then $\Delta_B \lesssim \sigma_{\Delta_F}$.
-In \Fig{offset_ratio_map}, we plot a field map (in the same spatial configuration as \Fig{fieldmap}) painted with the values of $\Delta_B / \sigma_{\Delta_F}$ for each detector field in the $J$ and $K_s$ mosaics.
+If sky offsets fitted between blocks are statistically permissible, then $\Delta_B \lesssim \sigma_{\Delta_F}$.
+In \Fig{offset_ratio_map}, we plot a field maps (in the same spatial configuration as \Fig{fieldmap}) painted with the values of $\Delta_B / \sigma_{\Delta_F}$ for each block in the $J$ and $K_s$ mosaics.
 The sky offsets are indeed distributed within the uncertainty budgeted by $\sigma_{\Delta_F}$: the sky offsets are statistically acceptable.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/offset_ratio_map_enhanced}
-\caption{Acceptability of $J$ and $K_s$ scalar sky offsets between blocks, as measured by the ratio of $\Delta_B/\sigma_{\Delta_F}$.}
+\includegraphics[width=\columnwidth]{figs/fw100k_medsky/offsetratiomap}
+\caption{Acceptability of $J$ and $K_s$ scalar sky offsets between blocks, as measured by the ratio of $\Delta_B/\sigma_{\Delta_F}$, plotted as histograms and field maps. Black and dashed-red histograms distinguish blocks observed in 2007B and 2009B, respectively. Scalar sky offsets required for blocks are consistent with the sky level uncertainties of single frames, given sky-target nodding sky subtraction.}
 \label{fig:offset_ratio_map}
-% made with skyoffset/offsetratiomap.py
-% TODO need to fix colour scheme of the histograms
+% made with wircam/calibset/mossaic/offsetratiomap.py
 \end{figure}
 
 Another demonstration of the veracity of these sky offsets is given in Fig. \todo{TODO}, where we plot a timeseries of both directly measured sky levels, and sky levels interpolated on disk observations via sky offsets.
