@@ -743,10 +743,18 @@ The sky offsets are indeed distributed within the uncertainty budgeted by $\sigm
 % made with wircam/calibset/mossaic/offsetratiomap.py
 \end{figure}
 
-Another demonstration of the veracity of these sky offsets is given in Fig. \todo{TODO}, where we plot a timeseries of both directly measured sky levels, and sky levels interpolated on disk observations via sky offsets.
+Another demonstration of the veracity of these sky offsets is given in \Fig{skylevel_timeseries}, where we plot a timeseries of both directly measured sky levels, and sky levels interpolated on disk observations via sky offsets.
 Note how remarkably continuous the sky level is from sky to disk observation; compared to the sky level timeseries of stationary sky fields, the variations in the sky level interpolated on the disk appear real.
 Through the sky target nodding and sky offset optimization, we \emph{have} effectively measured the level of the sky on M31.
 The variability of the sky in these timeseries will be further pursued in \S \todo{TODO}.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figs/skylevel_timeseries_all}
+\caption{Sky level timeseries for selected nights in the $J$ (top) and $K_s$ bands (bottom) as a percent difference of the initial sky level each night (with a 10\% offset between nights). Directly measured sky levels are plotted in black, while sky levels estimated on the disk (with scalar sky offsets) are coloured dots. The continuity between real and estimated sky levels demonstrates the veracity of sky offsets.}
+\label{fig:skylevel_timeseries}
+% made with andpipe/wircam/skyanalysis/allnights_skylevel_timeseries.py
+\end{figure*}
 
 \subsection{Residual Image Level Differences}
 \label{sec:residual_diffs}
