@@ -413,19 +413,18 @@ Since M31 is much larger than individual WIRCam fields, sky background is subtra
 Section~\ref{sec:Observations} describes the sky-target nodding sequences chosen for the 2007B and 2009B observing campaigns. 
 Although a scalar sky level could be estimated from a sky image, and subtracted from the paired target images, it is common to construct a median sky image, the same size as the WIRCam frames, and subtract this 2D image from target images.
 
-Independent median sky images for each WIRCam detector are produced by choosing a sky image (the primary sky image) and five other sky images taken adjacent time.
-Across each frame, the modal sky intensity is recorded.
+Independent median sky images for each WIRCam detector are produced by choosing a sky image (the primary sky image) and four other sky images taken adjacent time.
+Across each frame, the median sky intensity is recorded.
 A Source Extractor object mask, as used in \Sec{flatbuilding} for flat fielding, removes bias from astrophysical sources.
 Each sky image is \emph{additively} scaled to a common intensity level, allowing differences in overall sky amplitude to be ignored by the median combination.
 As described in \Sec{flatbuilding}, \sw{Swarp} is used to median-combine the sky images, taking into account non-sky pixel masks.
-This median sky image is additively scaled back to the original level of the primary sky image.
+Since these median sky images record only low-frequency spatial information, these median sky images are smoothed with a Gaussian kernel (note this is quite different from the function of median sky images applied to dome-flat processed WIRCam data, where median sky subtraction also removed pixel-to-pixel artifacts).
+This median sky image is then additively scaled back to the original level of the primary sky image.
 
 Each image in the data set is sky subtracted by first identifying the median sky frame whose primary image was taken most closely in time.
 That paired median sky frame is subtracted from the image.
 
 In \Sec{skyflatstability} we follow up on this operational discussion to consider the shapes of median sky images. In particular, we connect the role of median sky frames to the stability of different recipes of sky flats described in \Sec{flats}.
-
-\todo{Describe the shapes of the median sky frames. Indeed, this is crucial in the discussion of \Sec{skyflatstability}. Perhaps it would be appropriate to move that section \emph{after} \Sec{mediansky} to combine the discussion of both flat fielding and the residual median sky effects.}
 
 \section{Photometric calibration}
 \label{sec:photocal}
@@ -444,7 +443,8 @@ Objects in the 2MASS PSC are matched to Source Extractor detections by position 
 The 2MASS PSC contains many galaxies, and many 2MASS sources are saturated in our deeper WIRCam images.
 Thus we select stars with $m_J < 14$ or $m_{K_s} < 15$ magnitudes, and stars with FWHM $<1$\arcsec.
 Additionally, we select stars with $J-K_s < 0.8$ (typical of the foreground Milky Way stellar population) as we observe larger zeropoint residuals in redder stars.
-After filtering, roughly $sim 300$ matched 2MASS sources remain in typical WIRCam images.
+After filtering, roughly $\sim 300$ matched 2MASS sources remain in typical WIRCam images.
+\todo{Verify this number given new colour cuts}.
 
 Typical photometric calibrations attempt to model three numbers---a zeropoint $m_z$, an airmass-dependent extinction factor $K$ and a linear colour transformation coefficient between the instrumental (WIRCam) and reference (2MASS) photometric systems---in the fitting function $m_\mathrm{2MASS} = -2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) + \hat{m_z} + \hat{K} (\sec z -1) + \hat{A} (J-K_s)_\mathrm{2MASS}$.
 With queue service observing it is impossible to constrain a nightly extinction coefficient since observations are taken in short blocks spread over several weeks.
@@ -751,7 +751,7 @@ The variability of the sky in these timeseries will be further pursued in \S \to
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{figs/skylevel_timeseries_all}
-\caption{Sky level timeseries for selected nights in the $J$ (top) and $K_s$ bands (bottom) as a percent difference of the initial sky level each night (with a 10\% offset between nights). Directly measured sky levels are plotted in black, while sky levels estimated on the disk (with scalar sky offsets) are coloured dots. The continuity between real and estimated sky levels demonstrates the veracity of sky offsets.}
+\caption{Sky level timeseries for selected nights in the $J$ (top) and $K_s$ bands (bottom) as a percent difference of each night's initial sky level (with a 10\% offset between nights). Directly measured sky levels are plotted in black, while sky levels estimated on the disk (with scalar sky offsets) are coloured dots. The continuity between real and estimated sky levels demonstrates the veracity of sky offsets.}
 \label{fig:skylevel_timeseries}
 % made with andpipe/wircam/skyanalysis/allnights_skylevel_timeseries.py
 \end{figure*}
