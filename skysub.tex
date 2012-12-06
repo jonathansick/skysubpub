@@ -958,14 +958,17 @@ This notion is embodied in the \texttt{QRUN} sky flats that combine hundreds of 
 But this also assumes that WIRCam is a \emph{stable} detector over the period of several days.
 In this section, we consider the stability of WIRCam flat fields and argue for the optimal window for building WIRCam sky flats that is both responsive to changes in the WIRCam detector, and robust against sky shape biases.
 
-A first test of the accuracy of the different skyflats is their ability to produce an unbiased sky.
-In this test, measuring the median sky shape of flattened sky images, the \texttt{QRUN} sky flats readily fail (see \Fig{qrun_median_sky}).
-Axis symmetry, and presence of dust donuts imprinted on the sky, indicate that WIRCam is not mechanically stable over a queue run.
-Real-time (RT) sky flats, on the other hand, do produce flat median sky images to within a high accuracy.
-But since RT sky flats, such as \texttt{FW100K}, median sky images over similar timescales as the median sky images themselves, this test is less useful.
-Instead, in \todo{Fig. TODO} we show a typical sky frame flattened by an \texttt{FW100k} sky flat.
-Such images are flat at a level of \todo{TODO}\% of the NIR sky.
-Of course, the flattness of the sky is by design! We must ask how these RT sky flats evolve, and whether such flats are actually calibrating the WIRCam gain structure and illumination function, and not simply enforcing a flat sky.
+\subsection{Shapes of Median Sky}
+\label{sec:medianskyshapes}
+
+
+A first test of the accuracy of the different skyflats is their ability to produce an unbiased sky, up to the level of intrinsic sky variations.
+We can easily see that \texttt{QRUN} sky flats produced biased sky shapes from, \eg, \Fig{qrun_median_sky}.
+There, the axis symmetry, and presence of dust donuts imprinted on the sky, indicate the median sky in \Fig{qrun_median_sky} is recording biases in the \texttt{QRUN} sky flat---evidently caused by changes in the CFHT/WIRCam optical path and electronics over a queue run---rather than intrinsic variations in the sky itself.
+
+To compare the bias of \texttt{QRUN} versus \texttt{FW100K} sky flats, we simply measure the 2-standard deviation range of each median sky image's pixel distribution, $2 \sigma(\mathrm{med~sky})$.
+% TODO
+For comparison, we can measure the range of sky levels seen in median sky images produced with \texttt{FW100K} sky flats, and find that variation in sky shape across a WIRCam sky frame is reduced to XX\% of the sky level. \Fig{mediansky_amplitude}.
 
 \begin{figure}[t]
 \centering
@@ -974,8 +977,21 @@ Of course, the flattness of the sky is by design! We must ask how these RT sky f
 Although the median sky images vary,  the axis symmetry and dust patterns are indicative of flat fielding bias.
 As shown, flat-fielding errors impose sky subtraction biases on the order of 1\% of the NIR sky level, which is unacceptable for this M31 survey.}
 \label{fig:qrun_median_sky}
+% made with wircam/shape/median_sky_movie.py
 \end{figure}
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/mediansky_amplitude}
+\caption{Amplitude of sky level variations across median sky images processed with \texttt{QRUN} and \texttt{FW100K} sky flats.}
+\label{fig:mediansky_amplitude}
+% made with $andpipe/wircam/shape/mediansky_amplitude.py
+\end{figure}
+
+\subsection{Evolution of Real Time Sky Flats} % (fold)
+\label{sec:flatevo}
+
+% subsection Evolution of Real Time sky flats (end)
 A simple test of WIRCam's flatfield stability is to monitor how the RT skyflats evolve on scales of hours.
 In \Fig{fw100k_movie} we show percent difference images between RT sky flats made at intervals of 15, 30, 60 and 90 minutes after an initial RT sky flat.
 After just 30 minutes, the shape of the RT skyflats deviate by 0.5\% from the initial flat field shape.
@@ -987,11 +1003,12 @@ In some cases (\Fig{fw100k_movie}b) the flat field deviations are axis symmetric
 We interpret these patterns as instabilities in the WIRCam illumination function on the scales of minutes.
 \comment{It will be interesting to see if there is always asymmetry in staring/07B sky flats where the same sky field is consistently used, and circular symmetry in the 09B ST-nodding fields. I'm not sure what this means, but would imply a correlation with telescope movement or spatial sampling of the sky.}
 
-\begin{figure*}[p]
+\begin{figure*}[t]
 \centering
-\includegraphics[width=7in]{figs/fw100k/fw100k_movie}
+\includegraphics[width=\textwidth]{figs/fw100k/fw100k_movie}
 \caption{Spatio-temporal evolution of \texttt{FW100K} sky flats, shown as percent difference of the flat fields 15, 30, 60 and 90 minutes after the initial sky flat of the night. Sky flat evolution on three nights is shown: (a) 2009B $K_s$ observing block when the telescope `stared' at a sky field, (b) 2009B $K_s$ observing block with regular sky-target nodding, and (c) a 2007B observing block with sky-target nodding.}
 \label{fig:fw100k_movie}
+% made with andpipe/wircam/skyflat/plot/flatratio.py
 \end{figure*}
 
 An alternative interpretation is that these sky flat deviations are instabilities in the WIRCam detector electronics.
@@ -1019,6 +1036,9 @@ Suppose the same disk image is calibrated with a flat fielded with a sky flat th
 The magnitude difference between the correct and incorrect disk surface brightnesses will only be $2.5 \log_{10} \epsilon$.
 That is, a 1\% error in the flat field will only perturb the observed disk surface brightness by 0.01~mag.
 So long as the disk and sky are observed with the same flat field function, median sky subtraction will nonetheless subtract, and effectively flatten, the sky background of the disk image.
+
+\subsection{Frame residuals} % (fold)
+\label{sec:frameresiduals}
 
 Although the median sky subtraction is effective at flattening the sky background shape induced by bias flat fields, we can nonetheless detect how incorrect flat fielding changes disk surface brightness.
 Any time-varying flat-field function that is inadequately measured should be revealed as a distribution of surface brightness estimates on the bright bulge of M31, where flat fielding is more important than sky subtraction accuracy.
