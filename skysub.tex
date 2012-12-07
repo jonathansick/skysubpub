@@ -951,42 +951,12 @@ In particular, we are interested in the consequences of flat field design choice
 Our construction of skyflats permits one significant choice: how broad should the window of sky images be to reliably capture both pixel-to-pixel sensitivity, and the large scale illumination of the WIRCam detector.
 The robustness of skyflats is, on one hand, tempered by the flatness of the NIR sky itself.
 Wide-field movies of the NIR sky \citep{Adams:1996} show the NIR sky glow to be akin to a moving cloud system.
-As such, the NIR sky seen by WIRCam is never flat—yet by definition a flat field must necessarily be built from an intrinsically uniform illumination across the telescope focal plane.
+As such, the NIR sky seen by WIRCam is never flat---yet by definition a flat field must necessarily be built from an intrinsically uniform illumination across the telescope focal plane.
 In producing a NIR sky flat, we hypothesize that the mean shape of the NIR sky over a timespan is flat.
 By maximizing the time window we can marginalize over as many sky shapes as possible to produce an unbiased skyflat.
 This notion is embodied in the \texttt{QRUN} sky flats that combine hundreds of sky shapes captured across several days.
 But this also assumes that WIRCam is a \emph{stable} detector over the period of several days.
 In this section, we consider the stability of WIRCam flat fields and argue for the optimal window for building WIRCam sky flats that is both responsive to changes in the WIRCam detector, and robust against sky shape biases.
-
-\subsection{Shapes of Median Sky}
-\label{sec:medianskyshapes}
-
-
-A first test of the accuracy of the different skyflats is their ability to produce an unbiased sky, up to the level of intrinsic sky variations.
-We can easily see that \texttt{QRUN} sky flats produced biased sky shapes from, \eg, \Fig{qrun_median_sky}.
-There, the axis symmetry, and presence of dust donuts imprinted on the sky, indicate the median sky in \Fig{qrun_median_sky} is recording biases in the \texttt{QRUN} sky flat---evidently caused by changes in the CFHT/WIRCam optical path and electronics over a queue run---rather than intrinsic variations in the sky itself.
-
-To compare the bias of \texttt{QRUN} versus \texttt{FW100K} sky flats, we simply measure the 2-standard deviation range of each median sky image's pixel distribution, $2 \sigma(\mathrm{med~sky})$.
-% TODO
-For comparison, we can measure the range of sky levels seen in median sky images produced with \texttt{FW100K} sky flats, and find that variation in sky shape across a WIRCam sky frame is reduced to XX\% of the sky level. \Fig{mediansky_amplitude}.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figs/1129459_1129489_Ks_queuesky_medsky}
-\caption{A typical median sky image from images calibrated by \texttt{QRUN} sky flats.
-Although the median sky images vary,  the axis symmetry and dust patterns are indicative of flat fielding bias.
-As shown, flat-fielding errors impose sky subtraction biases on the order of 1\% of the NIR sky level, which is unacceptable for this M31 survey.}
-\label{fig:qrun_median_sky}
-% made with wircam/shape/median_sky_movie.py
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figs/mediansky_amplitude}
-\caption{Amplitude of sky level variations across median sky images processed with \texttt{QRUN} and \texttt{FW100K} sky flats.}
-\label{fig:mediansky_amplitude}
-% made with $andpipe/wircam/shape/mediansky_amplitude.py
-\end{figure}
 
 \subsection{Evolution of Real Time Sky Flats} % (fold)
 \label{sec:flatevo}
@@ -1027,6 +997,30 @@ Sky flat evolution does appear driven by changes in the large scale detector ill
 % wircam/skyflat/plots/amp_level_global.py
 \end{figure}
 
+\subsection{Shapes of Median Sky}
+\label{sec:medianskyshapes}
+
+A first test of the accuracy of the different skyflats is their ability to produce an unbiased sky, up to the level of intrinsic sky variations.
+We can easily see that \texttt{QRUN} sky flats produced biased sky shapes from, \eg \Fig{qrun_median_sky}.
+There, the axis symmetry, and presence of dust donuts imprinted on the sky, indicate the median sky in \Fig{qrun_median_sky} is recording biases in the \texttt{QRUN} sky flat---evidently caused by changes in the CFHT/WIRCam optical path and electronics over a queue run---rather than intrinsic variations in the sky itself.
+
+To compare the bias of \texttt{QRUN} versus \texttt{FW100K} sky flats, we can measure the amplitude of shapes across the $10\arcmin \times 10\arcmin$ WIRCam frame as the 2-standard deviation range of each median sky image's pixel distribution, $2 \sigma(\mathrm{med~sky})$.
+These distributions of sky shape amplitude are plotted in \Fig{mediansky_amplitude}.
+As expected by \Fig{qrun_median_sky}, \texttt{QRUN} median sky frames have typical biases of 1\% of the sky level, while sky frames from real-time \texttt{FW100K} sky flats are much flatter, $\lesssim 0.3\%$ of the sky level, and more consistently so.
+
+Although \texttt{FW100k} sky flats are better than \texttt{QRUN} flats, we can still ask how precise they are.
+Are the shapes of median sky frames a consequence of intrinsic sky shapes, or of limits in WIRCam flat field accuracy?
+We interpret \Fig{mediansky_amplitude} as indicating the latter since 2007B and 2009B median sky images have comparable amplitudes.
+Recall that 2009B median sky images are composed of five sky samples taken at random points on the sky, thus potentially sampling uncorrelated sky shapes while the 2007B sky images are composed of sky images taken in rapid succession at the same site on the sky.
+Thus we expect the instantaneous shape of the sky (in the sky field) to be captured in the 2007B median sky frames, while the 2009B sky frames should marginalize over five random sky shapes and be flatter up to a factor of $1/\sqrt{5}$.
+That this \emph{does not} occur indicates that sky shapes are correlated over tens of minutes and 3\arcdeg\ of sky, or that the flatness of median sky images is limited at the 0.3\% level by flat field variations in WIRCam (\eg \Fig{fw100k_movie}).
+Indeed, because 2009B median sky images are built over wider time windows than 2007B median sky images (that are built in rapid succession, without target nod interspersed), the intrinsic flat field function of WIRCam can evolve further for 2009B median sky images, offsetting any gains from sampling uncorrelated sky shapes. \todo{Get number for time windows of 2007B and 2009B median sky windows; put in \Sec{mediansky}}.
+
+Also note that in both cases, there are long-tail cases of median sky shape amplitudes as large as 5\% of the sky level \todo{(figure out the circumstances of these!)}.
+But neglecting this long tail, \Fig{mediansky_amplitude} demonstrates that the combined effects of real-time \texttt{FW100K} sky flat fidelity and the intrinsic variations of the NIR sky across a $10\arcmin \times 10\arcmin$.
+
+\subsubsection{The function of median sky subtraction}
+
 Although the WIRCam illumination function appears to vary rapidly, and strongly, we do not see extremely strong sky residuals (\ie \Fig{qrun_median_sky}) in the \texttt{QRUN}-calibrated mosaic (ultimately presented in \todo{\S TODO}).
 This can be attributed to the functionality of median sky subtraction (\Sec{mediansky}).
 Suppose the disk has a flux of $N$ counts, while the sky brightness is $S$ counts, before flat fielding.
@@ -1037,10 +1031,30 @@ The magnitude difference between the correct and incorrect disk surface brightne
 That is, a 1\% error in the flat field will only perturb the observed disk surface brightness by 0.01~mag.
 So long as the disk and sky are observed with the same flat field function, median sky subtraction will nonetheless subtract, and effectively flatten, the sky background of the disk image.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/1129459_1129489_Ks_queuesky_medsky}
+\caption{A typical median sky image from images calibrated by \texttt{QRUN} sky flats.
+Although the median sky images vary,  the axis symmetry and dust patterns are indicative of flat fielding bias.
+As shown, flat-fielding errors impose sky subtraction biases on the order of 1\% of the NIR sky level, which is unacceptable for this M31 survey.
+}
+\label{fig:qrun_median_sky}
+% made with wircam/shape/median_sky_movie.py
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/mediansky_amplitude}
+\caption{Amplitude of sky level variations across median sky images processed with \texttt{QRUN} and \texttt{FW100K} sky flats.
+\comment{Switch to a cumulative distribution to better show scales.}}
+\label{fig:mediansky_amplitude}
+% made with $andpipe/wircam/shape/mediansky_amplitude.py
+\end{figure}
+
 \subsection{Frame residuals} % (fold)
 \label{sec:frameresiduals}
 
-Although the median sky subtraction is effective at flattening the sky background shape induced by bias flat fields, we can nonetheless detect how incorrect flat fielding changes disk surface brightness.
+Although the median sky subtraction is effective at flattening the sky background shape induced by biased flat fields, we can nonetheless detect how incorrect flat fielding changes disk surface brightness.
 Any time-varying flat-field function that is inadequately measured should be revealed as a distribution of surface brightness estimates on the bright bulge of M31, where flat fielding is more important than sky subtraction accuracy.
 In Figures~\ref{fig:frame_residuals_M31-37_Ks_fw100k_medsky} and~\ref{fig:frame_residuals_M31-37_Ks_QRUN} we see the residual shapes of individual WIRCam frames against the median shape of the mosaic, given \texttt{FW100K} and \texttt{QRUN} sky flattening, respectively.
 In detector \#2 (lower-right), where the core of M31 resides, there are strong surface brightness residuals that clearly point out flaws in the flat field itself.
