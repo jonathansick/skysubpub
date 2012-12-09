@@ -1077,6 +1077,7 @@ Individual integrations are coloured by their time after the first disk integrat
 % made with wircam/shape/frame_block_residuals/plot_field_slices.py
 \end{figure*}
 
+
 \begin{figure*}[p]
 \centering
 \includegraphics[width=7in]{figs/frame_residuals/M31-37_Ks_queuesky_medsky}
@@ -1088,16 +1089,22 @@ Individual integrations are coloured by their time after the first disk integrat
 \subsubsection{Distributions of frame shape residuals}
 \label{sec:frameblockresidualhist}
 
-Our examination of frame-block residual differences can also be extended across the entire dataset.
-In doing so, we can see how consistently our observing and processing recipes image the disk of M31.
-In \Fig{frame_diffs_skyfrac} show the distribution of amplitudes of frame-block residuals, comparing these distributions between filter, sky flat type, and observing run.
+We also extend this analysis across the entire dataset.
+In \Fig{frame_residuals_M31-37_Ks_QRUN} we plot distribution of frame-block residual shape amplitudes, measured at the 95\% difference interval.
+In essence, this measures the consistency of imaging the shape of each M31 block.
+As in our test of median sky frame flatness (\Sec{medianskyshapes}), we see that the consistency of frame shapes is $\sim 0.3\%$ of the sky level.
+This result is seen for both \texttt{QRUN} and \texttt{FW100K} sky flat pipelines, and for 2007B and 2009B observing schemes.
+Is this indicative of limitations in flat field accuracy? in median sky accuracy? or in of real sky background fluctuations?
+Similarity of amplitudes to unflatness of median sky images indicates a similar process.
+In high-SB regions, the shape amplitude is $\sim 0.6\%$ of the sky (\eg \Fig{frame_residuals_m31-37_Ks_fw100k_medsky}), but in lower-SB regions the shape amplitude is $\sim 0.3\%$ of the sky level.
+
+Conclusions:
 
 \begin{itemize}
-  \item negligible difference between 09B and 07B
-  \item Similar differences in $J$ and $K_s$ as a fraction of sky level
-  \item The disk is most consistently imaged with real-time sky flats. Thus real-time sky flats \emph{are} necessary for tracking the WIRCam flat field function; we cannot band-aid our images with just real-time median sky subtraction.
+  \item Frame-by-frame background variability is $\sim 0.3\%$ of sky, seen both in residual differences between frames and blocks on the M31 disk, and in the shapes of sky background images.
+  \item No flat fielding technique, nor no observing method, can reliably decrease this variability. Thus it is \emph{impossible} for a WIRCam sky-target nodding program to control the shape of the sky background to better than $0.3\%$ of the sky background.
+  \item Field in flat field function increases frame shape variability to $\sim 0.6\%$ of sky.
 \end{itemize}
-
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figs/frame_residuals/framediffs_skyfrac}
@@ -1170,6 +1177,13 @@ This measurement is a dimensional reduction of the frame residual shape plots (\
 
 % \end{figure*}
 
+
+\section{Behaviour of the NIR Sky}
+\label{sec:behaviour}
+
+\subsection{Brightness of the NIR Sky}
+
+\subsection{Variability of the NIR Sky}
 
 \section{Conclusions}
 \label{sec:conclusions}
