@@ -1224,7 +1224,31 @@ Individual sky image pairs are shown as black points; the solid red line measure
 
 While \Fig{pairwise_skyvar} measures the variation in sky level at a stationary site (fixed coordinate) on the sky, a more relevant measure for sky-target nodding NIR programs is the variation in sky level induced by both a time lag, and a spatial nod across the sky.
 The latter is effectively measured by our scalar sky target nodding optimization (see \Tab{offset_hierarchy}).
-In Fig TODO we show the sky level variation distribution functions in the stationary and nodding regimes.
+In Fig \Fig{nodding_stationary_skyvar_skyfrac} we show the sky level variation distribution functions in the stationary and nodding regimes.
+In both $J$ and $K_s$ bands, we see that nodding the telescope between sky and target \emph{generates} additional sky level uncertainty beyond that expected from strictly temporal sky evolution.
+This makes sense in the context of spatial sky variations shown by \cite{Adams:1996}.
+As shown in \Fig{nodding_stationary_skyvar_skyfrac}, the process of sky-target nodding can inflate sky variations by 1.5--2$\times$ the sky variability expected at a stationary site on the sky.
+On longer time scales, the nodding and stationary sky variance converge, perhaps indicative of the timescales that NIR skyglow structures move across a nodding distance ($1\arcdeg$--$2\arcdeg$ on the sky).
+
+\comment{Note how bad the 09B sky reliability is!}
+
+This analysis underscores the challenge of accurately recovering surface brightness in a wide-field NIR mosaic.
+Sky-target nodding with CFHT implies typical time latencies 60--70~seconds, and nodding distances of $1\arcdeg$--$2\arcdeg$.
+Both of these elements prevent the true level of the sky on the disk of M31, in any single frame, from being known to better than 2\% of the sky level.
+
+\Fig{nodding_stationary_skyvar_skyfrac} also affords an interesting analysis of the thesis that the 2009B observing strategy of minimizing sky nodding latency would maximize sky level certainty.
+The rather shallow slopes of the mean sky variance seen in sky-target nodding demonstrates the modest gain sky certainty by capping sky latency at 1.2 minutes (\ie 2009B) compared to allowing latencies of 5 minutes (\ie 2007B).
+This also better explains \Tab{offset_hierarchy}.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/nodding_sationary_skyvar_skyfrac}
+\caption{Comparison of sky variation distribution functions measured as sky offset amplitudes and between pairs of sky images (cf \Fig{pairwise_skyvar}) for $J$ (top) and $K_s$ (bottom) bands.
+Mean and 95\% levels of sky variation are plotted as solid and dashed red lines, respectively.
+Mean and 95\% levels of sky offsets in the 2007B semester are plotted as large green circles and X symbols, respectively, while the same for the 2009B semester is plotted as orange symbols where sky latency was constrained to 1.2 minutes in both bands.}
+\label{fig:nodding_stationary_skyvar_skyfrac}
+% python $andpipe/wircam/skyanalysis/nodding_stationary_skyvariability.py
+\end{figure}
 
 
 \section{Conclusions}
