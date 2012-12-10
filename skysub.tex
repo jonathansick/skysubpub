@@ -1179,16 +1179,58 @@ This measurement is a dimensional reduction of the frame residual shape plots (\
 
 
 \section{Behaviour of the NIR Sky}
-\label{sec:behaviour}
+\label{sec:skybehaviour}
 
-\subsection{Brightness of the NIR Sky}
+Besides analyzing the precision of our M31 mosaics, our CFHT/WIRCam dataset also allows us to study the behaviour of the NIR sky.
+Our analysis of the mosaic performance divided sky behaviour into two components: sky level, and the shape of the sky on the scale of WIRCam frames.
+In doing so, we seek to find circumstances where the sky is most stable, and thus the best NIR mosaics can be made.
 
-\subsection{Variability of the NIR Sky}
+\subsection{Level of the NIR Sky}
+
+It has previously been shown by \cite{Vaduvescu:2004}, and references therein, that the NIR sky level is dependent upon airmass and the time since sunset.
+We reproduce this result in our own data set (\Fig{skylevel_airmass_sunset}), showing that the darkest NIR skies are available $> 3$~hours after sunset, and at high airmasses.
+Note, however, that there is a great deal of scatter in this time-airmass-sky level relation; additional meteorological parameters must exist to full understand the brightness of NIR sky glow.
+
+\comment{No correlation seen with the moon angle/illumination. Atmospheric temperature and humidity are also possibilities}.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/sunset_airmass}
+\caption{Observed sky level in the plane vs $T-T_\mathrm{sunset}$ and airmass in $J$ and $K_s$ (bottom) bands. Sky level is measured in instrumental counts per second observed by CFHT/WIRCam.
+Although this plot combines sky samples across all observed nights, sky level variations within a single night can be seen as chains of samples in the airmass-time plane.}
+\label{fig:sky_level_sunset}
+\end{figure}
+
+\subsection{Variability in the level of the NIR Sky}
+
+More than the absolute level of the near-infrared sky, we are also interested in the variability of that level in time.
+This impacts the magnitude of sky offsets, and in turn, the absolute zeropoint variability of the NIR mosaics (\Sec{systematics}).
+
+As shown in \Fig{pairwise_skyvar}, we have built an empirical distribution function of temporal sky level variability by measuring pairwise differences in sky levels across all sky images in our CFHT/WIRCam program.
+So that we do not add nodding effects, \Fig{pairwise_skyvar} is restricted to just sky level differences observed at the same field on the sky (fixed equatorial coordinates).
+Within an hour, the expected variation in sky level appears to grow linearly; mean variation at 60~minutes is $\sim10\%$ of the $J$ and $K_s$ sky levels while variations at the 95\% limit are 20\%--30\% of the sky level.
+On longer timescales, sky variation appears to revert to the mean; this is likely an artifact of our observations following M31 to higher airmasses, and to the scarcity of queue observing blocks longer than an hour.
+Thus our result is compatible with the claim of Glass \etal 99 (CITE) that the sky can change brightness by 50\% over the course of a night.
+Furthermore, \Fig{pairwise_skyvar} is compatible with the popular refrain that the NIR sky \emph{can} vary by 10\% in 10 minutes, although the mean variation over 10~minutes is 3\%.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/pairwise_skyvar_skyfrac}
+\caption{Variation in sky level (as a percent of sky level) vs time lag observed between pairs of sky images for $J$ (top) and $K_s$ WIRCam images.
+Individual sky image pairs are shown as black points; the solid red line measures the mean sky variation, and the dashed red line measures the 95\% level of variation.}
+\label{fig:pairwise_skyvar}
+% wircam/skyanalysis/pairwise_skyvariability.py
+\end{figure}
+
+While \Fig{pairwise_skyvar} measures the variation in sky level at a stationary site (fixed coordinate) on the sky, a more relevant measure for sky-target nodding NIR programs is the variation in sky level induced by both a time lag, and a spatial nod across the sky.
+The latter is effectively measured by our scalar sky target nodding optimization (see \Tab{offset_hierarchy}).
+In Fig TODO we show the sky level variation distribution functions in the stationary and nodding regimes.
+
 
 \section{Conclusions}
 \label{sec:conclusions}
 
-In this work, we have presented near-infrared ($J$ and $K_s$) images of M31's entire bulge and disk with CFHT/WIRCam. These maps surpass the 2MASS \citep{Beaton:2007} and Spitzer \citep{Barmby:2006} mosaics with superior resolution (1\arcsec pix$^{-1}$) that permits the resolution of individual stars throughout M31's mid and outer disk. The dataset is also complementary to the HST/WF3 PHAT survey (Dalcanton \etal) by providing complete areal coverage of M31's disk to $R=22$~kpc, and by offering a broader NIR colour baseline ($J-K_s$) than is offered by WF3 (approximately  $J-H$). NIR mosaics of M31 have crucial applications for studies of the nearly attenuation-free stellar structure of our nearest spiral neighbour, and for tests of stellar population synthesis models in NIR regimes.
+In this work, we have presented near-infrared ($J$ and $K_s$) images of M31's entire bulge and disk with CFHT/WIRCam. These maps surpass the 2MASS \citep{Beaton:2007} and Spitzer \citep{Barmby:2006} mosaics with superior resolution (1\arcsec pix$^{-1}$) that permits the resolution of individual stars throughout M31's mid and outer disk. The dataset is also complementary to the HST/WF3 PHAT survey \citep{Dalcanton:2012} by providing complete areal coverage of M31's disk to $R=22$~kpc, and by offering a broader NIR colour baseline ($J-K_s$) than is offered by WF3 (approximately  $J-H$). NIR mosaics of M31 have crucial applications for studies of the nearly attenuation-free stellar structure of our nearest spiral neighbour, and for tests of stellar population synthesis models in NIR regimes.
 
 The paramount task of this paper has been to establish procedures for accurately recovering near-infrared surface brightness across a target FIXME sq. deg. mosaic surface using a sky target nodding observing strategy with the WIRCam instrument on CFHT. The NIR sky is challenging because it is roughly 3 dex brighter than the disk at $R=20 kpc$; only the central bulge is brighter than the sky in the NIR. This problem is compounded by the fact that M31 is a large target on the sky, so that the NIR sky brightness \emph{at} M31 cannot be directly measured.
 
