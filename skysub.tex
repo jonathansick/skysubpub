@@ -64,16 +64,15 @@
 
 % ============================================================================
 \begin{abstract}
-\comment{PROVISIONAL}.
-We present near-infrared $J$ and $K_s$ images of the Andromeda Galaxy made with WIRCam on the Canada-France-Hawaii Telescope.
-These images provide the highest resolution of M31's entire bulge and disk (within $R=22$~kpc) to date, simultaneously resolving stars and recovering M31's near-infrared surface brightness.
-This work extensively develops and tests our WIRCam calibrations, which are complicated by the brightness of near-infrared sky glow (which is 3 dex brighter than M31's disk at $R=20$~kpc), spatiotemporal variations in the sky glow and instrumental calibrations, and by the exceptionally large area of the M31 disk that we survey.
-We find that WIRCam data should be calibrated with real-time sky flats, to overcome flat field variability of order 1\% over 20 minutes.
-Two sky-target nodding strategies were tested, and we find that strictly minimizing sky sampling latency does not maximize sky subtraction accuracy, which is at best 1\% of certainty.
+We present wide-field near-infrared $J$ and $K_s$ images of the Andromeda Galaxy made with WIRCam on the Canada-France-Hawaii Telescope.
+These images provide the highest resolution, homogeneous, dataset covering M31's entire bulge and disk (within $R=22$~kpc) to date, while simultaneously resolving stars and recovering M31's near-infrared surface brightness.
+This work extensively develops and tests our WIRCam surface brightness calibrations that are complicated by the brightness of near-infrared sky glow (which is 3~dex brighter than M31's disk at $R=20$~kpc), spatiotemporal variations in the sky glow and instrumental calibrations, and by the exceptionally large area we survey.
+We find that WIRCam data should be calibrated with real-time sky flats to overcome flat field variability of order 1\% over 20 minutes.
+Due either to atmospheric or instrumental variations, the individual WIRCam frames have typical residual shapes with amplitudes of 0.3\% of the sky after real-time flat fielding and median sky subtraction.
+Two sky-target nodding strategies were tested, and we find that strictly minimizing sky sampling latency does not maximize sky subtraction accuracy, which is at best 2\% of certainty.
 Instead, our final surface brightness calibration relies upon solving for sky offsets, nudges of flux to each WIRCam image, that reduce image-to-image differences.
-Sky offset optimizations reduce image-to-image residuals  to 0.02\% of the sky brightness.
-Monte Carlo simulations show that the absolute surface brightness level of the disk at $R=15$~kpc is uncertain by \todo{TODO}, necessitating independent surface brightness calibration based on resolved stellar populations.
-\todo{ADD SCIENCE CONTEXT? ADD DISCUSSION OF SHAPE VARIABILITY.}
+Sky offset optimizations reduce image-to-image residuals  to 0.1\% of the sky brightness.
+Monte Carlo simulations show that the absolute surface brightness level of the disk at $R=15$~kpc is uncertain by 0.1--0.2~mag~arcsec$^{-2}$, necessitating independent surface brightness calibration based on resolved stellar populations.
 \end{abstract}
 
 % ============================================================================
@@ -102,16 +101,18 @@ Those observations, which trace the stellar galaxy mass, were used by \cite{Atha
 But beyond the bulge, the 2MASS 6X images have limited utility.
 \cite{Courteau:2011} find sky uncertainty prevents using the 2MASS 6X to infer structural and photometric properties of the disk.
 Further, the pixel scale of 1\arcsec\ and integration depth of 46.8 seconds prevents point source measurements of the 2MASS 6X images.
-As a result, the de facto state-of-the-art NIR view of M31 is the slightly longer 3.6 $\mu$m Spitzer/IRAC map of \cite{Barmby:2006}.
+As a result, the defacto state-of-the-art NIR view of M31 is the slightly longer 3.6 $\mu$m Spitzer/IRAC map of \cite{Barmby:2006}.
 Spitzer obviates the issue of sky estimation, although the pixel scale of 0\farcs86 also prevents point source measurements of individual stars in the M31 disk.
 
 In this paper, we present a survey of the M31 bulge and disk with CFHT/WIRCam in the $J$ and $K_s$ bands.
 These are the first global near-infrared observations of M31 that simultaneously resolve throughout the mid- and outer-disk, while also recovering attempting to rigorously recover the NIR surface brightness.
 While future contributions will explore the resolved near-IR stellar populations, our focus here is the surface brightness calibration of the WIRCam data set, and exploration of NIR sky subtraction uncertainties.
 Section~\ref{sec:Observations} describes the novel observational strategies used to reduce sky subtraction uncertainties.
-Section~\ref{sec:reduction} describes the image reduction pipeline; a particularly important aspect of this is night sky flat fielding (\S\ref{sec:flats}).
-In \S\ref{sec:scalar} we present our method for recovering the galaxy surface brightness by minimizing the image-to-image differences across the mosaic.
-We estimate the systematic uncertainties in our mosaic solution in \S\ref{sec:systematics}, where we also compare our technique to the Montage package \citep{Berriman:2008} and the Spitzer/IRAC mosaics.
+Section~\ref{sec:reduction} describes the image reduction pipeline; a particularly important aspect of this is night sky flat fielding (\Sec{flats}).
+In \Sec{scalar} we present our method for recovering the galaxy surface brightness by minimizing the image-to-image differences across the mosaic.
+We estimate the systematic uncertainties in our mosaic solution in \Sec{systematics}, where we also compare our technique to the Montage package \citep{Berriman:2008} and the Spitzer/IRAC mosaics.
+In \Sec{skyflatstability} we consider the accuracy of the surface brightness \emph{shapes} recovered by our pipeline; in \Sec{skybehaviour} we use our dataset to explain the nature of the NIR sky level and temporal variability.
+In both of the former sections we seek to find the observational and reduction technique that maximizes surface brightness accuracy.
 Finally in \S\ref{sec:conclusions} we summarize the uncertainty of NIR sky subtraction on the scale of M31.
 
 \section{Observations}
@@ -150,17 +151,6 @@ Finally in \S\ref{sec:conclusions} we summarize the uncertainty of NIR sky subtr
       & $K_s$ & & & & & & (13.1, 13.4) & 0.60 & 0.66 & 0.76 \\
     \end{tabular}
 \end{table*}
-
-% \begin{deluxetable}{10}
-% % \tabletypesize{\small} % or \footnotesize or \scriptsize
-% % \rotate
-% % \tablewidth{⟨dimen ⟩}
-% % \tablenum{⟨text ⟩}
-% \tablecolumns{⟨num ⟩}
-% \tablecaption{Summary of WIRCam observing programs. Efficiency (Eff.) is the percentage of time in a program allocated to integrating the disk of M31, compared from nodding, read out and sky overheads. Seeing is measured from stars in sky images.
-%     \label{⟨key ⟩}}
-% \tablehead{⟨text ⟩}
-% \end{deluxetable}
 
 The Andromeda Galaxy (M31) was observed in the NIR using the WIRCam instrument, mounted to the 3.6-meter Canada-France-Hawaii Telescope (CFHT), at the summit of Mauna Kea in Hawaii. Observations were carried out exclusively in the NIR $J$ ($\lambda_0 \sim 1.2 \mu\mathrm{m}$) and $K_s$ ($\lambda_0 \sim 2.2 \mu\mathrm{m}$) bands.
 
@@ -223,7 +213,7 @@ This resulted in three principle changes to observing strategy. First, we chose 
 
 Second, we also increased the number of repetitions on each field, so that each field is observed 40 times in each band in a [ST$^2$S]$^{20}$S pattern. This repetition permits the opportunity to average over spatial sky background structures on the scale of WIRCam fields.
 
-Finally, we employ an innovative randomized sky-targeting nodding pattern where no sky field is used repeatedly for a disk field. In order to maintain rapid telescope nods, only northern sky fields serviced the northern disk, and similar for the southern fields; the maximum offset on the sky was 3\arcdeg\ (see \Fig{sky_target_dist}). This random sampling of sky fields yielded two possible advantages: 1) when a median sky image is constructed, many \emph{sky shapes} are combined, possibly yielding an intrinsically flatter image of sky (see \S on median sky subtraction), and 2) if there is a coherent structure in the NIR sky, sampling fields of the sky degrees apart in rapid succession should average out these systematic biases in estimating the sky level \emph{on the disk}.
+Finally, we employ an innovative randomized sky-targeting nodding pattern where no sky field is used repeatedly for a disk field. In order to maintain rapid telescope nods, only northern sky fields serviced the northern disk, and similar for the southern fields; the maximum offset on the sky was 3\arcdeg\ (see \Fig{sky_target_dist}). This random sampling of sky fields yielded two possible advantages: 1) when a median sky image is constructed, many \emph{sky shapes} are combined, possibly yielding an intrinsically flatter image of sky (see \Sec{mediansky}), and 2) if there is a coherent structure in the NIR sky, sampling fields of the sky degrees apart in rapid succession should average out these systematic biases in estimating the sky level \emph{on the disk}.
 
 % subsection obs9 (end)
 
@@ -236,7 +226,7 @@ Our goal is to produce an accurate mosaic of M31 from ground-based, CFHT/WIRCam,
 Central to this paper, then, is the development of best practises for reducing CFHT/WIRCam images and mapping surface brightness with a sky-target nodding observing scheme on a target as large as M31.
 The objectives of this paper require us to significantly exceed the observational performance of WIRCam realized by other studies.
 To realize this performance, we must carefully analyze each step of the reduction process, including flat fielding, photometric calibration and sky subtraction.
-The product of this paper is a novel pipeline for reducing CFHT/WIRCam data that is outlined next in \S\ref{sec:reduction_outline}, and in subsequent sections.
+The product of this paper is a novel pipeline for reducing CFHT/WIRCam data that is outlined next in \Sec{reduction_outline}, and in subsequent sections.
 
 WIRCam data are offered by CFHT in three progressive stages of \emph{preprocessing} by their \iiwione\ pipeline to allow programmes, such as this one, to re-implement calibration recipes for potentially higher performance.
 These data flavours are: a raw image that is essentially untouched after leaving the instrument (\texttt{*o.fits}); an image that has been nonlinearity-corrected, dark subtracted and flat fielded (\texttt{*s.fits}); and an image that has been sky subtracted, in addition to all the previous treatments (\texttt{*p.fits}).
