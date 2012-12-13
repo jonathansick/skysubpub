@@ -1,4 +1,4 @@
-\begin{thebibliography}{20}
+\begin{thebibliography}{21}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
@@ -50,6 +50,21 @@
   {Guhathakurta}, {Gilbert}, {Zhu}, {Beaton}, \& {Majewski}}]{Courteau:2011}
 {Courteau}, S., {Widrow}, L.~M., {McDonald}, M., {Guhathakurta}, P., {Gilbert},
   K.~M., {Zhu}, Y., {Beaton}, R.~L., \& {Majewski}, S.~R. 2011, \apj, 739, 20
+
+\bibitem[{{Dalcanton} {et~al.}(2012){Dalcanton}, {Williams}, {Lang}, {Lauer},
+  {Kalirai}, {Seth}, {Dolphin}, {Rosenfield}, {Weisz}, {Bell}, {Bianchi},
+  {Boyer}, {Caldwell}, {Dong}, {Dorman}, {Gilbert}, {Girardi}, {Gogarten},
+  {Gordon}, {Guhathakurta}, {Hodge}, {Holtzman}, {Johnson}, {Larsen}, {Lewis},
+  {Melbourne}, {Olsen}, {Rix}, {Rosema}, {Saha}, {Sarajedini}, {Skillman}, \&
+  {Stanek}}]{Dalcanton:2012}
+{Dalcanton}, J.~J., {Williams}, B.~F., {Lang}, D., {Lauer}, T.~R., {Kalirai},
+  J.~S., {Seth}, A.~C., {Dolphin}, A., {Rosenfield}, P., {Weisz}, D.~R.,
+  {Bell}, E.~F., {Bianchi}, L.~C., {Boyer}, M.~L., {Caldwell}, N., {Dong}, H.,
+  {Dorman}, C.~E., {Gilbert}, K.~M., {Girardi}, L., {Gogarten}, S.~M.,
+  {Gordon}, K.~D., {Guhathakurta}, P., {Hodge}, P.~W., {Holtzman}, J.~A.,
+  {Johnson}, L.~C., {Larsen}, S.~S., {Lewis}, A., {Melbourne}, J.~L., {Olsen},
+  K.~A.~G., {Rix}, H.-W., {Rosema}, K., {Saha}, A., {Sarajedini}, A.,
+  {Skillman}, E.~D., \& {Stanek}, K.~Z. 2012, \apjs, 200, 18
 
 \bibitem[{{Harris} \& {Zaritsky}(2001)}]{Harris:2001}
 {Harris}, J. \& {Zaritsky}, D. 2001, \apjs, 136, 25
