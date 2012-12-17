@@ -2,27 +2,21 @@
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
-{Adams}, J.~D. \& {Skrutskie}, M.~F. 1996, Airglow and 2MASS Survey Strategy
+{Adams}, J.~D., \& {Skrutskie}, M.~F. 1996, Airglow and 2MASS Survey Strategy
 
 \bibitem[{{Athanassoula} \& {Beaton}(2006)}]{Athanassoula:2006}
-{Athanassoula}, E. \& {Beaton}, R.~L. 2006, \mnras, 370, 1499
+{Athanassoula}, E., \& {Beaton}, R.~L. 2006, \mnras, 370, 1499
 
 \bibitem[{{Barmby} {et~al.}(2006){Barmby}, {Ashby}, {Bianchi}, {Engelbracht},
   {Gehrz}, {Gordon}, {Hinz}, {Huchra}, {Humphreys}, {Pahre},
   {P{\'e}rez-Gonz{\'a}lez}, {Polomski}, {Rieke}, {Thilker}, {Willner}, \&
   {Woodward}}]{Barmby:2006}
-{Barmby}, P., {Ashby}, M.~L.~N., {Bianchi}, L., {Engelbracht}, C.~W., {Gehrz},
-  R.~D., {Gordon}, K.~D., {Hinz}, J.~L., {Huchra}, J.~P., {Humphreys}, R.~M.,
-  {Pahre}, M.~A., {P{\'e}rez-Gonz{\'a}lez}, P.~G., {Polomski}, E.~F., {Rieke},
-  G.~H., {Thilker}, D.~A., {Willner}, S.~P., \& {Woodward}, C.~E. 2006, \apjl,
-  650, L45
+{Barmby}, P., {et~al.} 2006, \apjl, 650, L45
 
 \bibitem[{{Beaton} {et~al.}(2007){Beaton}, {Majewski}, {Guhathakurta},
   {Skrutskie}, {Cutri}, {Good}, {Patterson}, {Athanassoula}, \&
   {Bureau}}]{Beaton:2007}
-{Beaton}, R.~L., {Majewski}, S.~R., {Guhathakurta}, P., {Skrutskie}, M.~F.,
-  {Cutri}, R.~M., {Good}, J., {Patterson}, R.~J., {Athanassoula}, E., \&
-  {Bureau}, M. 2007, \apjl, 658, L91
+{Beaton}, R.~L., {et~al.} 2007, \apjl, 658, L91
 
 \bibitem[{{Berriman} {et~al.}(2008){Berriman}, {Good}, {Laity}, \&
   {Kong}}]{Berriman:2008}
@@ -37,7 +31,7 @@
   {C.~Gabriel, C.~Arviset, D.~Ponz, \& S.~Enrique}, 112--+
 
 \bibitem[{{Bertin} \& {Arnouts}(1996)}]{Bertin:1996}
-{Bertin}, E. \& {Arnouts}, S. 1996, \aaps, 117, 393
+{Bertin}, E., \& {Arnouts}, S. 1996, \aaps, 117, 393
 
 \bibitem[{{Bertin} {et~al.}(2002){Bertin}, {Mellier}, {Radovich}, {Missonnier},
   {Didelon}, \& {Morin}}]{Bertin:2002}
@@ -57,17 +51,10 @@
   {Gordon}, {Guhathakurta}, {Hodge}, {Holtzman}, {Johnson}, {Larsen}, {Lewis},
   {Melbourne}, {Olsen}, {Rix}, {Rosema}, {Saha}, {Sarajedini}, {Skillman}, \&
   {Stanek}}]{Dalcanton:2012}
-{Dalcanton}, J.~J., {Williams}, B.~F., {Lang}, D., {Lauer}, T.~R., {Kalirai},
-  J.~S., {Seth}, A.~C., {Dolphin}, A., {Rosenfield}, P., {Weisz}, D.~R.,
-  {Bell}, E.~F., {Bianchi}, L.~C., {Boyer}, M.~L., {Caldwell}, N., {Dong}, H.,
-  {Dorman}, C.~E., {Gilbert}, K.~M., {Girardi}, L., {Gogarten}, S.~M.,
-  {Gordon}, K.~D., {Guhathakurta}, P., {Hodge}, P.~W., {Holtzman}, J.~A.,
-  {Johnson}, L.~C., {Larsen}, S.~S., {Lewis}, A., {Melbourne}, J.~L., {Olsen},
-  K.~A.~G., {Rix}, H.-W., {Rosema}, K., {Saha}, A., {Sarajedini}, A.,
-  {Skillman}, E.~D., \& {Stanek}, K.~Z. 2012, \apjs, 200, 18
+{Dalcanton}, J.~J., {et~al.} 2012, \apjs, 200, 18
 
 \bibitem[{{Harris} \& {Zaritsky}(2001)}]{Harris:2001}
-{Harris}, J. \& {Zaritsky}, D. 2001, \apjs, 136, 25
+{Harris}, J., \& {Zaritsky}, D. 2001, \apjs, 136, 25
 
 \bibitem[{Luersen {et~al.}(2004)Luersen, Le~Riche, \& Guyon}]{Luersen:2004}
 Luersen, M., Le~Riche, R., \& Guyon, F. 2004, Structural and Multidisciplinary
@@ -77,27 +64,23 @@ Luersen, M., Le~Riche, R., \& Guyon, F. 2004, Structural and Multidisciplinary
 {Maraston}, C. 1998, \mnras, 300, 872
 
 \bibitem[{{Marmo} \& {Bertin}(2008)}]{Marmo:2008}
-{Marmo}, C. \& {Bertin}, E. 2008, in Astronomical Society of the Pacific
+{Marmo}, C., \& {Bertin}, E. 2008, in Astronomical Society of the Pacific
   Conference Series, Vol. 394, Astronomical Data Analysis Software and Systems
   XVII, ed. {R.~W.~Argyle, P.~S.~Bunclark, \& J.~R.~Lewis}, 619--+
 
 \bibitem[{Nelder \& Mead(1965)}]{Nelder:1965}
-Nelder, J.~A. \& Mead, R. 1965, {The Computer Journal}, 7, 308
+Nelder, J.~A., \& Mead, R. 1965, {The Computer Journal}, 7, 308
 
 \bibitem[{{Neumann} \& {Han}(2006)}]{Neumann:2006}
-{Neumann}, M. \& {Han}, L. 2006, {Optimization Methods and Software}, 21, 1055
+{Neumann}, M., \& {Han}, L. 2006, {Optimization Methods and Software}, 21, 1055
 
 \bibitem[{{Puget} {et~al.}(2004){Puget}, {Stadler}, {Doyon}, {Gigan},
   {Thibault}, {Luppino}, {Barrick}, {Benedict}, {Forveille}, {Rambold},
   {Thomas}, {Vermeulen}, {Ward}, {Beuzit}, {Feautrier}, {Magnard}, {Mella},
   {Preis}, {Vallee}, {Wang}, {Lin}, {Hall}, \& {Hodapp}}]{Puget:2004}
-{Puget}, P., {Stadler}, E., {Doyon}, R., {Gigan}, P., {Thibault}, S.,
-  {Luppino}, G., {Barrick}, G., {Benedict}, T., {Forveille}, T., {Rambold}, W.,
-  {Thomas}, J., {Vermeulen}, T., {Ward}, J., {Beuzit}, J., {Feautrier}, P.,
-  {Magnard}, Y., {Mella}, G., {Preis}, O., {Vallee}, P., {Wang}, S., {Lin}, C.,
-  {Hall}, D.~N., \& {Hodapp}, K.~W. 2004, in Presented at the Society of
-  Photo-Optical Instrumentation Engineers (SPIE) Conference, Vol. 5492, Society
-  of Photo-Optical Instrumentation Engineers (SPIE) Conference Series, ed.
+{Puget}, P., {et~al.} 2004, in Presented at the Society of Photo-Optical
+  Instrumentation Engineers (SPIE) Conference, Vol. 5492, Society of
+  Photo-Optical Instrumentation Engineers (SPIE) Conference Series, ed.
   {A.~F.~M.~Moorwood \& M.~Iye}, 978--987
 
 \bibitem[{{Skrutskie} {et~al.}(2006){Skrutskie}, {Cutri}, {Stiening},
@@ -106,13 +89,7 @@ Nelder, J.~A. \& Mead, R. 1965, {The Computer Journal}, 7, 308
   {Jarrett}, {Kirkpatrick}, {Gizis}, {Howard}, {Evans}, {Fowler}, {Fullmer},
   {Hurt}, {Light}, {Kopan}, {Marsh}, {McCallon}, {Tam}, {Van Dyk}, \&
   {Wheelock}}]{Skrutskie:2006}
-{Skrutskie}, M.~F., {Cutri}, R.~M., {Stiening}, R., {Weinberg}, M.~D.,
-  {Schneider}, S., {Carpenter}, J.~M., {Beichman}, C., {Capps}, R., {Chester},
-  T., {Elias}, J., {Huchra}, J., {Liebert}, J., {Lonsdale}, C., {Monet}, D.~G.,
-  {Price}, S., {Seitzer}, P., {Jarrett}, T., {Kirkpatrick}, J.~D., {Gizis},
-  J.~E., {Howard}, E., {Evans}, T., {Fowler}, J., {Fullmer}, L., {Hurt}, R.,
-  {Light}, R., {Kopan}, E.~L., {Marsh}, K.~A., {McCallon}, H.~L., {Tam}, R.,
-  {Van Dyk}, S., \& {Wheelock}, S. 2006, \aj, 131, 1163
+{Skrutskie}, M.~F., {et~al.} 2006, \aj, 131, 1163
 
 \bibitem[{{Taylor} {et~al.}(2011){Taylor}, {Hopkins}, {Baldry}, {Brown},
   {Driver}, {Kelvin}, {Hill}, {Robotham}, {Bland-Hawthorn}, {Jones}, {Sharp},
@@ -121,18 +98,10 @@ Nelder, J.~A. \& Mead, R. 1965, {The Computer Journal}, 7, 308
   {Kuijken}, {Nichol}, {Parkinson}, {Phillipps}, {Pimbblet}, {Popescu},
   {Prescott}, {Sutherland}, {Tuffs}, {van Kampen}, \&
   {Wijesinghe}}]{Taylor:2011}
-{Taylor}, E.~N., {Hopkins}, A.~M., {Baldry}, I.~K., {Brown}, M.~J.~I.,
-  {Driver}, S.~P., {Kelvin}, L.~S., {Hill}, D.~T., {Robotham}, A.~S.~G.,
-  {Bland-Hawthorn}, J., {Jones}, D.~H., {Sharp}, R.~G., {Thomas}, D., {Liske},
-  J., {Loveday}, J., {Norberg}, P., {Peacock}, J.~A., {Bamford}, S.~P.,
-  {Brough}, S., {Colless}, M., {Cameron}, E., {Conselice}, C.~J., {Croom},
-  S.~M., {Frenk}, C.~S., {Gunawardhana}, M., {Kuijken}, K., {Nichol}, R.~C.,
-  {Parkinson}, H.~R., {Phillipps}, S., {Pimbblet}, K.~A., {Popescu}, C.~C.,
-  {Prescott}, M., {Sutherland}, W.~J., {Tuffs}, R.~J., {van Kampen}, E., \&
-  {Wijesinghe}, D. 2011, \mnras, 418, 1587
+{Taylor}, E.~N., {et~al.} 2011, \mnras, 418, 1587
 
 \bibitem[{{Vaduvescu} \& {McCall}(2004)}]{Vaduvescu:2004}
-{Vaduvescu}, O. \& {McCall}, M.~L. 2004, \pasp, 116, 640
+{Vaduvescu}, O., \& {McCall}, M.~L. 2004, \pasp, 116, 640
 
 \bibitem[{{Wolff}(2004)}]{Wolff:2004}
 {Wolff}, S. 2004,
