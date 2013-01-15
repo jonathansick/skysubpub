@@ -1,5 +1,5 @@
-\documentclass{aastex}
-% \documentclass[iop]{emulateapj}
+% \documentclass{aastex}
+\documentclass[iop]{emulateapj}
 \usepackage[utf8]{inputenc}
 \usepackage{apjfonts}
 \usepackage{multirow}
@@ -52,27 +52,30 @@
 \author{Jonathan Sick, Stéphane Courteau}
 \affil{Queen's University}
 \email{jsick@astro.queensu.ca}
-\author{Jean-Charles Cuillandre}
-\affil{Canada-France Hawaii Telescope Corp.}
 \author{Michael McDonald}
 \affil{Massachusetts Institute of Technology}
-\author{Brent Tully}
-\affil{University of Hawaii Institute for Astronomy}
+\author{Jean-Charles Cuillandre}
+\affil{Canada-France Hawaii Telescope Corp.}
 \and
-\author{The \androids\ collaboration}
-\affil{}
+\author{Brent Tully}
+\affil{University of Hawaii, Institute for Astronomy}
 
 % ============================================================================
 \begin{abstract}
 We present wide-field near-infrared $J$ and $K_s$ images of the Andromeda Galaxy made with WIRCam on the Canada-France-Hawaii Telescope.
-These images provide the highest resolution, homogeneous, dataset covering M31's entire bulge and disk (within $R=22$~kpc) to date, while simultaneously resolving stars and recovering M31's near-infrared surface brightness.
-This work extensively develops and tests our WIRCam surface brightness calibrations that are complicated by the brightness of near-infrared sky glow (which is 3~dex brighter than M31's disk at $R=20$~kpc), spatiotemporal variations in the sky glow and instrumental calibrations, and by the exceptionally large area we survey.
-We find that WIRCam data should be calibrated with real-time sky flats to overcome flat field variability of order 1\% over 20 minutes.
-Due either to atmospheric or instrumental variations, the individual WIRCam frames have typical residual shapes with amplitudes of 0.3\% of the sky after real-time flat fielding and median sky subtraction.
-Two sky-target nodding strategies were tested, and we find that strictly minimizing sky sampling latency does not maximize sky subtraction accuracy, which is at best 2\% of certainty.
-Instead, our final surface brightness calibration relies upon solving for sky offsets, nudges of flux to each WIRCam image, that reduce image-to-image differences.
-Sky offset optimizations reduce image-to-image residuals  to 0.1\% of the sky brightness.
+This data set permits simultaneous observations of resolved stars and NIR surface brightness across M31's entire bulge and disk (within $R=22$~kpc), permitting a direct a test of the stellar composition of near-infrared light in a nearby galaxy.
+Our survey complements the HST/PHAT survey by covering M31's entire disk, rather than a single quadrant at similar wavelengths, albeit with lower resolution.
+The primary concern of this work is the development of NIR observation and reduction methods that recover surface brightness across the $3\arcdeg \times 1\arcdeg$ disk of M31 that necessitates sky-target nodding across 27 CFHT/WIRCam fields.
+Our method differs from the CFHT pipeline with independent photometric, flat fielding and sky subtraction computations.
+We present our WIRCam reduction pipeline and performance analysis here as a template for future users of CFHT/WIRCam attempting to produce wide-area surface brightness maps with sky-target nodding.
+Two sky-target nodding strategies were tested, and we find that strictly minimizing sky sampling latency does not maximize sky subtraction accuracy, which is at best 2\% of the sky level.
+The true surface brightness of M31 can be known within 0.15\% of the sky level by applying sky offsets that minimize intensity differences in the network of overlapping WIRCam fields; this uncertainty decreases as the inverse square-root of the number of fields.
 Monte Carlo simulations show that the absolute surface brightness level of the disk at $R=15$~kpc is uncertain by 0.1--0.2~mag~arcsec$^{-2}$, necessitating independent surface brightness calibration based on resolved stellar populations.
+We also find that the surface brightness across individual WIRCam frames is limited by both flat fielding accuracy
+To overcome flat field variability of order 1\% over 30 minutes, we find that WIRCam data should be calibrated with real-time sky flats.
+Due either to atmospheric or instrumental variations, the individual WIRCam frames have typical residual shapes with amplitudes of 0.3\% of the sky after real-time flat fielding and median sky subtraction.
+We do not find that planar sky offsets are acceptable for subtracting these residual background across WIRCam fields that are much smaller than the mosaic area.
+\todo{TODO: add bar science results.}
 \end{abstract}
 
 % ============================================================================
