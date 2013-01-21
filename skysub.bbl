@@ -1,4 +1,4 @@
-\begin{thebibliography}{38}
+\begin{thebibliography}{39}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
@@ -115,6 +115,11 @@ Luersen, M., Le~Riche, R., \& Guyon, F. 2004, Structural and Multidisciplinary
 \bibitem[{{Massey} {et~al.}(2006){Massey}, {Olsen}, {Hodge}, {Strong},
   {Jacoby}, {Schlingman}, \& {Smith}}]{Massey:2006}
 {Massey}, P., {Olsen}, K.~A.~G., {Hodge}, P.~W., {et~al.} 2006, \aj, 131, 2478
+
+\bibitem[{{McConnachie} {et~al.}(2005){McConnachie}, {Irwin}, {Ferguson},
+  {Ibata}, {Lewis}, \& {Tanvir}}]{McConnachie:2005}
+{McConnachie}, A.~W., {Irwin}, M.~J., {Ferguson}, A.~M.~N., {et~al.} 2005,
+  \mnras, 356, 979
 
 \bibitem[{Nelder \& Mead(1965)}]{Nelder:1965}
 Nelder, J.~A., \& Mead, R. 1965, {The Computer Journal}, 7, 308
