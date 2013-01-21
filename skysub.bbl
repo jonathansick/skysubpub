@@ -1,4 +1,4 @@
-\begin{thebibliography}{22}
+\begin{thebibliography}{38}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
@@ -41,6 +41,33 @@
   Analysis Software and Systems XI, ed. {D.~A.~Bohlender, D.~Durand, \&
   T.~H.~Handley}, 228--+
 
+\bibitem[{{Brown} {et~al.}(2003){Brown}, {Ferguson}, {Smith}, {Kimble},
+  {Sweigart}, {Renzini}, {Rich}, \& {VandenBerg}}]{Brown:2003}
+{Brown}, T.~M., {Ferguson}, H.~C., {Smith}, E., {et~al.} 2003, \apjl, 592, L17
+
+\bibitem[{{Brown} {et~al.}(2008){Brown}, {Beaton}, {Chiba}, {Ferguson},
+  {Gilbert}, {Guhathakurta}, {Iye}, {Kalirai}, {Koch}, {Komiyama}, {Majewski},
+  {Reitzel}, {Renzini}, {Rich}, {Smith}, {Sweigart}, \& {Tanaka}}]{Brown:2008}
+{Brown}, T.~M., {Beaton}, R., {Chiba}, M., {et~al.} 2008, \apjl, 685, L121
+
+\bibitem[{{Brown} {et~al.}(2009){Brown}, {Smith}, {Ferguson}, {Guhathakurta},
+  {Kalirai}, {Kimble}, {Renzini}, {Rich}, {Sweigart}, \& {Vanden
+  Berg}}]{Brown:2009a}
+{Brown}, T.~M., {Smith}, E., {Ferguson}, H.~C., {et~al.} 2009, \apjs, 184, 152
+
+\bibitem[{{{Brown}, T.~M. and {Smith}, E. and {Ferguson}, H.~C. and {Rich},
+  R.~M. and {Guhathakurta}, P. and {Renzini}, A. and {Sweigart}, A.~V. and
+  {Kimble}, R.~A.}(2006)}]{Brown:2006}
+{{Brown}, T.~M. and {Smith}, E. and {Ferguson}, H.~C. and {Rich}, R.~M. and
+  {Guhathakurta}, P. and {Renzini}, A. and {Sweigart}, A.~V. and {Kimble},
+  R.~A.} 2006, The Astrophysical Journal, 652, 323
+
+\bibitem[{{Bruzual}(2007)}]{Bruzual:2007}
+{Bruzual}, G. 2007, astro-ph/0703052
+
+\bibitem[{{Conroy} \& {Gunn}(2010)}]{Conroy:2010b}
+{Conroy}, C., \& {Gunn}, J.~E. 2010, \apj, 712, 833
+
 \bibitem[{{Courteau} {et~al.}(2011){Courteau}, {Widrow}, {McDonald},
   {Guhathakurta}, {Gilbert}, {Zhu}, {Beaton}, \& {Majewski}}]{Courteau:2011}
 {Courteau}, S., {Widrow}, L.~M., {McDonald}, M., {et~al.} 2011, \apj, 739, 20
@@ -54,6 +81,9 @@
 {Dalcanton}, J.~J., {Williams}, B.~F., {Lang}, D., {et~al.} 2012, \apjs, 200,
   18
 
+\bibitem[{{de Jong}(1996)}]{de-Jong:1996b}
+{de Jong}, R.~S. 1996, \aap, 313, 377
+
 \bibitem[{{Harris} \& {Zaritsky}(2001)}]{Harris:2001}
 {Harris}, J., \& {Zaritsky}, D. 2001, \apjs, 136, 25
 
@@ -65,19 +95,40 @@
 Luersen, M., Le~Riche, R., \& Guyon, F. 2004, Structural and Multidisciplinary
   Optimization, 27, 43, 10.1007/s00158-003-0320-9
 
-\bibitem[{{Maraston}(1998)}]{Maraston:1998}
-{Maraston}, C. 1998, \mnras, 300, 872
+\bibitem[{{MacArthur} {et~al.}(2004){MacArthur}, {Courteau}, {Bell}, \&
+  {Holtzman}}]{MacArthur:2004}
+{MacArthur}, L.~A., {Courteau}, S., {Bell}, E., \& {Holtzman}, J.~A. 2004,
+  \apjs, 152, 175
+
+\bibitem[{{Maraston}(2005)}]{Maraston:2005}
+{Maraston}, C. 2005, \mnras, 362, 799
+
+\bibitem[{{Maraston} {et~al.}(2006){Maraston}, {Daddi}, {Renzini}, {Cimatti},
+  {Dickinson}, {Papovich}, {Pasquali}, \& {Pirzkal}}]{Maraston:2006}
+{Maraston}, C., {Daddi}, E., {Renzini}, A., {et~al.} 2006, \apj, 652, 85
 
 \bibitem[{{Marmo} \& {Bertin}(2008)}]{Marmo:2008}
 {Marmo}, C., \& {Bertin}, E. 2008, in Astronomical Society of the Pacific
   Conference Series, Vol. 394, Astronomical Data Analysis Software and Systems
   XVII, ed. {R.~W.~Argyle, P.~S.~Bunclark, \& J.~R.~Lewis}, 619--+
 
+\bibitem[{{Massey} {et~al.}(2006){Massey}, {Olsen}, {Hodge}, {Strong},
+  {Jacoby}, {Schlingman}, \& {Smith}}]{Massey:2006}
+{Massey}, P., {Olsen}, K.~A.~G., {Hodge}, P.~W., {et~al.} 2006, \aj, 131, 2478
+
 \bibitem[{Nelder \& Mead(1965)}]{Nelder:1965}
 Nelder, J.~A., \& Mead, R. 1965, {The Computer Journal}, 7, 308
 
 \bibitem[{{Neumann} \& {Han}(2006)}]{Neumann:2006}
 {Neumann}, M., \& {Han}, L. 2006, {Optimization Methods and Software}, 21, 1055
+
+\bibitem[{{Olsen} {et~al.}(2006){Olsen}, {Blum}, {Stephens}, {Davidge},
+  {Massey}, {Strom}, \& {Rigaut}}]{Olsen:2006}
+{Olsen}, K.~A.~G., {Blum}, R.~D., {Stephens}, A.~W., {et~al.} 2006, \aj, 132,
+  271
+
+\bibitem[{{Pforr} {et~al.}(2012){Pforr}, {Maraston}, \& {Tonini}}]{Pforr:2012}
+{Pforr}, J., {Maraston}, C., \& {Tonini}, C. 2012, \mnras, 422, 3285
 
 \bibitem[{{Puget} {et~al.}(2004){Puget}, {Stadler}, {Doyon}, {Gigan},
   {Thibault}, {Luppino}, {Barrick}, {Benedict}, {Forveille}, {Rambold},
@@ -87,6 +138,10 @@ Nelder, J.~A., \& Mead, R. 1965, {The Computer Journal}, 7, 308
   Society of Photo-Optical Instrumentation Engineers (SPIE) Conference, Vol.
   5492, Society of Photo-Optical Instrumentation Engineers (SPIE) Conference
   Series, ed. {A.~F.~M.~Moorwood \& M.~Iye}, 978--987
+
+\bibitem[{{Saglia} {et~al.}(2010){Saglia}, {Fabricius}, {Bender}, {Montalto},
+  {Lee}, {Riffeser}, {Seitz}, {Morganti}, {Gerhard}, \& {Hopp}}]{Saglia:2010}
+{Saglia}, R.~P., {Fabricius}, M., {Bender}, R., {et~al.} 2010, \aap, 509, A61+
 
 \bibitem[{{Skrutskie} {et~al.}(2006){Skrutskie}, {Cutri}, {Stiening},
   {Weinberg}, {Schneider}, {Carpenter}, {Beichman}, {Capps}, {Chester},
@@ -110,8 +165,19 @@ Nelder, J.~A., \& Mead, R. 1965, {The Computer Journal}, 7, 308
 \bibitem[{{Vaduvescu} \& {McCall}(2004)}]{Vaduvescu:2004}
 {Vaduvescu}, O., \& {McCall}, M.~L. 2004, \pasp, 116, 640
 
+\bibitem[{{Williams}(2002)}]{Williams:2002}
+{Williams}, B.~F. 2002, \mnras, 331, 293
+
+\bibitem[{{Williams}(2003)}]{Williams:2003}
+---. 2003, \aj, 126, 1312
+
 \bibitem[{{Wolff}(2004)}]{Wolff:2004}
 {Wolff}, S. 2004,
   \url{http://webuser.uni-weimar.de/~wolff3/software/BNM_GBNM.pdf}
+
+\bibitem[{{Worthey} {et~al.}(2005){Worthey}, {Espa{\~n}a}, {MacArthur}, \&
+  {Courteau}}]{Worthey:2005}
+{Worthey}, G., {Espa{\~n}a}, A., {MacArthur}, L.~A., \& {Courteau}, S. 2005,
+  \apj, 631, 820
 
 \end{thebibliography}

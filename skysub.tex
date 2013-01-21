@@ -82,37 +82,73 @@ We do not find that planar sky offsets are acceptable for subtracting these resi
 \section{Introduction}
 \label{sec:intro}
 
-Near-infrared (NIR) light provides a valuable view into galaxies.
-The NIR is a segment of the spectral energy distribution (SED) that is only recently gaining attention in galaxy studies, mostly due to the immaturity of detectors.
-In conjunction with ultraviolet and optical bands, the NIR offers a partial remedy for the age-metallicity-dust degeneracy that plague stellar population interpretations. 
-Traditionally the NIR has also been treated as a stellar mass map, tracing the low end of the stellar initial mass function with minimal dust obfuscation.
-Yet the scientific promise of the near-infrared as not been realized.
+Thanks largely to its proximity, kinship with the Milky Way, and being an ideal foil for modern galaxy formation models, the Andromeda galaxy has been the focus of numerous investigations of galaxy structure (Ibata \etal 2005; Irwin \etal 2005; McConnachie \etal 2009, hereafter PAndAS; Courteau \etal 2011) and stellar populations \citep{Williams:2002,Worthey:2005,Saglia:2010}.
+The shapes, ages, kinematics and relative fraction of galaxy components (bulge, disk, halo) in large spiral galaxies like our own reveal precious information about their formation, accretion, and merging histories (\eg Kormendy \& Kennicutt 2004; de Jong \etal 2007, to cite a few).
 
-\cite{Maraston:1998} pointed out that most of the NIR light from intermediate age populations is contributed by thermally-pulsating asymptotic giant branch stars (TP-AGBs).
-These TP-AGB stars are notoriously difficult to model and include in spectral synthesis models.
-As a result, the optical-NIR SEDs of galaxies cannot be consistently modelled \citep{Taylor:2011}.
-Consequently, the best practise for stellar mass estimation as advocated by \cite{Taylor:2011} is to omit the NIR SED from fits, and rely upon useful stellar population degeneracies that, by coincidence, enforce a $g-i$~vs.~$\Upsilon_*$ relation.
+Unfortunately, the fundamental task of disentangling galaxy components---which typically involves light profile decompositions, colour gradients and mass modelling---remains non-trivial.
+Stellar population studies of spiral galaxies are thwarted by a three-fold degeneracy between stellar age ($A$), metallicity ($Z$) and ISM dust that can only be lifted using at least optical and infrared images and realistic dust models \citep{de-Jong:1996b,MacArthur:2004,Pforr:2012}.
+Likewise, mass models of spiral galaxies suffer a degeneracy between the stellar $M/L$ and dark halo parameters that requires, in addition to an extended rotation curve, deep and accurate multi-band imaging to uniquely constrain the stellar $M/L$ ratio (Dutton \etal 2005). 
 
-One means forward for NIR is improved empirical spectral libraries. 
-\todo{Cite X-shooter, other NIR spectral library efforts?}
-Another way to understand, and possibly calibrate, the NIR light is to observe nearby galaxies where stellar populations can be robustly understood (with exhaustive SED coverage and resolved stellar populations).
-Here the Andromeda galaxy stands as a unique and important target.
-It is visible to the Northern Hemisphere and thus to the premiere wide-field NIR imager (CFHT/WIRCam), and close enough (785~kpc) that stars can be resolved throughout the disk without adaptive optics.
+Compounding these challenges are fundamental uncertainties in modern stellar population synthesis, particularly uncertainties in the interpretation of near-infrared (NIR) light.
+In the Galaxy and Mass Assembly (GAMA) survey, \cite{Taylor:2011} combined SDSS and UKIRT $ugrizYJHK$ photometry of galaxies to show that optical-NIR SEDs yield unreliable population synthesis fits.
+This failure is largely attributable to inadequate NIR data and model predictions.
 
-\cite{Beaton:2007} assembled a 2.8\arcdeg\ $JHK_s$ mosaic centered on M31 with the 2MASS 6X program.
-Those observations, which trace the stellar galaxy mass, were used by \cite{Athanassoula:2006} as evidence of a bar embedded in a classical bulge.
+First, spectral energy distribution (SED) fitting often relies on simplistic star formation history (SFH) parameterizations.
+Because NIR colours lift age-metallicity-dust degeneracies, modelling of NIR bands may require additional sophistication, namely composite star formation and metal enrichment histories.
+The appropriate form of SFH models cannot be constrained from the integrated light of galaxies alone (as is typically attempted); resolved colour-magnitude diagrams (CMDs) are both more effective and, in fact, essential at deriving non-parametric stellar population histories. 
+
+Second, the NIR light is dominated by thermally-pulsating AGB (TP-AGB) stars from intermediate-aged stellar populations.
+Modelling TP-AGB stars is most challenging due to their complex dredge-up cycles that change surface chemistry and temperature (the M- to C-type transition), and circumstellar winds that further perturb an AGB star's location in the CMD.
+A proper calibration of NIR stellar population synthesis models \cite[\eg][Charlot \& Bruzual in prep.]{Maraston:2005} will yield a 30--50\% improvement in the estimation of stellar masses and ages of high redshift systems \citep[\eg][]{Maraston:2006,Bruzual:2007,Conroy:2010b}.
+
+Our remedy for both understanding the structure of M31, and more fundamentally to understand NIR stellar populations, is to survey the entire bulge and disk ($R \leq 22$~kpc) of M31 in both resolved and integrated stellar light at $J$ and $K_s$ wavelengths.
+In doing so, we can directly relate a NIR stellar population's decomposition in the colour-magnitude plane to the panchromatic SED of M31.
+Such a calibration could be made with other galaxies, but M31 is unique in its proximity so that even ground-based instrumentation can resolve its bright stellar population ($1\arcsec = 3.7$~pc at M31).
+
+A wealth of datasets exist for M31, but none fit the requirements for simultaneously observing M31's resolved and integrated NIR light.
+The best resource for resolved stellar populations across the entire disk of M31, to date, is the Local Group Galaxy survey \cite[LGGS][]{Williams:2003,Massey:2006}.
+This survey, although covering the $UBVRI$ wavelengths, does not extend to the $JHK$ NIR wavelengths most contentious for stellar population models.
+Advancing our view of M31 to NIR wavelengths, \cite{Beaton:2007} assembled a 2.8\arcdeg\ $JHK_s$ mosaic centered on M31 with the 2MASS 6X program.
+Those observations, which were the first nearly dust-free of M31's stellar content, were used by \cite{Athanassoula:2006} as evidence of a bar embedded in a classical bulge.
 But beyond the bulge, the 2MASS 6X images have limited utility.
 \cite{Courteau:2011} find sky uncertainty prevents using the 2MASS 6X to infer structural and photometric properties of the disk.
-Further, the pixel scale of 1\arcsec\ and integration depth of 46.8 seconds prevents point source measurements of the 2MASS 6X images.
+Further, the pixel scale of 1\arcsec\ and integration depth of 46.8 seconds prevent and point source measurement of M31 stars in the 2MASS 6X images.
 As a result, the defacto state-of-the-art NIR view of M31 is the slightly longer 3.6 $\mu$m Spitzer/IRAC map of \cite{Barmby:2006}.
 Spitzer obviates the issue of sky estimation, although the pixel scale of 0\farcs86 also prevents point source measurements of individual stars in the M31 disk.
 
-In this paper, we present a survey of the M31 bulge and disk with CFHT/WIRCam in the $J$ and $K_s$ bands.
-These are the first global near-infrared observations of M31 that simultaneously resolve throughout the mid- and outer-disk, while also recovering attempting to rigorously recover the NIR surface brightness.
-While future contributions will explore the resolved near-IR stellar populations, our focus here is the surface brightness calibration of the WIRCam data set, and exploration of NIR sky subtraction uncertainties.
+The best decompositions of M31's stellar populations have been made with high-resolution Hubble Space Telescope (HST) observations.
+\cite{Brown:2003,Brown:2006,Brown:2008} detected an intermediate age population in the inner halo of M31, and even disentangled debris associated with the Giant Stream around M31 in six fields sampling the outer disk, halo, and Giant Stream around M31 \citep{Brown:2009a}.
+In a similar vein, but in the near-infrared, \cite{Olsen:2006} derived star formation histories within $22\farcs5\times22\farcs5$ fields in M31's inner disk and bulge with ground-based adaptive optics observations with the Gemini ALTAIR/NIRI instrument.
+Yet these pencil beam surveys are cannot be construed as representative of the entire Andromeda Galaxy.
+Thus the boldest step forward in understanding M31's stellar populations is coming from the Panchromatic Hubble Andromeda Treasury Survey \citep[PHAT][]{Dalcanton:2012}.
+PHAT marries the best qualities of an M31 survey: wide-field coverage from M31's centre to the $10~kpc$ star forming ring, a panchromatic view of stellar populations in Near-UV, visible and NIR wavelengths (equivalent to a Johnson $H$), and resolution of stars in very crowded environments such as the bulge.
+But despite its heroic spatial coverage, PHAT still only covers a single quadrant of M31, making any global conclusions about M31's stellar populations incomplete.
+Further, the wavelength coverage of HST/WF3 falls short of the $2.3$~$\mu$m $K$-band, making empirical calibration of the common NIR bands used by wide-field NIR surveys ($JHK$) impossible.
+Thus there is good cause, even in the era of PHAT, to revisit M31 with a ground-based survey that covers the entirety of M31's disk at NIR wavelengths, while using the best natural seeing available from in the northern hemisphere (on Mauna Kea) to resolve stars even more effectively than the previous ground-based survey of M31's disk (LGGS).
+
+We present such a survey, the first instalment of the Andromeda Optical and Infrared Disk Survey (\androids) in this paper.
+ANDROIDS uses the WIRCam instrument \citep{Puget:2004} on the Canada-France-Hawaii Telescope (CFHT).
+WIRCam is among the first generation of wide-field ground-based NIR detector arrays, covering a $21\farcm 5 \times 21\farcm 5$ field of view.
+Indeed, it is the advent of detectors such as WIRCam that make such a wide-field, high-resolution survey of an object as vast as M31 possible.
+The excellent natural seeing on Mauna Kea yields seeing of 0\farcs 65, sufficient for resolving giant-branch stars throughout the disk of M31.
+
+But recovering the true NIR surface brightness map of M31 is more technically challenging.
+The NIR sky is 3~dex brighter than the NIR surface brightness of M31 at $R=20$~kpc, demanding exceptionally careful sky background characterization.
+Whereas most NIR galaxy surveys can measure the instantaneous background blank sky pixels surrounding the galaxy on a detector array, M31's size requires us to physically nod the telescope away from the galaxy by 1\arcdeg--3\arcdeg\ to sample blank sky (called Sky-Target, or ST, nodding).
+That we can never observe the instantaneous sky emission on the disk of M31, but rather sample the sky at both a different location and time, introduces additional complications.
+\cite{Adams:1996} clearly showed, with $9\arcdeg \times 9\arcdeg$ movies of the sky, that NIR sky emission has coherent spatial structure that moves across the sky, akin to a cirrus cloud system.
+This assures us that sky sampled from a sky field \emph{will not} correspond directly to the sky affecting disk observations.
+
+Another concern is the accuracy of the surface brightness shape across individual WIRCam fields of view.
+Spatial structures in the NIR sky can leave residual sky shapes in background subtracted disk images tat ultimately affect our ability to produce a seamless NIR mosaic of M31.
+\cite{Vaduvescu:2004} also found that detectors systems themselves, in their case the CFHT-IR camera, can add a time-varying background signal whose strength may be comparable to the NIR surface brightness of the outer M31 disk.
+
+Because such a large mosaic has never before been assembled with the WIRCam instrument with ST nodding, we focus this contribution on engineering the best practises for this type of observing.
+This includes: finding the optimal ST nodding cadence, defining the appropriate data reduction procedures for a WIRCam surface brightness procedure, and finally an analysis of the limits of surface brightness accuracy in wide-field WIRCam mosaics.
+
 Section~\ref{sec:Observations} describes the novel observational strategies used to reduce sky subtraction uncertainties.
-Section~\ref{sec:reduction} describes the image reduction pipeline; a particularly important aspect of this is night sky flat fielding (\Sec{flats}).
-In \Sec{scalar} we present our method for recovering the galaxy surface brightness by minimizing the image-to-image differences across the mosaic.
+Section~\ref{sec:reduction} describes the image reduction pipeline; a particularly important aspect of this is night sky flat fielding \Sec{flats}, median sky subtraction in \Sec{mediansky}, and zeropoint calibration practises in \Sec{photocal}.
+In \Sec{scalar} we present our method for recovering the galaxy surface brightness by minimizing the image-to-image differences across the mosaic, while in \Sec{scalaranalysis} we analyze the results of this algorithm.
 We estimate the systematic uncertainties in our mosaic solution in \Sec{systematics}, where we also compare our technique to the Montage package \citep{Berriman:2008} and the Spitzer/IRAC mosaics.
 In \Sec{skyflatstability} we consider the accuracy of the surface brightness \emph{shapes} recovered by our pipeline; in \Sec{skybehaviour} we use our dataset to explain the nature of the NIR sky level and temporal variability.
 In both of the former sections we seek to find the observational and reduction technique that maximizes surface brightness accuracy.
@@ -241,14 +277,8 @@ Finally, we employ an innovative randomized sky-targeting nodding pattern where 
 \section{Image Preparation}
 \label{sec:reduction}
 
-Our goal is to produce an accurate mosaic of M31 from ground-based, CFHT/WIRCam, NIR images.
-%Here we wish to comment on some of the image reduction steps that have a significant impact on the quality of our final mosaic, and the custom WIRCam pipeline adaptation made by \androids.
-Central to this paper, then, is the development of best practises for reducing CFHT/WIRCam images and mapping surface brightness with a sky-target nodding observing scheme on a target as large as M31.
-The objectives of this paper require us to significantly exceed the observational performance of WIRCam realized by other studies.
-To realize this performance, we must carefully analyze each step of the reduction process, including flat fielding, photometric calibration and sky subtraction.
-The product of this paper is a novel pipeline for reducing CFHT/WIRCam data that is outlined next in \Sec{reduction_outline}, and in subsequent sections.
-
-WIRCam data are offered by CFHT in three progressive stages of \emph{preprocessing} by their \iiwione\ pipeline to allow programmes, such as this one, to re-implement calibration recipes for potentially higher performance.
+The crux of this paper is finding how wide-field NIR mosaics can best be made with the WIRCam instrument on CFHT, and determining what limits the accuracy of our maps.
+To begin, we note that WIRCam data are offered by CFHT in three progressive stages of \emph{preprocessing} by their \iiwione\ pipeline to allow programmes, such as this one, to re-implement calibration recipes for potentially higher performance.
 These data flavours are: a raw image that is essentially untouched after leaving the instrument (\texttt{*o.fits}); an image that has been nonlinearity-corrected, dark subtracted and flat fielded (\texttt{*s.fits}); and an image that has been sky subtracted, in addition to all the previous treatments (\texttt{*p.fits}).
 
 As sky subtraction is the highest source of error in this program, the middle data product, \texttt{*s.fits}, would appear most amenable as a starting point for this program.
