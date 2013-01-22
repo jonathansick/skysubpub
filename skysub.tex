@@ -292,18 +292,18 @@ This random sampling of sky fields yielded two possible advantages: 1) when a me
 \section{Image Preparation}
 \label{sec:reduction}
 
-The crux of this paper is finding how wide-field NIR mosaics can best be made with the WIRCam instrument on CFHT, and determining what limits the accuracy of our maps.
-To begin, we note that WIRCam data are offered by CFHT in three progressive stages of \emph{preprocessing} by their \iiwione\ pipeline to allow programmes, such as this one, to re-implement calibration recipes for potentially higher performance.
-These data flavours are: a raw image that is essentially untouched after leaving the instrument (\texttt{*o.fits}); an image that has been nonlinearity-corrected, dark subtracted and flat fielded (\texttt{*s.fits}); and an image that has been sky subtracted, in addition to all the previous treatments (\texttt{*p.fits}).
+The crux of this paper is finding how wide-field NIR mosaics can best be made with the WIRCam instrument on CFHT, and determining what limits the accuracy of our surface brightness maps.
+To begin, we note that WIRCam data are offered by CFHT in three progressive stages of \emph{preprocessing} by their \iiwione\ pipeline to allow programmes, such as this one, to re-implement calibration recipes for potentially better surface brightness accuracy.
+The data flavours are: a raw image that is essentially untouched after leaving the instrument (\texttt{*o.fits}); an image that has been corrected for nonlinearity, dark subtracted and flat fielded (\texttt{*s.fits}); and an image that has been sky subtracted, in addition to all the previous treatments (\texttt{*p.fits}).
 
-As sky subtraction is the highest source of error in this program, the middle data product, \texttt{*s.fits}, would appear most amenable as a starting point for this program.
+As sky subtraction is the highest source of error in our program, the middle data product, \texttt{*s.fits}, would appear most amenable as a starting.
 Nonetheless, two \iiwione\ processing stages included in \texttt{*s.fits} products must be handled carefully.
 
 \paragraph{Cross-talk correction} WIRCam integrations prior to March 2008 (that is, the 2007B data set, but not the 2009B data) suffered from electronic cross talk within the detector.
 This cross talk is manifested in repeating rings above and below saturated stars.\footnote{See \url{http://cfht.hawaii.edu/Instruments/Imaging/WIRCam/WIRCamCrosstalks.html}.}
 By default, the \iiwione\ pipeline removes this cross talk by subtracting a median of the 32 amplifier slices.
 Unfortunately, this algorithm fails in cases where the background has a surface brightness gradient (such as on the disk of M31) and produces an inverse surface brightness gradient that is stronger than the galaxy surface brightness itself.
-Loic Albert was kind to re-process the 2007B data set with the cross-talk correction turned off.
+Loic Albert (then at CFHT) kindly re-processed our 2007B data set with the cross-talk correction turned off.
 
 \paragraph{Flat fielding} We discovered that the dome flat fielding offered by \iiwione\ was only accurate to 2\% of edge-to-edge intensity.
 The ineffectiveness of WIRCam dome flat fielding is evident in \texttt{*s.fits} images that show significant detector structure, despite having been flat fielded.
@@ -313,71 +313,66 @@ Yet since pixel gain changes the signal in proportion to incident flux, subtract
 Our remedy is to adopt night sky flats, which use the median night sky as the illumination reference rather than a dome lamp.
 Comparing the dome and night sky flats, as in \Fig{domeflatratio}, shows how profound the choice of flat field can be.
 Our confidence in night sky flats as the \textit{correct} choice for flat fielding WIRCam lies in their ability to remove both large scale illumination features (\eg \Fig{median_sky_images}) and pixel-to-pixel gain changes across WIRCam (\eg \Fig{flattenedimage_comparison}).
-But the production of WIRCam sky flats is subtle as we find the flat field structure to be time dependent on sub-hour scales, and of course the NIR night sky itself is not flat.
-A comprehensive discussion of WIRCam flat fielding is made in \Sec{skyflatstability}.
+Production of WIRCam sky flats is subtle as we find the flat field structure to be time dependent on sub-hour scales, and of course the NIR night sky itself is not flat.
+A comprehensive discussion of WIRCam flat fielding is presented in \Sec{skyflatstability}.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figs/flattenedimage_comparison}
 \caption{Comparison of a WIRCam frame cutout processed with dome flats by the \iiwione\ pipeline (top), and with sky flats (bottom).
-Both image are shown in linear counts with identical level ranges.
+Both images are shown in linear counts with identical level ranges.
 No median sky subtraction has been applied.
-Dome flats leave WIRCam images with dust artifacts (on left) and detector surface defects (on right). Furthermore, the 64-pixel high horizontal amplifier bands are clearly visible.
-Simply using sky flats corrects these artifacts.
+Dome flats leave WIRCam images with dust artifacts (left) and detector surface defects (right). Furthermore, the 64-pixel high horizontal amplifier bands are clearly visible.
+Simply using sky flats eliminates these artifacts.
 }
 \label{fig:flattenedimage_comparison}
 % skysubpub/flattened_image_comparison.py
 \end{figure}
 
 \begin{figure}[t]
-   \centering
-    \includegraphics[width=3in]{figs/flatratio_09BQ01_Ks_twocol}
-    \caption{Percent difference image of the 09BQ01 $K_s$ (queue run) sky flat to the \texttt{domeflat\_8302B\_20090728HST143302\_Ks} dome flat used in the \iiwione\ pipeline. Using the median night sky illumination over a WIRCam queue run, rather than a dome lamp, results not only in 2\% edge-to-edge different in the large scale WIRCam illumination function, but also in different characterizations of gain structure in the WIRCam detector amplifiers (the 32 horizontal bands in each of the four WIRCam detectors).}
-   \label{fig:domeflatratio}
-   % made with skysubpub/flatratio.py
+\centering
+\includegraphics[width=3in]{figs/flatratio_09BQ01_Ks_twocol}
+\caption{Difference image between the 09BQ01 $K_s$ (queue run) sky flat and the \texttt{domeflat\_8302B\_20090728HST143302\_Ks} dome flat used in the \iiwione\ pipeline, in percent.
+Using the median night sky illumination over a WIRCam queue run, rather than a dome lamp, results not only in 2\% edge-to-edge different in the large scale WIRCam illumination function, but also in different characterizations of gain structure in the WIRCam detector amplifiers (the 32 horizontal bands in each of the four WIRCam detectors).}
+\label{fig:domeflatratio}
+% made with skysubpub/flatratio.py
 \end{figure}
 
 \vspace{1em}
 
 Our \androids\ pipeline thus begins with \texttt{*s.fits} data that have been undone of flat fielding.
-That is, we multiply the \texttt{*s.fits} image with with its associated dome flat.\footnote{Dome and twilight flats are made available by CFHT, \url{http://limu.cfht.hawaii.edu:80/detrend/wircam/}.}
+That is, we multiply the \texttt{*s.fits} image with its associated dome flat.\footnote{Dome and twilight flats are made available by CFHT, \url{http://limu.cfht.hawaii.edu:80/detrend/wircam/}.}
 The result is an image that retains \iiwione's prescription for dark subtraction, bad pixel masking and non-linearity correction.
-The \androids\ WIRCam pipeline then carries out steps described here, and in the following sections.
+The \androids\ WIRCam pipeline then follows the steps described below.
 
 \subsection{Reduction outline}
 \label{sec:reduction_outline}
 
-Our ANDROIDS/WIRCam reductions begins by unifying the World Coordinate System across the dataset with \sw{Scamp} \citep{Bertin:2006}.
-Scamp matches stars in Source Extractor \citep{Bertin:1996} catalogs of each WIRCam \texttt{*p.fits} frame both internally (to \todo{TODO} \arcsec ), and against the 2MASS Point Source Catalog \citep{Skrutskie:2006} to a precision of \todo{TODO}\arcsec.
-So that all frames match field-to-field and between $J$ and $K_s$ bands, astrometric solutions for all \todo{TODO} frames of the \androids /WIRCam survey are assembled simultaneously.  Scamp handles this data volume gracefully provided we cull the input star catalogs for stars of $S/N > 100$, and by using the \texttt{SAME\_CRVAL} astronometry assumption that the WIRCam focal plane geometry is stable.
+Our ANDROIDS/WIRCam reductions begin by unifying the World Coordinate System across the dataset with \sw{Scamp} \citep{Bertin:2006}.
+Scamp matches stars in Source Extractor \citep{Bertin:1996} catalogs of each WIRCam \texttt{*p.fits} frame both internally (to $\sigma_\mathrm{int}=0\farcs 10$), and against the 2MASS Point Source Catalog \citep{Skrutskie:2006} to a precision of $\sigma_\mathrm{ref}=0 \farcs 15$.
+% Values obtained from Scamp XML output
+By processing all all 4286 frames of the \androids /WIRCam survey simultaneously, SCAMP allows us produce an accurate and internally consistent coordinate frame for our mosaic.
+Scamp handles this data volume gracefully provided we cull the input star catalogs for stars with $S/N > 100$, and by using the \texttt{SAME\_CRVAL} astrometry assumption that the WIRCam focal plane geometry is stable.
 
-In parallel, we apply flat fields constructed from sky signal in the \textit{deflattened} \texttt{*s.fits} images.
-Sky flats produced the observations themselves are able to track gain variations across the WIRCam detectors throughout the night.
-These flat fielded images still possess a sky background illumination that must be estimated and subtracted.
-This can done by constructing \textit{median sky frames}, median combinations of five sequential sky 
-images.
-This procedure was originally motivated by near-infrared programs where the objects are small, so that the median of several frames in a multi-point dither pattern effortlessly removes the signal flux, leaving only an image of the sky background itself.
-An advantage of median sky construction is that it not only records the amplitude of a sky signal, but also its \emph{shape}.
-For large sky-target nods, the recorded shape of the sky will be a less relevant representation of the sky on the target itself.
-Nonetheless, \iiwione\ retained this practice of median sky construction as a crutch for removing instrumental signals not removed by dome flat fielding (see \Sec{flats}). In this ANDROIDS pipeline we find that even sky flat fielding leaves a background shape that persists across sky fields, and that must be subtracted with median sky subtraction.
-Discussion of sky flat and median sky subtraction construction is saved for \Sec{flats} where we argue the appropriate time window for averaging sky flux into a sky flat field, and the shapes of residual sky captured by median sky subtraction. \todo{(Fix sentence)}
+The next steps are flat fielding and median sky subtraction.
+For flat fielding, we apply flat field frames built from sky images (sky flats), as opposed to the dome flats and twilight sky flats employed in the \iiwione\ pipeline.
+As we explore thoroughly in Section~\ref{sec:flats} and again in Section~\ref{sec:skyflatstability}, sky flats are crucial for tracking flat field evolution in the WIRCam detector.
+Next, our pipeline performs preliminary sky subtraction using median sky images.
+This step is described in Section~\ref{sec:mediansky}.
+Since we apply a new flat field recipe, our pipeline also re-estimates photometric zeropoints by bootstrapping directly against the 2MASS Point Source Catalog; this operation is described in Section~\ref{sec:photocal}.
 
-These flat fielded and background subtracted frames are photometrically calibrated to a uniform zeropoint.
-We cannot use the CFHT \iiwione\ zeropoints because of our custom sky flat fielding; zeropoints are instead estimated against 2MASS stars in the WIRCam fields.
-The photometric calibration, including colour transformations between the CFHT/WIRCam and 2MASS filters are discussed in the next section (\Sec{photocal}).
-
-Finally, while the data has formally been flat fielded and photometrically calibrated, the sky level estimation provided by the sky-target nodding observing scheme is not accurate enough to build a seamless mosaic.
+Finally, while the data have formally been flat fielded and photometrically calibrated, the sky level estimation provided by the sky-target nodding observing scheme is not accurate enough to build a seamless mosaic.
 Instead we model sky offsets that enforce internal consistency in the sky levels of target frames.
-In \Sec{scalar} we discuss the methods for modelling these sky offsets and their analyze their amplitudes.
+In Section~\ref{sec:scalar} we discuss the methods for modelling these sky offsets and provide an analysis of their amplitudes in  Section~\ref{sec:scalaranalysis}.
 
 \section{Sky Flat Fielding}
 \label{sec:flats}
 
-Dome flats fail to properly calibrate WIRCam data, as evidenced by Figs.~\ref{fig:domeflatratio} and \todo{TODO: figure of dome-flattened image}.
+Dome flats fail to properly calibrate WIRCam data, as evidenced by Figs.~\ref{fig:flattenedimage_comparison}~and~\ref{fig:domeflatratio}.
 Sky flats are an appropriate alternative, both because of the abundant sky background (any NIR imaging program can use its own images to build sky flats), and because sky flats more aptly trace detector illumination and gain structure.
 The former because skylight traces the same optical path as astronomical sources; the latter because WIRCam's gain structure appears variable.
 Sky flats allow detector gain mapping in real-time.
-We return to the variability of WIRCam flat fields later in this section.
+We return to the variability of WIRCam flat fields in \Sec{skyflatstability}.
 
 \subsection{Sky Flat Designs}
 \label{sec:flatdesign}
