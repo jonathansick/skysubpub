@@ -377,7 +377,7 @@ We return to the variability of WIRCam flat fields in \Sec{skyflatstability}.
 \subsection{Sky Flat Designs}
 \label{sec:flatdesign}
 
-Producing sky flats is principally as simple as median-combining integrations of blank sky. 
+Producing sky flats is as simple as median-combining integrations of blank sky. 
 The \androids\ sky-target nodding observing strategy provides an abundance of `sky' images for this purpose.
 A fundamental decision is the definition of the window of sky integrations that are combined into a sky flat.
 Here we present two sky flat designs: labelled \texttt{QRUN} and \texttt{FW100K}.
@@ -417,9 +417,8 @@ $K_s$ & 09BQ08 & 637 & 8 \\
 
 An alternative design choice assumes that WIRCam's illumination function and detector gain structure is unstable even over short periods.
 Here the objective is to make many sky flats that reflect the real-time flat field function---we call these Real-Time Sky Flats.
-Our first real-time sky flat, labelled \texttt{FW100K}, is designed such that the pool of sky images contain cumulative sky levels of at least 100,000 ADU, or that the time span from first to last sky integration be no longer than two hours.
-In \Fig{fw100k_summary} we consider the properties of such real-time sky flats.
-$J$-band sky flats typically require 15 integrations during the 07B campaign, or 10--25 integrations in the 09B campaign $J$-band sky levels were bimodal (see \Fig{net_sky_level}).
+Our first real-time sky flat, labelled \texttt{FW100K}, is designed such that the pool of sky images reaches cumulative sky levels of at least 100,000 ADU, or that the time span from first to last sky integration be no longer than two hours.
+Properties of these sky flats---the number of images required to build them, and the width of the windows they cover are shown in \Fig{fw100k_summary}.
 Given the 07B $J$-band ST nodding pattern, 15 sky integrations are accumulated in 50 minute windows; whereas the more frequent nodding in the 09B campaign shortened this window to 20 minutes (but as long as 50--90 minutes in dark sky conditions).
 The brighter $K_s$ sky calls for just 7--13 integrations in 07B, or 10--20 integrations in the 09B campaign.
 This number of $K_s$ sky samples was accumulated within 10--30 minutes in 07B, or 10--70 minutes in 09B.
@@ -429,7 +428,7 @@ This number of $K_s$ sky samples was accumulated within 10--30 minutes in 07B, o
 \includegraphics[width=\columnwidth]{figs/fw100k/fw100k_summary}
 \caption{Characteristics of \texttt{FW100K} real-time sky flats, meeting criteria of at least 100,000 sky ADU, and spans of less than two hours.
 Distributions of 07B sky flats plotted as red outlined histograms, 09B sky flats are plotted as shaded histograms.
-The number of sky images required to build a sky flat, and the time span from first to last sky image depends on sky brightness and the sky-target nodding pattern.
+The number of sky images required to build a sky flat (top), and the time span from first to last sky image depends on sky brightness and the sky-target nodding pattern (bottom).
 Real-time sky flats can consequently be refreshed in as little as 10 minutes, or span the order of an hour.}
 \label{fig:fw100k_summary}
 % $andpipe/wircam/skyflat/plot/fw_property_hist.py 
@@ -438,27 +437,30 @@ Real-time sky flats can consequently be refreshed in as little as 10 minutes, or
 \subsection{Building Sky Flats}
 \label{sec:flatbuilding}
 
+\todo{SC's corrections don't match the intent; we should confer to make the scaling argument concretely understandable.}
 Given the ensemble of sky integrations, our next task is to scale the intensity of each image.
 This scaling achieves three requirements: 1) each image frame in the median stack is at the same level, 2) each WIRCam detector has a unified zeropoint, and 3) the sky flat across the whole array is flux normalized.
 This scaling is determined by the median pixel level measured on each detector for each sky integration---denote these median levels as $\alpha_{i,j}$ for the $i$th sky image's level in detector $j$, $j=1, 2, 3, 4$.
-To avoid bias in the sky estimate, we also build masks for any pixels that do not sample blank sky.
+To avoid bias in the sky estimate, we mask any pixels that do not sample blank sky.
 \sw{Source Extractor} \citep{Bertin:1996} is used to define stars and background galaxies (we use \iiwione\ \texttt{*p.fits} images to detector sources), while hand-drawn polygon regions cover diffraction spikes and the diffuse halos around bright galactic stars. These masks, along with the \iiwione\ bad pixel mask, are combined with \sw{WeightWatcher} \citep{Marmo:2008}.
-For each detector, we compute the median sky level seen by that chip: $\beta_j = \mathrm{median}(\alpha_{1,j}, \alpha_{2,j}\ldots \alpha_{n,j} )$.
-Further, we also compute $S$, the median of median chip levels: $S=\mathrm{median}(\beta_j)$.
+
+From the ensemble of images produced by an individual WIRCam detector we compute the median sky level: $\beta_j = \mathrm{median}(\alpha_{1,j}, \alpha_{2,j}\ldots \alpha_{n,j} )$.
+Further, we also compute $S$, the median of all median detector levels: $S=\mathrm{median}(\beta_j)$.
 Then each the sky image is scaled by the factor $f_{ij} = \mathrm{median}(\beta_1, \beta_2, \beta_3, \beta_4) / (\alpha_{ij} S)$.
-Note that the factor $\alpha_{ij}^{-1}$ normalizes each image to the same level for stacking, while the ratio $\beta_j / S$ adjusts the level of each chip according to chip-to-chip zeropoint offsets.
-Indeed, chip-to-chip zeropoint offsets can be measured as $-2.5 \log_{10}(\beta_i / \beta_1)$, as done in \Fig{fw100k_zpdiff}.
+Note that the factor $\alpha_{ij}^{-1}$ normalizes each image to the same level for stacking, while the ratio $\beta_j / S$ adjusts the level of each detector according to detector-to-detector zeropoint offsets.
+Indeed, detector-to-detector zeropoint offsets can be measured as $-2.5 \log_{10}(\beta_i / \beta_1)$, as shown in \Fig{fw100k_zpdiff}.
 WIRCam detector \#1 (North-West quadrant) is clearly the most sensitive, while the dispersion indicates the level of gain variability in WIRCam.
-We also note systematic differences in spectral response of WIRCam detectors in the $J$ and $K_s$ on the order of 0.05 mag.
+We also note systematic differences in spectral response of WIRCam detectors in the $J$ and $K_s$ on the order of 5\%.
+% 0.05 mag is about 4.5%
 
 The flat itself is built by median combination.
-Median combination of a stack of hundreds of $2048\times2048$ pixel image, each with a weightmap masking astronomical sources, is computationally expensive.
+Median combination of a stack of hundreds of $2048\times2048$ pixel image, each with a weightmap masking astronomical sources, is computationally intensive.
 A convenient solution was to use \sw{Swarp} \citep[an image-mosaicing software package,][]{Bertin:2002} in a mode that combined images pixel-to-pixel.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figs/fw100k/fw100k_betadiff}
-\caption{Distribution of real-time sky flat scaling factors, measuring chip-to-chip zeropoint differences relative to detector \#1 (red: \#2, green: \#3, blue: \#4) in $J$ and $K_s$ bands.
+\caption{Distribution of real-time sky flat scaling factors, measuring detector-to-detector zeropoint differences relative to detector \#1 (red: \#2, green: \#3, blue: \#4) in $J$ and $K_s$ bands.
 }
 \label{fig:fw100k_zpdiff}
 % $andpipe/wircam/skyflat/plot/chip_zp_diff.py
@@ -471,8 +473,8 @@ Since M31 is much larger than individual WIRCam fields, sky background is subtra
 Section~\ref{sec:Observations} describes the sky-target nodding sequences chosen for the 2007B and 2009B observing campaigns. 
 Although a scalar sky level could be estimated from a sky image, and subtracted from the paired target images, it is common to construct a median sky image, the same size as the WIRCam frames, and subtract this 2D image from target images.
 
-Independent median sky images for each WIRCam detector are produced by choosing a sky image (the primary sky image) and four other sky images taken adjacent time.
-Across each frame, the median sky intensity is recorded.
+Independent median sky images for each WIRCam detector are produced by choosing a sky image (the primary sky image) and four other sky images taken at adjacent times.
+Across each image, the median sky intensity is recorded.
 A Source Extractor object mask, as used in \Sec{flatbuilding} for flat fielding, removes bias from astrophysical sources.
 Each sky image is \emph{additively} scaled to a common intensity level, allowing differences in overall sky amplitude to be ignored by the median combination.
 As described in \Sec{flatbuilding}, \sw{Swarp} is used to median-combine the sky images, taking into account non-sky pixel masks.
@@ -487,54 +489,53 @@ In \Sec{skyflatstability} we follow up on this operational discussion to conside
 \section{Photometric calibration}
 \label{sec:photocal}
 
-Since the \androids/WIRCam dataset uses revised flat fields that differ by 2\% from the \iiwione\ pipeline, new photometric zeropoints must be established.
+Since the sky flats used by this \androids/WIRCam data set differ from the dome flats employed by the \iiwione\ pipeline by 2\% in edge-to-edge level (see \Fig{domeflatratio}), new photometric zeropoints must be established.
 The Two Micron All Sky Survey (2MASS) Point Source Catalog (PSC) \citep{Skrutskie:2006} provides a convenient photometric system to bootstrap against.
-Typical WIRCam pointings (20\arcmin by 20\arcmin) in this survey contain $\sim 500$ stars measured by 2MASS.
+Typical WIRCam pointings ($20\arcmin 20\arcmin$) in this survey contain $\sim 500$ 2MASS stars.
 % see python $andpipe/wircam/calibset/photcal/tmass_source_count.py
 Although these are not standards, the ensemble of 2MASS stars may be treated as such.
-Since the disk of M31 is crowded, and 2MASS has poor resolution (seeing $> 1\arcsec$), we consider 2MASS point source measurements to be unreliable on the disk.
-Instead, all zeropoint measurements are made using sky images, and those calibrations are applied to paired disk images (analogous to the median sky subtraction procedure).
+Since the disk of M31 is crowded, and 2MASS has poor resolution ($1\arcsec$~pix$^{-1}$ \todo{verify this pixel scale}), we consider 2MASS point source measurements to be unreliable on the disk.
+Instead, all zeropoints are measured against sky images, and those calibrations are applied to paired disk images (analogous to the median sky subtraction procedure, described in \Sec{mediansky}).
 
-Photometry of 2MASS stars in the uncrowded sky fields is done with Source Extractor \citep{Bertin:1996}.
+Photometry of 2MASS stars in the uncrowded sky fields is obtained with Source Extractor \citep{Bertin:1996}.
 We use the \texttt{AUTO} photometry mode to capture the full light of stars without using aperture corrections.
-Objects in the 2MASS PSC are matched to Source Extractor detections by position using the author's \sw{Mo'Astro}\footnote{\url{http://moastro.jonathansick.ca}} Python package, that manages the full 2MASS PSC in a MongoDB database.
+Objects in the 2MASS PSC are matched to Source Extractor detections by position using J. Sick's \sw{Mo'Astro}\footnote{\url{http://moastro.jonathansick.ca}} Python package, that manages the full 2MASS PSC in a MongoDB database.
 The 2MASS PSC contains many galaxies, and many 2MASS sources are saturated in our deeper WIRCam images.
 Thus we select stars with $m_J < 14$ or $m_{K_s} < 15$ magnitudes, and stars with FWHM $<1$\arcsec.
 Additionally, we select stars with $J-K_s < 0.8$ (typical of the foreground Milky Way stellar population) as we observe larger zeropoint residuals in redder stars.
-After filtering, roughly $\sim 300$ matched 2MASS sources remain in typical WIRCam images.
-\todo{Verify this number given new colour cuts}.
+After filtering, typically 200 matched 2MASS sources remain in typical WIRCam images.
 
-Typical photometric calibrations attempt to model three numbers---a zeropoint $m_z$, an airmass-dependent extinction factor $K$ and a linear colour transformation coefficient between the instrumental (WIRCam) and reference (2MASS) photometric systems---in the fitting function $m_\mathrm{2MASS} = -2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) + \hat{m_z} + \hat{K} (\sec z -1) + \hat{A} (J-K_s)_\mathrm{2MASS}$.
-With queue service observing it is impossible to constrain a nightly extinction coefficient since observations are taken in short blocks spread over several weeks.
-We instead collapse airmass dependence into an instantaneous zeropoint, $m_0$, that is fit to individual images:
+To fit a photometric zeropoint, we bootstrap directly against 2MASS photometry visible in sky images.
+This practice obviates any airmass dependence, since each fitted zeropoint, $m_0$ is instantaneous.
+Given sample of matching 2MASS and instrumental photometry, the instrumental zeropoint is estimated as median:
 
 \begin{equation}
   \label{eq:photcal}
-  m_\mathrm{2MASS} = -2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) + \hat{m_0} + \hat{A} (J-K_s)_\mathrm{2MASS}.
+  m_0 = \langle m_\mathrm{2MASS} + 2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) - \hat{A} (J-K_s)_\mathrm{2MASS} \rangle.
 \end{equation}
 
-Given that $\sim 175$ usable 2MASS stars are visible in each image, and their photometric uncertainties are $0.05 \lesssim \sigma_{\mathrm{2MASS}} \lesssim 0.3$, the typical statistical zeropoint uncertainty, $\sigma_{\hat{m_0}}$, is 0.1 mag in a single image.
+The $A$ term permits a linear colour transformation between the 2MASS and Although we could fit a colour transformation coefficient $A$ for each image, the short $J-K_s$ colour baseline makes such measurements unreliable.
+Instead we adopt $A_J = 0.05$ and $A_{K_s} = -0.05$ (K. Thanjuvar, priv.\ comm.) based on modelling stellar spectra with the 2MASS and CFHT/WIRCam transmission functions.
 
-The typical uncertainty of the instantaneous colour transformation coefficient is 0.03.
-Although we could fit a colour transformation coefficient $\hat{A}$ for each image, the short $J-K_s$ colour baseline makes such measurements unreliable. Instead we adopt $A_J = 0.05$ and $A_{K_s} = -0.05$ (K. Thanjuvar, priv.\ comm.) based on modelling stellar spectra with the 2MASS and CFHT/WIRCam transmission functions.
+Given that 2MASS stars in each image have photometric uncertainties $0.05 \lesssim \sigma_{\mathrm{2MASS~mag}} \lesssim 0.3$, the typical statistical zeropoint uncertainty, $\sigma_{m_0}$, is 0.1~mag in a single image.
 
-Since $m_0$ is fit for sky images, zeropoints and colour transformations for science images are interpolated as the median of a sliding window of sky images large enough to statistical uncertainty of the median $m_z$ to be reduced below 0.01 mag.
+Since $m_0$ is fit for sky images, zeropoints for science images are interpolated as the median of a sliding window of sky images large enough for the statistical uncertainty of the median $m_0$ to be reduced below 0.01 mag.
 % see $andpipe/wircam/calibset/photcal/singleimg/uncertainty_dists.py for photometry properties 
 
-\subsection{Chip-to-chip zeropoint consistency}
-\label{sec:chip_zp}
+\subsection{Detector-to-Detector zeropoint consistency}
+\label{sec:detector_zp}
 
 Our sky flats are designed to unify the zeropoints of the four WIRCam detectors by scaling according to the modal sky levels seen on each detector (see~\Sec{flats}).
 % To prove the chip-to-chip zeropoint consistency generated by the flat fielding procedure, we can use our photometric calibration mechanics.
 % While the formal photometric calibration described above pools together 2MASS stars seen in any of the four detectors, we can also generate photometric calibrations in each individual detector.
-The accuracy of this calibration can be verified by comparing photometric zeropoint estimates for individual WIRCam chips.
-In \Fig{fw100k_chip_to_chip} we show the distribution of mean chip-to-chip zeropoints offsets observed in images processed by real-time sky flats, and find that zeropoints are consistent within $\pm 0.1$ mag, although we do detect a possible systematic bias between chips \#1 and \#4 at the level of $-0.03$~mag.
-% \mycomment{JS: this method of verifying zeropoint consistency needs work. Single-chip zeropoint uncertainty is $\sim 0.05$ mag, so the uncertainty of the difference measurement is 0.07 mag. But \Fig{fw100k_chip_to_chip} actually measures the mean zeropoint offset within among the images in each sky flat. This reduces the statistical uncertainty; making the 0.1 mag scatter in \Fig{fw100k_chip_to_chip} quite significant}
+The accuracy of this calibration can be verified by comparing photometric zeropoint estimates for individual WIRCam detectors.
+In \Fig{fw100k_chip_to_chip} we show the distribution of mean detector-to-detector zeropoints offsets observed in images processed by real-time sky flats, and find that zeropoints are consistent within $\pm 0.1$ mag, although we do detect a possible systematic bias between detectors \#1 and \#4 at the level of $0.03$~mag.
+% \mycomment{JS: this method of verifying zeropoint consistency needs work. Single-detector zeropoint uncertainty is $\sim 0.05$ mag, so the uncertainty of the difference measurement is 0.07 mag. But \Fig{fw100k_chip_to_chip} actually measures the mean zeropoint offset within among the images in each sky flat. This reduces the statistical uncertainty; making the 0.1 mag scatter in \Fig{fw100k_chip_to_chip} quite significant}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figs/fw100k/fw100k_chip_to_chip}
-\caption{Distribution of mean chip-to-chip zeropoint offsets for sky images processed by real-time sky flats. Zeropoint offsets between chips \#1--\#2, --\#3, and --\#4 are plotted as
+\caption{Distribution of mean detector-to-detetector zeropoint offsets for sky images processed by real-time sky flats. Zeropoint offsets between detectors \#1--\#2, --\#3, and --\#4 are plotted as
 red, green and blue histograms, respectively, for the $J$-band (top) and $K_s$-band (bottom).}
 \label{fig:fw100k_chip_to_chip}
 % andpipe/wircam/calibset/photcal/singleimg/chip_consistency_zp_fixa.py
@@ -763,7 +764,7 @@ It is this level of uncertainty that sky offset optimization must diminish to tr
 
 Note that offsets to fit a stack into a block ($\Delta_S$) of four detector field stacks are smallest: 0.1\% of the sky level.
 This suggests that on the scale of the $2\times 2$ WIRCam array, the contemporaneously observed detector frames are subjected to nearly identical biases in sky background.
-Stack offsets, then, arise from uncertainties in the pipeline's measurement of the sky level from single frames in two stages: estimating chip-to-chip zeropoint offsets from frame sky levels (\Sec{flatbuilding}) and again when subtracting a median sky frame (\Sec{mediansky}).  \mycomment{Come back to this statement after the analysis of sky shape variations; it could be a consequence of background sky shape uncertainty.}
+Stack offsets, then, arise from uncertainties in the pipeline's measurement of the sky level from single frames in two stages: estimating detector-to-detector zeropoint offsets from frame sky levels (\Sec{flatbuilding}) and again when subtracting a median sky frame (\Sec{mediansky}).  \mycomment{Come back to this statement after the analysis of sky shape variations; it could be a consequence of background sky shape uncertainty.}
 
 A comparison between the net sky offsets applied to the 2007B and 2009B data sets is provocative.
 Although the 2009B dataset employed rapid sky-target nodding to minimize temporal lags between disk and sky sampling, the magnitude of sky offsets in the 2007B and 2009B semesters is comparable.
@@ -1047,7 +1048,7 @@ Sky flat evolution does appear driven by changes in the large scale detector ill
 \caption{Time evolution of the mean flat field level of amplifier bands in the four WIRCam detectors in \texttt{FW100K} sky flats made over three hours.
 Amplifier bands colours are mapped to their order on the array: red lines at the bottom, green in the middle, and red at the top.
 Although the levels of individual amplifiers differ by 10\%, their order is consistent, indicating that amplifier gain is extremely stable.
-The jitter is due to chip-to-chip zeropoint normalization (\Sec{flatbuilding}) uncertainty, or measurement biases.}
+The jitter is due to detector-to-detector zeropoint normalization (\Sec{flatbuilding}) uncertainty, or measurement biases.}
 \label{fig:fw100k_globalamp_timeseries_55136_Ks}
 % wircam/skyflat/plots/amp_level_global.py
 \end{figure}
