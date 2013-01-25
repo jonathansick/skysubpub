@@ -553,12 +553,12 @@ red, green and blue histograms, respectively, for the $J$-band (top) and $K_s$-b
 % + skysubpub/raw_mosaic.py
 \end{figure}
 
-Despite our attention thus far to real-time sky flat fielding, and median sky image subtraction, we have not achieved our goal of recovering the true NIR surface brightness of M31.
+Despite our attention thus far to real-time sky flat fielding, and median sky image subtraction, we have yet to achieve our goal of recovering the true NIR surface brightness of M31.
 In \Fig{raw_mosaics} we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed thus far with the pipeline discussed in \Sec{reduction}--\Sec{photocal}.
 Although these basic image preparations dramatically improve image quality the \iiwione\ pipeline (particularly with regards to flat fielding performance), we see that classical NIR sky subtraction has fundamentally limited accuracy.
 Classically, the true value of the sky on the disk of M31 is lost by the temporal and spatial variations of skyglow between disk and sky field observations.
 
-To advance on our goal, we demonstrate in this section how the residual sky bias in each observation can be inferred from information in the overlaps of pairs of images in the mosaic.
+To advance on our goal, we demonstrate in this section how the residual sky bias in each observation can be inferred from information in the overlaps of image pairs in the mosaic.
 Each classically sky subtracted image of the M31 disk is a combination of the true surface intensity, $I_i$, and a residual sky intensity, $\epsilon_i$.
 Consider a pair of images, $i$ and $j$, that overlap on the galaxy: their difference is $(I_i+\epsilon_i) - (I_j+\epsilon_j) = \epsilon_i - \epsilon_j$.
 Given this measurement $\epsilon_i - \epsilon_j$ of residual sky intensity, we introduce \emph{sky offsets}, $\Delta$, for each observation so that
@@ -581,13 +581,13 @@ That is, sky offsets can be chosen by the optimization of
 \noindent over all coupled image pairs $(i,j)$ in the mosaic.
 Note that absolute uniqueness is not guaranteed.
 In the limit that sky offsets $\Delta_i$ are drawn from a Gaussian distribution, with standard deviation $\sigma_\Delta$, the absolute brightness of the whole mosaic will be uncertain by $\sigma_\Delta / \sqrt{N_\mathrm{images}}$.
-The consequences of this uncertainty are revisited in \S\todo{TODO}.
+The consequences of this uncertainty are revisited in \Sec{systematics}.
 
 \subsection{Implementations}
 \label{sec:offset_algos}
 
 The sky offset optimization summarized in \Eq{scalartheoryobj} is difficult to implement because it is over-constrained, requiring a non-linear optimization.
-Any single image is connected in a network (visualized in Fig. \todo{todo}) with others; and any error in the surface brightness \emph{shapes} of fields will result in an imperfect match.
+Any single image is connected in a network with others; and any error in the surface brightness \emph{shapes} of fields will result in an imperfect match.
 In this work, we consider two implementations of \Eq{scalartheoryobj}.
 First, we review the \sw{Montage} software package in \Sec{montage_algo}, and then introduce an alternative in \Sec{msrnm_algo}.
 
@@ -598,14 +598,14 @@ First, we review the \sw{Montage} software package in \Sec{montage_algo}, and th
 In that software, images are rectified onto a mosaic pixel grid, and difference images are computed among overlapping images.
 Sky offsets are then chosen iteratively by looping through each image pair and choosing the offset needed to minimize the difference image of that pair, counting previous sky offset estimates.
 That is, at each step the sky levels of the two images are increased and decreased by half the total intensity difference.
-Sky offsets are refined over several loops through the entire set of overlapping image pairs until convergence is reached (adjustments to sky offsets diminish below a threshold).
-Although this iterative implementation of sky offset optimization is elegant, its accuracy has never been formally analyzed in literature.
+Sky offsets are refined over several loops through the entire set of overlapping image pairs until convergence is reached (that is, once incremental adjustments to sky offsets diminish below user-specified threshold).
+Although this iterative implementation of sky offset optimization is elegant, its accuracy has never been formally analyzed in literature, to our knowledge.
 In particular, we are interested in the robustness of Montage sky offsets against local minima in the $N$-dimensional solution space of sky offsets, given a mosaic of $N$ independent images.
 
 \subsubsection{A New Implementation based on the Multi-Start Reconverging Downhill Simplex}
 \label{sec:msrnm_algo}
 
-As an alternative to the iterative algorithm used by \sw{Montage}, we introduce here an implementation based on the \cite{Nelder:1965} Downhill-Simplex algorithm.
+As an alternative to the iterative algorithm used by \sw{Montage}, we introduce here an implementation based on the Downhill-Simplex algorithm \cite[][hereafter, NM]{Nelder:1965}.
 Like \sw{Montage}, our pipeline begins with a set of images resampled to a common pixel grid in an Aitoff projection with the native WIRCam pixel scale (0.3 \arcsec/pixel).
 For this we use \sw{Swarp} \citep{Bertin:2002} in resample-only mode.
 We identify overlaps between images in a brute-force fashion according to their frames in the mosaic pixel space, defined by the \texttt{CRPIX} and \texttt{NAXIS}$i$ header values of the resampled images.
@@ -640,19 +640,19 @@ Fortunately, it is possible to impose this constraint \textit{post facto} by sub
     \label{eq:netzero}
 \end{equation}
 
-Given the image coupling records, we optimize the set of $\Delta_i$ using the \cite{Nelder:1965} (NM) downhill simplex algorithm.
+Given the image coupling records, we optimize the set of $\Delta_i$ using the NM downhill simplex algorithm.
 This NM algorithm has the advantage of being naturally multi-dimensional, and being able to work without knowledge of the gradient of the objective function.
 Instead, the NM algorithm operates by constructing a geometric simplex of $N+1$ dimensions that samples the sky offset parameter space.
 By evaluating the objective function at each vertex of the simplex, the NM algorithm adapts simplex's shape to ultimately contract upon a minimum.
 
-But NM has two weaknesses.
-First, it is a \emph{greedy} optimizer that will converge into any local minimum, without necessarily seeking the global minimum.
+However NM has two weaknesses.
+First, it is a greedy optimizer that will converge into any local minimum, without necessarily seeking the global minimum.
 Second, for high-dimension optimizations (many fields in the mosaic), the NM may fail to converge in a reasonable number of objective function evaluations \citep{Neumann:2006}.
 Without solving these issues, a minimization of \Eq{objf} with an off-the-shelf NM code yields a mosaic with obvious discontinuities across fields.
 To solve the first problem, we develop a Multi-Start Reconverging NM (MSRNM) downhill simplex driver.
 This algorithm allows the NM to cumulatively cover a larger portion of parameter space to probabilistically ensure convergence into a global optimum.
 
-Several approaches have been made in the literature to globalize the NM algorithm in the high-dimensional case.
+Several approaches exist to globalize the NM algorithm in the high-dimensional case.
 \cite{Harris:2001} use the NM simplex to fit stellar populations, of roughly 50 parameters, to colour magnitude diagrams in their \sw{StarFISH} application.
 Solving for scalar sky offsets in this WIRCam survey has roughly the same degree of complexity.
 In the case of \sw{StarFISH}, \citeauthor{Harris:2001} combine the NM simplex optimization with brute force line searches.
@@ -660,9 +660,9 @@ In the case of \sw{StarFISH}, \citeauthor{Harris:2001} combine the NM simplex op
 An initial grid search indicates a rough starting point for the simplex.
 The simplex is allowed to converge upon as minimum through the standard NM algorithm.
 Retaining the best point, the other points in the simplex are inflated, and the simplex is again allowed to converge upon a minimum---hopefully the original.
-Yet this minimum may still be a local minimum.
+Yet this minimum may still be a local one.
 To guard against this, points near the minimum are probed.
-If the point is more ideal, then that direction of parameter space is searched until the objective function begins to increase.
+If the point is more ideal, then that direction of parameter space is searched until the objective function starts increasing.
 This random linear search through parameter space is repeated several thousand times.
 
 Another globalization recipe is to start the simplex from a large ensemble of starting positions in parameter space. The global minimum of the objective function should be accessible to the NM algorithm from some portion of the imaginable starting parameter space. An advantage of this is that each start of the downhill simplex can be carried out in parallel on a computing cluster. There are recipes in the literature for choosing the best ensemble of starting simplexes: some based upon a running memory of past downhill simplex runs, and others simply based upon having a uniform coverage of parameter space \citep[\eg][]{Luersen:2004,Wolff:2004}.
@@ -681,13 +681,13 @@ That is, a normal distribution of mean zero intensity, and standard deviation of
 To ensure that the parameter space is well covered, we design $\sigma_\mathrm{start}$ to be $10\times$ greater than the dispersion of image-to-image differences.
 
 Each initial simplex is allowed to converge according to the NM algorithm.
-A simplex is deemed converged once each point has changed by no more than $10^{-4}$ of the previous iteration, or the objective function's value has changed by no more than $10^{-4}$ of the previous iteration. 
+A simplex is deemed to have converged once each point has changed by no more than \todo{$10^{-4}$} of the previous iteration, or the objective function's value has changed by no more than \todo{$10^{-4}$} of the previous iteration. 
 
 \paragraph{Restart} Upon convergence, the optimal point in the simplex, $\vect{p}$, is recorded.
 A new simplex is then generated where one vertex is $\vect{p}$, and the rest are $\vect{p}+\vect{\delta}$ where $\vect{\delta}$ is a normal random variable of mean zero, and standard deviation $\sigma_\mathrm{restart}$.
 That is, the simplex of the restart retains one vertex upon the previously found minimum, while the other vertices surround that minimum.
 If the minimum is indeed the global minimum, then the NM algorithm will quickly reconverge.
-But more often than not, the other random vertices will probe an even better parameter space, causing the NM restart to converge upon a new minimum.
+More often than not, the other random vertices will probe an even better parameter space, causing the NM restart to converge upon a new minimum.
 When a new minimum is found, the process of restarting is repeated until the same minimum is consecutively arrived upon.
 Like $\sigma_\mathrm{start}$, there is flexibility in choosing $\sigma_\mathrm{restart}$; generally $\sigma_\mathrm{start}$ should be on the order of the observed image-to-image difference dispersion, not not necessarily as large as $\sigma_\mathrm{start}$.
 \todo{Cite numerical recipes for this algorithm design? Or it is from elsewhere?}
@@ -695,14 +695,14 @@ Like $\sigma_\mathrm{start}$, there is flexibility in choosing $\sigma_\mathrm{r
 \subsection{Hierarchical sky offset optimization}
 \label{sec:hierarchical_algo}
 
-Sky offset optimization is challenging because of dimensionality. Assuming that sky residuals are \emph{constant} across a frame, each image frame represents a new dimension ($\Delta_i$) in the optimization. Considering that the WIRCam array produces four image frames for every exposure, the combined 2007B and 2009B data sets consist of 3924 $J$ and 4972 $K_s$ image frames that cover the disk of M31. Such a large optimization is computationally ambitious, but also needless.
+Sky offset optimization is challenging because of dimensionality. Assuming that sky residuals are \emph{constant} across a frame, each image frame represents a new dimension ($\Delta_i$) in the optimization. Considering that the WIRCam array produces four image frames for every exposure, the combined 2007B and 2009B data sets consist of 3924 $J$ and 4972 $K_s$ image frames covering the disk of M31. Such a large optimization is computationally ambitious, but also needless.
 
 Our sky optimization algorithm breaks the optimization of sky offsets into three sequential steps, which we call \emph{hierarchical sky offset optimization}.
 
 The 2007B and 2009B WIRCam surveys observed a total of 39 \emph{fields} across the M31 disk (illustrated in \Fig{fieldmap}).
 Each WIRCam field is imaged with four detectors, arranged in a $2\times 2$ grid.
 Let us define a \emph{detector field} as the collection of images that are taken with a given detector, at a given field.
-Images in a detector field have the greatly simplifying property of all overlapping across a dominant section of the image frame.
+Images in a detector field all have the greatly simplifying property of overlapping across a common section of the image frame.
 
 Thus our M31 WIRCam mosaics are assembled in three steps.
 In Step 1 we combine the frames in a detector field to produce a \emph{detector field stack}.
@@ -717,20 +717,20 @@ A simple median combination, then, produces edges that have background levels th
 A solution is to estimate offsets for each frame compared to this first detector field stack.
 Offsets are computed as the median of the difference image between the stack and individual image frames.
 The original image frames, now with offsets applied, are re-combined into a detector field stack image.
-Now edge-effects are smaller.
+Now edge effects are smaller.
 Nonetheless, offsets are estimated a second time to produce a finalized detector field stack image.
-Let us denote the offsets applied to individual frames at this first stage as $\Delta_F$.
+Let us denote the offsets applied to individual \emph{frames} at this first stage as $\Delta_F$.
 
 In the second hierarchical level, we combine sets of four detector field stacks into blocks.
 Here we must use the non-linear optimization algorithms detailed in \Sec{montage_algo} or \Sec{msrnm_algo}.
-Let us denote the offsets of stacks into blocks as $\Delta_S$. Finally, we again use our offset optimization algorithms to combine blocks into a mosaic. The sky offsets applied to blocks at this stage are labelled $\Delta_B$. We also measure a net offset: $\Delta_\Sigma = \Delta_F + \Delta_S + \Delta_B$ for each frame.
+Let us denote the offsets of \emph{stacks} into blocks as $\Delta_S$. Finally, we again use our offset optimization algorithms to combine blocks into a mosaic. The sky offsets applied to \emph{blocks} at this stage are labelled $\Delta_B$. We also measure a net offset: $\Delta_\Sigma = \Delta_F + \Delta_S + \Delta_B$ for each frame.
 
 
 \section{Analysis of Scalar Sky Offsets}
 \label{sec:scalaranalysis}
 
-We can now present the fruits of our WIRCam pipeline and sky offset optimization with \Fig{scalar_mosaics}.
-Compared to our mosaics without sky offsets, \Fig{raw_mosaics}, it is clear that sky offset optimization is essential for assembling wide-field NIR mosaics.
+We present the fruits of our WIRCam pipeline and sky offset optimization in \Fig{scalar_mosaics}.
+Compared to our mosaics without sky offsets, \Fig{raw_mosaics}, the sky offset optimization is clearly essential for assembling wide-field NIR mosaics.
 Note that these mosaics are not yet perfect; field-to-field discontinuities remain, and large-scale sky residuals perturb the outer M31 disk.
 
 \begin{figure}[t]
@@ -744,7 +744,7 @@ Note that these mosaics are not yet perfect; field-to-field discontinuities rema
 \subsection{Amplitudes of Sky Offsets}
 \label{sec:offset_amplitudes}
 
-The distribution of scalar sky offsets provide an excellent characterization of sky subtraction uncertainties when using sky-target nodding.
+The distribution of scalar sky offsets provides an excellent characterization of sky subtraction uncertainties when using sky-target nodding.
 Recall that sky offsets are optimized hierarchically: WIRCam frames are fitted to stacks, stacks are fitted into blocks of four contemporaneously-observed WIRCam detector fields, and these blocks are fitted into a mosaic.
 \Tab{offset_hierarchy} lists the standard deviations of these offset distributions with respect to the typical sky level observed in the $J$ and $K_s$ bands.
 
@@ -770,7 +770,7 @@ A comparison between the net sky offsets applied to the 2007B and 2009B data set
 Although the 2009B dataset employed rapid sky-target nodding to minimize temporal lags between disk and sky sampling, the magnitude of sky offsets in the 2007B and 2009B semesters is comparable.
 This implies a limit to the absolute sky level accuracy that can be expected: the minimal 40~sec lag between sky and target samples, combined with a 1--$2\arcdeg$ nod across the sky, allows the sky level to change by 2\%.
 Reducing this latency, and this nodding distance, is impossible in WIRCam observations of M31.
-Thus by the metric of \Tab{offset_hierarchy}, the expensive 2009B observing approach does not return full dividends.
+\emph{Thus, by the metric of \Tab{offset_hierarchy}, the expensive 2009B observing approach does not return full dividends.}
 
 
 \begin{table}[t]
@@ -791,7 +791,7 @@ Recall that scalar sky offsets were initially introduced as nudges in intensity 
 For sky offsets to be considered acceptable, we demand that the offsets applied to blocks, $\Delta_B$ be consistent with the sky level uncertainty of the blocks themselves.
 We can conservatively measure the sky uncertainty as the dispersion of $\Delta_F$ frame offsets in a stack: $\sigma_{\Delta_F}$.
 If sky offsets fitted between blocks are statistically permissible, then $\Delta_B \lesssim \sigma_{\Delta_F}$.
-In \Fig{offset_ratio_map}, we plot a field maps (in the same spatial configuration as \Fig{fieldmap}) painted with the values of $\Delta_B / \sigma_{\Delta_F}$ for each block in the $J$ and $K_s$ mosaics.
+In \Fig{offset_ratio_map}, we plot field maps (in the same spatial configuration as \Fig{fieldmap}) painted with the values of $\Delta_B / \sigma_{\Delta_F}$ for each block in the $J$ and $K_s$ mosaics.
 The sky offsets are indeed distributed within the uncertainty budgeted by $\sigma_{\Delta_F}$: the sky offsets are statistically acceptable.
 
 \begin{figure}[t]
@@ -802,16 +802,16 @@ The sky offsets are indeed distributed within the uncertainty budgeted by $\sigm
 % made with wircam/calibset/mossaic/offsetratiomap.py
 \end{figure}
 
-Another demonstration of the veracity of these sky offsets is given in \Fig{skylevel_timeseries}, where we plot a timeseries of both directly measured sky levels, and sky levels interpolated on disk observations via sky offsets.
-Note how remarkably continuous the sky level is from sky to disk observation; compared to the sky level timeseries of stationary sky fields, the variations in the sky level interpolated on the disk appear real.
+Another demonstration of the veracity of these sky offsets is given in \Fig{skylevel_timeseries}, where we plot a time series of both directly measured sky levels, and sky levels interpolated on disk observations via sky offsets.
+Note how remarkably continuous the sky level is from sky-to-disk observation; compared to the sky level time series of stationary sky fields, the variations in the sky level interpolated on the disk appear real.
 Through the sky target nodding and sky offset optimization, we \emph{have} effectively measured the level of the sky on M31.
-The variability of the sky in these timeseries will be further pursued in \S \todo{TODO}.
+The variability of the sky in these time series will be further pursued in \Sec{skybehaviour}.
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{figs/skylevel_timeseries_all}
-\caption{Sky level timeseries for selected nights in the $J$ (top) and $K_s$ bands (bottom) as a percent difference of each night's initial sky level (with a 10\% offset between nights).
-Individual nights are tagged by modified Julian date (MJD).
+\caption{Sky level time series for selected nights in the $J$ (top) and $K_s$ bands (bottom) as a percent difference of each night's initial sky level (with a 10\% offset between nights).
+Individual nights are tagged by a modified Julian date (MJD).
 Directly measured sky levels are plotted in black, while sky levels estimated on the disk (with scalar sky offsets) are coloured dots. The continuity between real and estimated sky levels demonstrates the veracity of sky offsets.}
 \label{fig:skylevel_timeseries}
 % made with andpipe/wircam/skyanalysis/allnights_skylevel_timeseries.py
@@ -839,8 +839,8 @@ Evidence of this can be seen in \Fig{fw100k_medsky_scalar_resid_sigmafrac}, wher
 The sky offsets solved by the MSRNM algorithm are within the uncertainties of the difference images themselves; better scalar sky offsets \emph{cannot} be made with the WIRCam blocks our pipeline has produced.
 Nonetheless, block-to-block surface brightness discontinuities are plainly seen in \Fig{scalar_mosaics}.
 
-An interpretation of this failure is that sky background residuals are not entirely scalar across WIRCam blocks.
-Our discussion in \Sec{skyflatstability}, and particularly \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}, indicate that flat field variability, and sky background variability can affect the shape of WIRCam fields.
+An interpretation of this predicament is that sky background residuals are not entirely scalar across WIRCam blocks.
+Our discussion in \Sec{skyflatstability} indicates that flat field variability, and sky background variability, can affect the shape of WIRCam fields.
 
 \begin{table}[t]
 \centering
@@ -880,19 +880,6 @@ Differences are presented as a percent of the mean sky level seen by observation
 \end{figure}
 
 
-\subsection{Usefulness of Planar Sky Offsets}
-
-\label{sec:planar_offset_analysis}
-
-\todo{\begin{enumerate}
-    \item mosaic plot of montage planar offsets
-    \item table or histogram with distribution of planar slopes in units of mag per arcsec? or percent of sky per arcsec?
-    \item residual network plot showing block-to-block residuals in percent of sky. Compare to \Fig{scalar_relresidnet}.
-\end{enumerate}
-}
-
-
-
 \section{Systematic Uncertainties in Surface Brightness Reconstruction}
 \label{sec:systematics}
 
@@ -916,7 +903,7 @@ Sky offsets produce a mosaic that is rigorously optimal only in the sense of fie
 \subsection{Comparison to Spitzer/IRAC Images}
 
 Systematic uncertainties can be explored by comparing our WIRCam mosaics to well-calibrated images of M31, and looking for colour discrepancies.
-A template for the old stellar disk, is the 3.6~$\mu$m Spitzer/IRAC map, presented in \cite{Barmby:2006}, which avoids sky subtraction uncertainties inherent in ground-based observation.
+A template for the old stellar disk is the 3.6~$\mu$m Spitzer/IRAC map, presented in \cite{Barmby:2006}, which avoids sky subtraction uncertainties inherent in ground-based observation.
 In \Fig{scalar_irac36_sbdiff} we compare the scalar-fitted mosaics against the 3.6~$\mu$m image. Generally the $J-[3.6]$ and $K_s-[3.6]$ colors decrease with disk radius, but increase in the star-forming regions because of hot dust emission. Both the scalar-fitted $J$ and $K_s$ mosaics are reddened in the south-eastern corner, which we interpret as a systematic \emph{over-subtraction} of the WIRCam NIR sky. In $J-[3.6]$ and $K_s-[3.6]$ maps realized with planar-fitted sky, \Fig{altplanar_irac36_sbdiff}, a similar, though stronger, systematic sky error is seen. This result qualitatively illustrates the greater potential for systematic sky errors when planar sky correction freedom is permitted across the $20\times 20$ arcmin WIRCam blocks.
 
 \subsection{Comparison to \sw{Montage}-fitted images}
@@ -958,9 +945,10 @@ And neither of the solutions is optimal in the sense of absolute calibration.
 
 Another useful comparison is \Fig{altplanar_jk_sbdiff}, where $J-K_s$ color maps are realized by both the simplex planar-fitting and \sw{Montage} algorithms.
 Unlike the comparisons against $[3.6]$, these color maps test the entire \androids\ footprint.
-Absolute calibration of the NIR surface brightness is a clear requisite before these images are scientifically useful beyond the inner disk.
+Absolute calibration of the NIR surface brightness is a clear requisite to uses these images for studying NIR surface brightness beyond the inner disk.
 
 \subsection{Monte Carlo Analysis of Systematic Surface Brightness Uncertainties}
+\label{sec:montecarlo}
 
 \begin{figure}[t]
 \centering
@@ -972,11 +960,12 @@ White contours identify RMS levels of 0.05 (solid), 0.1 (dashed) and 0.2 (dash-d
 \end{figure}
 
 The difference images presented in the previous section, and particularly \Fig{altplanar_jk_sbdiff}, illustrate how the surface brightness reconstructions of identical data can vary depending on the optimization algorithm.
-Here we pose a slightly different question: how are reconstructions affected by the initial conditions of sky errors? We answer this with a Monte Carlo analysis.
+Here we pose a slightly different question: how are reconstructions affected by the initial conditions of sky errors?
+That is, given the possible sets of sky level biases affecting the blocks, what is the distribution of surface brightness reconstructions?
+We answer this with a Monte Carlo analysis.
 
 A Monte Carlo (MC) realization is generated by perturbing the surface brightness of the corrected blocks with a sky error drawn (with replacement) from the ensemble of block sky offsets observed in the original mosaic (\Fig{scalar_mosaics}).
-Using the scalar-sky fitting procedure, sky offsets  are optimized against the known sky perturbations.
-100 such realizations are made to compile an ensemble of mosaics in both bands.
+Using the scalar-sky fitting procedure, sky offsets  are optimized against the known sky perturbations; 100 such realizations are made to compile an ensemble of mosaics in both bands.
 
 Figure~\ref{fig:bootstrap_sb_rms} shows the RMS deviation of MC mosaic surface brightness against the original scalar-fitted mosaics.
 Reconstructed surface brightness in the outer disk can vary $\sim 1$ mag arcsec$^{-2}$, consistent with colour biases in the $J-[3.6]$ and $K_s-[3.6]$ maps.
@@ -984,11 +973,11 @@ Reconstructed surface brightness in the outer disk can vary $\sim 1$ mag arcsec$
 We can ultimately understand the source of surface brightness by examining the standard deviations in the residual between expected and realized sky offsets in each Monte Carlo iteration.
 This residual dispersion is 0.15\% of the $J$-sky (0.17\% of the $K_s$ sky); we find this dispersion to be constant across all fields in the mosaics.
 If mosaic surface brightness uncertainty is caused by flexure in the mosaic---where blocks on the mosaic periphery are forced to conform to the surface brightness of more central and tightly coupled blocks---then outer blocks would have higher offset dispersion.
-This is note that case.
+This is not the case.
 
 Rather than mosaic flexure, a better model for \Fig{bootstrap_sb_rms} is uncertainties in the \textit{post priori} adjustment for zero net offset (\Eq{netzero}).
 Since block sky offsets have approximately Gaussian distributions with dispersions given in \Tab{offset_hierarchy}, the uncertainty in the net offset correction is simply $\sigma(\mathrm{block})/\sqrt{n_\mathrm{blocks}}$, where $n_\mathrm{blocks}=39$ in the combined 2007B and 2009B mosaic.
-Given that $\sigma_{\Delta_B}\sim 1\%$, the expected uncertainty in the net offset correction is 0.16\%: a in perfect correspondence to the observed mosaic uncertainty.
+Given that $\sigma_{\Delta_B}\sim 1\%$, the expected uncertainty in the net offset correction is 0.16\%: in perfect correspondence to the observed mosaic uncertainty.
 The dominant source of uncertainty shown in the MC simulations, Figs.~\ref{fig:bootstrap_sb_rms}, is the use of an arithmetic mean of offsets to set an absolute zeropoint, not flexure or uncertainty in the network of offsets.
 This suggests that external zeropoints could be very useful in replacing \Eq{netzero}.
 Since no absolutely-calibrated NIR photometry of M31's surface brightness exists, we will discuss a method using panchromatic resolved stellar populations in a future work.
@@ -997,38 +986,35 @@ Since no absolutely-calibrated NIR photometry of M31's surface brightness exists
 \label{sec:skyflatstability}
 
 Our analysis of the WIRCam M31 mosaics has thus far focused on macroscopic surface brightness accuracy.
-Section~\ref{sec:scalar} asked how continuous blocks can be fit (\Sec{scalar}) with sky offsets, while \Sec{systematics} studied the absolute accuracy of surface brightness zeropoint accuracy.
-Here we tackle the issue of discontinuities between blocks in the mosaics (see \Fig{scalar_mosaics}), which are a consequence of biases in the surface brightness shapes across WIRCam frames (and ultimately, blocks).
+Here we concern progresses to the accuracy of surface brightness shapes in individual WIRCam frames (and ultimately, blocks).
+Such shape biases give rise to discontinuities between blocks in our optimized mosaics (\Fig{scalar_mosaics}), and reflect high-order irregularities in block surface brightness shape that cannot be corrected with either scalar (zeroth-order) or even planar (first-order) sky offsets.
 
-In particular, we are interested in the accuracy of our flat fielding and median sky subtraction pipeline processes: the two pipeline steps that ultimately affect the surface brightness shape of our WIRCam images.
-The robustness of skyflats is, on one hand, tempered by the flatness of the NIR sky itself.
-Wide-field movies of the NIR sky \citep{Adams:1996} show the NIR sky glow to be akin to a moving cloud system.
-As such, the NIR sky seen by WIRCam is never flat---yet by definition a flat field must necessarily be built from an intrinsically uniform illumination across the telescope focal plane.
-In producing a NIR sky flat, we assert that the mean shape of the NIR sky over a timespan is flat.
-By maximizing the time window we can marginalize over as many sky shapes as possible to produce an unbiased skyflat.
-This notion is embodied in the \texttt{QRUN} sky flats that combine hundreds of sky shapes captured across several days.
-But this also assumes that WIRCam is a \emph{stable} detector over the period of several days; our real-time \texttt{FW100K} sky flats take the pessimistic view that that WIRCam is unstable over periods of 30-minutes.
-In this section, we consider the stability of WIRCam flat fields and argue for the optimal window for building WIRCam sky flats that is both responsive to changes in the WIRCam detector, and robust against sky shape biases.
-We also consider the limiting accuracy of WIRCam median sky subtraction, and whether median sky subtraction in a sky-target nodding program such as this meaningfully subtracts a background sky shape.
+Block shape accuracy is affected by two stages of our reduction pipeline: first, in the \emph{proportional} corrections of flat-fielding, and second, in the \emph{additive} corrections of median sky subtraction.
+The accuracy and effectiveness of both calibrations is limited by spatial and temporal variations in the NIR sky itself (see discussion in \Sec{intro}).
+In this section, we attempt to deconvolve the scales of proportional and additive surface brightness biases, and ultimately establish an empirical upper limit on the edge-to-edge surface brightness accuracy seen in our WIRCam program.
 
 \subsection{Evolution of Real Time Sky Flats} % (fold)
 \label{sec:flatevo}
 
+In producing a NIR sky flat, we assert that the mean shape of the NIR sky over a timespan is flat.
+By maximizing the time window we can marginalize over as many sky shapes as possible to produce an unbiased skyflat.
+This notion is embodied in the \texttt{QRUN} sky flats that combine hundreds of sky shapes captured across several days.
+But this also assumes that WIRCam is a \emph{stable} detector over the period of several days; our real-time \texttt{FW100K} sky flats, however, assume that WIRCam is unstable over periods of 30-minutes.
+
 A simple test of WIRCam's flatfield stability is to monitor how the real-time \texttt{FW100K} skyflats evolve on scales of hours.
 In \Fig{fw100k_movie} we show percent difference images between \texttt{FW100K} sky flats made at intervals of 15, 30, 60 and 90 minutes after an initial sky flat.
-After just 30 minutes, the shape of the \texttt{FW100K} skyflats deviate by 0.5\% from the initial flat field shape.
+After just 30~minutes, the shape of the \texttt{FW100K} skyflats deviates by 0.5\% from the initial flat field shape.
 By 60 minutes, the deviation exceeds 1\%.
 Evidently, the WIRCam flat field function is stable on timescales less than 30 minutes---much less than a queue run.
 
 Nonetheless, the spatio-temporal evolution takes many forms.
-In some cases (\Fig{fw100k_movie}b) the flat field deviations are axis symmetric, while in others there is a distinct East-West deviation (\Fig{fw100k_movie}ac).
-We interpret these patterns as instabilities in the WIRCam illumination function on the scale of minutes.
-% \mycomment{It will be interesting to see if there is always asymmetry in staring/07B sky flats where the same sky field is consistently used, and circular symmetry in the 09B ST-nodding fields. I'm not sure what this means, but would imply a correlation with telescope movement or spatial sampling of the sky.}
+In some cases (\Fig{fw100k_movie}b) the flat field deviations are axisymmetric, while in others there is a distinct East-West pattern (\Fig{fw100k_movie}ac).
+We interpret these as instabilities in the WIRCam illumination function on the scale of minutes.
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{figs/fw100k/fw100k_movie}
-\caption{spatio-temporal evolution of \texttt{FW100K} sky flats, shown as percent difference of the flat fields 15, 30, 60 and 90 minutes after the initial sky flat of the night.
+\caption{Spatio-temporal evolution of \texttt{FW100K} sky flats, shown as percent difference of the flat fields 15, 30, 60 and 90 minutes after the initial sky flat of the night.
 Sky flat evolution on three nights is shown: (a) 2009B $K_s$ observing block when the telescope `stared' at a sky field, (b) 2009B $K_s$ observing block with regular sky-target nodding, and (c) a 2007B observing block with sky-target nodding.}
 \label{fig:fw100k_movie}
 % made with andpipe/wircam/skyflat/plot/flatratio.py
@@ -1039,14 +1025,14 @@ The dominant macroscopic electronic feature in WIRCam flat fields are the amplif
 Each WIRCam detector is divided into 32 horizontal bands (each 64 pixels high) that are each read out into independent amplifiers.
 These amplifiers have gains that result in levels that differ by 10\% in flat field images.
 But these different gains appear stable: over the course of an observing block, the mean flat field level of each amplifier band evolved by less than 0.1\% relative to other amplifiers (see \Fig{fw100k_globalamp_timeseries_55136_Ks}) over three hours.
-Indeed, the amplifier band signature is absent from the \texttt{FW100K} skyflat difference images (\Fig{fw100k_movie})\footnote{Quite unlike \Fig{domeflatratio} that compared dome flat and \texttt{QRUN} sky flat shapes.}
-Sky flat evolution does appear driven by changes in the large scale detector illumination function, not electronic instabilities.
+Indeed, the amplifier band signature is absent from the \texttt{FW100K} skyflat difference images (\Fig{fw100k_movie}).\footnote{Quite unlike \Fig{domeflatratio} that compared dome flat and \texttt{QRUN} sky flat shapes.}
+Thus sky flat evolution does appear driven by changes in the large scale detector illumination function, not electronic instabilities.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figs/fw100k/fw100k_globalamp_timeseries_55136_Ks.pdf}
 \caption{Time evolution of the mean flat field level of amplifier bands in the four WIRCam detectors in \texttt{FW100K} sky flats made over three hours.
-Amplifier bands colours are mapped to their order on the array: red lines at the bottom, green in the middle, and red at the top.
+Amplifier bands are colour-coded according to their order on the array: red lines at the bottom, green in the middle, and blue at the top.
 Although the levels of individual amplifiers differ by 10\%, their order is consistent, indicating that amplifier gain is extremely stable.
 The jitter is due to detector-to-detector zeropoint normalization (\Sec{flatbuilding}) uncertainty, or measurement biases.}
 \label{fig:fw100k_globalamp_timeseries_55136_Ks}
@@ -1056,44 +1042,43 @@ The jitter is due to detector-to-detector zeropoint normalization (\Sec{flatbuil
 \subsection{Shapes of Median Sky Frames}
 \label{sec:medianskyshapes}
 
-We can also judge sky flats in their ability to produce an unbiased sky background, up to the level of intrinsic sky variations.
+Another test of sky flats is their ability to produce an unbiased sky background, up to the level of intrinsic sky variations.
 This test can be made by examining the median sky frames (\Sec{mediansky}) produced by \texttt{QRUN} and \texttt{FW100K} sky flats.
-Examples of these median sky images are shown in \Fig{median_sky_images}, where we can easily see that \texttt{QRUN} sky flats produce biased sky shapes---evidently caused by changes in the CFHT/WIRCam optical path and electronics over a queue run, rather than intrinsic variations in the sky itself.
+Examples of these median sky images are shown in \Fig{median_sky_images}, where \texttt{QRUN} sky flats clearly produce biased sky shapes---evidently caused by changes in the CFHT/WIRCam optical path and electronics over a queue run, rather than intrinsic variations in the sky itself.
 
 To quantitatively compare the bias of \texttt{QRUN} versus \texttt{FW100K} sky flats, we measure the amplitude of shapes across the $10\arcmin \times 10\arcmin$ WIRCam frame as the 2-standard deviation interval (95\%) of each median sky image's pixel distribution: $2 \sigma(\mathrm{med~sky})$.
 These distributions of sky shape amplitude are plotted in \Fig{mediansky_amplitude}.
 As expected from \Fig{median_sky_images}, \texttt{QRUN} median sky frames have typical biases of 1\% of the sky level, while sky frames from real-time \texttt{FW100K} sky flats are much flatter---$\lesssim 0.3\%$ of the sky level---and more consistently so.
 
-Although \texttt{FW100k} sky flats are better than \texttt{QRUN} flats, we can still ask how accurate they are.
-% Are the shapes of median sky frames a consequence of intrinsic sky shapes, or of limits in WIRCam flat field accuracy?
-Is the 0.3\% flatness limit of median sky images a consequence of intrinsic sky shapes, or of limits in the WIRCam flat field accuracy?
-% \mycomment{We interpret \Fig{mediansky_amplitude} as indicating the latter since 2007B and 2009B median sky images have comparable amplitudes. TODO: is the previous statement still true?}
+Although \texttt{FW100k} sky flats are better than \texttt{QRUN} flats, we can still ask if the 0.3\% flatness limit of median sky images a consequence of intrinsic sky shapes, or of limits in the WIRCam flat field accuracy.
 Recall that median sky images are composed of five sky frames taken closest to a disk frame.
-In the case of 2007B, all sky frames would be sampled from the same coordinate on the sky, but span a 12~minute window covering sky integrations taken before and after a disk image (for both $J$ and $K_s$ sky-target nods).
-In 2009B, sky frames are sampled for randomly chosen sites along the sky field ring (\Fig{fieldmap}) with a window typically spanning 15 minutes.
+In 2007B, all sky frames would be sampled from the same coordinate on the sky, but span a 12~minute window covering sky integrations taken before and after a disk image (for both $J$ and $K_s$ sky-target nods).
+But in 2009B, sky frames were sampled from randomly chosen sites along the sky field ring (\Fig{fieldmap}) with a window typically spanning 15 minutes.
 Thus both 2007B and 2009B median sky images span similar time windows, but the 2009B strategy attempts to marginalize over five distinct sites  on the sky (and thus shapes shapes) while 2007B median sky images do not.
-If the spatial sky glow pattern and WIRCam flatness function were stationary, we expect the instantaneous shape of the sky (in the sky field) to be captured in the 2007B median sky frames, while the 2009B sky frames should marginalize over five random sky shapes and be flatter by up to a factor of $1/\sqrt{5}$ (for a Gaussian shape distribution).
-That this \emph{does not} occur indicates either (a) sky shapes are correlated over 15~minutes and 3\arcdeg\ of sky, (b) sky glow patterns have sufficient temporal variability to be effectively uncorrelated over windows of 15~minutes across a WIRCam frame so that both observing patterns marginalize over sky shapes equally, or (c) the flatness of median sky images is limited at the 0.3\% level by background variations associated with WIRCam itself over 15~minutes.
+If the spatial sky glow pattern and WIRCam flatness function were stationary, we expect the instantaneous shape of the sky (in the sky field) to be captured in the 2007B median sky frames, while the 2009B sky frames should marginalize over five random sky shapes and thus be flatter by up to a factor of $1/\sqrt{5}$ (for a Gaussian shape distribution).
+That this \emph{does not} occur indicates either that (a) sky shapes are correlated over 15~minutes and 3\arcdeg\ of sky, (b) sky glow patterns have sufficient temporal variability to be effectively uncorrelated over 15~minute windows across a WIRCam frame so that both observing patterns marginalize over sky shapes equally, or (c) the flatness of median sky images is limited at the 0.3\% level by background variations associated with WIRCam itself over 15~minutes.
 Wide-field movies of the NIR sky \citep{Adams:1996} indicate option (a) to be false.
 From this test alone, then, we cannot distinguish between instrumental background variability or stochasticity in the sky as the cause of the 0.3\% amplitude of sky shapes seen by WIRCam median sky images.
-Further, this test cannot distinguish between proportional instrumental variability in the flat field (\eg \Fig{fw100k_movie}) or additive background variability \citep[as seen in the CFHT-IR camera][]{Vaduvescu:2004}.
+Further, this test cannot distinguish between proportional instrumental variability in the flat field (\eg \Fig{fw100k_movie}) or additive background variability \citep[as seen in the CFHT-IR camera,][]{Vaduvescu:2004}.
 
-\mycomment{Also note that in both cases, there are long-tail cases of median sky shape amplitudes as large as 5\% of the sky level \todo{(figure out the circumstances of these!)}.
-But neglecting this long tail, \Fig{mediansky_amplitude} demonstrates the combined effects of real-time \texttt{FW100K} sky flat fidelity and the intrinsic variations of the NIR sky across a $10\arcmin \times 10\arcmin$.}
+% \mycomment{Also note that in both cases, there are long-tail cases of median sky shape amplitudes as large as 5\% of the sky level \todo{(figure out the circumstances of these!)}.
+% But neglecting this long tail, \Fig{mediansky_amplitude} demonstrates the combined effects of real-time \texttt{FW100K} sky flat fidelity and the intrinsic variations of the NIR sky across a $10\arcmin \times 10\arcmin$.}
 
-\subsubsection{The function of median sky subtraction}
+% \subsubsection{The function of median sky subtraction}
 
-Although the WIRCam illumination function appears to vary rapidly, and strongly, we do not see extremely strong sky residuals (\ie \Fig{median_sky_images}) in the \texttt{QRUN}-calibrated mosaic (ultimately presented in \todo{\S TODO}).
-This can be attributed to the functionality of median sky subtraction (\Sec{mediansky}).
-Suppose the disk has a flux of $N$ counts, while the sky brightness is $S$ counts, before flat fielding.
-Suppose that both the disk and the paired median sky subtraction image are calibrated with the same flat field, $\mathcal{F}$.
-Then the flat fielded, and median sky subtracted, disk image will be $(N + S)/\mathcal{F} - S \mathcal{F}$.
-Suppose the same disk image is calibrated with a sky flat that is biased by a factor $\epsilon$, so that in this case the incorrectly calibrated disk image is $(N + S) / \epsilon \mathcal{F} - S / \epsilon \mathcal{F}$.
-The magnitude difference between the correct and incorrect disk surface brightnesses will only be $2.5 \log_{10} \epsilon$.
-That is, a 1\% error in the flat field will only perturb the observed disk surface brightness by 0.01~mag.
-So long as the disk and sky are observed with the same flat field function, median sky subtraction will nonetheless subtract, and effectively flatten, the sky background of the disk image.
+% TODO: perhaps work this content in elsewhere.
 
-\todo{TODO: Case if biases are different in median sky and target images.}.
+% Although the WIRCam illumination function appears to vary rapidly and strongly ($\sim 0.5\%$ in $\lesssim 30$~minutes, see \Fig{fw100k_movie}), we do not see extremely strong sky residuals (\ie \Fig{median_sky_images}) in the \texttt{QRUN}-calibrated mosaic (ultimately presented in \todo{\S TODO}).
+% This can be attributed to the functionality of median sky subtraction (\Sec{mediansky}).
+% Suppose the disk has a flux of $N$ counts, while the sky brightness is $S$ counts, before flat fielding.
+% Suppose that both the disk and the paired median sky subtraction image are calibrated with the same flat field, $\mathcal{F}$.
+% Then the flat fielded, and median sky subtracted, disk image will be $(N + S)/\mathcal{F} - S \mathcal{F}$.
+% Suppose the same disk image is calibrated with a sky flat that is biased by a factor $\epsilon$, so that in this case the incorrectly calibrated disk image is $(N + S) / \epsilon \mathcal{F} - S / \epsilon \mathcal{F}$.
+% The magnitude difference between the correct and incorrect disk surface brightnesses will only be $2.5 \log_{10} \epsilon$.
+% That is, a 1\% error in the flat field will only perturb the observed disk surface brightness by 0.01~mag.
+% So long as the disk and sky are observed with the same flat field function, median sky subtraction will nonetheless subtract, and effectively flatten, the sky background of the disk image.
+
+% \todo{TODO: Case if biases are different in median sky and target images.}.
 
 \begin{figure}[t]
 \centering
@@ -1110,6 +1095,7 @@ While the real-time sky flat produces very flat median sky images, \texttt{QRUN}
 \centering
 \includegraphics[width=\columnwidth]{figs/mediansky_amplitude_cdf}
 \caption{Cumulative distribution function of sky level amplitudes across median sky images processed with \texttt{QRUN} (black) and \texttt{FW100K} (blue) sky flats for the $J$ (top) and $K_s$ (bottom) bands. Real-time (\texttt{FW100k}) sky flats produce much flatter median sky frames, with expected shape amplitudes of 0.3\% ($J$) to 0.1\% ($K_s$) of the NIR sky level, while the expected amplitude of \texttt{QRUN}-flat processed sky images is 0.5\% of the sky level, and as high as 3\% of the sky level.
+\todo{Fix colour scheme}
 }
 \label{fig:mediansky_amplitude}
 % made with $andpipe/wircam/shape/mediansky_amplitude.py
@@ -1147,7 +1133,7 @@ We interpret this frame residual behaviour as being caused by random additive ba
 \includegraphics[width=\textwidth]{figs/frame_residuals/M31-37_Ks_fw100k_medsky}
 \caption{Residual shapes of individual \texttt{FW100k} sky flat-processed WIRCam integrations of the M31 disk to the median (mosaic) shape for the field M31-37, $K_s$-band, observed in the 2009B semester.
 Residuals have been marginalized across the $x$ (left) and ($y$) (right) axes to provide 1D views.
-Axes are split among the four WIRCam detectors, arranged to match the WIRCam $2\times2$ detector footprint.
+Axes match WIRCam's $2\times2$ detector footprint.
 Individual integrations are coloured by their time after the first disk integration.
 The centre of M31 is located in the lower-right detector; surface brightness bias in these regions betray the presence of flat field bias. Lower surface brightness regions are dominated by shape variations on the order of $\pm 0.2\%$ of sky, which we interpret as additive uncertainties associated either with the detector, skyglow, or both.}
 \label{fig:frame_residuals_M31-37_Ks_fw100k_medsky}
@@ -1158,7 +1144,7 @@ The centre of M31 is located in the lower-right detector; surface brightness bia
 \begin{figure*}[p]
 \centering
 \includegraphics[width=\textwidth]{figs/frame_residuals/M31-37_Ks_queuesky_medsky}
-\caption{Residual shapes of individual of the M31-37 $K_s$ field, processed with \texttt{QRUN} sky flats. Compared to \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}, \texttt{QRUN} sky flats clearly do not capture flat field evolution that occurs over the course of 90-minutes, yielding systematically evolving realizations of surface brightness.}
+\caption{Residual shapes of individual of the M31-37 $K_s$ field, processed with \texttt{QRUN} sky flats. Compared to \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}, \texttt{QRUN} sky flats clearly do not capture flat field evolution that occurs over the course of 90-minutes, yielding systematically evolving realizations of surface brightness. \todo{Stress that the M31 center is located in the lower-left detector.}}
 \label{fig:frame_residuals_M31-37_Ks_QRUN}
 % made with wircam/shape/frame_block_residuals/plot_field_slices.py
 \end{figure*}
@@ -1170,7 +1156,7 @@ We also extend the previous analysis analysis across the entire dataset.
 In \Fig{frame_diffs_skyfrac} we plot the distribution of frame-block residual shape amplitudes, measured at the 95\% difference interval.
 In essence, this measures the consistency of imaging the shape of each M31 block.
 As in our test of median sky frame flatness (\Sec{medianskyshapes}), we see that the consistency of frame shapes is $\sim 0.3\%$ of the sky level.
-This result is seen for both \texttt{QRUN} and \texttt{FW100K} sky flat pipelines and for 2007B and 2009B observing schemes, agreeing with our observation in \Sec{frameblockresiduals} that in background dominated regimes (as most of our blocks are) frame shape consistency is not correlated with flat field bias.
+This result is seen for both \texttt{QRUN} and \texttt{FW100K} sky flat pipelines and for 2007B and 2009B observing schemes, agreeing with our observation in \Sec{frameblockresiduals} that in background dominated regimes (as most of our blocks are) frame shape consistency is \emph{not} correlated with flat field bias.
 Rather, we interpret \Fig{frame_diffs_skyfrac} as measuring the amplitudes of \emph{additive} stochastic background shapes originating either from the sky, or associated with the instrumentation itself.
 Effectively, \Fig{frame_diffs_skyfrac} illustrates the \emph{flatness limit} of WIRCam frames observed with large sky-target nods, sky flat fielding, and median sky subtraction.
 
@@ -1188,15 +1174,15 @@ The expected amplitude difference is $0.3\%$ of the $J$ sky brightness ($0.2\%$ 
 % \mycomment{Note that shape variability appears uncorrelated with sky level or time since sunset (unlike sky level; see \texttt{python andpipe/wircam/skyanalysis/shapevar\_correlations.py}.
 % There may be a correlation against airmass, but it is weak.}
 
-\subsection{Conclusions}
+\subsection{Section Summary}
 \label{sec:shapeconclusions}
 
-We conclude this section by summarizing our findings on the accuracy of surface brightness shapes reproduced by WIRCam in a sky-target nodding observing program.
+We summarize our findings on the accuracy of surface brightness shapes reproduced by WIRCam in a sky-target nodding observing program.
 
 \begin{enumerate}
-  \item We decompose surface perturbations into proportional processes (flat field biases) and additive processes (stochastic sky and instrumental backgrounds) by observing residual shapes of individual WIRCam frames again the median M31 mosaic in high and low surface brightness regimes; we find evidence for both processes occurring.
-  \item The WIRCam flat field function can vary by approximately 1\% across a frame in 1~hour. Building sky flats concurrently with observations is necessary to minimize systematic surface brightness bias. This, however, is only a concern in signal-dominated pixels (such as galaxy centres, or point sources); otherwise median sky subtract is effective at masking flat field bias to low-surface brightness features.
-  \item In low surface brightness regimes, we observe stochastic background variations of $\pm 0.2$\% of the sky amplitude. These background shapes cannot be removed with median sky frame subtraction (which itself has shape amplitudes on the order of $0.3\%$ of the NIR sky level. We find this to the the limiting surface brightness accuracy across a $10\arcmin \times 10\arcmin$ WIRCam frame.
+  \item Surface perturbations can be decomposed into multiplicative processes (flat field biases) and additive processes (stochastic sky and instrumental backgrounds) by observing residual shapes of individual WIRCam frames again the median M31 mosaic in high and low surface brightness regimes; we find evidence for both processes occurring.
+  \item The WIRCam flat field function can vary by approximately 1\% across a $10\arcmin \times 10\arcmin$ frame in 1~hour. Building sky flats concurrently with observations is necessary to minimize systematic surface brightness bias. This, however, is only a concern in signal-dominated pixels (such as galaxy centres, or point sources); otherwise median sky subtraction is effective at masking flat field bias to low-surface brightness features.
+  \item In low surface brightness regimes, we observe stochastic background variations of $\pm 0.2$\% of the sky amplitude. These background shapes cannot be removed with median sky frame subtraction (which itself has shape amplitudes on the order of $0.3\%$ of the NIR sky level). We find this to the limiting surface brightness accuracy across a $10\arcmin \times 10\arcmin$ WIRCam frame.
 \end{enumerate}
 
 \section{Behaviour of the NIR Sky}
