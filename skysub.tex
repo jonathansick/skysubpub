@@ -150,9 +150,8 @@ Section~\ref{sec:reduction} presents the image reduction pipeline; a particularl
 In \Sec{scalar} we present our method for recovering the galaxy surface brightness by minimizing image-to-image differences across the mosaic, while in \Sec{scalaranalysis} we analyze the results of this algorithm.
 We estimate the systematic uncertainties in our mosaic solution in \Sec{systematics}, where we also compare our technique to the Montage package \citep{Berriman:2008} and the Spitzer/IRAC mosaics.
 In \Sec{skyflatstability} we consider the accuracy of the surface brightness \emph{shapes} recovered by our pipeline.
-In \Sec{skybehaviour} we use our dataset to explain the nature of the NIR sky level and temporal variability.
 In both of the former sections we seek to find the observational and reduction technique that maximizes surface brightness accuracy.
-Finally in \S\ref{sec:conclusions} we summarize the uncertainty of NIR sky subtraction on the scale of M31.
+Finally in \S\ref{sec:conclusions} we summarize the uncertainty of NIR sky subtraction on the scale of M31 and outline the observational and reduction technique that maximizes surface brightness accuracy.
 \todo{Expand \S marks?}
 
 \section{Observations}
@@ -805,7 +804,7 @@ The sky offsets are indeed distributed within the uncertainty budgeted by $\sigm
 Another demonstration of the veracity of these sky offsets is given in \Fig{skylevel_timeseries}, where we plot a time series of both directly measured sky levels, and sky levels interpolated on disk observations via sky offsets.
 Note how remarkably continuous the sky level is from sky-to-disk observation; compared to the sky level time series of stationary sky fields, the variations in the sky level interpolated on the disk appear real.
 Through the sky target nodding and sky offset optimization, we \emph{have} effectively measured the level of the sky on M31.
-The variability of the sky in these time series will be further pursued in \Sec{skybehaviour}.
+The variability of the sky in these time series will be further pursued in \Sec{offsetevo}.
 
 \begin{figure*}[t]
 \centering
@@ -877,6 +876,53 @@ Differences are presented as a percent of the mean sky level seen by observation
 \caption{Map of residual block-to-block surface brightness differences as a fraction of the standard deviation of the difference image, after scalar fitting.}
 \label{fig:fw100k_medsky_scalar_resid_sigmafrac}
 % made with $andpipe/wircam/calibset/mosaic/networkmap.py
+\end{figure}
+
+
+\subsection{The Growth of Sky Offsets in Time and Space}
+\label{sec:offsetevo}
+
+% More than the absolute level of the near-infrared sky, we are also interested in the variability of that level in time.
+% This impacts the magnitude of sky offsets, and in turn, the absolute zeropoint variability of the NIR mosaics (\Sec{systematics}).
+
+How does our sky-target nodding program affect the magnitude of the sky offsets?
+This was partially addressed in \Sec{offset_amplitudes}, where we see that both the 2007B and 2009B observing programs resulted in similar net offset distributions (\Tab{offset_hierarchy}).
+In this section, we directly map the observed sky offsets as a function of time latency since the sky observation.
+
+But first we must realize that sky offsets are born not only from temporal variability in the sky level (\eg \Fig{skylevel_timeseries}), but also from spatial structure in the NIR sky glow.
+Thus as a fiducial, we first build a function of mean sky level variation as a function of time measured at stationary site on the sky (a single sky field), without telescope nodding.
+In \Fig{nodding_stationary_skyvar_skyfrac} we plot the mean and 95\% growth of sky level variations as a function of time.
+In agreement with the results of \cite{Vaduvescu:2004}, we see a mean sky level variation of $\sim 0.5\%$ in 1~minute in both $J$ and $K_s$ bands.
+After 5~minutes, the intrinsic sky level variation typically grows to 2\%.
+The worst-case sky variation (measured at the 95\% level of the sample distribution) is 5\% variation in 5-minutes.
+
+Individual points in \Fig{nodding_stationary_skyvar_skyfrac} are net sky offsets of disk images plotted against the time latency to the paired sky sample.
+The periodic time structure in \Fig{nodding_stationary_skyvar_skyfrac} is a consequence of the 2007B and 2009B sky-target nodding schemes (see \Tab{obssummary}), indeed the circles and `x' marks in \Fig{nodding_stationary_skyvar_skyfrac} denote the mean and 95\% level of sky variation, respectively, in each cluster.
+Recall that all 2009B disk integrations have equal sky sample latency due to the \emph{sky-target-target-sky} nodding pattern.
+
+In both $J$ and $K_s$ bands, we see that nodding the telescope between sky and target \emph{generates} additional sky level uncertainty beyond that expected from strictly temporal sky evolution.
+This makes sense in the context of spatial sky variations \citep{Adams:1996}.
+As shown in \Fig{nodding_stationary_skyvar_skyfrac}, the process of sky-target nodding can inflate sky variations by 1.5--2 times the sky variability expected at a stationary site on the sky.
+On longer time scales, the nodding and stationary sky variance converge, perhaps indicative of the timescales that NIR skyglow structures move across a nodding distance ($1\arcdeg$--$2\arcdeg$ on the sky).
+
+% \mycomment{Note how bad the 09B sky reliability is!}
+
+This analysis underscores the challenge of accurately recovering surface brightness in a wide-field NIR mosaic.
+Sky-target nodding with CFHT implies typical time latencies 60--70~seconds, and nodding distances of $1\arcdeg$--$2\arcdeg$.
+Both of these elements prevent the true level of the sky on the disk of M31, in any single frame, from being known to better than 2\% of the sky level.
+
+\Fig{nodding_stationary_skyvar_skyfrac} also affords an interesting analysis of the thesis that the 2009B observing strategy of minimizing sky nodding latency would maximize sky level certainty.
+The rather shallow slopes of the mean sky variance seen in sky-target nodding demonstrates the modest gain sky certainty by capping sky latency at 1.2 minutes (\ie 2009B) compared to allowing latencies of 5 minutes (\ie 2007B).
+This also better explains \Tab{offset_hierarchy}.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/nodding_sationary_skyvar_skyfrac}
+\caption{Comparison of sky variation distribution functions measured as sky offset amplitudes and between pairs of sky images for $J$ (top) and $K_s$ (bottom) bands.
+Mean and 95\% levels of sky variation are plotted as solid and dashed red lines, respectively.
+Mean and 95\% levels of sky offsets in the 2007B semester are plotted as large green circles and X symbols, respectively, while the same for the 2009B semester is plotted as orange symbols where sky latency was constrained to 1.2~minutes in both bands.}
+\label{fig:nodding_stationary_skyvar_skyfrac}
+% python $andpipe/wircam/skyanalysis/nodding_stationary_skyvariability.py
 \end{figure}
 
 
@@ -1184,90 +1230,6 @@ We summarize our findings on the accuracy of surface brightness shapes reproduce
   \item The WIRCam flat field function can vary by approximately 1\% across a $10\arcmin \times 10\arcmin$ frame in 1~hour. Building sky flats concurrently with observations is necessary to minimize systematic surface brightness bias. This, however, is only a concern in signal-dominated pixels (such as galaxy centres, or point sources); otherwise median sky subtraction is effective at masking flat field bias to low-surface brightness features.
   \item In low surface brightness regimes, we observe stochastic background variations of $\pm 0.2$\% of the sky amplitude. These background shapes cannot be removed with median sky frame subtraction (which itself has shape amplitudes on the order of $0.3\%$ of the NIR sky level). We find this to the limiting surface brightness accuracy across a $10\arcmin \times 10\arcmin$ WIRCam frame.
 \end{enumerate}
-
-\section{Behaviour of the NIR Sky}
-\label{sec:skybehaviour}
-
-Besides analyzing the precision of our M31 mosaics, our CFHT/WIRCam dataset also allows us to study the behaviour of the NIR sky.
-Our analysis of the mosaic performance divided sky behaviour into two components: sky level, and the shape of the sky on the scale of WIRCam frames.
-In doing so, we seek to find circumstances where the sky is most stable, and thus the best NIR mosaics can be made.
-
-\subsection{Level of the NIR Sky}
-\label{sec:skylevel}
-
-It has previously been shown by \cite{Vaduvescu:2004}, and references therein, that the NIR sky level is dependent upon airmass and the time since sunset.
-We reproduce this result in our own data set (\Fig{skylevel_airmass_sunset}), showing that the darkest NIR skies are available $> 3$~hours after sunset, and at high airmasses.
-Note, however, that there is a great deal of scatter in this time-airmass-sky level relation; additional meteorological parameters must exist to full understand the brightness of NIR sky glow.
-
-\mycomment{No correlation seen with the moon angle/illumination. Atmospheric temperature and humidity are also possibilities}.
-
-\mycomment{Note: \cite{Vaduvescu:2004} and others take this one step further by modelling the sky level as a function of time since sunset as an exponential function: $I = a +b \exp(- k\Delta T)$.
-The \emph{idea} is that $b$ and $k$ should be near-universal, and $a$ represents a base level at zero airmass (this fitting is done at airmasses between 1 and 1.1).
-Given this fit, they claim to `time-correct' their sky levels for the exponential decay in sky brightness after sunset.
-In doing so, the can directly fit sky level against airmass, and extrapolate to the sky level at zero airmass.
-In doing so, they claim to decompose the sky and thermal components of the background flux.
-Thermal signal is the sky level at zero airmass; while the associated sky component is measured as $a$.
-My difficulty with this is fitting $b$ and $k$.
-Each night must have an adjusted value of $a$ to compensate for night-to-night variations in sky level.}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figs/sunset_airmass}
-\caption{Observed sky level in the plane vs $T-T_\mathrm{sunset}$ and airmass in $J$ and $K_s$ (bottom) bands. Sky level is measured in instrumental counts per second observed by CFHT/WIRCam.
-Although this plot combines sky samples across all observed nights, sky level variations within a single night can be seen as chains of samples in the airmass-time plane.}
-\label{fig:skylevel_airmass_sunset}
-\end{figure}
-
-\subsection{Variability in the level of the NIR Sky}
-\label{sec:skylevelvariability}
-
-More than the absolute level of the near-infrared sky, we are also interested in the variability of that level in time.
-This impacts the magnitude of sky offsets, and in turn, the absolute zeropoint variability of the NIR mosaics (\Sec{systematics}).
-
-As shown in \Fig{pairwise_skyvar}, we have built an empirical distribution function of temporal sky level variability by measuring pairwise differences in sky levels across all sky images in our CFHT/WIRCam program.
-So that we do not add nodding effects, \Fig{pairwise_skyvar} is restricted to just sky level differences observed at the same field on the sky (fixed equatorial coordinates).
-Within an hour, the expected variation in sky level appears to grow linearly; mean variation at 60~minutes is $\sim10\%$ of the $J$ and $K_s$ sky levels while variations at the 95\% limit are 20\%--30\% of the sky level.
-On longer timescales, sky variation appears to revert to the mean; this is likely an artifact of our observations following M31 to higher airmasses, and to the scarcity of queue observing blocks longer than an hour.
-Thus our result is compatible with the claim of Glass \etal 99 (CITE) that the sky can change brightness by 50\% over the course of a night.
-Furthermore, \Fig{pairwise_skyvar} is compatible with the popular refrain that the NIR sky \emph{can} vary by 10\% in 10 minutes, although the mean variation over 10~minutes is 3\%.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figs/pairwise_skyvar_skyfrac}
-\caption{Variation in sky level (as a percent of sky level) vs time lag observed between pairs of sky images for $J$ (top) and $K_s$ WIRCam images.
-Individual sky image pairs are shown as black points; the solid red line measures the mean sky variation, and the dashed red line measures the 95\% level of variation.}
-\label{fig:pairwise_skyvar}
-% wircam/skyanalysis/pairwise_skyvariability.py
-\end{figure}
-
-While \Fig{pairwise_skyvar} measures the variation in sky level at a stationary site (fixed coordinate) on the sky, a more relevant measure for sky-target nodding NIR programs is the variation in sky level induced by both a time lag, and a spatial nod across the sky.
-The latter is effectively measured by our scalar sky target nodding optimization (see \Tab{offset_hierarchy}).
-In Fig \Fig{nodding_stationary_skyvar_skyfrac} we show the sky level variation distribution functions in the stationary and nodding regimes.
-In both $J$ and $K_s$ bands, we see that nodding the telescope between sky and target \emph{generates} additional sky level uncertainty beyond that expected from strictly temporal sky evolution.
-This makes sense in the context of spatial sky variations shown by \cite{Adams:1996}.
-As shown in \Fig{nodding_stationary_skyvar_skyfrac}, the process of sky-target nodding can inflate sky variations by 1.5--2$\times$ the sky variability expected at a stationary site on the sky.
-On longer time scales, the nodding and stationary sky variance converge, perhaps indicative of the timescales that NIR skyglow structures move across a nodding distance ($1\arcdeg$--$2\arcdeg$ on the sky).
-
-\mycomment{Note how bad the 09B sky reliability is!}
-
-This analysis underscores the challenge of accurately recovering surface brightness in a wide-field NIR mosaic.
-Sky-target nodding with CFHT implies typical time latencies 60--70~seconds, and nodding distances of $1\arcdeg$--$2\arcdeg$.
-Both of these elements prevent the true level of the sky on the disk of M31, in any single frame, from being known to better than 2\% of the sky level.
-
-\Fig{nodding_stationary_skyvar_skyfrac} also affords an interesting analysis of the thesis that the 2009B observing strategy of minimizing sky nodding latency would maximize sky level certainty.
-The rather shallow slopes of the mean sky variance seen in sky-target nodding demonstrates the modest gain sky certainty by capping sky latency at 1.2 minutes (\ie 2009B) compared to allowing latencies of 5 minutes (\ie 2007B).
-This also better explains \Tab{offset_hierarchy}.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figs/nodding_sationary_skyvar_skyfrac}
-\caption{Comparison of sky variation distribution functions measured as sky offset amplitudes and between pairs of sky images (cf \Fig{pairwise_skyvar}) for $J$ (top) and $K_s$ (bottom) bands.
-Mean and 95\% levels of sky variation are plotted as solid and dashed red lines, respectively.
-Mean and 95\% levels of sky offsets in the 2007B semester are plotted as large green circles and X symbols, respectively, while the same for the 2009B semester is plotted as orange symbols where sky latency was constrained to 1.2 minutes in both bands.}
-\label{fig:nodding_stationary_skyvar_skyfrac}
-% python $andpipe/wircam/skyanalysis/nodding_stationary_skyvariability.py
-\end{figure}
-
 
 \section{Conclusions}
 \label{sec:conclusions}
