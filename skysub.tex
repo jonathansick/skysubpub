@@ -62,19 +62,21 @@
 
 % ============================================================================
 \begin{abstract}
-We present wide-field near-infrared $J$ and $K_s$ images of the Andromeda Galaxy made with WIRCam on the Canada-France-Hawaii Telescope.
-This data set permits simultaneous observations of resolved stars and NIR surface brightness across M31's entire bulge and disk (within $R=22$~kpc), permitting a direct a test of the stellar composition of near-infrared light in a nearby galaxy.
-Our survey complements the HST/PHAT survey by covering M31's entire disk, rather than a single quadrant at similar wavelengths, albeit with lower resolution.
-The primary concern of this work is the development of NIR observation and reduction methods that recover surface brightness across the $3\arcdeg \times 1\arcdeg$ disk of M31 that necessitates sky-target nodding across 27 CFHT/WIRCam fields.
+We present wide-field near-infrared $J$ and $K_s$ images of the Andromeda Galaxy taken with WIRCam on the Canada-France-Hawaii Telescope.
+This data set allows simultaneous observations of resolved stars and NIR surface brightness across M31's \emph{entire} bulge and disk (within $R=22$~kpc), permitting a direct a test of the stellar composition of near-infrared light in a nearby galaxy.
+Our survey complements the similar HST/PHAT survey by covering M31's entire disk, rather than a single quadrant at similar wavelengths, albeit with lower resolution.
+The primary concern of this work is the development of NIR observation and reduction methods to recover a uniform surface brightness map across the $3\arcdeg \times 1\arcdeg$ disk of M31.
+This necessitates sky-target nodding across 27 CFHT/WIRCam fields.
 Our method differs from the CFHT pipeline with independent photometric, flat fielding and sky subtraction computations.
-We present our WIRCam reduction pipeline and performance analysis here as a template for future users of CFHT/WIRCam attempting to produce wide-area surface brightness maps with sky-target nodding.
+We present our WIRCam reduction pipeline and performance analysis here as a template for future NIR observers needing wide-area surface brightness maps with sky-target nodding.
 Two sky-target nodding strategies were tested, and we find that strictly minimizing sky sampling latency does not maximize sky subtraction accuracy, which is at best 2\% of the sky level.
 The true surface brightness of M31 can be known within 0.15\% of the sky level by applying sky offsets that minimize intensity differences in the network of overlapping WIRCam fields; this uncertainty decreases as the inverse square-root of the number of fields.
-Monte Carlo simulations show that the absolute surface brightness level of the disk at $R=15$~kpc is uncertain by 0.1--0.2~mag~arcsec$^{-2}$, necessitating independent surface brightness calibration based on resolved stellar populations.
-We also find that the surface brightness across individual WIRCam frames is limited by both flat fielding accuracy
+Monte Carlo simulations show that the absolute surface brightness level of the disk at $R=15$~kpc is uncertain by 0.1--0.2~mag~arcsec$^{-2}$; further improvements independent surface brightness calibration based on resolved stellar populations.
+We also find that the surface brightness across individual WIRCam frames is limited by both flat fielding accuracy and residual sky background shapes.
 To overcome flat field variability of order 1\% over 30 minutes, we find that WIRCam data should be calibrated with real-time sky flats.
 Due either to atmospheric or instrumental variations, the individual WIRCam frames have typical residual shapes with amplitudes of 0.3\% of the sky after real-time flat fielding and median sky subtraction.
 We do not find that planar sky offsets are acceptable for subtracting these residual background across WIRCam fields that are much smaller than the mosaic area.
+\todo{Montage tests.}
 \end{abstract}
 
 % ============================================================================
@@ -98,61 +100,60 @@ The appropriate form of SFH models cannot be constrained from the integrated lig
 
 Second, the NIR light is dominated by thermally-pulsating AGB (TP-AGB) stars from intermediate-aged stellar populations.
 Modelling TP-AGB stars is most challenging due to their complex dredge-up cycles that change surface chemistry and temperature (the M- to C-type transition), and circumstellar winds that further perturb an AGB star's location in the CMD.
-A proper calibration of NIR stellar population synthesis models \cite[\eg][Charlot \& Bruzual in prep.]{Maraston:2005} will yield a 30--50\% improvement in the estimation of stellar masses and ages of high redshift systems \citep[\eg][]{Maraston:2006,Bruzual:2007,Conroy:2010b}.
+A proper calibration of NIR stellar population synthesis models \cite[\eg][Charlot \& Bruzual in prep.]{Maraston:2005} will yield a 30--50\% improvement in the estimation of stellar masses and ages of high redshift systems \citep[\eg][]{Maraston:2006,Bruzual:2007,Conroy:2010b,Conroy:2013}.
 
 Our remedy for both understanding the structure of M31, and more fundamentally to understand NIR stellar populations, is to survey the entire bulge and disk ($R \leq 22$~kpc) of M31 in both resolved and integrated stellar light at $J$ and $K_s$ wavelengths.
 In doing so, we can directly relate a NIR stellar population's decomposition in the colour-magnitude plane to the panchromatic SED of M31.
-Such a calibration could be made with other galaxies, but M31 is unique in its proximity so that even ground-based instrumentation can resolve its bright stellar population ($1\arcsec = 3.7$~pc at M31).
+Such a calibration could be made with other galaxies, but M31 is unique in its proximity so that even ground-based instrumentation can resolve its bright stellar population
+For reference, $1\arcsec = 3.7~\mathrm{pc}$ across the disk of M31 \citep[we adopt $D_\mathrm{M31} = 785$~kpc,][]{McConnachie:2005}.
 
 A wealth of datasets exist for M31, but none fit the requirements for simultaneously observing M31's resolved and integrated NIR light.
 The best resource for resolved stellar populations across the entire disk of M31, to date, is the Local Group Galaxy survey \cite[LGGS][]{Williams:2003,Massey:2006}.
 This survey, although covering the $UBVRI$ wavelengths, does not extend to the $JHK$ NIR wavelengths most contentious for stellar population models.
 Advancing our view of M31 to NIR wavelengths, \cite{Beaton:2007} assembled a 2.8\arcdeg\ $JHK_s$ mosaic centered on M31 with the 2MASS 6X program.
 Those observations, which were the first nearly dust-free of M31's stellar content, were used by \cite{Athanassoula:2006} as evidence of a bar embedded in a classical bulge.
-But beyond the bulge, the 2MASS 6X images have limited utility.
-\cite{Courteau:2011} find sky uncertainty prevents using the 2MASS 6X to infer structural and photometric properties of the disk.
-Further, the pixel scale of 1\arcsec\ and integration depth of 46.8 seconds prevent and point source measurement of M31 stars in the 2MASS 6X images.
-As a result, the defacto state-of-the-art NIR view of M31 is the slightly longer 3.6 $\mu$m Spitzer/IRAC map of \cite{Barmby:2006}.
-Spitzer obviates the issue of sky estimation, although the pixel scale of 0\farcs86 also prevents point source measurements of individual stars in the M31 disk.
+Beyond the bulge, the 2MASS 6X images have limited utility; sky uncertainties restrict their use to infer structural and photometric properties of the disk.
+Further, the pixel scale of 1\arcsec\ and integration depth of 46.8 seconds prevent point source measurement of M31 stars in the 2MASS 6X images.
+As a result, the state-of-the-art NIR view of M31 is the slightly longer 3.6 $\mu$m Spitzer/IRAC map of \cite{Barmby:2006}.
+Spitzer reduces the uncertainties of sky estimation, though the pixel scale of 0\farcs86 also prevents point source measurements of individual stars in the M31 disk.
 
-The best decompositions of M31's stellar populations have been made with high-resolution Hubble Space Telescope (HST) observations.
-\cite{Brown:2003,Brown:2006,Brown:2008} detected an intermediate age population in the inner halo of M31, and even disentangled debris associated with the Giant Stream around M31 in six fields sampling the outer disk, halo, and Giant Stream around M31 \citep{Brown:2009a}.
-In a similar vein, but in the near-infrared, \cite{Olsen:2006} derived star formation histories within $22\farcs5\times22\farcs5$ fields in M31's inner disk and bulge with ground-based adaptive optics observations with the Gemini ALTAIR/NIRI instrument.
-Yet these pencil beam surveys are cannot be construed as representative of the entire Andromeda Galaxy.
+The best decompositions of M31's stellar populations have been made with high-resolution Hubble Space Telescope (HST) observations \citep{Brown:2003,Brown:2006,Brown:2008}.
+These authors detected an intermediate age population in the inner halo of M31, and even disentangled debris associated with the Giant Stream around M31 in six fields sampling the outer disk, halo, and Giant Stream around M31 \citep{Brown:2009a}.
+Similarly, though in the near-infrared, \cite{Olsen:2006} derived star formation histories within $22\farcs5\times22\farcs5$ fields in M31's inner disk and bulge with ground-based adaptive optics observations with the Gemini ALTAIR/NIRI instrument.
+Yet these pencil beam surveys cannot be construed as representative of the entire Andromeda Galaxy.
 Thus the boldest step forward in understanding M31's stellar populations is coming from the Panchromatic Hubble Andromeda Treasury Survey \citep[PHAT][]{Dalcanton:2012}.
-PHAT marries the best qualities of an M31 survey: wide-field coverage from M31's centre to the $10~kpc$ star forming ring, a panchromatic view of stellar populations in Near-UV, visible and NIR wavelengths (equivalent to a Johnson $H$), and resolution of stars in very crowded environments such as the bulge.
-But despite its heroic spatial coverage, PHAT still only covers a single quadrant of M31, making any global conclusions about M31's stellar populations incomplete.
+PHAT marries the best qualities of an M31 survey: wide-field coverage from M31's centre to the $10$~kpc star forming ring, a panchromatic view of stellar populations in Near-UV, visible and NIR wavelengths (equivalent to a Johnson $H$), and resolution of stars in very crowded environments such as the bulge.
+Despite its heroic spatial coverage, PHAT only covers a single quadrant of M31, making any global conclusions about M31's stellar populations incomplete.
 Further, the wavelength coverage of HST/WF3 falls short of the $2.3$~$\mu$m $K$-band, making empirical calibration of the common NIR bands used by wide-field NIR surveys ($JHK$) impossible.
-Thus there is good cause, even in the era of PHAT, to revisit M31 with a ground-based survey that covers the entirety of M31's disk at NIR wavelengths, while using the best natural seeing available from in the northern hemisphere (on Mauna Kea) to resolve stars even more effectively than the previous ground-based survey of M31's disk (LGGS).
+Thus there is good cause, even in the era of PHAT, to revisit M31 with a ground-based survey that covers the entirety of M31's disk at NIR wavelengths, while using the best natural seeing in the northern hemisphere (on Mauna Kea) to resolve stars even more effectively than the previous ground-based survey of M31's disk (LGGS).
 
 We present such a survey, the first instalment of the Andromeda Optical and Infrared Disk Survey (\androids) in this paper.
 ANDROIDS uses the WIRCam instrument \citep{Puget:2004} on the Canada-France-Hawaii Telescope (CFHT).
 WIRCam is among the first generation of wide-field ground-based NIR detector arrays, covering a $21\farcm 5 \times 21\farcm 5$ field of view.
-Indeed, it is the advent of detectors such as WIRCam that make such a wide-field, high-resolution survey of an object as vast as M31 possible.
-The excellent natural seeing on Mauna Kea yields seeing of 0\farcs 65, sufficient for resolving giant-branch stars throughout the disk of M31.
+Indeed, the advent of detectors such as WIRCam makes such a wide-field, high-resolution survey of an object as vast as M31 possible.
+The excellent natural seeing on Mauna Kea of 0\farcs 65 is sufficient for resolving giant-branch stars throughout the disk of M31.
 
-But recovering the true NIR surface brightness map of M31 is more technically challenging.
+Recovering the true NIR surface brightness map of M31 is, however, more technically challenging.
 The NIR sky is $\sim 10^3\times$ brighter than the NIR surface brightness of M31 at $R=20$~kpc, demanding exceptionally careful sky background characterization.
-Whereas most NIR galaxy surveys can measure the instantaneous background blank sky pixels surrounding the galaxy on a detector array, M31's size requires us to physically nod the telescope away from the galaxy by 1\arcdeg--3\arcdeg\ to sample blank sky (called Sky-Target, or ST, nodding).
+Whereas most NIR galaxy surveys can measure the instantaneous background blank sky pixels surrounding the galaxy on a detector array, M31's size requires physically nodding of the telescope away from the galaxy by 1\arcdeg--3\arcdeg\ to sample blank sky (called Sky-Target, or ST, nodding).
 That we can never observe the instantaneous sky emission on the disk of M31, but rather sample the sky at both a different location and time, introduces additional complications.
 \cite{Adams:1996} clearly showed, with $9\arcdeg \times 9\arcdeg$ movies of the sky, that NIR sky emission has coherent spatial structure that moves across the sky, akin to a cirrus cloud system.
-This assures us that sky sampled from a sky field \emph{will not} correspond directly to the sky affecting disk observations.
+This assures that sky sampled from a sky field \emph{will not} correspond directly to the sky affecting disk observations.
 
 Another concern is the accuracy of the surface brightness shape across individual WIRCam fields of view.
-Spatial structures in the NIR sky can leave residual sky shapes in background subtracted disk images tat ultimately affect our ability to produce a seamless NIR mosaic of M31.
-\cite{Vaduvescu:2004} also found that detectors systems themselves, in their case the CFHT-IR camera, can add a time-varying background signal whose strength may be comparable to the NIR surface brightness of the outer M31 disk.
+Spatial structures in the NIR sky can leave residual sky shapes in background subtracted disk images that ultimately affect our ability to produce a seamless NIR mosaic of M31.
+\cite{Vaduvescu:2004} also found that detector systems themselves, in their case the CFHT-IR camera, can add a time-varying background signal whose strength may be comparable to the NIR surface brightness of the outer M31 disk.
 
 Because such a large mosaic has never before been assembled with the WIRCam instrument with ST nodding, we focus this contribution on engineering the best practises for this type of observing.
-This includes: finding the optimal ST nodding cadence, defining the appropriate data reduction procedures for a WIRCam surface brightness procedure, and finally an analysis of the limits of surface brightness accuracy in wide-field WIRCam mosaics.
+This includes: finding the optimal ST nodding cadence, defining the appropriate data reduction procedures for a WIRCam surface brightness procedure, and finally an analysis of the surface brightness accuracy in wide-field WIRCam mosaics.
 
 Section~\ref{sec:Observations} describes the novel observational strategies used to reduce sky subtraction uncertainties.
-Section~\ref{sec:reduction} presents the image reduction pipeline; a particularly important aspect of this is night sky flat fielding \Sec{flats}, median sky subtraction in \Sec{mediansky}, and zeropoint calibration practises in \Sec{photocal}.
-In \Sec{scalar} we present our method for recovering the galaxy surface brightness by minimizing image-to-image differences across the mosaic, while in \Sec{scalaranalysis} we analyze the results of this algorithm.
-We estimate the systematic uncertainties in our mosaic solution in \Sec{systematics}, where we also compare our technique to the Montage package \citep{Berriman:2008} and the Spitzer/IRAC mosaics.
-In \Sec{skyflatstability} we consider the accuracy of the surface brightness \emph{shapes} recovered by our pipeline.
-In both of the former sections we seek to find the observational and reduction technique that maximizes surface brightness accuracy.
-Finally in \S\ref{sec:conclusions} we summarize the uncertainty of NIR sky subtraction on the scale of M31 and outline the observational and reduction technique that maximizes surface brightness accuracy.
-\todo{Expand \S marks?}
+Section~\ref{sec:reduction} presents the image reduction pipeline; an important aspect of this is night sky flat fielding in Section~\ref{sec:flats}, median sky subtraction in Section~\ref{sec:mediansky}, and zeropoint calibration practises in Section~\ref{sec:photocal}.
+In Section~\ref{sec:scalar} we present our method for recovering the galaxy surface brightness by minimizing image-to-image differences across the mosaic, while in Section~\ref{sec:scalaranalysis} we analyze the results of this algorithm.
+We estimate the systematic uncertainties in our mosaic solution in Section~\ref{sec:systematics}, where we also compare our technique to the Montage package \citep{Berriman:2008} and the Spitzer/IRAC mosaics.
+In Section~\ref{sec:skyflatstability} we consider the accuracy of the surface brightness \emph{shapes} recovered by our pipeline.
+Ultimately we seek the observation and reduction method that maximizes surface brightness accuracy.
+Finally in Section~\ref{sec:conclusions} we summarize the uncertainty of NIR sky subtraction on the scale of M31 and outline the our ideal observation and reduction method.
 
 \section{Observations}
 \label{sec:Observations}
@@ -181,11 +182,11 @@ Plotted against a star count map of M31 produced with the Isaac Newton Telescope
 
 \begin{table*}[t]
 \caption[Summary of WIRCam observing programs]{Summary of WIRCam observing programs.
-ST Nods are coded with superscripts to denote the number of times an observation is repeated at a given field.
 $N_\mathrm{disk}$ is the number of WIRCam fields covering in the M31 disk in each semester (see \Fig{fieldmap}).
-$T_\mathrm{int}$ is the total integration time at each disk field while $T_\mathrm{exp}$ is the integration time per WIRCam exposure.
-\emph{Eff.} is the observing efficiency, or percentage of time in a program allocated to integrating the disk of M31, compared from nodding, read out and sky overheads.
-$\mu_\mathrm{sky}$ reports the range (min-max) of sky surface brightnesses seen in each band, for each semester.
+ST Nods with superscripts denote the number of times an observation is repeated at a given field.
+$T_\mathrm{int}$ is the total integration time per disk field while $T_\mathrm{exp}$ is the integration time per WIRCam exposure.
+\emph{Eff.} is the observing efficiency, or percentage of time in a program allocated to integrating the disk of M31, compared to nodding, read out and sky overheads.
+$\mu_\mathrm{sky}$ gives the range (min-max) of sky surface brightnesses seen in each band, for each semester.
 PSF reports the distribution seeing as measured from the full width at half maximum (FWHM) of stellar point spread functions in the uncrowded sky images.}
 \label{tab:obssummary}
     
@@ -203,21 +204,19 @@ PSF reports the distribution seeing as measured from the full width at half maxi
 \end{table*}
 
 The Andromeda Galaxy (M31) was observed in the NIR using the WIRCam instrument, mounted to the 3.6-meter Canada-France-Hawaii Telescope (CFHT), at the summit of Mauna Kea in Hawaii.
-Observations were carried out exclusively in the NIR $J$ ($\lambda_0 \sim 1.2 \mu\mathrm{m}$) and $K_s$ ($\lambda_0 \sim 2.2 \mu\mathrm{m}$) bands.
+Observations were carried out in the NIR $J$ ($\lambda_0 \sim 1.2 \mu\mathrm{m}$) and $K_s$ ($\lambda_0 \sim 2.2 \mu\mathrm{m}$) bands.
 
 WIRCam itself is an array of four HgCdTe HAWAII-RG2 detectors \citep{Puget:2004}.
 Each detector comprises $2048\times 2048$ pixels, with a scale of 0\farcs 3~pix$^{-1}$.
 This pixel scale critically samples the typical seeing of 0\farcs 65~at CFHT\@.
-For reference, $1\arcsec = 3.7~\mathrm{pc}$ across the disk of M31 \citep[we adopt $D_\mathrm{M31} = 785$~kpc,][]{McConnachie:2005}.
 WIRCam's detectors are arranged in a $2\times 2$ grid with 45\arcsec~gaps, so that the entire instrument covers $21.5\arcmin \times 21.5\arcmin$ of sky.
 It is truly the recent advent of NIR focal plane arrays, like WIRCam, that have enabled relatively efficient studies of M31 in the NIR.
 
-The \androids\ WIRCam survey is designed to simultaneously resolve stars and recover the integrated surface brightness of the M31 disk.
-While the former objective is attained by requesting good seeing in Queued Service Observing mode (see \Tab{obssummary}), WIRCam has not previously been used to recover surface brightness at the accuracy required---$\mu_{K_s}\lesssim~22$~mag~arcsec$^{-2}$---across entire detector fields.
+The \androids\ WIRCam survey is designed to simultaneously resolve stars and recover the integrated surface brightness of the entire M31 disk.
 As discussed in \Sec{intro}, NIR observations require frequent monitoring of the sky background.
 \cite{Vaduvescu:2004} found, for example, that the NIR sky intensity can vary by 0.5\% per minute; yet the low surface brightness of M31's NIR disk at $R=20$~kpc requires us to constrain the sky brightness to approximately 0.01\%.
-And since M31, with a $190\arcmin \times 60\arcmin$ optical disk, is much larger than the WIRCam fields of view, monitoring of the sky zeropoint is only possible by periodically pointing the telescope away from M31, towards blank sky---\emph{sky-target} (ST) nodding. 
-The fundamental compromise of ST nodding observation programs is balance the cadence of sky sampling with the efficiency of observing the target itself.
+Since M31, with a $190\arcmin \times 60\arcmin$ optical disk, is much larger than the WIRCam fields of view, monitoring of the sky zeropoint is only possible by periodically pointing the telescope away from M31, towards blank sky, through \emph{sky-target} (ST) nodding. 
+The fundamental compromise of ST nodding observation programs is to balance the cadence of sky sampling with the efficiency of observing the target itself.
 Although studies such as \cite{Vaduvescu:2004}, and references therein, have given good guidelines for NIR sky behaviour, no program has attempted to construct a near-IR surface brightness mosaic covering an area as large and faint as M31's disk.
 
 In this program, we have the opportunity to experiment with different ST nodding strategies since observations were taken over the 2007B and 2009B semesters.
@@ -255,26 +254,30 @@ As such, a given disk field only samples roughly of the full sky ring.}
 \subsection{2007B Semester}
 \label{sec:obs7}
 
-The initial survey was carried out in the 2007B semester by the CFHT Queue Service Observing under photometric conditions. This programme covers M31 with 27 contiguous WIRCam fields covering the entirety of M31 out to the optical radius: $\mu_V=23$ mag arcsec$^{-2}$, $R=20$~kpc. The fields are arranged with at least 1\arcmin\ overlap in declination, and approximately 5\arcmin\ overlap in right ascension.
-% FIXME check overlaps
-This arrangement yields a continuous mosaic that avoids masked pixels that obscure the eastern 3\arcmin\ of the WIRCam array. The field configuration is shown in \Fig{fieldmap}.
+The initial survey was carried out in the 2007B semester by the CFHT Queue Service Observing under photometric conditions.
+Here M31 is covered with 27 contiguous WIRCam fields out to the optical radius where $\mu_V=23$ mag arcsec$^{-2}$ at $R=20$~kpc.
+The fields are arranged with at least 1\arcmin\ overlap in declination, and approximately 5\arcmin\ overlap in right ascension.
+The field configuration is shown in \Fig{fieldmap}.
 
-Each field was integrated for $16\times 47 s = 12.5$ minutes in $J$ and $26\times 25 s = 10.8$ minutes in $K_s$. These integrations are sufficiently deep for resolved stellar photometry to reach at least 1 mag below the tip of the red giant branch, a crucial requirement for decomposing the contributions of red giant and asymptotic giant branch stars to the NIR light.
+As shown in Table~\ref{tab:obssummary}, each field was integrated for $16\times 47 s = 12.5$ minutes in $J$ and $26\times 25 s = 10.8$ minutes in $K_s$.
+These integrations are sufficiently deep for resolved stellar photometry to reach at least 1~mag below the tip of the red giant branch, a crucial requirement for decomposing the contributions of red giant and asymptotic giant branch stars to the NIR light.
 
 The 2007B ST nodding strategy was motivated by a canonical understanding of NIR sky behaviour, since ST nodding sky subtraction had never been attempted on this scale before.
-The NIR sky intensity can be expected to change by 5\% in 10~minutes \citep{Adams:1996,Vaduvescu:2004}; since the sky itself is $\sim10^3\times$ brighter than the outer disk of M31 in the NIR, a 5\% uncertainty in the background would be fatal to our objective of recovering M31's NIR surface brightness.
+The NIR sky intensity can be expected to change by 5\% in 10~minutes \citep{Adams:1996,Vaduvescu:2004}.
+Since the sky itself is $\sim10^3\times$ brighter than the outer disk of M31 in the NIR, a 5\% uncertainty in the background would be fatal to our objective of recovering M31's NIR surface brightness.
 To constrain the sky to within 1\%, we chose to monitor the sky so that at worst, a sky sample would be no more than 5 minutes removed from a M31 target image.
-Given the respective exposure times (47~s in $J$, $25$~s in $K_s$ so as not to saturate with the sky brightness), this implied a sky (S)--target (T) observing sequence of $S^3T^8S^3$ in $J$ and $S^5T^{13}S^5$ in $K_s$.\footnote{Superscripts here denote the number of times an observation is repeated in sequence for a given target disk field.}
+Given the respective exposure times (chosen so as not to saturate with the sky brightness), this implied a sky ($S$)--target ($T$) observing sequence of $S^3T^8S^3$ in $J$ and $S^5T^{13}S^5$ in $K_s$.\footnote{Superscripts here denote the number of times an observation is repeated in sequence for a given target disk field.}
 Four sky fields were chosen (\Fig{fieldmap}), and each disk field was associated with a single sky field.
 
 \subsection{2009B Semester}
 \label{sub:obs9}
 
-Initial analysis data set revealed that the canonical sky-target nodding strategy of the 2007B campaign was not sufficient for recovering the M31 surface brightness due to uncertainties in the sky background.
-We additionally suspected that using the repeated sampling one of four sky fields was also not ideal.
+Analysis of the 2007B data revealed that the adopted sky-target nodding strategy was not sufficient for recovering the M31 surface brightness due to uncertainties in the sky background.
+Repeatedly sampling one of only four sky fields was also proved not ideal.
 This motivated a 2009B observing campaign informed by our experiences.
 
-Rather than replicate the 28-field footprint of the 2007B campaign, we observed 12 fields. These fields overlap each other, and all of the 2007B footprints, to form a network of well-sky subtracted fields. That is the 2009B observations augment and calibrate the 2007B NIR mapping.
+Rather than replicate the 28-field footprint of the 2007B campaign, we observed 12 new fields (see \Fig{fieldmap}) that overlap each other and all of the 2007B footprints, to form a network of well-sky subtracted fields.
+That is, the 2009B observations augment and calibrate the 2007B NIR mapping.
 
 To improve sky subtraction fidelity, we recognized challenges not fully appreciated in the 2007B survey design.
 Not only does the sky background change rapidly in time, it possess a significant spatial structure on the scale of WIRCam fields and larger.
@@ -282,9 +285,9 @@ This has two ramifications: the sky level sampled at a sky field \emph{will not}
 
 This resulted in three principle changes to observing strategy. First, we chose to minimize latency between sky and target observations with a ST$^2$S pattern. That is, each target observation was directly paired with a sky observation taken within 1.5 minutes (\Fig{sky_target_lag}).
 
-Second, we also increased the number of repetitions on each field, so that each field is observed 40 times in each band in a [ST$^2$S]$^{20}$S pattern. This repetition permits the opportunity to average over spatial sky background structures on the scale of WIRCam fields.
+Second, we also increased the number of repetitions on each field, so that each field is observed 40 times in each band in a [ST$^2$S]$^{20}$S pattern. This repetition enables averaging over spatial sky background structures on the scale of WIRCam fields.
 
-Finally, we employ an innovative randomized sky-targeting nodding pattern where no sky field is used repeatedly for a disk field.
+Finally, we employ a randomized sky-targeting nodding pattern where no sky field is used repeatedly for a disk field.
 In order to maintain rapid telescope nods, only northern sky fields serviced the northern disk, and similarly for the southern fields; the maximum offset on the sky was 3\arcdeg\ (see \Fig{sky_target_dist}).
 This random sampling of sky fields yielded two possible advantages: 1) when a median sky image is constructed, many \emph{sky shapes} are combined, possibly yielding an intrinsically flatter image of sky (see \Sec{mediansky}), and 2) if there is a coherent structure in the NIR sky, sampling sky fields degrees apart in rapid succession should average out these systematic biases in estimating the sky level \emph{on the disk}.
 
@@ -292,10 +295,10 @@ This random sampling of sky fields yielded two possible advantages: 1) when a me
 \label{sec:reduction}
 
 The crux of this paper is finding how wide-field NIR mosaics can best be made with the WIRCam instrument on CFHT, and determining what limits the accuracy of our surface brightness maps.
-To begin, we note that WIRCam data are offered by CFHT in three progressive stages of \emph{preprocessing} by their \iiwione\ pipeline to allow programmes, such as this one, to re-implement calibration recipes for potentially better surface brightness accuracy.
+To begin, we note that WIRCam data are offered by CFHT in three progressive stages of \emph{preprocessing} by their \iiwione\ pipeline to allow programmes, such as this one, to re-implement calibration recipes for potentially higher surface brightness accuracy.
 The data flavours are: a raw image that is essentially untouched after leaving the instrument (\texttt{*o.fits}); an image that has been corrected for nonlinearity, dark subtracted and flat fielded (\texttt{*s.fits}); and an image that has been sky subtracted, in addition to all the previous treatments (\texttt{*p.fits}).
 
-As sky subtraction is the highest source of error in our program, the middle data product, \texttt{*s.fits}, would appear most amenable as a starting.
+As sky subtraction is the highest source of error in our program, the middle data product, \texttt{*s.fits}, would appear most amenable as a starting point.
 Nonetheless, two \iiwione\ processing stages included in \texttt{*s.fits} products must be handled carefully.
 
 \paragraph{Cross-talk correction} WIRCam integrations prior to March 2008 (that is, the 2007B data set, but not the 2009B data) suffered from electronic cross talk within the detector.
@@ -310,9 +313,9 @@ An example of this structure is related to the different gain structures of the 
 Users of fully-processed \iiwione\ \texttt{*p.fits} images do not directly notice the unsuitability of dome flats since images of the detector gain structure embedded in the NIR bright sky background are \textit{subtracted} from the signal as part of the median sky subtraction step.
 Yet since pixel gain changes the signal in proportion to incident flux, subtraction is fundamentally the wrong operation to use.
 Our remedy is to adopt night sky flats, which use the median night sky as the illumination reference rather than a dome lamp.
-Comparing the dome and night sky flats, as in \Fig{domeflatratio}, shows how profound the choice of flat field can be.
-Our confidence in night sky flats as the \textit{correct} choice for flat fielding WIRCam lies in their ability to remove both large scale illumination features (\eg \Fig{median_sky_images}) and pixel-to-pixel gain changes across WIRCam (\eg \Fig{flattenedimage_comparison}).
-Production of WIRCam sky flats is subtle as we find the flat field structure to be time dependent on sub-hour scales, and of course the NIR night sky itself is not flat.
+The profound difference between using dome or night sky flats is shown in \Fig{domeflatratio}.
+Our confidence in night sky flats as the \textit{correct} choice for flat fielding WIRCam lies in their ability to remove both large scale illumination features (see \Sec{skyflatstability}) and pixel-to-pixel gain changes across WIRCam (\eg \Fig{flattenedimage_comparison}).
+Production of WIRCam sky flats is subtle as we find the flat field structure to be time dependent on sub-hour scales, and the NIR night sky itself is not flat either.
 A comprehensive discussion of WIRCam flat fielding is presented in \Sec{skyflatstability}.
 
 \begin{figure}[t]
@@ -339,7 +342,7 @@ Using the median night sky illumination over a WIRCam queue run, rather than a d
 
 \vspace{1em}
 
-Our \androids\ pipeline thus begins with \texttt{*s.fits} data that have been undone of flat fielding.
+Our \androids\ pipeline thus begins with \texttt{*s.fits} data that have been uncorrected for done flat fielding.
 That is, we multiply the \texttt{*s.fits} image with its associated dome flat.\footnote{Dome and twilight flats are made available by CFHT, \url{http://limu.cfht.hawaii.edu:80/detrend/wircam/}.}
 The result is an image that retains \iiwione's prescription for dark subtraction, bad pixel masking and non-linearity correction.
 The \androids\ WIRCam pipeline then follows the steps described below.
@@ -350,7 +353,7 @@ The \androids\ WIRCam pipeline then follows the steps described below.
 Our ANDROIDS/WIRCam reductions begin by unifying the World Coordinate System across the dataset with \sw{Scamp} \citep{Bertin:2006}.
 Scamp matches stars in Source Extractor \citep{Bertin:1996} catalogs of each WIRCam \texttt{*p.fits} frame both internally (to $\sigma_\mathrm{int}=0\farcs 10$), and against the 2MASS Point Source Catalog \citep{Skrutskie:2006} to a precision of $\sigma_\mathrm{ref}=0 \farcs 15$.
 % Values obtained from Scamp XML output
-By processing all all 4286 frames of the \androids /WIRCam survey simultaneously, SCAMP allows us produce an accurate and internally consistent coordinate frame for our mosaic.
+By processing all 4286 frames in the \androids /WIRCam survey simultaneously, SCAMP allows us to produce an accurate and internally consistent coordinate frame for our mosaic.
 Scamp handles this data volume gracefully provided we cull the input star catalogs for stars with $S/N > 100$, and by using the \texttt{SAME\_CRVAL} astrometry assumption that the WIRCam focal plane geometry is stable.
 
 The next steps are flat fielding and median sky subtraction.
@@ -371,7 +374,7 @@ Dome flats fail to properly calibrate WIRCam data, as evidenced by Figs.~\ref{fi
 Sky flats are an appropriate alternative, both because of the abundant sky background (any NIR imaging program can use its own images to build sky flats), and because sky flats more aptly trace detector illumination and gain structure.
 The former because skylight traces the same optical path as astronomical sources; the latter because WIRCam's gain structure appears variable.
 Sky flats allow detector gain mapping in real-time.
-We return to the variability of WIRCam flat fields in \Sec{skyflatstability}.
+We return to the variability of WIRCam flat fields in Section~\ref{sec:skyflatstability}.
 
 \subsection{Sky Flat Designs}
 \label{sec:flatdesign}
@@ -382,9 +385,9 @@ A fundamental decision is the definition of the window of sky integrations that 
 Here we present two sky flat designs: labelled \texttt{QRUN} and \texttt{FW100K}.
 
 The first choice assumes that flat fields are stable over a queue run (a continuous installation period of WIRCam).
-In this case, all sky integrations taken during a queue run, and through a given filter, are combined into what we denote as a \texttt{QRUN} sky flat.
+In this case, all sky integrations taken during a queue run, and through a given filter, are combined into a \texttt{QRUN} sky flat.
 This choice is reasonable since dust and optical geometry should be stable during a continuous mounting period.
-Further, choosing a large pool of sky images ensures high \sn\, and helps to helps to marginalize over the shape of the sky background.
+Further, choosing a large pool of sky images ensures high \sn\, and helps to marginalize over the shape of the sky background.
 For the \androids\ program, \texttt{QRUN} skyflats are built from 25--637 sky integrations over several nights (see \Tab{qrunflattable}).
 
 \begin{table}[t]
@@ -436,25 +439,24 @@ Real-time sky flats can consequently be refreshed in as little as 10 minutes, or
 \subsection{Building Sky Flats}
 \label{sec:flatbuilding}
 
-\todo{SC's corrections don't match the intent; we should confer to make the scaling argument concretely understandable.}
 Given the ensemble of sky integrations, our next task is to scale the intensity of each image.
-This scaling achieves three requirements: 1) each image frame in the median stack is at the same level, 2) each WIRCam detector has a unified zeropoint, and 3) the sky flat across the whole array is flux normalized.
+This scaling obeys three requirements: 1) each image frame in the median stack is at the same level, 2) each WIRCam detector has a unified zeropoint, and 3) the sky flat across the whole array is flux normalized.
 This scaling is determined by the median pixel level measured on each detector for each sky integration---denote these median levels as $\alpha_{i,j}$ for the $i$th sky image's level in detector $j$, $j=1, 2, 3, 4$.
 To avoid bias in the sky estimate, we mask any pixels that do not sample blank sky.
 \sw{Source Extractor} \citep{Bertin:1996} is used to define stars and background galaxies (we use \iiwione\ \texttt{*p.fits} images to detector sources), while hand-drawn polygon regions cover diffraction spikes and the diffuse halos around bright galactic stars. These masks, along with the \iiwione\ bad pixel mask, are combined with \sw{WeightWatcher} \citep{Marmo:2008}.
 
-From the ensemble of images produced by an individual WIRCam detector we compute the median sky level: $\beta_j = \mathrm{median}(\alpha_{1,j}, \alpha_{2,j}\ldots \alpha_{n,j} )$.
+From the ensemble of images produced by an individual WIRCam detector, we compute the median sky level: $\beta_j = \mathrm{median}(\alpha_{1,j}, \alpha_{2,j}\ldots \alpha_{n,j} )$.
 Further, we also compute $S$, the median of all median detector levels: $S=\mathrm{median}(\beta_j)$.
 Then each the sky image is scaled by the factor $f_{ij} = \mathrm{median}(\beta_1, \beta_2, \beta_3, \beta_4) / (\alpha_{ij} S)$.
 Note that the factor $\alpha_{ij}^{-1}$ normalizes each image to the same level for stacking, while the ratio $\beta_j / S$ adjusts the level of each detector according to detector-to-detector zeropoint offsets.
 Indeed, detector-to-detector zeropoint offsets can be measured as $-2.5 \log_{10}(\beta_i / \beta_1)$, as shown in \Fig{fw100k_zpdiff}.
 WIRCam detector \#1 (North-West quadrant) is clearly the most sensitive, while the dispersion indicates the level of gain variability in WIRCam.
-We also note systematic differences in spectral response of WIRCam detectors in the $J$ and $K_s$ on the order of 5\%.
+We also note systematic differences in spectral response of WIRCam detectors in the $J$ and $K_s$ of order 5\%.
 % 0.05 mag is about 4.5%
 
 The flat itself is built by median combination.
 Median combination of a stack of hundreds of $2048\times2048$ pixel image, each with a weightmap masking astronomical sources, is computationally intensive.
-A convenient solution was to use \sw{Swarp} \citep[an image-mosaicing software package,][]{Bertin:2002} in a mode that combined images pixel-to-pixel.
+A convenient solution is to use \sw{Swarp} \citep[an image-mosaicing software package,][]{Bertin:2002} in a mode that combined images pixel-to-pixel.
 
 \begin{figure}[t]
 \centering
@@ -470,7 +472,7 @@ A convenient solution was to use \sw{Swarp} \citep[an image-mosaicing software p
 
 Since M31 is much larger than individual WIRCam fields, sky background is subtracted (to first order) using the sky levels found in contemporary sky images.
 Section~\ref{sec:Observations} describes the sky-target nodding sequences chosen for the 2007B and 2009B observing campaigns. 
-Although a scalar sky level could be estimated from a sky image, and subtracted from the paired target images, it is common to construct a median sky image, the same size as the WIRCam frames, and subtract this 2D image from target images.
+Although a scalar sky level can be estimated from a sky image, and subtracted from the paired target images, it is common to construct a median sky image, the same size as the WIRCam frames, and subtract this 2D image from target images.
 
 Independent median sky images for each WIRCam detector are produced by choosing a sky image (the primary sky image) and four other sky images taken at adjacent times.
 Across each image, the median sky intensity is recorded.
@@ -480,7 +482,7 @@ As described in \Sec{flatbuilding}, \sw{Swarp} is used to median-combine the sky
 Since these median sky images record only low-frequency spatial information, these median sky images are smoothed with a Gaussian kernel (note this is quite different from the function of median sky images applied to dome-flat processed WIRCam data, where median sky subtraction also removed pixel-to-pixel artifacts).
 This median sky image is then additively scaled back to the original level of the primary sky image.
 
-Each image in the data set is sky subtracted by first identifying the median sky frame whose primary image was taken most closely in time.
+Each science image is sky subtracted by first identifying the median sky frame whose primary image was taken most closely in time.
 That paired median sky frame is subtracted from the image.
 
 In \Sec{skyflatstability} we follow up on this operational discussion to consider the shapes of median sky images. In particular, we connect the role of median sky frames to the stability of different recipes of sky flats described in \Sec{flats}.
@@ -490,14 +492,14 @@ In \Sec{skyflatstability} we follow up on this operational discussion to conside
 
 Since the sky flats used by this \androids/WIRCam data set differ from the dome flats employed by the \iiwione\ pipeline by 2\% in edge-to-edge level (see \Fig{domeflatratio}), new photometric zeropoints must be established.
 The Two Micron All Sky Survey (2MASS) Point Source Catalog (PSC) \citep{Skrutskie:2006} provides a convenient photometric system to bootstrap against.
-Typical WIRCam pointings ($20\arcmin 20\arcmin$) in this survey contain $\sim 500$ 2MASS stars.
+WIRCam pointings ($20\arcmin \times 20\arcmin$) in this survey contain typically $\sim 500$ 2MASS stars.
 % see python $andpipe/wircam/calibset/photcal/tmass_source_count.py
 Although these are not standards, the ensemble of 2MASS stars may be treated as such.
 Since the disk of M31 is crowded, and 2MASS has poor resolution ($1\arcsec$~pix$^{-1}$ \todo{verify this pixel scale}), we consider 2MASS point source measurements to be unreliable on the disk.
-Instead, all zeropoints are measured against sky images, and those calibrations are applied to paired disk images (analogous to the median sky subtraction procedure, described in \Sec{mediansky}).
+Instead, all zeropoints are measured against sky images, and those calibrations are applied to paired disk images (analogous to the median sky subtraction procedure, described in Section \ref{sec:mediansky}).
 
 Photometry of 2MASS stars in the uncrowded sky fields is obtained with Source Extractor \citep{Bertin:1996}.
-We use the \texttt{AUTO} photometry mode to capture the full light of stars without using aperture corrections.
+We use the \texttt{AUTO} photometry mode to capture the full stellar light without using aperture corrections.
 Objects in the 2MASS PSC are matched to Source Extractor detections by position using J. Sick's \sw{Mo'Astro}\footnote{\url{http://moastro.jonathansick.ca}} Python package, that manages the full 2MASS PSC in a MongoDB database.
 The 2MASS PSC contains many galaxies, and many 2MASS sources are saturated in our deeper WIRCam images.
 Thus we select stars with $m_J < 14$ or $m_{K_s} < 15$ magnitudes, and stars with FWHM $<1$\arcsec.
@@ -510,10 +512,12 @@ Given sample of matching 2MASS and instrumental photometry, the instrumental zer
 
 \begin{equation}
   \label{eq:photcal}
-  m_0 = \langle m_\mathrm{2MASS} + 2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) - \hat{A} (J-K_s)_\mathrm{2MASS} \rangle.
+  m_0 = \langle m_\mathrm{2MASS} + 2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) - A (J-K_s)_\mathrm{2MASS} \rangle.
 \end{equation}
 
-The $A$ term permits a linear colour transformation between the 2MASS and Although we could fit a colour transformation coefficient $A$ for each image, the short $J-K_s$ colour baseline makes such measurements unreliable.
+\todo{Something with percentages?}
+The $A$ term permits a linear colour transformation between the 2MASS and WIRCam bandpasses.
+Although we could fit a colour transformation coefficient $A$ for each image, the short $J-K_s$ colour baseline makes such measurements unreliable.
 Instead we adopt $A_J = 0.05$ and $A_{K_s} = -0.05$ (K. Thanjuvar, priv.\ comm.) based on modelling stellar spectra with the 2MASS and CFHT/WIRCam transmission functions.
 
 Given that 2MASS stars in each image have photometric uncertainties $0.05 \lesssim \sigma_{\mathrm{2MASS~mag}} \lesssim 0.3$, the typical statistical zeropoint uncertainty, $\sigma_{m_0}$, is 0.1~mag in a single image.
@@ -528,7 +532,7 @@ Our sky flats are designed to unify the zeropoints of the four WIRCam detectors 
 % To prove the chip-to-chip zeropoint consistency generated by the flat fielding procedure, we can use our photometric calibration mechanics.
 % While the formal photometric calibration described above pools together 2MASS stars seen in any of the four detectors, we can also generate photometric calibrations in each individual detector.
 The accuracy of this calibration can be verified by comparing photometric zeropoint estimates for individual WIRCam detectors.
-In \Fig{fw100k_chip_to_chip} we show the distribution of mean detector-to-detector zeropoints offsets observed in images processed by real-time sky flats, and find that zeropoints are consistent within $\pm 0.1$ mag, although we do detect a possible systematic bias between detectors \#1 and \#4 at the level of $0.03$~mag.
+In \Fig{fw100k_chip_to_chip} we show the distribution of mean detector-to-detector zeropoints offsets observed in images processed by real-time sky flats, and find that zeropoints are consistent within $\pm 0.1$ mag, although we detect a possible systematic bias between detectors \#1 and \#4 at the level of $0.03$~mag.
 % \mycomment{JS: this method of verifying zeropoint consistency needs work. Single-detector zeropoint uncertainty is $\sim 0.05$ mag, so the uncertainty of the difference measurement is 0.07 mag. But \Fig{fw100k_chip_to_chip} actually measures the mean zeropoint offset within among the images in each sky flat. This reduces the statistical uncertainty; making the 0.1 mag scatter in \Fig{fw100k_chip_to_chip} quite significant}
 
 \begin{figure}[t]
@@ -553,13 +557,13 @@ red, green and blue histograms, respectively, for the $J$-band (top) and $K_s$-b
 \end{figure}
 
 Despite our attention thus far to real-time sky flat fielding, and median sky image subtraction, we have yet to achieve our goal of recovering the true NIR surface brightness of M31.
-In \Fig{raw_mosaics} we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed thus far with the pipeline discussed in \Sec{reduction}--\Sec{photocal}.
-Although these basic image preparations dramatically improve image quality the \iiwione\ pipeline (particularly with regards to flat fielding performance), we see that classical NIR sky subtraction has fundamentally limited accuracy.
+In \Fig{raw_mosaics}, we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed with the pipeline discussed in \Sec{reduction}--\Sec{photocal}.
+Although these basic image preparations dramatically improve image quality compared to the \iiwione\ pipeline (particularly with regards to flat fielding performance), we see that classical NIR sky subtraction has fundamentally limited accuracy.
 Classically, the true value of the sky on the disk of M31 is lost by the temporal and spatial variations of skyglow between disk and sky field observations.
 
-To advance on our goal, we demonstrate in this section how the residual sky bias in each observation can be inferred from information in the overlaps of image pairs in the mosaic.
+We now demonstrate how the residual sky bias in each observation can be inferred from information in the overlaps of image pairs in the mosaic.
 Each classically sky subtracted image of the M31 disk is a combination of the true surface intensity, $I_i$, and a residual sky intensity, $\epsilon_i$.
-Consider a pair of images, $i$ and $j$, that overlap on the galaxy: their difference is $(I_i+\epsilon_i) - (I_j+\epsilon_j) = \epsilon_i - \epsilon_j$.
+Consider a pair of images, $i$ and $j$, that overlaps the galaxy: their difference is $(I_i+\epsilon_i) - (I_j+\epsilon_j) = \epsilon_i - \epsilon_j$.
 Given this measurement $\epsilon_i - \epsilon_j$ of residual sky intensity, we introduce \emph{sky offsets}, $\Delta$, for each observation so that
 
 \begin{equation}
@@ -568,7 +572,7 @@ Given this measurement $\epsilon_i - \epsilon_j$ of residual sky intensity, we i
 
 \noindent and the intrinsic intensities cancel, $I_i - I_j = 0$.
 Given a single pair of images, the inference of $\Delta_i$ and $\Delta_j$ is degenerate given the single difference image, $\epsilon_i-\epsilon_j$.
-But in a mosaic, each image is coupled (has overlapping domain) with many other images, and the mosaic itself can be considered as a network of coupled images.
+But in a mosaic, each image is coupled with many other images, and the mosaic itself can be considered as a network of coupled images.
 If we model the residual sky intensity $\epsilon_i$ as having a simple shape across the observed images, the single offset $\Delta_i$ will minimize all difference images involving image $i$.
 That is, sky offsets can be chosen by the optimization of
 
@@ -586,7 +590,7 @@ The consequences of this uncertainty are revisited in \Sec{systematics}.
 \label{sec:offset_algos}
 
 The sky offset optimization summarized in \Eq{scalartheoryobj} is difficult to implement because it is over-constrained, requiring a non-linear optimization.
-Any single image is connected in a network with others; and any error in the surface brightness \emph{shapes} of fields will result in an imperfect match.
+Any single image is connected in a network with others, and any error in the surface brightness \emph{shapes} of fields will result in an imperfect match.
 In this work, we consider two implementations of \Eq{scalartheoryobj}.
 First, we review the \sw{Montage} software package in \Sec{montage_algo}, and then introduce an alternative in \Sec{msrnm_algo}.
 
@@ -594,7 +598,7 @@ First, we review the \sw{Montage} software package in \Sec{montage_algo}, and th
 \label{sec:montage_algo}
 
 \sw{Montage} is a FITS mosaicing package \citep{Berriman:2008} originally written for the 2MASS survey, and includes sky offset estimation (background rectification, in their terminology) functionality.
-In that software, images are rectified onto a mosaic pixel grid, and difference images are computed among overlapping images.
+Images are rectified onto a mosaic pixel grid, and difference images are computed among overlapping images.
 Sky offsets are then chosen iteratively by looping through each image pair and choosing the offset needed to minimize the difference image of that pair, counting previous sky offset estimates.
 That is, at each step the sky levels of the two images are increased and decreased by half the total intensity difference.
 Sky offsets are refined over several loops through the entire set of overlapping image pairs until convergence is reached (that is, once incremental adjustments to sky offsets diminish below user-specified threshold).
@@ -640,9 +644,9 @@ Fortunately, it is possible to impose this constraint \textit{post facto} by sub
 \end{equation}
 
 Given the image coupling records, we optimize the set of $\Delta_i$ using the NM downhill simplex algorithm.
-This NM algorithm has the advantage of being naturally multi-dimensional, and being able to work without knowledge of the gradient of the objective function.
+This NM algorithm is naturally multi-dimensional and does not require knowledge of the gradient of the objective function.
 Instead, the NM algorithm operates by constructing a geometric simplex of $N+1$ dimensions that samples the sky offset parameter space.
-By evaluating the objective function at each vertex of the simplex, the NM algorithm adapts simplex's shape to ultimately contract upon a minimum.
+By evaluating the objective function at each vertex of the simplex, the NM algorithm adapts the simplex shape to ultimately contract upon a minimum.
 
 However NM has two weaknesses.
 First, it is a greedy optimizer that will converge into any local minimum, without necessarily seeking the global minimum.
@@ -694,13 +698,13 @@ Like $\sigma_\mathrm{start}$, there is flexibility in choosing $\sigma_\mathrm{r
 \subsection{Hierarchical sky offset optimization}
 \label{sec:hierarchical_algo}
 
-Sky offset optimization is challenging because of dimensionality. Assuming that sky residuals are \emph{constant} across a frame, each image frame represents a new dimension ($\Delta_i$) in the optimization. Considering that the WIRCam array produces four image frames for every exposure, the combined 2007B and 2009B data sets consist of 3924 $J$ and 4972 $K_s$ image frames covering the disk of M31. Such a large optimization is computationally ambitious, but also needless.
+Sky offset optimization is challenging because of dimensionality. Assuming that sky residuals are \emph{constant} across a frame, each image frame represents a new dimension ($\Delta_i$) in the optimization. Considering that the WIRCam array produces four image frames for every exposure, the combined 2007B and 2009B data sets consist of 3924 $J$ and 4972 $K_s$ image frames covering the disk of M31. Such a large optimization is computationally ambitious, but also unnecessary.
 
 Our sky optimization algorithm breaks the optimization of sky offsets into three sequential steps, which we call \emph{hierarchical sky offset optimization}.
 
 The 2007B and 2009B WIRCam surveys observed a total of 39 \emph{fields} across the M31 disk (illustrated in \Fig{fieldmap}).
 Each WIRCam field is imaged with four detectors, arranged in a $2\times 2$ grid.
-Let us define a \emph{detector field} as the collection of images that are taken with a given detector, at a given field.
+Let us define a \emph{detector field} as the collection of images taken with a given detector, at a given field.
 Images in a detector field all have the greatly simplifying property of overlapping across a common section of the image frame.
 
 Thus our M31 WIRCam mosaics are assembled in three steps.
@@ -716,21 +720,21 @@ A simple median combination, then, produces edges that have background levels th
 A solution is to estimate offsets for each frame compared to this first detector field stack.
 Offsets are computed as the median of the difference image between the stack and individual image frames.
 The original image frames, now with offsets applied, are re-combined into a detector field stack image.
-Now edge effects are smaller.
+Edge effects are now smaller.
 Nonetheless, offsets are estimated a second time to produce a finalized detector field stack image.
 Let us denote the offsets applied to individual \emph{frames} at this first stage as $\Delta_F$.
 
 In the second hierarchical level, we combine sets of four detector field stacks into blocks.
 Here we must use the non-linear optimization algorithms detailed in \Sec{montage_algo} or \Sec{msrnm_algo}.
-Let us denote the offsets of \emph{stacks} into blocks as $\Delta_S$. Finally, we again use our offset optimization algorithms to combine blocks into a mosaic. The sky offsets applied to \emph{blocks} at this stage are labelled $\Delta_B$. We also measure a net offset: $\Delta_\Sigma = \Delta_F + \Delta_S + \Delta_B$ for each frame.
-
+Let us denote the offsets of \emph{stacks} into blocks as $\Delta_S$.
+We also use our offset optimization algorithms to combine blocks into a mosaic. The sky offsets applied to \emph{blocks} at this stage are labelled $\Delta_B$. We also measure a net offset: $\Delta_\Sigma = \Delta_F + \Delta_S + \Delta_B$ for each frame.
 
 \section{Analysis of Scalar Sky Offsets}
 \label{sec:scalaranalysis}
 
-We present the fruits of our WIRCam pipeline and sky offset optimization in \Fig{scalar_mosaics}.
+The fruits of our WIRCam pipeline and sky offset optimization are presented in \Fig{scalar_mosaics}.
 Compared to our mosaics without sky offsets, \Fig{raw_mosaics}, the sky offset optimization is clearly essential for assembling wide-field NIR mosaics.
-Note that these mosaics are not yet perfect; field-to-field discontinuities remain, and large-scale sky residuals perturb the outer M31 disk.
+Note that these mosaics are not yet perfect; field-to-field discontinuities at a level of 0.05\% of sky remain, and large-scale sky residuals perturb the outer M31 disk.
 
 \begin{figure}[t]
 	\centering
@@ -758,8 +762,8 @@ This indicates that spatio-temporal variations in the NIR sky are monochromatic.
 
 Within the hierarchy of sky fitting, simply fitting frames to a stack (with $\Delta_F$) is most significant: a correction on the order of 2\% of the sky intensity.
 Fitting blocks into a mosaic ($\Delta_B$) is a further $\sim 1$\% correction.
-But overall, the temporal and spatial lags of sky-target nodding induce a 2\% uncertainty in the sky level at the target.
-It is this level of uncertainty that sky offset optimization must diminish to transform uncorrected mosaics (\Fig{raw_mosaics}) to ones that show the disk with fidelity (\Fig{scalar_mosaics}).
+Overall, the temporal and spatial lags of sky-target nodding induce a 2\% uncertainty in the sky level at the target.
+It is this level of uncertainty that sky offset optimization must diminish to transform uncorrected mosaics (\Fig{raw_mosaics}) into ones that show the disk with fidelity (\Fig{scalar_mosaics}).
 
 Note that offsets to fit a stack into a block ($\Delta_S$) of four detector field stacks are smallest: 0.1\% of the sky level.
 This suggests that on the scale of the $2\times 2$ WIRCam array, the contemporaneously observed detector frames are subjected to nearly identical biases in sky background.
@@ -802,9 +806,9 @@ The sky offsets are indeed distributed within the uncertainty budgeted by $\sigm
 \end{figure}
 
 Another demonstration of the veracity of these sky offsets is given in \Fig{skylevel_timeseries}, where we plot a time series of both directly measured sky levels, and sky levels interpolated on disk observations via sky offsets.
-Note how remarkably continuous the sky level is from sky-to-disk observation; compared to the sky level time series of stationary sky fields, the variations in the sky level interpolated on the disk appear real.
-Through the sky target nodding and sky offset optimization, we \emph{have} effectively measured the level of the sky on M31.
-The variability of the sky in these time series will be further pursued in \Sec{offsetevo}.
+Note the remarkable continuities of the sky level from sky-to-disk observation; compared to the sky level time series of stationary sky fields, the variations in the sky level interpolated on the disk appear real.
+Through the sky target nodding and sky offset optimization, we \emph{have} effectively measured the sky level on M31.
+The variability of the sky in these time series will be further examined in \Sec{offsetevo}.
 
 \begin{figure*}[t]
 \centering
@@ -819,15 +823,15 @@ Directly measured sky levels are plotted in black, while sky levels estimated on
 \subsection{Residual Image Level Differences}
 \label{sec:residual_diffs}
 
-Although the scalar sky offsets are statistically valid, they are not perfect prescriptions against the sky subtraction uncertainties of each image stack---that much is visually true.
+Although scalar sky offsets are statistically valid, they are not perfect prescriptions against the sky subtraction uncertainties of each image stack---that much is visually true.
 A measure of the limitation of sky offset fitting are the residual image level differences between coupled blocks, $(\vect{I}_i - \Delta_{B,i}) - (\vect{I}_j - \Delta_{B,j})$, after the sky offsets $\Delta_{B,i}$ have been optimally fitted to each block.
 
 \Tab{fw100k_medsky_scalar_resid_diffs} lists distributions of both image level differences between coupled blocks, before and after the application of scalar sky offsets.
 Uncorrected, the ensemble of coupled blocks have a mean intensity difference of $\sim 1\%$ of the typical sky background intensity.
 Scalar sky offsets decrease the differences between overlapping fields to $\sim 0.2\%$.
 
-With \Fig{fw100k_medsky_scalar_resid_sbfrac} we can visualize these block-to-block residual differences as a fraction of the local surface brightness.
-Note that throughout the bright inner disk of M31, block-to-block residuals are negligible compared to the disk signal; but at the mosaic periphery ($R\sim 20$~kpc), the field-to-field residuals become comparable to, or greater than, the disk surface brightness.
+\Fig{fw100k_medsky_scalar_resid_sbfrac} the block-to-block residual differences as a fraction of the local surface brightness.
+Note that throughout the bright inner disk of M31, block-to-block residuals are negligible compared to the disk signal, but at the mosaic periphery ($R\sim 20$~kpc), the field-to-field residuals become comparable to, or greater than, the disk surface brightness.
 The poor fit is driven primarily by diminishing disk signal, rather than poor convergence of sky offsets.
 This can be seen by plotting the magnitude of block-to-block residuals (in units of sky brightness) in \Fig{fw100k_medsky_scalar_resid_skyfrac}.
 There, significant residuals are distributed throughout the disk, rather than the low-SB periphery of the mosaic.
@@ -836,7 +840,7 @@ Of course, it is precisely this residual image level difference that was sought 
 The inability of scalar sky offset optimization to eliminate residual image differences should not be interpreted as a failure to detect the global minimum; the MSRNM optimization algorithm appears robust in arriving at this offset solution set.
 Evidence of this can be seen in \Fig{fw100k_medsky_scalar_resid_sigmafrac}, where block-to-block network connections are coloured by the ratio of the residual block-to-block intensity difference to the uncertainty in the block-to-block difference image.
 The sky offsets solved by the MSRNM algorithm are within the uncertainties of the difference images themselves; better scalar sky offsets \emph{cannot} be made with the WIRCam blocks our pipeline has produced.
-Nonetheless, block-to-block surface brightness discontinuities are plainly seen in \Fig{scalar_mosaics}.
+Nonetheless, block-to-block surface brightness discontinuities are still seen in \Fig{scalar_mosaics}.
 
 An interpretation of this predicament is that sky background residuals are not entirely scalar across WIRCam blocks.
 Our discussion in \Sec{skyflatstability} indicates that flat field variability, and sky background variability, can affect the shape of WIRCam fields.
@@ -889,10 +893,10 @@ How does our sky-target nodding program affect the magnitude of the sky offsets?
 This was partially addressed in \Sec{offset_amplitudes}, where we see that both the 2007B and 2009B observing programs resulted in similar net offset distributions (\Tab{offset_hierarchy}).
 In this section, we directly map the observed sky offsets as a function of time latency since the sky observation.
 
-But first we must realize that sky offsets are born not only from temporal variability in the sky level (\eg \Fig{skylevel_timeseries}), but also from spatial structure in the NIR sky glow.
+First, we must realize that sky offsets are born not only from temporal variability in the sky level (\eg \Fig{skylevel_timeseries}), but also from spatial structure in the NIR sky glow.
 Thus as a fiducial, we first build a function of mean sky level variation as a function of time measured at stationary site on the sky (a single sky field), without telescope nodding.
 In \Fig{nodding_stationary_skyvar_skyfrac} we plot the mean and 95\% growth of sky level variations as a function of time.
-In agreement with the results of \cite{Vaduvescu:2004}, we see a mean sky level variation of $\sim 0.5\%$ in 1~minute in both $J$ and $K_s$ bands.
+In agreement with \cite{Vaduvescu:2004}, we see a mean sky level variation of $\sim 0.5\%$ in 1~minute in both $J$ and $K_s$ bands.
 After 5~minutes, the intrinsic sky level variation typically grows to 2\%.
 The worst-case sky variation (measured at the 95\% level of the sample distribution) is 5\% variation in 5-minutes.
 
@@ -909,9 +913,9 @@ On longer time scales, the nodding and stationary sky variance converge, perhaps
 
 This analysis underscores the challenge of accurately recovering surface brightness in a wide-field NIR mosaic.
 Sky-target nodding with CFHT implies typical time latencies 60--70~seconds, and nodding distances of $1\arcdeg$--$2\arcdeg$.
-Both of these elements prevent the true level of the sky on the disk of M31, in any single frame, from being known to better than 2\% of the sky level.
+Both of these elements prevent the true level of the sky on M31's disk, in any single frame, from being known to an accuracy greather than 2\%.
 
-\Fig{nodding_stationary_skyvar_skyfrac} also affords an interesting analysis of the thesis that the 2009B observing strategy of minimizing sky nodding latency would maximize sky level certainty.
+\Fig{nodding_stationary_skyvar_skyfrac} also shows that the 2009B observing strategy of minimizing sky nodding latency would maximize sky level certainty.
 The rather shallow slopes of the mean sky variance seen in sky-target nodding demonstrates the modest gain sky certainty by capping sky latency at 1.2 minutes (\ie 2009B) compared to allowing latencies of 5 minutes (\ie 2007B).
 This also better explains \Tab{offset_hierarchy}.
 
@@ -986,7 +990,7 @@ Rather than simultaneously solve for all offsets, \sw{Montage} uses an iterative
 
 Figure~\ref{fig:montage_planar_mosaics} shows mosaics generated by \sw{Montage}, allowing for planar sky offsets.
 These surface brightness realizations lead to $J-[3.6]$ and $K_s-[3.6]$ maps in \Fig{montage_irac36_sbdiff}.
-Comparing the simplex-optimized color map (\Fig{altplanar_irac36_sbdiff}) against the \sw{Montage} realization, it is plain that the two algorithms find different sets of globally optimum sky offsets.
+Comparing the simplex-optimized color map (\Fig{altplanar_irac36_sbdiff}) against the \sw{Montage} realization, the two algorithms find different sets of globally optimum sky offsets.
 And neither of the solutions is optimal in the sense of absolute calibration.
 
 Another useful comparison is \Fig{altplanar_jk_sbdiff}, where $J-K_s$ color maps are realized by both the simplex planar-fitting and \sw{Montage} algorithms.
@@ -1008,13 +1012,13 @@ White contours identify RMS levels of 0.05 (solid), 0.1 (dashed) and 0.2 (dash-d
 The difference images presented in the previous section, and particularly \Fig{altplanar_jk_sbdiff}, illustrate how the surface brightness reconstructions of identical data can vary depending on the optimization algorithm.
 Here we pose a slightly different question: how are reconstructions affected by the initial conditions of sky errors?
 That is, given the possible sets of sky level biases affecting the blocks, what is the distribution of surface brightness reconstructions?
-We answer this with a Monte Carlo analysis.
+We answer this with a realistic Monte Carlo analysis.
 
 A Monte Carlo (MC) realization is generated by perturbing the surface brightness of the corrected blocks with a sky error drawn (with replacement) from the ensemble of block sky offsets observed in the original mosaic (\Fig{scalar_mosaics}).
 Using the scalar-sky fitting procedure, sky offsets  are optimized against the known sky perturbations; 100 such realizations are made to compile an ensemble of mosaics in both bands.
 
 Figure~\ref{fig:bootstrap_sb_rms} shows the RMS deviation of MC mosaic surface brightness against the original scalar-fitted mosaics.
-Reconstructed surface brightness in the outer disk can vary $\sim 1$ mag arcsec$^{-2}$, consistent with colour biases in the $J-[3.6]$ and $K_s-[3.6]$ maps.
+Reconstructed surface brightness in the outer disk can vary by $\sim 1$~mag~arcsec$^{-2}$, consistent with colour biases in the $J-[3.6]$ and $K_s-[3.6]$ maps.
 
 We can ultimately understand the source of surface brightness by examining the standard deviations in the residual between expected and realized sky offsets in each Monte Carlo iteration.
 This residual dispersion is 0.15\% of the $J$-sky (0.17\% of the $K_s$ sky); we find this dispersion to be constant across all fields in the mosaics.
@@ -1024,7 +1028,7 @@ This is not the case.
 Rather than mosaic flexure, a better model for \Fig{bootstrap_sb_rms} is uncertainties in the \textit{post priori} adjustment for zero net offset (\Eq{netzero}).
 Since block sky offsets have approximately Gaussian distributions with dispersions given in \Tab{offset_hierarchy}, the uncertainty in the net offset correction is simply $\sigma(\mathrm{block})/\sqrt{n_\mathrm{blocks}}$, where $n_\mathrm{blocks}=39$ in the combined 2007B and 2009B mosaic.
 Given that $\sigma_{\Delta_B}\sim 1\%$, the expected uncertainty in the net offset correction is 0.16\%: in perfect correspondence to the observed mosaic uncertainty.
-The dominant source of uncertainty shown in the MC simulations, Figs.~\ref{fig:bootstrap_sb_rms}, is the use of an arithmetic mean of offsets to set an absolute zeropoint, not flexure or uncertainty in the network of offsets.
+The dominant source of uncertainty shown in the MC simulations, \Fig{bootstrap_sb_rms}, is the use of an arithmetic mean of offsets to set an absolute zeropoint, not flexure or uncertainty in the network of offsets.
 This suggests that external zeropoints could be very useful in replacing \Eq{netzero}.
 Since no absolutely-calibrated NIR photometry of M31's surface brightness exists, we will discuss a method using panchromatic resolved stellar populations in a future work.
 
@@ -1032,7 +1036,7 @@ Since no absolutely-calibrated NIR photometry of M31's surface brightness exists
 \label{sec:skyflatstability}
 
 Our analysis of the WIRCam M31 mosaics has thus far focused on macroscopic surface brightness accuracy.
-Here we concern progresses to the accuracy of surface brightness shapes in individual WIRCam frames (and ultimately, blocks).
+Here we examine the accuracy of surface brightness shapes in individual WIRCam frames (and ultimately, blocks).
 Such shape biases give rise to discontinuities between blocks in our optimized mosaics (\Fig{scalar_mosaics}), and reflect high-order irregularities in block surface brightness shape that cannot be corrected with either scalar (zeroth-order) or even planar (first-order) sky offsets.
 
 Block shape accuracy is affected by two stages of our reduction pipeline: first, in the \emph{proportional} corrections of flat-fielding, and second, in the \emph{additive} corrections of median sky subtraction.
@@ -1061,7 +1065,7 @@ We interpret these as instabilities in the WIRCam illumination function on the s
 \centering
 \includegraphics[width=\textwidth]{figs/fw100k/fw100k_movie}
 \caption{Spatio-temporal evolution of \texttt{FW100K} sky flats, shown as percent difference of the flat fields 15, 30, 60 and 90 minutes after the initial sky flat of the night.
-Sky flat evolution on three nights is shown: (a) 2009B $K_s$ observing block when the telescope `stared' at a sky field, (b) 2009B $K_s$ observing block with regular sky-target nodding, and (c) a 2007B observing block with sky-target nodding.}
+Sky flat evolution on three nights is shown: (a) 2009B $K_s$ observing block with the telescope staring at a sky field, (b) 2009B $K_s$ observing block with regular sky-target nodding, and (c) a 2007B observing block with sky-target nodding.}
 \label{fig:fw100k_movie}
 % made with andpipe/wircam/skyflat/plot/flatratio.py
 \end{figure*}
@@ -1096,15 +1100,15 @@ To quantitatively compare the bias of \texttt{QRUN} versus \texttt{FW100K} sky f
 These distributions of sky shape amplitude are plotted in \Fig{mediansky_amplitude}.
 As expected from \Fig{median_sky_images}, \texttt{QRUN} median sky frames have typical biases of 1\% of the sky level, while sky frames from real-time \texttt{FW100K} sky flats are much flatter---$\lesssim 0.3\%$ of the sky level---and more consistently so.
 
-Although \texttt{FW100k} sky flats are better than \texttt{QRUN} flats, we can still ask if the 0.3\% flatness limit of median sky images a consequence of intrinsic sky shapes, or of limits in the WIRCam flat field accuracy.
+Although \texttt{FW100k} sky flats are better than \texttt{QRUN} flats, we can still ask if the 0.3\% flatness limit of median sky images is a consequence of intrinsic sky shapes, or of limits in the WIRCam flat field accuracy.
 Recall that median sky images are composed of five sky frames taken closest to a disk frame.
 In 2007B, all sky frames would be sampled from the same coordinate on the sky, but span a 12~minute window covering sky integrations taken before and after a disk image (for both $J$ and $K_s$ sky-target nods).
 But in 2009B, sky frames were sampled from randomly chosen sites along the sky field ring (\Fig{fieldmap}) with a window typically spanning 15 minutes.
-Thus both 2007B and 2009B median sky images span similar time windows, but the 2009B strategy attempts to marginalize over five distinct sites  on the sky (and thus shapes shapes) while 2007B median sky images do not.
+Thus both 2007B and 2009B median sky images span similar time windows, but the 2009B strategy attempts to marginalize over five distinct sites  on the sky (and thus sky shapes) while 2007B median sky images do not.
 If the spatial sky glow pattern and WIRCam flatness function were stationary, we expect the instantaneous shape of the sky (in the sky field) to be captured in the 2007B median sky frames, while the 2009B sky frames should marginalize over five random sky shapes and thus be flatter by up to a factor of $1/\sqrt{5}$ (for a Gaussian shape distribution).
 That this \emph{does not} occur indicates either that (a) sky shapes are correlated over 15~minutes and 3\arcdeg\ of sky, (b) sky glow patterns have sufficient temporal variability to be effectively uncorrelated over 15~minute windows across a WIRCam frame so that both observing patterns marginalize over sky shapes equally, or (c) the flatness of median sky images is limited at the 0.3\% level by background variations associated with WIRCam itself over 15~minutes.
 Wide-field movies of the NIR sky \citep{Adams:1996} indicate option (a) to be false.
-From this test alone, then, we cannot distinguish between instrumental background variability or stochasticity in the sky as the cause of the 0.3\% amplitude of sky shapes seen by WIRCam median sky images.
+From this test alone, then, we cannot distinguish between instrumental background variability or stochasticity in the sky as the cause of the 0.3\% sky shape amplitudes seen by WIRCam median sky images.
 Further, this test cannot distinguish between proportional instrumental variability in the flat field (\eg \Fig{fw100k_movie}) or additive background variability \citep[as seen in the CFHT-IR camera,][]{Vaduvescu:2004}.
 
 % \mycomment{Also note that in both cases, there are long-tail cases of median sky shape amplitudes as large as 5\% of the sky level \todo{(figure out the circumstances of these!)}.
@@ -1152,9 +1156,9 @@ While the real-time sky flat produces very flat median sky images, \texttt{QRUN}
 
 In previous sections, we have shown that real-time \texttt{FW100K} sky flats are preferable over broader-baseline \texttt{QRUN} sky flats since they produce systematically flatter median sky images, and do seem to track real evolution in the WIRCam flat field function on scales of 30 minutes.
 Yet it is difficult to measure the absolute accuracy of real-time sky flats since flat field bias cannot be distinguished from additive background stochasticity (from sky or instrument) when simply observing the shape of the sky background.
-But if we examine signal- (not sky-) dominated fields, flat fielding biases should grow in comparison to sky shape biases.
+If we examine signal- (not sky-) dominated fields, flat fielding biases should grow in comparison to sky shape biases.
 
-Our 2009B observations of field M31-37 in the $K_s$ band are perfect for this experiment: a single detector in that field covers the core of M31, and observations were taken into two blocks, covering a total window of 2~hours (most blocks for this program are observed by the CFHT queue in a half hour).
+Our 2009B observations of field M31-37 in the $K_s$ band are ideal for this experiment: a single detector in that field covers the core of M31, and observations were taken into two blocks, covering a total window of 2~hours (most blocks for this program are observed by the CFHT queue in a half hour).
 Both the high surface brightness and wide time baseline in this field should highlight flat field bias and variation.
 In Figures~\ref{fig:frame_residuals_M31-37_Ks_fw100k_medsky} and~\ref{fig:frame_residuals_M31-37_Ks_QRUN} we show the residual shapes of individual WIRCam frames against the median shape of the mosaic, given \texttt{FW100K} and \texttt{QRUN} sky flattening, respectively, in field M31-37 in the $K_s$ band.
 That is, we produce difference images between each WIRCam frame and the block mosaic.
@@ -1167,7 +1171,7 @@ The time scale residual evolution clearly matches that of flat field evolution i
 But despite limited accuracy, the \texttt{FW100K} sky flats do appear to track the real-time evolution of the WIRCam detector and produce more consistent frame shapes.
 Although all frames in \Fig{frame_residuals_M31-37_Ks_QRUN} are processed with the same \texttt{QRUN} sky flat, the intrinsic flat field function of WIRCam has evolved over the span of two hours to create frame-to-frame shape variations nearly $\pm 1\%$ of the $K_s$-band sky brightness at the center of M31.
 
-It is useful to contrast the frame shape residuals seen in detector \#2 to those in other detector's, where the disk surface brightness is lower.
+It is useful to contrast the frame shape residuals seen in detector \#2 to those in other detectors, where the disk surface brightness is lower.
 There, both \texttt{FW100K} (\Fig{frame_residuals_M31-37_Ks_fw100k_medsky}) and \texttt{QRUN} (\Fig{frame_residuals_M31-37_Ks_QRUN}) show similar residual distributions, on the order of $\lesssim 0.2$\% of the NIR sky brightness.
 Further, the results are not monotonically varying in time, as they are in detector \#2, and indeed appear to vary essentially randomly.
 We interpret this frame residual behaviour as being caused by random additive background processes, distinct from flat field biases that are proportional to surface brightness.
@@ -1228,15 +1232,15 @@ We summarize our findings on the accuracy of surface brightness shapes reproduce
 \begin{enumerate}
   \item Surface perturbations can be decomposed into multiplicative processes (flat field biases) and additive processes (stochastic sky and instrumental backgrounds) by observing residual shapes of individual WIRCam frames again the median M31 mosaic in high and low surface brightness regimes; we find evidence for both processes occurring.
   \item The WIRCam flat field function can vary by approximately 1\% across a $10\arcmin \times 10\arcmin$ frame in 1~hour. Building sky flats concurrently with observations is necessary to minimize systematic surface brightness bias. This, however, is only a concern in signal-dominated pixels (such as galaxy centres, or point sources); otherwise median sky subtraction is effective at masking flat field bias to low-surface brightness features.
-  \item In low surface brightness regimes, we observe stochastic background variations of $\pm 0.2$\% of the sky amplitude. These background shapes cannot be removed with median sky frame subtraction (which itself has shape amplitudes on the order of $0.3\%$ of the NIR sky level). We find this to the limiting surface brightness accuracy across a $10\arcmin \times 10\arcmin$ WIRCam frame.
+  \item In low surface brightness regimes, we observe stochastic variations of $\pm 0.2$\% in the sky amplitude. These background shapes cannot be removed with median sky frame subtraction (which itself has shape amplitudes on the order of $0.3\%$ of the NIR sky level). We find this to be the limiting surface brightness accuracy across a $10\arcmin \times 10\arcmin$ WIRCam frame.
 \end{enumerate}
 
 \section{Conclusions}
 \label{sec:conclusions}
 
-In this work, we have presented near-infrared ($J$ and $K_s$) images of M31's entire bulge and disk with CFHT/WIRCam. These maps surpass the 2MASS \citep{Beaton:2007} and Spitzer \citep{Barmby:2006} mosaics with superior resolution (1\arcsec pix$^{-1}$) that permits the resolution of individual stars throughout M31's mid and outer disk. The dataset is also complementary to the HST/WF3 PHAT survey \citep{Dalcanton:2012} by providing complete areal coverage of M31's disk to $R=22$~kpc, and by offering a broader NIR colour baseline ($J-K_s$) than is offered by WF3 (approximately  $J-H$). NIR mosaics of M31 have crucial applications for studies of the nearly attenuation-free stellar structure of our nearest spiral neighbour, and for tests of stellar population synthesis models in NIR regimes.
+In this work, we have presented near-infrared ($J$ and $K_s$) images of M31's entire bulge and disk with CFHT/WIRCam. These maps surpass the 2MASS \citep{Beaton:2007} and Spitzer \citep{Barmby:2006} mosaics with superior resolution (1\arcsec/pix) that permits the resolution of individual stars throughout M31's mid and outer disk. The dataset is also complementary to the HST/WF3 PHAT survey \citep{Dalcanton:2012} by providing complete areal coverage of M31's disk to $R=22$~kpc, and by offering a broader NIR colour baseline ($J-K_s$) than is offered by WF3 (approximately  $J-H$). NIR mosaics of M31 have crucial applications for studies of the nearly attenuation-free stellar structure of our nearest spiral neighbour, and for tests of stellar population synthesis models in NIR regimes.
 
-The paramount task of this paper has been to establish procedures for accurately recovering near-infrared surface brightness across a target FIXME sq. deg. mosaic surface using a sky target nodding observing strategy with the WIRCam instrument on CFHT. The NIR sky is challenging because it is roughly 3 dex brighter than the disk at $R=20 kpc$; only the central bulge is brighter than the sky in the NIR. This problem is compounded by the fact that M31 is a large target on the sky, so that the NIR sky brightness \emph{at} M31 cannot be directly measured.
+The paramount task of this paper has been to establish procedures for accurately recovering near-infrared surface brightness across a target FIXME sq. deg. mosaic surface using a sky target nodding observing strategy with the WIRCam instrument on CFHT. The NIR sky is challenging because it is roughly 3 dex brighter than the disk at $R=20$~kpc; only the central bulge is brighter than the sky in the NIR. This problem is compounded by the fact that M31 is a large target on the sky, so that the NIR sky brightness \emph{at} M31 cannot be directly measured.
 
 We find that our NIR SB reconstruction is limited on two regimes. On a large scale, the absolute surface brightness of the mosaic is uncertain by $\sim \sigma_{\Delta_B} / \sqrt{N_\mathrm{blocks}}$, a consequence of the uncertainty in sky level induced by  not measuring the sky level directly on M31's disk. This zeropoint can ultimately be established using resolved stellar populations, the subject of a future \androids\ work. A more delicate SB error regime occurs on small scales, where the 2D SB shapes of WIRCam blocks ($20\arcmin\times20\arcmin$) are uncertain by FIXME\% of the sky intensity, centre-to-edge. These shape errors are a consequence of strong variations in WIRCam flat fields (FIXME 1\% over 30 minutes), and spatial patterns in the NIR skyglow itself. 
 
@@ -1255,6 +1259,13 @@ In this work we have processed WIRCam observations from two semesters: 2007B and
 We have investigated the conditions of sky level and sky shape variability, to determine if NIR sky-target nodding programs can be optimized in queue planning. Although we confirm that \emph{sky level} is primarily dependent on time since sunset and airmass (see also Vaduvescu 04, others, CITE), we do not find statistical correlations for sky level variability, nor for the variability in the shapes of frames. Sky level variability in a fixed time windows are Poisson distributed with an increasing $\lambda$ parameter for broader time windows. TODO.
 
 Future works will capitalize on the data reduction presented in this paper, analyzing both the resolved stellar populations and panchromatic spectral energy distribution of M31.
+
+
+\bigskip We wish to thank Loic Albert and Karun Thanjavur from CFHT for their help with WIRCam I'iwi data products and procedures.
+[something like that...]
+J.S. and S.C. acknowledge support through respective Graduate Scholarship and Discovery grants from the Natural Sciences and
+Engineering Research Council of Canada.
+M.M is supported by NASA through a Hubble Fellowship grant HST-HF51308.01-A awarded by the Space Telescope Science Institute, which is operated by the Association of Universities for Research in Astronomy, Inc., for NASA, under contract NAS 5-26555.
 
 \bibliography{master}
 
