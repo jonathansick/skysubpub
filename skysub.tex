@@ -1145,7 +1145,6 @@ While the real-time sky flat produces very flat median sky images, \texttt{QRUN}
 \centering
 \includegraphics[width=\columnwidth]{figs/mediansky_amplitude_cdf}
 \caption{Cumulative distribution function of sky level amplitudes across median sky images processed with \texttt{QRUN} (black) and \texttt{FW100K} (blue) sky flats for the $J$ (top) and $K_s$ (bottom) bands. Real-time (\texttt{FW100k}) sky flats produce much flatter median sky frames, with expected shape amplitudes of 0.3\% ($J$) to 0.1\% ($K_s$) of the NIR sky level, while the expected amplitude of \texttt{QRUN}-flat processed sky images is 0.5\% of the sky level, and as high as 3\% of the sky level.
-\todo{Fix colour scheme}
 }
 \label{fig:mediansky_amplitude}
 % made with $andpipe/wircam/shape/mediansky_amplitude.py
@@ -1176,7 +1175,7 @@ There, both \texttt{FW100K} (\Fig{frame_residuals_M31-37_Ks_fw100k_medsky}) and 
 Further, the results are not monotonically varying in time, as they are in detector \#2, and indeed appear to vary essentially randomly.
 We interpret this frame residual behaviour as being caused by random additive background processes, distinct from flat field biases that are proportional to surface brightness.
 
-\mycomment{Would it be better to actually plot an RMS map of pixels, rather than slices? Then it would be easier to plot RMS/intensity to plot flat fielding errors}.
+\mycomment{I will plot an RMS map of pixels, rather than slices. Then it would be easier to plot RMS/intensity to plot flat fielding errors}.
 
 \begin{figure*}[p]
 \centering
@@ -1185,7 +1184,7 @@ We interpret this frame residual behaviour as being caused by random additive ba
 Residuals have been marginalized across the $x$ (left) and ($y$) (right) axes to provide 1D views.
 Axes match WIRCam's $2\times2$ detector footprint.
 Individual integrations are coloured by their time after the first disk integration.
-The centre of M31 is located in the lower-right detector; surface brightness bias in these regions betray the presence of flat field bias. Lower surface brightness regions are dominated by shape variations on the order of $\pm 0.2\%$ of sky, which we interpret as additive uncertainties associated either with the detector, skyglow, or both.}
+The centre of M31 is located in the lower-right detector (\#2); surface brightness bias in these regions betray the presence of flat field bias. Lower surface brightness regions are dominated by shape variations on the order of $\pm 0.2\%$ of sky, which we interpret as additive uncertainties associated either with the detector, skyglow, or both.}
 \label{fig:frame_residuals_M31-37_Ks_fw100k_medsky}
 % made with wircam/shape/frame_block_residuals/plot_field_slices.py
 \end{figure*}
@@ -1194,7 +1193,8 @@ The centre of M31 is located in the lower-right detector; surface brightness bia
 \begin{figure*}[p]
 \centering
 \includegraphics[width=\textwidth]{figs/frame_residuals/M31-37_Ks_queuesky_medsky}
-\caption{Residual shapes of individual of the M31-37 $K_s$ field, processed with \texttt{QRUN} sky flats. Compared to \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}, \texttt{QRUN} sky flats clearly do not capture flat field evolution that occurs over the course of 90-minutes, yielding systematically evolving realizations of surface brightness. \todo{Stress that the M31 center is located in the lower-left detector.}}
+\caption{Residual shapes of individual of the M31-37 $K_s$ field, processed with \texttt{QRUN} sky flats.
+Compared to \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}, \texttt{QRUN} sky flats clearly do not capture flat field evolution that occurs over the course of 90-minutes, yielding systematically evolving realizations of bulge-dominated surface brightness in detector \#2 (lower-right). In the more sky-dominated regions of the image (detector \#4), \texttt{QRUN} sky flats produce images with similar stability to \texttt{FW100K} sky flats, against indicating that the limit of additive uncertainties associated with sky or instrumental background variations is seen here.}
 \label{fig:frame_residuals_M31-37_Ks_QRUN}
 % made with wircam/shape/frame_block_residuals/plot_field_slices.py
 \end{figure*}
