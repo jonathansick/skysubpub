@@ -70,13 +70,14 @@ This necessitates sky-target nodding across 27 CFHT/WIRCam fields.
 Our method differs from the CFHT pipeline with independent photometric, flat fielding and sky subtraction computations.
 We present our WIRCam reduction pipeline and performance analysis here as a template for future NIR observers needing wide-area surface brightness maps with sky-target nodding.
 Two sky-target nodding strategies were tested, and we find that strictly minimizing sky sampling latency does not maximize sky subtraction accuracy, which is at best 2\% of the sky level.
+The mean surface brightness difference between blocks in our mosaic can be reduced from 1\% to 0.1\% of the sky brightness by introducing scalar sky offsets to each image.
+We test the popular \sw{Montage} package, and also develop an independent method of estimating sky offsets using simplex optimization; we show these two optimization schemes to differ by up to 0.5~mag~arcsec$^{-2}$ in the outer disk.
+We do not find that planar sky offsets are acceptable for subtracting these residual background across WIRCam fields that are much smaller than the mosaic area.
 The true surface brightness of M31 can be known within 0.15\% of the sky level by applying sky offsets that minimize intensity differences in the network of overlapping WIRCam fields; this uncertainty decreases as the inverse square-root of the number of fields.
-Monte Carlo simulations show that the absolute surface brightness level of the disk at $R=15$~kpc is uncertain by 0.1--0.2~mag~arcsec$^{-2}$; further improvements independent surface brightness calibration based on resolved stellar populations.
+Monte Carlo simulations show that the absolute surface brightness level of the disk at $R=15$~kpc is uncertain by 0.1--0.2~mag~arcsec$^{-2}$; further improvements dependent upon a surface brightness calibration based on resolved stellar populations.
 We also find that the surface brightness across individual WIRCam frames is limited by both flat fielding accuracy and residual sky background shapes.
 To overcome flat field variability of order 1\% over 30 minutes, we find that WIRCam data should be calibrated with real-time sky flats.
-Due either to atmospheric or instrumental variations, the individual WIRCam frames have typical residual shapes with amplitudes of 0.3\% of the sky after real-time flat fielding and median sky subtraction.
-We do not find that planar sky offsets are acceptable for subtracting these residual background across WIRCam fields that are much smaller than the mosaic area.
-\todo{Montage tests.}
+Due either to atmospheric or instrumental variations, the individual WIRCam frames have typical residual shapes with amplitudes of 0.2\% of the sky after real-time flat fielding and median sky subtraction.
 \end{abstract}
 
 % ============================================================================
