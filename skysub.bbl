@@ -1,4 +1,4 @@
-\begin{thebibliography}{39}
+\begin{thebibliography}{45}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
@@ -68,6 +68,10 @@
 \bibitem[{{Conroy} \& {Gunn}(2010)}]{Conroy:2010b}
 {Conroy}, C., \& {Gunn}, J.~E. 2010, \apj, 712, 833
 
+\bibitem[{{Courteau} {et~al.}(2011){Courteau}, {Widrow}, {McDonald},
+  {Guhathakurta}, {Gilbert}, {Zhu}, {Beaton}, \& {Majewski}}]{Courteau:2011}
+{Courteau}, S., {Widrow}, L.~M., {McDonald}, M., {et~al.} 2011, \apj, 739, 20
+
 \bibitem[{{Dalcanton} {et~al.}(2012){Dalcanton}, {Williams}, {Lang}, {Lauer},
   {Kalirai}, {Seth}, {Dolphin}, {Rosenfield}, {Weisz}, {Bell}, {Bianchi},
   {Boyer}, {Caldwell}, {Dong}, {Dorman}, {Gilbert}, {Girardi}, {Gogarten},
@@ -80,12 +84,31 @@
 \bibitem[{{de Jong}(1996)}]{de-Jong:1996b}
 {de Jong}, R.~S. 1996, \aap, 313, 377
 
+\bibitem[{{de Jong} {et~al.}(2007){de Jong}, {Seth}, {Radburn-Smith}, {Bell},
+  {Brown}, {Bullock}, {Courteau}, {Dalcanton}, {Ferguson}, {Goudfrooij},
+  {Holfeltz}, {Holwerda}, {Purcell}, {Sick}, \& {Zucker}}]{de-Jong:2007}
+{de Jong}, R.~S., {Seth}, A.~C., {Radburn-Smith}, D.~J., {et~al.} 2007, \apjl,
+  708, L49
+
+\bibitem[{{Dutton} {et~al.}(2005){Dutton}, {Courteau}, {de Jong}, \&
+  {Carignan}}]{Dutton:2005}
+{Dutton}, A.~A., {Courteau}, S., {de Jong}, R., \& {Carignan}, C. 2005, \apj,
+  619, 218
+
 \bibitem[{{Harris} \& {Zaritsky}(2001)}]{Harris:2001}
 {Harris}, J., \& {Zaritsky}, D. 2001, \apjs, 136, 25
 
 \bibitem[{{Ibata} {et~al.}(2005){Ibata}, {Chapman}, {Ferguson}, {Lewis},
   {Irwin}, \& {Tanvir}}]{Ibata:2005}
 {Ibata}, R., {Chapman}, S., {Ferguson}, A.~M.~N., {et~al.} 2005, \apj, 634, 287
+
+\bibitem[{{Irwin} {et~al.}(2005){Irwin}, {Ferguson}, {Ibata}, {Lewis}, \&
+  {Tanvir}}]{Irwin:2005}
+{Irwin}, M.~J., {Ferguson}, A.~M.~N., {Ibata}, R.~A., {Lewis}, G.~F., \&
+  {Tanvir}, N.~R. 2005, \apjl, 628, L105
+
+\bibitem[{{Kormendy} \& {Kennicutt}(2004)}]{Kormendy:2004}
+{Kormendy}, J., \& {Kennicutt}, Jr., R.~C. 2004, \araa, 42, 603
 
 \bibitem[{Luersen {et~al.}(2004)Luersen, Le~Riche, \& Guyon}]{Luersen:2004}
 Luersen, M., Le~Riche, R., \& Guyon, F. 2004, Structural and Multidisciplinary
@@ -116,6 +139,15 @@ Luersen, M., Le~Riche, R., \& Guyon, F. 2004, Structural and Multidisciplinary
   {Ibata}, {Lewis}, \& {Tanvir}}]{McConnachie:2005}
 {McConnachie}, A.~W., {Irwin}, M.~J., {Ferguson}, A.~M.~N., {et~al.} 2005,
   \mnras, 356, 979
+
+\bibitem[{{McConnachie} {et~al.}(2009){McConnachie}, {Irwin}, {Ibata},
+  {Dubinski}, {Widrow}, {Martin}, {C{\^o}t{\'e}}, {Dotter}, {Navarro},
+  {Ferguson}, {Puzia}, {Lewis}, {Babul}, {Barmby}, {Bienaym{\'e}}, {Chapman},
+  {Cockcroft}, {Collins}, {Fardal}, {Harris}, {Huxor}, {Mackey},
+  {Pe{\~n}arrubia}, {Rich}, {Richer}, {Siebert}, {Tanvir}, {Valls-Gabaud}, \&
+  {Venn}}]{McConnachie:2009}
+{McConnachie}, A.~W., {Irwin}, M.~J., {Ibata}, R.~A., {et~al.} 2009, \nat, 461,
+  66
 
 \bibitem[{Nelder \& Mead(1965)}]{Nelder:1965}
 Nelder, J.~A., \& Mead, R. 1965, {The Computer Journal}, 7, 308
