@@ -442,7 +442,7 @@ Real-time sky flats can consequently be refreshed in as little as 10 minutes, or
 \label{sec:flatbuilding}
 
 Given the ensemble of sky integrations, our next task is to scale the intensity of each image.
-This scaling obeys three requirements: 1) each image frame in the median stack is at the same level, 2) each WIRCam detector has a unified zeropoint, and 3) the sky flat across the whole array is flux normalized.
+This scaling obeys three requirements: 1) each image frame in the median stack is at the same level, 2) each WIRCam detector has a unified zeropoint, and 3) the sky flat across the whole array is flux normalized.\footnote{Note that it is also acceptable to establish independent zeropoints for each chip using 2MASS photometry, rather than using sky surface brightness. We verify the compatibility of the two schemes in \Sec{detector_zp}.}
 This scaling is determined by the median pixel level measured on each detector for each sky integration---denote these median levels as $\alpha_{i,j}$ for the $i$th sky image's level in detector $j$, $j=1, 2, 3, 4$.
 To avoid bias in the sky estimate, we mask any pixels that do not sample blank sky.
 \sw{Source Extractor} \citep{Bertin:1996} is used to define stars and background galaxies (we use \iiwione\ \texttt{*p.fits} images to detector sources), while hand-drawn polygon regions cover diffraction spikes and the diffuse halos around bright galactic stars. These masks, along with the \iiwione\ bad pixel mask, are combined with \sw{WeightWatcher} \citep{Marmo:2008}.
@@ -916,6 +916,7 @@ On longer time scales, the nodding and stationary sky variance converge, perhaps
 This analysis underscores the challenge of accurately recovering surface brightness in a wide-field NIR mosaic.
 Sky-target nodding with CFHT implies typical time latencies 60--70~seconds, and nodding distances of $1\arcdeg$--$2\arcdeg$.
 Both of these elements prevent the true level of the sky on M31's disk, in any single frame, from being known to an accuracy greather than 2\%.
+Both of these elements prevent the true level of the sky on M31's disk, in any single frame, from being known to an accuracy greater than 2\%.
 
 \Fig{nodding_stationary_skyvar_skyfrac} also shows that the 2009B observing strategy of minimizing sky nodding latency would maximize sky level certainty.
 The rather shallow slopes of the mean sky variance seen in sky-target nodding demonstrates the modest gain sky certainty by capping sky latency at 1.2 minutes (\ie 2009B) compared to allowing latencies of 5 minutes (\ie 2007B).
