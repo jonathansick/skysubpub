@@ -1257,20 +1257,29 @@ Here we summarize our analysis of the observing and reduction methods developed 
 
 \subsection{Recommendations for Conducting a Wide-field NIR Survey with Sky-Target Nodding}
 
-First, we find little benefit in adopting an extremely rapid $STTS$ nodding cadence (our 2009B approach).
-By tracking the total offset applied to images, we see that individual 2007B images have sky uncertainties of 2.7\% in $J$ (2.4\% in $K_s$) compared to 2.0\% in 2009B.
-Simply nodding the telescope across 1\arcdeg--2\arcdeg increases sky uncertainty by $\sim 1.5$ times (see \Fig{nodding_stationary_skyvar_skyfrac}), setting the lower limit accuracy on any sky-target nodding approach.
-Spending more time on disk (up to eight minutes, as in 2007B) is valid to conserve nodding overheads.
-Note that with fewer visits to sky, additional sky images must be made in each visit so that real-time sky flats of $\sim10^5$~ADU can be built in windows of 30~minutes or less.
+Wide-field sky-target nodding programs must prioritize frequent sampling of sky to track flat field evolution in WIRCam (not simply to track sky level evolution), and must have strong couplings between many blocks to enhance the effectiveness of sky offset optimization codes.
 
-We do recommend employing the randomized sky field selection used in 2009B.
-This nodding pattern was originally intended to marginalize over various possible sky shapes, theoretically producing less biased (flatter) median sky images.
-Instead we find that sky backgrounds, on the scales of WIRCam fields, are dominated by high frequency shape variations on the order of 0.2\% of the sky brightness that are caused either by sky glow or instrumental backgrounds.
-This pattern is nonetheless useful for producing sky flats with as little correlated sky and astronomical light as possible.
+Sky offsets optimization is aided by having more independent blocks covering the target, since our net zero offset assertion is uncertain by $\sigma_{\Delta_B} / \sqrt{N_\mathrm{blocks}}$.
+Given that $\sigma_B$, the distribution of block offsets, cannot be reduced significantly, increasing the number of \emph{independent} blocks (observed hours, even a night, apart to decouple sky and instrumental biases) is the most reliable way to establish the absolute surface brightness accuracy of the mosaic.
+Since sky offsets are further biased by any shape errors in blocks (realized as our inability to diminish block-to-block offsets to below ~0.1\% of sky brightness), we propose that blocks be interlaced by 50\% (so that one detector completely overlaps a detector from an adjacent blocks).
+This interlace pattern would thus allow us to marginalize shape errors across the entire detector frame.
+By integrating only half the time on each block, the total mosaic could be reproduced with an equivalent integration.
+\todo{Would this scheme increase the uncertainty in the sky level of each block, since there would be only half as many blocks? Then again, we double the number of blocks, so the uncertainty should be unchanged. Verify this.}
 
-Absolutely essential is the adoption of \emph{real-time} sky flats.
-Dome and twilight flats, as adopted in the CFHT/I'iwi pipeline do not recover large scale illumination, nor small scale detector structure (see \Fig{domeflatratio}).
-We also see that sky flats built from abundant data over a single queue run fail to capture the variability of the WIRCam flat field function, as evidenced by evolution in the shapes of frames TODO.
+% First, we find little benefit in adopting an extremely rapid $STTS$ nodding cadence (our 2009B approach).
+% By tracking the total offset applied to images, we see that individual 2007B images have sky uncertainties of 2.7\% in $J$ (2.4\% in $K_s$) compared to 2.0\% in 2009B.
+% Simply nodding the telescope across 1\arcdeg--2\arcdeg increases sky uncertainty by $\sim 1.5$ times (see \Fig{nodding_stationary_skyvar_skyfrac}), setting the lower limit accuracy on any sky-target nodding approach.
+% Spending more time on disk (up to eight minutes, as in 2007B) is valid to conserve nodding overheads.
+% Note that with fewer visits to sky, additional sky images must be made in each visit so that real-time sky flats of $\sim10^5$~ADU can be built in windows of 30~minutes or less.
+
+% We do recommend employing the randomized sky field selection used in 2009B.
+% This nodding pattern was originally intended to marginalize over various possible sky shapes, theoretically producing less biased (flatter) median sky images.
+% Instead we find that sky backgrounds, on the scales of WIRCam fields, are dominated by high frequency shape variations on the order of 0.2\% of the sky brightness that are caused either by sky glow or instrumental backgrounds.
+% This pattern is nonetheless useful for producing sky flats with as little correlated sky and astronomical light as possible.
+
+% Absolutely essential is the adoption of \emph{real-time} sky flats.
+% Dome and twilight flats, as adopted in the CFHT/I'iwi pipeline do not recover large scale illumination, nor small scale detector structure (see \Fig{domeflatratio}).
+% We also see that sky flats built from abundant data over a single queue run fail to capture the variability of the WIRCam flat field function, as evidenced by evolution in the shapes of frames TODO.
 
 \bigskip We wish to thank Loic Albert and Karun Thanjavur from CFHT for their help with WIRCam I'iwi data products and procedures.
 J.S. and S.C. acknowledge support through respective Graduate Scholarship and Discovery grants from the Natural Sciences and Engineering Research Council of Canada.
