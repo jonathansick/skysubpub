@@ -197,10 +197,10 @@ PSF reports the distribution seeing as measured from the full width at half maxi
         & & & & $\frac{T_\mathrm{int}}{\mathrm{field}}$ & $T_\mathrm{exp}$ & Eff. & $\mu_\mathrm{sky}$ & \multicolumn{3}{c}{PSF FWHM (arcsec)} \\ \cline{9-11}
     Semester & Band & $N_\mathrm{disk}$ & ST Nods & (min) &  (s) &  (\%) & (mag/arcsec$^2$) & 25th  & 50th & 75th \\
     \hline
-    \multirow{2}{*}{2007B} & $J$ & \multirow{2}{*}{27} & [S$^3$T$^8$S$^3$]$^{2}$S$^3$ & 12.5 & 47 & 49 & (14.9, 15.3) & 0.68 & 0.75 & 0.84 \\
-     & $K_s$ &  & [S$^5$T$^{13}$S$^5$]${^2}$S$^5$ & 10.8 & 25 & 42 & (13.2, 13.6) & 0.60 &  0.65 & 0.73 \\
+    \multirow{2}{*}{2007B} & $J$ & \multirow{2}{*}{27} & [S$^3$T$^8$]$^{2}$S$^3$ & 12.5 & 47 & 49 & (14.9, 15.3) & 0.68 & 0.75 & 0.84 \\
+     & $K_s$ &  & [S$^5$T$^{13}$]${^2}$S$^5$ & 10.8 & 25 & 42 & (13.2, 13.6) & 0.60 &  0.65 & 0.73 \\
      \hline
-     \multirow{2}{*}{2009B} & $J$ & \multirow{2}{*}{12} & \multirow{2}{*}{[ST$^2$S]$^{20}$S} & \multirow{2}{*}{13.3} & \multirow{2}{*}{20} & \multirow{2}{*}{26} & (14.3, 14.6), (15.1, 15.3) & 0.61 & 0.69 & 0.83 \\
+     \multirow{2}{*}{2009B} & $J$ & \multirow{2}{*}{12} & \multirow{2}{*}{[ST$^2$]$^{20}$S} & \multirow{2}{*}{13.3} & \multirow{2}{*}{20} & \multirow{2}{*}{26} & (14.3, 14.6), (15.1, 15.3) & 0.61 & 0.69 & 0.83 \\
       & $K_s$ & & & & & & (13.1, 13.4) & 0.60 & 0.66 & 0.76 \\
     \end{tabular}
 \end{table*}
@@ -287,7 +287,7 @@ This has two ramifications: the sky level sampled at a sky field \emph{will not}
 
 This resulted in three principle changes to observing strategy. First, we chose to minimize latency between sky and target observations with a ST$^2$S pattern. That is, each target observation was directly paired with a sky observation taken within 1.5 minutes (\Fig{sky_target_lag}).
 
-Second, we also increased the number of repetitions on each field, so that each field is observed 40 times in each band in a [ST$^2$S]$^{20}$S pattern. This repetition enables averaging over spatial sky background structures on the scale of WIRCam fields.
+Second, we also increased the number of repetitions on each field, so that each field is observed 40 times in each band in a [ST$^2$]$^{20}$S pattern. This repetition enables averaging over spatial sky background structures on the scale of WIRCam fields.
 
 Finally, we employ a randomized sky-targeting nodding pattern where no sky field is used repeatedly for a disk field.
 In order to maintain rapid telescope nods, only northern sky fields serviced the northern disk, and similarly for the southern fields; the maximum offset on the sky was 3\arcdeg\ (see \Fig{sky_target_dist}).
@@ -355,8 +355,8 @@ The \androids\ WIRCam pipeline then follows the steps described below.
 Our ANDROIDS/WIRCam reductions begin by unifying the World Coordinate System across the dataset with \sw{Scamp} \citep{Bertin:2006}.
 Scamp matches stars in Source Extractor \citep{Bertin:1996} catalogs of each WIRCam \texttt{*p.fits} frame both internally (to $\sigma_\mathrm{int}=0\farcs 10$), and against the 2MASS Point Source Catalog \citep{Skrutskie:2006} to a precision of $\sigma_\mathrm{ref}=0 \farcs 15$.
 % Values obtained from Scamp XML output
-By processing all 4286 frames in the \androids /WIRCam survey simultaneously, SCAMP allows us to produce an accurate and internally consistent coordinate frame for our mosaic.
-Scamp handles this data volume gracefully provided we cull the input star catalogs for stars with $S/N > 100$, and by using the \texttt{SAME\_CRVAL} astrometry assumption that the WIRCam focal plane geometry is stable.
+By processing all 4286 frames in the \androids /WIRCam survey simultaneously, \sw{SCAMP} allows us to produce an accurate and internally consistent coordinate frame for our mosaic.
+\sw{SCAMP} handles this data volume gracefully provided we cull the input star catalogs for stars with $S/N > 100$, and by using the \texttt{SAME\_CRVAL} astrometry assumption that the WIRCam focal plane geometry is stable.
 
 The next steps are flat fielding and median sky subtraction.
 For flat fielding, we apply flat field frames built from sky images (sky flats), as opposed to the dome flats and twilight sky flats employed in the \iiwione\ pipeline.
