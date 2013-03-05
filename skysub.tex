@@ -106,10 +106,10 @@ A proper calibration of NIR stellar population synthesis models \cite[\eg][Charl
 
 Our remedy for both understanding the structure of M31, and more fundamentally to understand NIR stellar populations, is to survey the entire bulge and disk ($R \leq 22$~kpc) of M31 in both resolved and integrated stellar light at $J$ and $K_s$ wavelengths.
 In doing so, we can directly relate a NIR stellar population's decomposition in the colour-magnitude plane to the panchromatic SED of M31.
-Such a calibration could be made with other galaxies, but M31 is unique in its proximity so that even ground-based instrumentation can resolve its bright stellar population
+Though such a calibration could be made with other galaxies, M31 is unique in its proximity so that even ground-based instrumentation can resolve its bright stellar population
 For reference, $1\arcsec = 3.7~\mathrm{pc}$ across the disk of M31 \citep[we adopt $D_\mathrm{M31} = 785$~kpc,][]{McConnachie:2005}.
 
-A wealth of datasets exist for M31, but none provide simultaneous observations of M31's resolved and integrated NIR light.
+A wealth of datasets exist for M31, however, none provide simultaneous observations of M31's resolved and integrated NIR light.
 The best resource for resolved stellar populations across the entire disk of M31, to date, is the Local Group Galaxy survey \cite[LGGS,][]{Williams:2003,Massey:2006}.
 This survey, although covering the $UBVRI$ wavelengths, does not extend to the $JHK$ NIR wavelengths most contentious for stellar population models.
 Advancing our view of M31 to NIR wavelengths, \cite{Beaton:2007} assembled a 2.8\arcdeg\ $JHK_s$ mosaic of M31 with the 2MASS 6X program.
@@ -421,7 +421,7 @@ An alternative design choice assumes that WIRCam's illumination function and det
 Here the objective is to make many sky flats that reflect the real-time flat field function---we call these Real-Time Sky Flats.
 Our first real-time sky flat, labelled \texttt{FW100K}, is designed such that the pool of sky images reaches cumulative sky levels of at least 100,000 ADU, or that the time span from first to last sky integration be no longer than two hours.
 Properties of these sky flats---the number of images required to build them, and the width of the windows they cover---are shown in \Fig{fw100k_summary}.
-Given the 07B $J$-band ST nodding pattern, 15 sky integrations are accumulated in 50 minute windows, whereas the more frequent nodding in the 09B campaign shortened this window to 20 minutes (but as long as 50--90 minutes in dark sky conditions).
+Given the 07B $J$-band ST nodding pattern, 15 sky integrations are accumulated in 50 minute windows, whereas the more frequent nodding in the 09B campaign shortened this window to 20 minutes (though as long as 50--90 minutes in dark sky conditions).
 The brighter $K_s$ sky calls for just 7--13 integrations in 07B, or 10--20 integrations in the 09B campaign.
 This number of $K_s$ sky samples was accumulated within 10--30 minutes in 07B, or 10--70 minutes in 09B.
 
@@ -811,7 +811,7 @@ Uncorrected, the ensemble of coupled blocks have a mean intensity difference of 
 Scalar sky offsets decrease the differences between overlapping fields to $\sim 0.2\%$.
 
 \Fig{fw100k_medsky_scalar_resid_sbfrac} shows the block-to-block residual differences as a fraction of the local surface brightness.
-Note that throughout the bright inner disk of M31, block-to-block residuals are negligible compared to the disk signal, but at the mosaic periphery ($R\sim 20$~kpc), field-to-field residuals become comparable to, or greater than, the disk surface brightness.
+Note that throughout the bright inner disk of M31, block-to-block residuals are negligible compared to the disk signal, at the mosaic periphery ($R\sim 20$~kpc), field-to-field residuals become comparable to, or greater than, the disk surface brightness.
 The poor fit is driven primarily by diminishing disk signal, rather than poor convergence of sky offsets.
 This can be seen by plotting the magnitude of block-to-block residuals (in units of sky brightness) in \Fig{fw100k_medsky_scalar_resid_skyfrac}.
 There, significant residuals are distributed throughout the disk, rather than the low-SB periphery of the mosaic.
@@ -840,7 +840,7 @@ Differences are presented as a percent of the mean sky level seen by observation
 \centering
 \includegraphics[width=3.5in]{figs/fw100k_medsky/networks/scalar_resid_sbfrac}
 \caption{Map of residual block-to-block surface brightness differences as a fraction of mean local surface brightness, after scalar fitting.
-  This graph mimics the spatial distribution of the 2007B and 2009B WIRCam fields (\Fig{fieldmap}), but the field boxes have been exploded to allow room for lines to connect coupled blocks.
+  This graph mimics the spatial distribution of the 2007B and 2009B WIRCam fields (\Fig{fieldmap}), with the footprints have been exploded to allow room for lines to connect coupled blocks.
 }
 \label{fig:fw100k_medsky_scalar_resid_sbfrac}
 % made with $andpipe/wircam/calibset/mosaic/networkmap.py
@@ -942,8 +942,8 @@ Although the simplex and \sw{Montage} scalar-offset mosaics \emph{appear} equiva
 
 \sw{Montage} is also capable of fitting planar sky offsets to images, which is a tempting solution to the field-to-field discontinuities that persist between scalar-offset blocks.
 The result of planar fitting is shown in \Fig{montage_planar_mosaics}.
-We see that planar sky offsets, in this case, do little to improve the mosaics, but have a dramatic effect on the systematic surface brightness of the mosaic (by more than 1~mag~arcsec$^{-2}$ in the $K_s$ band).
-Planar sky offsets may be amenable for observations acquired in long strips (such as 2MASS or SDSS), but the small and square WIRCam fields do not provide the necessary leverage to prevent systematic error propagation from planar offsets.
+We see that planar sky offsets, in this case, do little to improve the mosaics, and indeed, have a dramatic effect on the systematic surface brightness of the mosaic (by more than 1~mag~arcsec$^{-2}$ in the $K_s$ band).
+Planar sky offsets may be amenable for observations acquired in long strips (such as 2MASS or SDSS), however, the small and square WIRCam fields do not provide the necessary leverage to prevent systematic error propagation from planar offsets.
 \textit{We thus recommend against using planar, or higher-order, sky offsets in wide-field WIRCam mosaics.}
 
 \subsection{Comparison to Spitzer/IRAC Images}
@@ -1017,7 +1017,7 @@ In this section, we attempt to deconvolve the scales of proportional and additiv
 In producing a NIR sky flat, we assert that the mean shape of the NIR sky over a timespan is flat.
 By maximizing the time window we can marginalize over as many sky shapes as possible to produce an unbiased skyflat.
 This notion is embodied in the \texttt{QRUN} sky flats that combine hundreds of sky shapes captured across several days.
-But this also assumes that WIRCam is a \emph{stable} detector over the period of several days; our real-time \texttt{FW100K} sky flats, however, assume that WIRCam is unstable over periods of 30-minutes.
+However, this also assumes that WIRCam is a \emph{stable} detector over the period of several days; our real-time \texttt{FW100K} sky flats, however, assume that WIRCam is unstable over periods of 30-minutes.
 
 A simple test of WIRCam's flatfield stability is to monitor how the real-time \texttt{FW100K} skyflats evolve on scales of hours.
 In \Fig{fw100k_movie} we show percent difference images between \texttt{FW100K} sky flats made at intervals of 15, 30, 60 and 90 minutes after an initial sky flat.
@@ -1070,9 +1070,9 @@ As expected from \Fig{median_sky_images}, \texttt{QRUN} median sky frames have t
 
 Although \texttt{FW100k} sky flats are better than \texttt{QRUN} flats, we can still wonder if the 0.3\% flatness limit of median sky images is a consequence of intrinsic sky shapes or due to limits in the WIRCam flat field accuracy.
 Recall that median sky images are composed of five sky frames taken closest to a disk frame.
-In 2007B, all sky frames were sampled from the same coordinate on the sky, but span a 12~minute window covering sky integrations taken before and after a disk image (for both $J$ and $K_s$ sky-target nods).
+In 2007B, all sky frames were sampled from the same coordinate on the sky, and span a 12~minute window covering sky integrations taken before and after a disk image (for both $J$ and $K_s$ sky-target nods).
 In 2009B, sky frames were sampled from randomly chosen sites along the sky field ring (\Fig{fieldmap}) with a window typically spanning 15 minutes.
-Thus both 2007B and 2009B median sky images span similar time windows, but the 2009B strategy attempts to marginalize over five distinct sites  on the sky (and thus sky shapes) while 2007B median sky images do not.
+Thus both 2007B and 2009B median sky images span similar time windows, although the 2009B strategy attempts to marginalize over five distinct sites  on the sky (and thus sky shapes) while 2007B median sky images do not.
 If the spatial sky glow pattern and WIRCam flatness function were stationary, we expect the instantaneous shape of the sky (in the sky field) to be captured in the 2007B median sky frames, while the 2009B sky frames should marginalize over five random sky shapes and thus be flatter by up to a factor of $1/\sqrt{5}$ (for a Gaussian shape distribution).
 That this \emph{does not} occur indicates either that (a) sky shapes are correlated over 15~minutes and 3\arcdeg\ of sky, (b) sky glow patterns have sufficient temporal variability to be effectively uncorrelated over 15~minute windows across a WIRCam frame so that both observing patterns marginalize over sky shapes equally, or (c) the flatness of median sky images is limited at the 0.3\% level by background variations associated with WIRCam itself over 15~minutes.
 Wide-field movies of the NIR sky \citep{Adams:1996} suggest option (a) to be false.
@@ -1250,7 +1250,7 @@ Given that $\sigma_B$ cannot be reduced, increasing the number of \emph{independ
 Since sky offsets are further biased by any shape errors in blocks (realized as our inability to diminish block-to-block offsets below $\sim~0.1\%$ of sky brightness), we propose that blocks be interlaced by 50\% (so that one detector completely overlaps a detector from an adjacent blocks).
 This interlacing pattern would thus enable the marginalization of shape errors across the entire detector frame.
 By integrating only half the time on each block, the total mosaic could be reproduced with an equivalent integration.
-By doubling the number of blocks, but reducing their total integration time by half, the mosaic could be reproduced with an equivalent net integration time.
+By doubling the number of blocks, each with individually halved exposure times, the mosaic could be reproduced with an equivalent net integration time.
 \todo{Would this scheme increase the uncertainty in the sky level of each block, since there would be only half as many blocks? Then again, we double the number of blocks, so the uncertainty should be unchanged. Verify this.}
 
 \bigskip We wish to thank Loic Albert and Karun Thanjavur, previously from CFHT, for their help with WIRCam I'iwi data products and procedures.
