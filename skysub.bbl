@@ -1,4 +1,4 @@
-\begin{thebibliography}{43}
+\begin{thebibliography}{42}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
@@ -83,12 +83,6 @@
 
 \bibitem[{{de Jong}(1996)}]{de-Jong:1996b}
 {de Jong}, R.~S. 1996, \aap, 313, 377
-
-\bibitem[{{de Jong} {et~al.}(2007){de Jong}, {Seth}, {Radburn-Smith}, {Bell},
-  {Brown}, {Bullock}, {Courteau}, {Dalcanton}, {Ferguson}, {Goudfrooij},
-  {Holfeltz}, {Holwerda}, {Purcell}, {Sick}, \& {Zucker}}]{de-Jong:2007}
-{de Jong}, R.~S., {Seth}, A.~C., {Radburn-Smith}, D.~J., {et~al.} 2007, \apjl,
-  708, L49
 
 \bibitem[{{Dutton} {et~al.}(2005){Dutton}, {Courteau}, {de Jong}, \&
   {Carignan}}]{Dutton:2005}
