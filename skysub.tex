@@ -197,11 +197,11 @@ PSF reports the distribution seeing as measured from the full width at half maxi
         & & & & $\frac{T_\mathrm{int}}{\mathrm{field}}$ & $T_\mathrm{exp}$ & Eff. & $\mu_\mathrm{sky}$ & \multicolumn{3}{c}{PSF FWHM (arcsec)} \\ \cline{9-11}
     Semester & Band & $N_\mathrm{disk}$ & ST Nods & (min) &  (s) &  (\%) & (mag/arcsec$^2$) & 25th  & 50th & 75th \\
     \hline
-    \multirow{2}{*}{2007B} & $J$ & \multirow{2}{*}{27} & [S$^3$T$^8$]$^{2}$S$^3$ & 12.5 & 47 & 49 & (14.9, 15.3) & 0.68 & 0.75 & 0.84 \\
-     & $K_s$ &  & [S$^5$T$^{13}$]${^2}$S$^5$ & 10.8 & 25 & 42 & (13.2, 13.6) & 0.60 &  0.65 & 0.73 \\
+    \multirow{2}{*}{2007B} & $J$ & \multirow{2}{*}{27} & [S$^3$T$^8$]$^{2}$S$^3$ & 12.5 & 47 & 49 & (15.4, 16.7) & 0.68 & 0.75 & 0.84 \\
+     & $K_s$ &  & [S$^5$T$^{13}$]${^2}$S$^5$ & 10.8 & 25 & 42 & (13.4, 14.2) & 0.60 &  0.65 & 0.73 \\
      \hline
-     \multirow{2}{*}{2009B} & $J$ & \multirow{2}{*}{12} & \multirow{2}{*}{[ST$^2$]$^{20}$S} & \multirow{2}{*}{13.3} & \multirow{2}{*}{20} & \multirow{2}{*}{26} & (14.3, 14.6), (15.1, 15.3) & 0.61 & 0.69 & 0.83 \\
-      & $K_s$ & & & & & & (13.1, 13.4) & 0.60 & 0.66 & 0.76 \\
+     \multirow{2}{*}{2009B} & $J$ & \multirow{2}{*}{12} & \multirow{2}{*}{[ST$^2$]$^{20}$S} & \multirow{2}{*}{13.3} & \multirow{2}{*}{20} & \multirow{2}{*}{26} & (15.0, 16.5) & 0.61 & 0.69 & 0.83 \\
+                            & $K_s$ & & & & & & (13.4, 14.3) & 0.60 & 0.66 & 0.76 \\
     \end{tabular}
 \end{table*}
 
@@ -226,30 +226,28 @@ An objective of this study is to determine how observational design can improve 
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=3in]{figs/sky_target_lag}
+\includegraphics[width=\columnwidth]{figs/sky_target_lag}
 \caption{Time latency between target observations and sky field sampling in the 2007B and 2009B WIRCam observing runs.
-The 2009B program was designed to ensure that no disk sample would be removed by more than 1.5 minutes from a sky sample by using a STTS nodding pattern.
-\todo{Update colours}.}
+The 2009B program was designed to ensure that no disk sample would be removed by more than 1.5 minutes from a sky sample by using a STTS nodding pattern.}
 \label{fig:sky_target_lag}
-% made with skyoffsets/obs_run_stats.py
+% made with skysubpub/obs_run_stats.py
 \end{figure}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=3in]{figs/sky_target_dist}
+\includegraphics[width=\columnwidth]{figs/sky_target_dist}
 \caption{Distance between sky and target observations in the 2007B and 2009B WIRCam observing runs.
 The larger nodding distance of 2009B is a consequence of sky ring sampling.
 The maximum nodding distance across the sky ring was purposely set to $\sim 3$\arcdeg\ to avoid excessive time overheads (see \Fig{fieldmap}).
-As such, a given disk field only samples roughly half of the full sky ring.
-\todo{Update colours}.}
+As such, a given disk field only samples roughly half of the full sky ring.}
 \label{fig:sky_target_dist}
-% made with skyoffsets/obs_run_stats.py
+% made with skysubpub/obs_run_stats.py
 \end{figure}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=3.25in]{figs/sky_level_hist}
-\caption{Sky levels observed in the 2007B (red outline) and 2009B (grey filled) programs. \todo{Update colours}.}
+\includegraphics[width=\columnwidth]{figs/sky_level_hist}
+\caption{Sky levels observed in the 2007B and 2009B programs, as applied to each target field.}
 \label{fig:net_sky_level}
 % made with skyoffset/net_sky_level.py
 \end{figure}
@@ -262,7 +260,7 @@ Here M31 is covered with 27 contiguous WIRCam fields out to the optical radius w
 The fields are arranged with at least 1\arcmin\ overlap in declination, and approximately 5\arcmin\ overlap in right ascension.
 The field configuration is shown in \Fig{fieldmap}.
 
-As shown in Table~\ref{tab:obssummary}, each field was integrated for $16\times 47 s = 12.5$ minutes in $J$ and $26\times 25 s = 10.8$ minutes in $K_s$.
+As shown in Table~\ref{tab:obssummary}, each field was integrated for $16\times 47~\mathrm{s} = 12.5$ minutes in $J$ and $26\times 25~\mathrm{s} = 10.8$ minutes in $K_s$.
 These integrations are sufficiently deep for resolved stellar photometry to reach at least 1~mag below the tip of the red giant branch, a crucial requirement for decomposing the contributions of red giant and asymptotic giant branch stars to the NIR light.
 
 The 2007B ST nodding strategy was motivated by a canonical understanding of NIR sky behaviour, since ST nodding sky subtraction had never been attempted on this scale before.
