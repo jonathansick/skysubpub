@@ -49,7 +49,8 @@
     % \IfFileExists{vc.tex}{\slugcomment{Version \VCRevision\ by \VCAuthor\ on \VCDateTEX , \VCTime.}
 % }{\slugcomment{Revision unknown.}}
 \slugcomment{Submitted to AJ.}
-\title{ANDROIDS I. New Insights in Wide-Field Near-IR Surface Photometry\\ with the Andromeda Galaxy (M31)}
+% \title{ANDROIDS I. New Insights in Wide-Field Near-IR Surface Photometry\\ with the Andromeda Galaxy (M31)}
+\title{Andromeda Optical and Infrared Disk Survey \sc{i}.\\ New Insights in Wide-Field Near-IR Surface Photometry}
 \author{Jonathan Sick, Stéphane Courteau}
 \affil{Department of Physics, Engineering Physics \& Astronomy, Queen's University, Kingston, Ontario, K7L 3N6 Canada}
 \email{jsick@astro.queensu.ca}
@@ -169,8 +170,8 @@ Central blue fields are the 27 disk fields observed in 2007B, surrounded by 4 sk
 Red fields at center are the 12 disk fields observed in 2009B.
 The red ring of 53 fields is the 2009B sky sampling ring.
 The dashed yellow ellipse marks the M31 disk at $R=20$ kpc along the major axis.
-Coordinates are centered on the nucleus of M31 with North up, and East is left.
-Plotted against a star count map of M31 produced with the Isaac Newton Telescope, from \cite{Ibata:2005}, which shows that our sky fields lie beyond the stellar content of M31's disk.}
+Coordinates are centered on the nucleus of M31 with North up, and East is left.}
+% Plotted against a star count map of M31 produced with the Isaac Newton Telescope, from \cite{Ibata:2005}, which shows that our sky fields lie beyond the stellar content of M31's disk.}
 \label{fig:fieldmap}
 % skysubpub/chart.py
 \end{figure}
@@ -783,7 +784,7 @@ The sky offsets are indeed distributed within the uncertainty budgeted by $\sigm
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figs/fw100k_medsky/offsetratiomap}
-\caption{Acceptability of $J$ and $K_s$ scalar sky offsets between blocks, as measured by the ratio of $\Delta_B/\sigma_{\Delta_F}$, plotted as histograms and field maps. Black and dashed-red histograms distinguish blocks observed in 2007B and 2009B, respectively. Scalar sky offsets required for blocks are consistent with the sky level uncertainties of single frames, given sky-target nodding sky subtraction.}
+\caption{Acceptability of $J$ and $K_s$ scalar sky offsets between blocks, as measured by the ratio of $\Delta_B/\sigma_{\Delta_F}$, plotted as histograms and field maps. Shaded blue and red-outlined histograms distinguish blocks observed in 2007B and 2009B, respectively. Scalar sky offsets required for blocks are consistent with the sky level uncertainties of single frames, given sky-target nodding sky subtraction.}
 \label{fig:offset_ratio_map}
 % made with wircam/calibset/mossaic/offsetratiomap.py
 \end{figure}
@@ -906,8 +907,8 @@ This also better explains \Tab{offset_hierarchy}.
 \centering
 \includegraphics[width=\columnwidth]{figs/nodding_sationary_skyvar_skyfrac}
 \caption{Comparison of sky variation distribution functions measured as sky offset amplitudes and between pairs of sky images for $J$ (top) and $K_s$ (bottom) bands.
-Mean and 95\% levels of sky variation are plotted as solid and dashed red lines, respectively.
-Mean and 95\% levels of sky offsets in the 2007B semester are plotted as large green circles and X symbols, respectively, while the same for the 2009B semester is plotted as orange symbols where sky latency was constrained to 1.2~minutes in both bands.}
+Mean and 95\% levels of sky variation are plotted as solid and dashed black lines, respectively.
+Mean and 95\% levels of sky offsets in the 2007B semester are plotted as large blue circles and X symbols, respectively, while the same for the 2009B semester is plotted as red symbols where sky latency was constrained to 1.2~minutes in both bands.}
 \label{fig:nodding_stationary_skyvar_skyfrac}
 % python $andpipe/wircam/skyanalysis/nodding_stationary_skyvariability.py
 \end{figure}
