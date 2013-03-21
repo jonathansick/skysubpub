@@ -335,11 +335,11 @@ Simply using sky flats eliminates these artifacts.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=3in]{figs/flatratio_09BQ01_Ks_twocol}
+\includegraphics[width=3.5in]{figs/flatratio_09BQ01_Ks}
 \caption{Difference image between the 09BQ01 $K_s$ (queue run) sky flat and the \texttt{domeflat\_8302B\_20090728HST143302\_Ks} dome flat used in the \iiwione\ pipeline, in percent.
-Using the median night sky illumination over a WIRCam queue run, rather than a dome lamp, results not only in 2\% edge-to-edge different in the large scale WIRCam illumination function, but also in different characterizations of gain structure in the WIRCam detector amplifiers (the 32 horizontal bands in each of the four WIRCam detectors).}
+Using the median night sky illumination over a WIRCam queue run, rather than a dome lamp, results not only in $>2$\% edge-to-edge difference in the large scale WIRCam illumination function, but also in different characterizations of gain structure in the WIRCam detector amplifiers (the 32 horizontal bands in each of the four WIRCam detectors).}
 \label{fig:domeflatratio}
-% made with skysubpub/flatratio.py
+% made with wircam/skyflat/plot/flatratio.py
 \end{figure}
 
 \vspace{1em}
@@ -834,7 +834,7 @@ Our discussion in \Sec{skyflatstability} indicates that flat field variability, 
 scalar sky offsets]{Coupled block intensity differences and residual intensity differences after application of scalar sky offsets: 25th, 50th and 75th percentiles of distribution.
 Differences are presented as a percent of the mean sky level seen by observations in each band.
 }
-\input{tables/fw100k_medsky_scalar_resid_diffs}
+\input{tables/fw100k_medsky_scalar_resid_diffs.tex}
 \label{tab:fw100k_medsky_scalar_resid_diffs}
 % $andpipe/wircam/calibset/mosaic/residuals_table.py
 \end{table}
@@ -923,7 +923,7 @@ Sky offsets produce a mosaic that is rigorously optimal only in the sense of fie
 
 \begin{figure}[t]
     \centering
-        \includegraphics[width=3.5in]{figs/sbdiff/simplex_scalarmontage_comp.pdf}
+        \includegraphics[width=3.5in]{figs/sbdiff/simplex_scalarmontage_comp}
         \caption{Surface brightness difference maps between our simplex scalar-fit mosaics (\Fig{scalar_mosaics}) and \sw{Montage} scalar-fit mosaics.}
     \label{fig:simplex_scalarmontage_comp}
     % make with skysubpub/diffplots.py
@@ -937,7 +937,7 @@ Although the simplex and \sw{Montage} scalar-offset mosaics \emph{appear} equiva
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=3.5in]{figs/montage_planar_mosaics.pdf}
+\includegraphics[width=3.5in]{figs/montage_planar_mosaics}
 \caption{Montage-generated $J$ and $K_s$ maps. Compare to the equivalent simplex maps, \Fig{scalar_mosaics}. Pixels with negative surface intensity, after sky offset correction, are masked with white.}
 \label{fig:montage_planar_mosaics}
 % make with skysubpub/mosaic_plots.py and skyoffset/montageoffsets.py
@@ -973,7 +973,7 @@ Evidently, our scalar sky offset mosaics are not systematically reliable beyond 
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/bootstrap_sb_rms.pdf}
+\includegraphics[width=\columnwidth]{figs/bootstrap_sb_rms}
 \caption{Mosaic maps of bootstrap RMS surface brightness in $J$ (left) and $K_s$ (right).
 White contours identify RMS levels of 0.05 (solid), 0.1 (dashed) and 0.2 (dash-dot) mag arcsec$^{-2}$.}
 \label{fig:bootstrap_sb_rms}
@@ -1051,7 +1051,7 @@ Thus sky flat evolution does appear driven by changes in the large scale detecto
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/fw100k/fw100k_globalamp_timeseries_55136_Ks.pdf}
+\includegraphics[width=\columnwidth]{figs/fw100k/fw100k_globalamp_timeseries_55136_Ks}
 \caption{Time evolution of the mean flat field level of amplifier bands in the four WIRCam detectors in \texttt{FW100K} sky flats made over three hours.
 Amplifier bands are colour-coded according to their order on the array: red lines at the bottom, green in the middle, and blue at the top.
 Although the levels of individual amplifiers differ by 10\%, their order is consistent, indicating that amplifier gain is extremely stable.
