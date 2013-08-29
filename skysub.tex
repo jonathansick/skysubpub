@@ -352,7 +352,17 @@ The \androids\ WIRCam pipeline then follows the steps described below.
 \subsection{Reduction outline}
 \label{sec:reduction_outline}
 
-Our ANDROIDS/WIRCam reductions begin by unifying the World Coordinate System across the dataset with \sw{SCAMP} \citep{Bertin:2006}.
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figs/pipeline_flowchart}
+\caption{Flowchart representation of the \androids\ WIRCam pipeline, from receipt of CFHT \iiwione\ data products to rendering of M31 mosaics.
+\todo{Label article sections within the flowchart (once known).}}
+\label{fig:flowchart}
+% made with Illustrator
+\end{figure*}
+
+An overview of the \androids\/WIRCam pipeline is illustrated in \Fig{flowchart}.
+In words, our reductions begin by unifying the World Coordinate System across the dataset with \sw{SCAMP} \citep{Bertin:2006}.
 Scamp matches stars in Source Extractor \citep{Bertin:1996} catalogs of each WIRCam \texttt{*p.fits} frame both internally (to $\sigma_\mathrm{int}=0\farcs 10$), and against the 2MASS Point Source Catalog \citep{Skrutskie:2006} to a precision of $\sigma_\mathrm{ref}=0 \farcs 15$.
 % Values obtained from Scamp XML output
 By processing all 4286 frames in the \androids /WIRCam survey simultaneously, \sw{SCAMP} allows an accurate and internally consistent coordinate frame for our mosaic.
