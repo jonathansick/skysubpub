@@ -498,15 +498,14 @@ In \Sec{skyflatstability} we follow up on this operational discussion to conside
 \section{Photometric calibration}
 \label{sec:photocal}
 
-Since the sky flats used by this \androids/WIRCam data set differ from the dome flats employed by the \iiwione\ pipeline by 2\% in edge-to-edge level (see \Fig{domeflatratio}), new photometric zeropoints must be established.
-The Two Micron All Sky Survey (2MASS) Point Source Catalog (PSC) \citep{Skrutskie:2006} provides a convenient photometric system to bootstrap against.
-WIRCam pointings ($20\arcmin \times 20\arcmin$) in this survey contain typically $\sim 500$ 2MASS stars.
-% see python $andpipe/wircam/calibset/photcal/tmass_source_count.py
+Our flat field procedure necessitates a revision of photometric zeropoints.
+Since our program is observed in short ($\sim 1$ hour) blocks in CFHT's queue service observing, we do not have the necessary airmass baseline to solve for nightly zeropoint and atmospheric extinction terms for each band.
+Instead, we estimate photometric zeropoints by directly bootstrapping against sources from the Two Micron All Sky Survey (2MASS) Point Source Catalog (PSC) \citep{Skrutskie:2006}.
 Although these are not standards, the ensemble of 2MASS stars may be treated as such.
-Since the disk of M31 is crowded, and 2MASS has poor resolution ($1\arcsec$~per pixel), we consider 2MASS point source measurements to be unreliable on the disk.
-Instead, all zeropoints are measured against sky images, and those calibrations are applied to paired disk images (analogous to the median background subtraction procedure, described in Section \ref{sec:mediansky}).
+Since the disk of M31 is crowded, and 2MASS has poor resolution ($1\arcsec$~per pixel), we choose to directly estimate zeropoints only in the sky images.
+Then moving window average of sky image zeropoint are applied to paired disk images (analogous to the median background subtraction procedure, described in Section \ref{sec:mediansky}).
 
-Photometry of 2MASS stars in the uncrowded sky fields is obtained with Source Extractor \citep{Bertin:1996}.
+Specifically, instrumental photometry of stars in the uncrowded sky fields is obtained with Source Extractor \citep{Bertin:1996}.
 We use the \texttt{AUTO} photometry mode to capture the full stellar light without using aperture corrections.
 Objects in the 2MASS PSC are matched to Source Extractor detections by position using J. Sick's \sw{Mo'Astro}\footnote{\url{http://moastro.jonathansick.ca}} Python package, that manages the full 2MASS PSC in a MongoDB database.
 The 2MASS PSC contains many galaxies, and many 2MASS sources are saturated in our deeper WIRCam images.
@@ -514,29 +513,26 @@ Thus we select stars with $m_J < 14$ or $m_{K_s} < 15$ magnitudes, and stars wit
 Additionally, we select sources with $J-K_s < 0.8$ (typical of foreground Milky Way stars) as we observe larger zeropoint residuals in redder stars.
 After filtering, typically 200 matched 2MASS sources remain in typical WIRCam images.
 
-To fit a photometric zeropoint, we bootstrap directly against 2MASS photometry visible in sky images.
-This practice obviates any airmass dependence, since each fitted zeropoint, $m_0$ is instantaneous.
-Given sample of matching 2MASS and instrumental photometry, the instrumental zeropoint is estimated as median:
+Given sample of matching 2MASS and instrumental photometry (in ADU) in a specific sky image, an instrumental zeropoint is estimated as median:
 
 \begin{equation}
   \label{eq:photcal}
-  m_0 = \langle m_\mathrm{2MASS} + 2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) - A (J-K_s)_\mathrm{2MASS} \rangle.
+  m_0 = \langle m_\mathrm{2MASS} + 2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) \rangle.
 \end{equation}
 
-The $A$ term permits a linear colour transformation between the 2MASS and WIRCam bandpasses.
-Although we could fit a colour transformation coefficient $A$ for each image, the short $J-K_s$ colour baseline makes such measurements unreliable.
-Instead we adopt $A_J = 0.05$ and $A_{K_s} = -0.05$ (K. Thanjuvar, priv.\ comm.) based on modelling stellar spectra with the 2MASS and CFHT/WIRCam transmission functions.
-% Mike notes: more important is: what is uncertainty of A? If 20%, then uncertainty in colour transformation is 0.02 mag, which is muss less dramatic.
-% Unfortunately the uncertainty of A cannot be assessed right now.
-For typical M31 RGB stars with $J-K_s\sim 1$, this colour transformation is a 0.1~mag effect.
+We do not find a trend in zeropoint vs $J-K_s$ colour index in our own data.
+Hence, following practice at CFHT, we assume that there is no colour transformation between 2MASS and WIRCam bandpasses.
+Internal testing at CFHT with synthetic photometry indicates that colour transformation coefficients may be $A_J = 0.05$ and $A_{K_s}=-0.005$ (K. Thanjuvar, priv.\ comm.)
+For typical M31 RGB stars with $J-K_s\sim 1$, this colour transformation would be a $< 0.1$~mag effect.
 
 Given that 2MASS stars in each image have photometric uncertainties $0.05 \lesssim \sigma_{\mathrm{2MASS~mag}} \lesssim 0.3$, the typical statistical zeropoint uncertainty, $\sigma_{m_0}$, is 0.1~mag in a single image.
-% TODO review the photometric error calculation. Does it not scale as 1/sqrt(N) stars? I guess I'm looking at the sigma of the residuals here.
-Since $m_0$ is fit for sky images, zeropoints for science images are interpolated as the median of a sliding window of sky images large enough for the statistical uncertainty of the median $m_0$ to be reduced below 0.01 mag.
+Again, since $m_0$ is fit for sky images, zeropoints for science images are interpolated as the median of a sliding window of sky images large enough for the statistical uncertainty of the median $m_0$ to be reduced below 0.01 mag.
 % see $andpipe/wircam/calibset/photcal/singleimg/uncertainty_dists.py for photometry properties 
 
 \subsection{Detector-to-Detector zeropoint consistency}
 \label{sec:detector_zp}
+
+\todo{Move this section to evidence for sky flat validity?}
 
 Our sky flats are designed to unify the zeropoints of the four WIRCam detectors by scaling according to the modal background levels seen on each detector (see~\Sec{flats}).
 % To prove the chip-to-chip zeropoint consistency generated by the flat fielding procedure, we can use our photometric calibration mechanics.
