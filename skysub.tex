@@ -390,89 +390,31 @@ Using the median night sky illumination over a WIRCam queue run, rather than a d
 \section{Sky Flat Fielding and Median Sky Subtraction}
 \label{sec:flats}
 
-As we mentioned previously in \Sec{reduction_outline}, dome flats fail to properly calibrate WIRCam data (see \Fig{flattenedimage_comparison}).
+As we mentioned previously in \Sec{reduction_outline}, dome flats fail to properly calibrate dust, amplifier gain and surface defects in WIRCam data (see \Fig{flattenedimage_comparison}).
 Sky flats are an appropriate alternative, both because of the abundant background (any NIR imaging program can use its own images to build sky flats), and because sky flats directly match the illumination path and colour of observations.
-Sky flats also have the advantage of being contemporaneous with observations: if the WIRCam flat field is variable, the sky flats can be built to track such variability.
+Sky flats also have the advantage of being contemporaneous with observations: if the WIRCam flat field is variable, then sky flats can be built to track such variability.
 This is a distinct advantage over dome flats, which CFHT builds at the beginning of every WIRCam queue run, or even twilight flats that can only be built once per night.
-% A focus of this section will be devoted to identifying intrinsic variability in the WIRCam flat field.
-% We return to the variability of WIRCam flat fields in Section~\ref{sec:skyflatstability}.
 
-Despite these advantages, sky flats are built on two assumptions that limit their accuracy.
-First, we must assume that atmospheric sky glow is uniform across the detectors.
-Second, we assume that all flux in a \emph{dark subtracted} frame is proportional to the intrinsic flat field function.
-The latter is intrinsically false: wide-field images of the near-infrared night sky show that sky glow has rich spatial and temporal variations.
-This effect can be negated by marginalizing over a large number of sky images.
-The 2009B observing program even took this marginalization process further by sampling pseudo-random sites on the sky while building sky flats.
-% TODO talk about thermal component now.
-% A flaw of sky flat fielding is that thermal background from the telescope and detector cannot be separated from illumination on the chip (unlike in the lamp on/off dome flat procedure).
-Ideally, one would subtract any thermal background from sky images before constructing a sky flat frame, but this cannot be done.
-Thus sky flat fielding implicitly makes the naive assumption that all background signal in a blank sky image is proportional to the WIRCam flat field function.
-% what about darks? don't darks remove a majority of the thermal background?
-% also what about flattness of the sky background?
+Despite these advantages, sky flats are built on the assumption that all background illumination in a night sky image is proportional to the flat field function.
+TODO
 
-The one degree of control that can be exerted over sky flat construction is the time window that sky images are drawn from.
-Using wide window, the length of a queue observing run, asserts confidence that the intrinsic WIRCam flat field function is stable over several days.
-Such a window also 
+A second assumption built into sky flat construction is that sky glow is uniform across the detector.
+Wide-field images of the near-infrared night sky show that sky glow has rich spatial and temporal variations.
+However, by marginalizing over a large number of sky images, any illumination bias in the sky can be mitigated.
+The 2009B observing program even took this marginalization process further by sampling pseudo-random sites on the sky while building sky flats. One degree of control that can be exerted over sky flat construction is the time window that sky images are drawn from.
+Using a wide window, the length of a queue observing run, asserts confidence that the intrinsic WIRCam flat field function is stable over several days, while producing the statistically flattest average sky illumination pattern.
+Shorter windows make the opposite assertion that the WIRCam flat field is stable, and that any bias in sky shapes can be tolerated.
 
-\subsection{Sky Flat Designs}
-\label{sec:flatdesign}
-
-Producing sky flats is as simple as median-combining integrations of blank sky. 
-The \androids\ sky-target nodding observing strategy provides an abundance of `sky' images for this purpose.
-A fundamental decision is the definition of the window of sky integrations that are combined into a sky flat.
-Here we present two sky flat designs: labelled \texttt{QRUN} and \texttt{FW100K}.
-
-The first choice assumes that flat fields are stable over a queue run (a continuous installation period of WIRCam).
-In this case, all sky integrations taken during a queue run, and through a given filter, are combined into a \texttt{QRUN} sky flat.
-This choice is reasonable since dust and optical geometry should be stable during a continuous mounting period.
-Further, choosing a large pool of sky images ensures high \sn\, and helps to marginalize over the shape of the background.
-For the \androids\ program, \texttt{QRUN} skyflats are built from 25--637 sky integrations over several nights (see \Tab{qrunflattable}).
-
-\begin{table}[t]
-\centering
-\caption{Properties of \texttt{QRUN} sky flats constructed for each CFHT/WIRCam Queue Run (\texttt{QRUNID}).}
-\label{tab:qrunflattable}
-
-\begin{tabular}{cccc}
-\hline
-Filter & QRUNID & $N$ images & $N$ nights \\
-\hline
-$J$ & 07BQ01 & 24 & 6 \\
-$J$ & 07BQ03 & 141 & 9 \\
-$J$ & 07BQ05 & 43 & 4 \\
-$J$ & 09BQ01 & 111 & 10 \\
-$J$ & 09BQ03 & 55 & 3 \\
-$J$ & 09BQ08 & 396 & 10 \\
-\hline
-$K_s$ & 07BQ01 & 35 & 2 \\
-$K_s$ & 07BQ03 & 25 & 1 \\
-$K_s$ & 07BQ05 & 156 & 6 \\
-$K_s$ & 07BQ07 & 133 & 3 \\
-$K_s$ & 09BQ01 & 113 & 10 \\
-$K_s$ & 09BQ03 & 55 & 3 \\
-$K_s$ & 09BQ08 & 637 & 8 \\
-\hline
-\end{tabular}
-\end{table}
-
-An alternative design choice assumes that WIRCam's illumination function and detector gain structure is unstable even over short periods.
-Here the objective is to make many sky flats that reflect the real-time flat field function---we call these Real-Time Sky Flats.
-Our first real-time sky flat, labelled \texttt{FW100K}, is designed such that the pool of sky images reaches cumulative background levels of at least 100,000 ADU, or that the time span from first to last sky integration be no longer than two hours.
-Properties of these sky flats---the number of images required to build them, and the width of the windows they cover---are shown in \Fig{fw100k_summary}.
+We investigate three sky flat designs in this study, labelled \texttt{QRUN}, \texttt{NIGHT} and \texttt{FW100K}.
+\texttt{QRUN} flats are built from all sky integrations taken during a queue run, and through a given filter.
+For the \androids\ program, 25--637 (typically $\sim 140$) sky images, obtained over a sequence of a $\leq 10$ days, are composed into a \texttt{QRUN} flat.
+\texttt{NIGHT} flats are from all sky integration taken during a single night, through a given filter.
+Because observations are observed in queue service observing mode, the ensemble of sky images would typically sample 0.5--3 hours of a night.
+Last, we introduce \emph{real-time} sky flats that are rapidly updated throughout the night in case the WIRCam illumination function and gain structure is unstable.
+\texttt{FW100K}, is designed such that the pool of sky images reaches cumulative background levels of at least 100,000 ADU, or that the time span from first to last sky integration be no longer than two hours.
 Given the 07B $J$-band ST nodding pattern, 15 sky integrations are accumulated in 50 minute windows, whereas the more frequent nodding in the 09B campaign shortened this window to 20 minutes (though as long as 50--90 minutes in dark sky conditions).
 The brighter $K_s$ sky calls for just 7--13 integrations in 07B, or 10--20 integrations in the 09B campaign.
 This number of $K_s$ sky samples was accumulated within 10--30 minutes in 07B, or 10--70 minutes in 09B.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figs/fw100k/fw100k_summary}
-\caption{Characteristics of \texttt{FW100K} real-time sky flats, meeting criteria of at least 100,000 sky ADU, and spans of less than two hours.
-Distributions of 07B sky flats plotted as red outlined histograms, 09B sky flats are plotted as shaded histograms.
-The number of sky images required to build a sky flat (top), and the time span from first to last sky image depends on sky brightness and the sky-target nodding pattern (bottom).
-Real-time sky flats can consequently be refreshed in as little as 10 minutes, or span the order of an hour.}
-\label{fig:fw100k_summary}
-% $andpipe/wircam/skyflat/plot/fw_property_hist.py 
-\end{figure}
 
 \subsection{Building Sky Flats}
 \label{sec:flatbuilding}
