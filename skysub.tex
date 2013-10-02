@@ -416,10 +416,16 @@ Given the 07B $J$-band ST nodding pattern, 15 sky integrations are accumulated i
 The brighter $K_s$ sky calls for just 7--13 integrations in 07B, or 10--20 integrations in the 09B campaign.
 This number of $K_s$ sky samples was accumulated within 10--30 minutes in 07B, or 10--70 minutes in 09B.
 
-\subsection{Building Sky Flats}
+\subsection{Implementation of Sky Flat Fielding and Median Background Subtraction}
 \label{sec:flatbuilding}
 
-Given the ensemble of sky integrations, our next task is to scale the intensity of each image.
+Here we describe the technical details of sky flat fielding and median background subtraction steps.
+Recall from \Fig{flowchart} that the inputs of flat field construction are `de-flattened' images that retain the linearity and dark-current subtraction of the \iiwione\ pipeline.
+
+\subsubsection{Sky Flat Construction}
+
+According to the type of sky flat being constructed, \texttt{QRUN}, \texttt{NIGHT} and \texttt{FW100K}, ensembles of sky images are formed.
+Given an ensemble of sky integrations, our next task is to scale the intensity of each image.
 This scaling obeys three requirements: 1) each image frame in the median stack is at the same level, 2) each WIRCam detector has a unified zeropoint, and 3) the sky flat across the whole array is flux normalized.\footnote{It is also acceptable to establish chip-to-chip zeropoint offsets using differential 2MASS photometry, rather than from background surface brightness. In \Sec{detector_zp} we establish the equivalence of the two methods.}
 This scaling is determined by the median pixel level measured on each detector for each sky integration---let us denote these median levels as $\alpha_{i,j}$ for the $i$th sky image's level in detector $j$, $j=1, 2, 3, 4$.
 To avoid bias in the background estimate, we mask any pixels that do not sample blank sky.
@@ -437,6 +443,7 @@ We also note systematic differences in spectral response of WIRCam detectors in 
 The flat itself is built by median combination.
 Median combination of a stack of hundreds of $2048\times2048$ pixel images, each with a weightmap masking astronomical sources, is computationally intensive.
 A convenient solution is to use \sw{Swarp} \citep[an image-mosaicing software package,][]{Bertin:2002} in a mode that combines images pixel-to-pixel.
+Once the sky flat is built, it is divided from the appropriate science images to produce a flat-fielded data set.
 
 \begin{figure}[t]
 \centering
@@ -447,25 +454,23 @@ A convenient solution is to use \sw{Swarp} \citep[an image-mosaicing software pa
 % $andpipe/wircam/skyflat/plot/chip_zp_diff.py
 \end{figure}
 
-\section{Median sky image subtraction}
+\subsubsection{Median background subtraction}
 \label{sec:mediansky}
 
 Since M31 is much larger than individual WIRCam fields, background is subtracted (to first order) using the background levels found in contemporary sky images.
 Section~\ref{sec:Observations} described the sky-target nodding sequences chosen for the 2007B and 2009B observing campaigns. 
-Although a scalar background level can be estimated from a sky image, and subtracted from the paired target images, it is common to construct a median sky image, the same size as the WIRCam frames, and subtract this 2D image from target images.
+Although a scalar background level can be estimated from a sky image, and subtracted from the paired target images, it is common to construct a median background image, the same size as the WIRCam frames, and subtract this 2D image from target images.
 
-Independent median sky images for each WIRCam detector are produced by choosing a sky image (the primary sky image) and four other sky images taken at adjacent times.
+Independent median background images for each WIRCam detector are produced by choosing a sky image (the primary sky image) and four other sky images taken at adjacent times.
 Across each image, the median background intensity is recorded.
 A Source Extractor object mask, as used in \Sec{flatbuilding} for flat fielding, removes bias from astrophysical sources.
 Each sky image is \emph{additively} scaled to a common intensity level, allowing differences in overall background amplitude to be ignored by the median combination.
 As described in \Sec{flatbuilding}, \sw{Swarp} is used to median-combine the sky images, taking into account non-sky pixel masks.
-Since these median sky images record only low-frequency spatial information, these median sky images are smoothed with a Gaussian kernel (note this is quite different from the function of median sky images applied to dome-flat processed WIRCam data, where median sky subtraction also removed pixel-to-pixel artifacts).
-This median sky image is then additively scaled back to the original level of the primary sky image.
+Since these median background images record only low-frequency spatial information, these median background images are smoothed with a Gaussian kernel (note this is quite different from the function of median background images applied to dome-flat processed WIRCam data, where median background subtraction also removed pixel-to-pixel artifacts).
+This median background image is then additively scaled back to the original level of the primary sky image.
 
-Each science image is background subtracted by first identifying the median sky frame whose primary image was taken most closely in time.
-That paired median sky frame is subtracted from the image.
-
-In \Sec{skyflatstability} we follow up on this operational discussion to consider the shapes of median sky images. In particular, we connect the role of median sky frames to the stability of different recipes of sky flats described in \Sec{flats}.
+Each science image is background subtracted by first identifying the median background frame whose primary image was taken most closely in time.
+That paired median background frame is subtracted from the image.
 
 \section{Photometric calibration}
 \label{sec:photocal}
