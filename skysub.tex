@@ -396,7 +396,17 @@ Sky flats also have the advantage of being contemporaneous with observations: if
 This is a distinct advantage over dome flats, which CFHT builds at the beginning of every WIRCam queue run, or even twilight flats that can only be built once per night.
 
 Despite these advantages, sky flats are built on the assumption that all background illumination in a night sky image is proportional to the flat field function.
-TODO
+Several contaminants prevent this from being true: thermal emission from the detector or telescope structures, 
+Thermal emission from the detector and telescope structures can add a significant background in the $K_s$ band, and scattered light (\eg off the camera's cold pupil stop further perturb the proportionality of flat field images.
+Ideally one would subtract these contaminants from images before constructing sky flats.
+Then science images could be flat fielded, and additive contaminants in science images would be automatically removed in subsequence median background subtraction.
+Note that both dome flats and twilight flat fields \emph{are} able to distinguish additive contaminants from the multiplicative flat field function.
+Dome flats are built from the differences of images taken with the lamp on and off, directly removing any thermal component from the flat field.
+% TODO describe what dome flats can do. Are they immune to the cold stop? No, dome does not. Twilight might.
+Twilight flats can also treat additive contamination by capturing images at different levels of sky illumination so that linear fits to each pixel allow any additive bias to be removed.
+In the case of sky flat fielding, however, we \emph{cannot} disentangle additive from multiplicative processes in images.
+We must assume that additive contaminants are negligible, and simply divide images by the median sky shape.
+In the following sections, we test this assumption to verify that sky flats are the ideal tool for calibrating WIRCam images.
 
 A second assumption built into sky flat construction is that sky glow is uniform across the detector.
 Wide-field images of the near-infrared night sky show that sky glow has rich spatial and temporal variations.
