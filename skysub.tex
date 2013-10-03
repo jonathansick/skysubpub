@@ -510,21 +510,6 @@ red, green and blue histograms, respectively, for the $J$-band (top) and $K_s$-b
 \subsection{Evolution of Real Time Sky Flats}
 \label{sec:flatevo}
 
-In producing a NIR sky flat, we assert that the mean shape of the NIR background over a timespan is flat.
-By maximizing the time window we can marginalize over as many background shapes as possible to produce an unbiased skyflat.
-This notion is embodied in the \texttt{QRUN} sky flats that combine hundreds of background shapes captured across several days.
-However, this also assumes that WIRCam is a \emph{stable} detector over the period of several days; our real-time \texttt{FW100K} sky flats, however, assume that WIRCam is unstable over periods of 30-minutes.
-
-A simple test of WIRCam's flatfield stability is to monitor how the real-time \texttt{FW100K} skyflats evolve on scales of hours.
-In \Fig{fw100k_movie} we show percent difference images between \texttt{FW100K} sky flats made at intervals of 15, 30, 60 and 90 minutes after an initial sky flat.
-After just 30~minutes, the shape of the \texttt{FW100K} skyflats deviates by 0.5\% from the initial flat field shape.
-By 60 minutes, the deviation exceeds 1\%.
-Evidently, the WIRCam flat field function is stable on timescales less than 30 minutes---much less than a queue run.
-
-Nonetheless, the spatio-temporal evolution takes many forms.
-In some cases (\Fig{fw100k_movie}b) the flat field deviations are axisymmetric, while in others there is a distinct East-West pattern (\Fig{fw100k_movie}ac).
-We interpret these as instabilities in the WIRCam illumination function on the scale of minutes.
-
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{figs/fw100k/fw100k_movie}
@@ -533,14 +518,6 @@ Sky flat evolution on three nights is shown: (a) 2009B $K_s$ observing block wit
 \label{fig:fw100k_movie}
 % made with andpipe/wircam/skyflat/plot/flatratio.py
 \end{figure*}
-
-An alternative interpretation is that these sky flat deviations are instabilities in the WIRCam detector electronics.
-The dominant macroscopic electronic feature in WIRCam flat fields are the amplifier bands.
-Each WIRCam detector is divided into 32 horizontal bands (each 64 pixels high) that are read out into independent amplifiers.
-These amplifiers have gains that result in levels that differ by 10\% in flat field images.
-Still, these different gains appear stable: over the course of an observing block, the mean flat field level of each amplifier band evolved by less than 0.1\% relative to other amplifiers (see \Fig{fw100k_globalamp_timeseries_55136_Ks}) over three hours.
-Indeed, the amplifier band signature is absent from the \texttt{FW100K} skyflat difference images (\Fig{fw100k_movie}).\footnote{Quite unlike \Fig{domeflatratio} that compared dome flat and \texttt{QRUN} sky flat shapes.}
-Thus sky flat evolution does appear driven by changes in the large scale detector illumination function, not electronic instabilities.
 
 \begin{figure}[t]
 \centering
@@ -552,6 +529,28 @@ The jitter is due to detector-to-detector zeropoint normalization (\Sec{flatbuil
 \label{fig:fw100k_globalamp_timeseries_55136_Ks}
 % wircam/skyflat/plots/amp_level_global.py
 \end{figure}
+
+A key advantage of sky flats is their close temporal correspondence to the data.
+At the limit, our \texttt{FW100K} flats are updated with moving windows of approximately 30~minutes.
+Here we investigate the nature of evolution in the `real-time` \texttt{FW100K} flats throughout a night.
+In doing so, we can assess whether sky flat evolution is driven by proportional effects, or additive contamination from a thermal background or scattered light.
+
+In \Fig{fw100k_movie} we show percent difference images between \texttt{FW100K} sky flats made at intervals of 15, 30, 60 and 90 minutes after an initial sky flat.
+After just 30~minutes, the shape of the \texttt{FW100K} skyflats deviates by 0.5\% from the initial flat field shape.
+By 60 minutes, the deviation exceeds 1\%.
+Evidently, our WIRCam skyflats are stable on timescales less than 30 minutes---much less than a queue run.
+
+Nonetheless, the spatio-temporal evolution takes many forms.
+In some cases (\Fig{fw100k_movie}b) the flat field deviations are axisymmetric, while in others there is a distinct East-West pattern (\Fig{fw100k_movie}ac).
+We interpret these as instabilities in the WIRCam illumination function on the scale of minutes.
+
+An alternative interpretation is that these sky flat deviations are instabilities in the WIRCam detector electronics.
+The dominant macroscopic electronic feature in WIRCam flat fields are the amplifier bands.
+Each WIRCam detector is divided into 32 horizontal bands (each 64 pixels high) that are read out into independent amplifiers.
+These amplifiers have gains that result in levels that differ by 10\% in flat field images.
+Still, these different gains appear stable: over the course of an observing block, the mean flat field level of each amplifier band evolved by less than 0.1\% relative to other amplifiers (see \Fig{fw100k_globalamp_timeseries_55136_Ks}) over three hours.
+Indeed, the amplifier band signature is absent from the \texttt{FW100K} skyflat difference images (\Fig{fw100k_movie}).\footnote{Quite unlike \Fig{domeflatratio} that compared dome flat and \texttt{QRUN} sky flat shapes.}
+Thus sky flat evolution is not driven by WIRCam gain instabilities, but by large scale variations in the flat field function or an additive background component.
 
 \subsection{Shapes of Median Sky Frames}
 \label{sec:medianskyshapes}
