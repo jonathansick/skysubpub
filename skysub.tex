@@ -552,6 +552,88 @@ Still, these different gains appear stable: over the course of an observing bloc
 Indeed, the amplifier band signature is absent from the \texttt{FW100K} skyflat difference images (\Fig{fw100k_movie}).\footnote{Quite unlike \Fig{domeflatratio} that compared dome flat and \texttt{QRUN} sky flat shapes.}
 Thus sky flat evolution is not driven by WIRCam gain instabilities, but by large scale variations in the flat field function or an additive background component.
 
+\subsection{Frame residuals shapes}
+\label{sec:frameblockresiduals}
+
+Although real-time \texttt{FW100K} sky flats clearly evolve smoothly over the course of a night, the previous section could not establish whether this variation tracked real changes in the WIRCam flat field function, or was simply due to variations in the additive contamination in flat field images.
+Here we provide a simple test by examining the residual image differences between individual WIRCam images and the mosaic (as produced in \Sec{scalar}).
+If the residuals of datasets treated by \texttt{QRUN} for \texttt{NIGHT} sky flats vary systematically with time, in correspondence with the results of \Sec{flatevo}, then the flat field function of WIRCam truly would be variable throughout a night, and \texttt{FW100K} sky flats should be most appropriate.
+This effect should be exacerbated in signal- (not sky-) dominated fields as flat field errors grow in proportion to signal strength.
+
+Our 2009B observations of field M31-37 in the $K_s$ band are ideal for this experiment: a single detector in that field covers the core of M31, and observations were taken into two blocks, covering a total window of 2~hours (most blocks for this program are observed by the CFHT queue in a half hour).
+Both the high surface brightness and wide time baseline in this field should highlight flat field bias and variation.
+In Figures~\ref{fig:frame_residuals_M31-37_Ks_fw100k_medsky},~\ref{fig:frame_residuals_M31-37_Ks_nightset}~and~\ref{fig:frame_residuals_M31-37_Ks_QRUN} we show the residual shapes of individual WIRCam frames against the median shape of the mosaic, given \texttt{FW100K}, \texttt{NIGHT} and \texttt{QRUN} sky flattening, respectively, in field M31-37 in the $K_s$ band.
+That is, we produce difference images between each WIRCam frame and the block mosaic.
+To analyze the shapes of these difference images we then marginalize the difference images along rows (left side of \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}), and columns (right side of \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}).
+Note that these marginalization are done for each detector in the $2\times2$ WIRCam array; the core of M31 resides in detector \#2 (lower-right).
+In that high surface brightness region, there are strong surface brightness residuals that clearly point out flaws in the flat field itself.
+
+Comparing Figures~\ref{fig:frame_residuals_M31-37_Ks_fw100k_medsky},~\ref{fig:frame_residuals_M31-37_Ks_nightset}~and~\ref{fig:frame_residuals_M31-37_Ks_QRUN}, we see both both \texttt{FW100K} and \texttt{NIGHT} sky flats have similar performance, where frames vary in surface brightness $\pm 0.5\%$ at the core of M31.
+The exception are \texttt{QRUN}-treated frames, which show an evolution on the order of $\pm 1\%$ of the $K_s$-band sky brightness over a similar time scale as indicated in \Fig{fw100k_movie}.
+This indicates that \texttt{QRUN} sky flats, which are built over several nights of data, are unsuitable for capturing the WIRCam flat field function.
+While this indicates that the intrinsic WIRCam flat field function varies detectably from night-to-night, the performance equivalence of \texttt{FW100K} and \texttt{NIGHT} sky flats indicates that the WIRCam flat \emph{does not} vary throughout the night.
+Spatial variability tracked by the \texttt{FW100K} sky flats, visualized in \Fig{fw100k_movie} must reflect additive contamination (thermal background or scattered light) that can easily vary throughout the night.
+
+It is useful to contrast the frame shape residuals seen in detector \#2 with those in other detectors, where the disk surface brightness is lower.
+There, both \texttt{FW100K} (\Fig{frame_residuals_M31-37_Ks_fw100k_medsky}) and \texttt{QRUN} (\Fig{frame_residuals_M31-37_Ks_QRUN}) show similar residual distributions, on the order of $\lesssim 0.2$\% of the NIR background brightness.
+Further, the results are not monotonically varying in time, as they are in detector \#2, and indeed appear to vary essentially randomly.
+We interpret this frame residual behaviour as being caused by random additive background processes, distinct from flat field biases that are proportional to surface brightness.
+
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{figs/frame_residuals/M31-37_Ks_fw100k_medsky}
+\caption{Residual shapes of individual \texttt{FW100k} sky flat-processed WIRCam integrations of the M31 disk to the median (mosaic) shape for the field M31-37, $K_s$-band, observed in the 2009B semester.
+Residuals have been marginalized across the $x$ (left) and ($y$) (right) axes to provide 1D views.
+Axes match WIRCam's $2\times2$ detector footprint.
+Individual integrations are coloured by their time after the first disk integration.
+The centre of M31 is located in the lower-right detector (\#2); surface brightness bias in these regions betray the presence of flat field bias. Lower surface brightness regions are dominated by shape variations on the order of $\pm 0.2\%$ of background level, interpreted as additive uncertainties associated either with the detector, skyglow, or both.}
+\label{fig:frame_residuals_M31-37_Ks_fw100k_medsky}
+% made with wircam/shape/frame_block_residuals/plot_field_slices.py
+\end{figure*}
+
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{figs/frame_residuals/M31-37_Ks_nightset_medsky}
+\caption{Residual shapes of individual of the M31-37 $K_s$ field, processed with \texttt{NIGHT} sky flats.
+% Compared to \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}, \texttt{NIGHT} sky flats clearly do not capture flat field evolution that occurs over the course of 90-minutes, yielding systematically evolving realizations of bulge-dominated surface brightness in detector \#2 (lower-right). In the more sky-dominated regions of the image (detector \#4), \texttt{QRUN} sky flats produce images with similar stability to \texttt{FW100K} sky flats, indicating that the limit of additive uncertainties associated with sky or instrumental background variations is reached here.
+}
+\label{fig:frame_residuals_M31-37_Ks_nightset}
+% made with wircam/shape/frame_block_residuals/plot_field_slices.py
+\end{figure*}
+
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{figs/frame_residuals/M31-37_Ks_queuesky_medsky}
+\caption{Residual shapes of individual of the M31-37 $K_s$ field, processed with \texttt{QRUN} sky flats.
+Compared to \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}, \texttt{QRUN} sky flats clearly do not capture flat field evolution that occurs over the course of 90-minutes, yielding systematically evolving realizations of bulge-dominated surface brightness in detector \#2 (lower-right). In the more sky-dominated regions of the image (detector \#4), \texttt{QRUN} sky flats produce images with similar stability to \texttt{FW100K} sky flats, indicating that the limit of additive uncertainties associated with sky or instrumental background variations is reached here.}
+\label{fig:frame_residuals_M31-37_Ks_QRUN}
+% made with wircam/shape/frame_block_residuals/plot_field_slices.py
+\end{figure*}
+
+\subsection{Distributions of frame shape residuals}
+\label{sec:frameblockresidualhist}
+
+We now extend the previous analysis analysis across the entire dataset.
+In \Fig{frame_diffs_skyfrac} we plot the distribution of frame-block residual shape amplitudes, measured at the 95\% difference interval.
+In essence, this measures the consistency of imaging the shape of each M31 block.
+As in our test of median sky frame flatness (\Sec{medianskyshapes}), we see that the consistency of frame shapes is $\sim 0.3\%$ of the background level.
+This result is seen for both \texttt{QRUN} and \texttt{FW100K} sky flat pipelines and for 2007B and 2009B observing schemes, agreeing with our observation in \Sec{frameblockresiduals} that in background dominated regimes (as most of our blocks are) frame shape consistency is \emph{not} correlated with flat field bias.
+Rather, we interpret \Fig{frame_diffs_skyfrac} as measuring the amplitudes of \emph{additive} stochastic background shapes originating either from the sky, or associated with the instrumentation itself.
+Effectively, \Fig{frame_diffs_skyfrac} illustrates the \emph{flatness limit} of WIRCam frames observed with large sky-target nods, sky flat fielding, and median sky subtraction.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/frame_residuals/framediffs_skyfrac_cdf}
+\caption{Cumulative distributions of scalar difference amplitudes between individual frames and blocks in the $J$ (top) and $K_s$ (bottom) mosaics, measured as a dispersion of pixel differences at the 95\% level.
+Whether processed with \texttt{QRUN} (red) or \texttt{FW100k} (blue) sky flats, or observed in 2007B (solid lines) or 2009B (dotted lines), the residual amplitude differences between frames and blocks are similarly distributed.
+The expected amplitude difference is $0.3\%$ of the $J$ background brightness ($0.2\%$ in $K_s$).
+}
+% Made with andpipe/wircam/shape/frame_block_residuals/plot_frame_residuals_hists.py
+\label{fig:frame_diffs_skyfrac}
+\end{figure}
+
+% \mycomment{Note that shape variability appears uncorrelated with sky level or time since sunset (unlike sky level; see \texttt{python andpipe/wircam/skyanalysis/shapevar\_correlations.py}.
+% There may be a correlation against airmass, but it is weak.}
 \subsection{Shapes of Median Sky Frames}
 \label{sec:medianskyshapes}
 
@@ -594,79 +676,6 @@ While the real-time sky flat produces very flat median sky images, \texttt{QRUN}
 % made with $andpipe/wircam/shape/mediansky_amplitude.py
 \end{figure}
 
-\subsection{Frame residuals shapes}
-\label{sec:frameblockresiduals}
-
-In previous sections, we have shown that real-time \texttt{FW100K} sky flats are preferred over broader-baseline \texttt{QRUN} sky flats since they produce systematically flatter median sky images, and do seem to track real evolution in the WIRCam flat field function on scales of 30 minutes.
-Yet it is difficult to measure the absolute accuracy of real-time sky flats since flat field bias cannot be distinguished from additive background stochasticity (from sky or instrument) when simply observing the shape of the sky background.
-If we examine signal- (not sky-) dominated fields, flat fielding biases should grow in comparison to sky shape biases.
-
-Our 2009B observations of field M31-37 in the $K_s$ band are ideal for this experiment: a single detector in that field covers the core of M31, and observations were taken into two blocks, covering a total window of 2~hours (most blocks for this program are observed by the CFHT queue in a half hour).
-Both the high surface brightness and wide time baseline in this field should highlight flat field bias and variation.
-In Figures~\ref{fig:frame_residuals_M31-37_Ks_fw100k_medsky} and~\ref{fig:frame_residuals_M31-37_Ks_QRUN} we show the residual shapes of individual WIRCam frames against the median shape of the mosaic, given \texttt{FW100K} and \texttt{QRUN} sky flattening, respectively, in field M31-37 in the $K_s$ band.
-That is, we produce difference images between each WIRCam frame and the block mosaic.
-To analyze the shapes of these difference images we then marginalize the difference images along rows (left side of \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}), and columns (right side of \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}).
-Note that these marginalization are done for each detector in the $2\times2$ WIRCam array; the core of M31 resides in detector \#2 (lower-right).
-In that high surface brightness region, there are strong surface brightness residuals that clearly point out flaws in the flat field itself.
-\texttt{FW100K} sky flats (\Fig{frame_residuals_M31-37_Ks_fw100k_medsky}) WIRCam frames at the core of M31 can vary in surface brightness by $\pm 0.5\%$; with \texttt{QRUN} sky flats these residuals are much larger, nearly $\pm 1\%$ of the $K_s$-band sky brightness.
-% In lower surface brightness regions of the disk (such as covered in the left-side detectors of Figs.~\ref{fig:frame_residuals_M31-37_Ks_fw100k_medsky} and~\ref{fig:frame_residuals_M31-37_Ks_QRUN}) the frame residuals consequent of \texttt{FW100K} and \text{QRUN} sky flats are typically within $\pm 0.2\%$ of the $K_s$ sky brightness; a similar magnitude as the shapes of median sky images.
-The time scale residual evolution clearly matches that of flat field evolution indicated in \Fig{fw100k_movie}.
-Despite limited accuracy, the \texttt{FW100K} sky flats do appear to track the real-time evolution of the WIRCam detector and produce more consistent frame shapes.
-Although all frames in \Fig{frame_residuals_M31-37_Ks_QRUN} are processed with the same \texttt{QRUN} sky flat, the intrinsic flat field function of WIRCam has evolved over the span of two hours to create frame-to-frame shape variations nearly $\pm 1\%$ of the $K_s$-band background brightness at the center of M31.
-
-It is useful to contrast the frame shape residuals seen in detector \#2 with those in other detectors, where the disk surface brightness is lower.
-There, both \texttt{FW100K} (\Fig{frame_residuals_M31-37_Ks_fw100k_medsky}) and \texttt{QRUN} (\Fig{frame_residuals_M31-37_Ks_QRUN}) show similar residual distributions, on the order of $\lesssim 0.2$\% of the NIR background brightness.
-Further, the results are not monotonically varying in time, as they are in detector \#2, and indeed appear to vary essentially randomly.
-We interpret this frame residual behaviour as being caused by random additive background processes, distinct from flat field biases that are proportional to surface brightness.
-
-% \mycomment{I will plot an RMS map of pixels, rather than slices. Then it would be easier to plot RMS/intensity to plot flat fielding errors}.
-
-\begin{figure*}[p]
-\centering
-\includegraphics[width=\textwidth]{figs/frame_residuals/M31-37_Ks_fw100k_medsky}
-\caption{Residual shapes of individual \texttt{FW100k} sky flat-processed WIRCam integrations of the M31 disk to the median (mosaic) shape for the field M31-37, $K_s$-band, observed in the 2009B semester.
-Residuals have been marginalized across the $x$ (left) and ($y$) (right) axes to provide 1D views.
-Axes match WIRCam's $2\times2$ detector footprint.
-Individual integrations are coloured by their time after the first disk integration.
-The centre of M31 is located in the lower-right detector (\#2); surface brightness bias in these regions betray the presence of flat field bias. Lower surface brightness regions are dominated by shape variations on the order of $\pm 0.2\%$ of background level, interpreted as additive uncertainties associated either with the detector, skyglow, or both.}
-\label{fig:frame_residuals_M31-37_Ks_fw100k_medsky}
-% made with wircam/shape/frame_block_residuals/plot_field_slices.py
-\end{figure*}
-
-
-\begin{figure*}[p]
-\centering
-\includegraphics[width=\textwidth]{figs/frame_residuals/M31-37_Ks_queuesky_medsky}
-\caption{Residual shapes of individual of the M31-37 $K_s$ field, processed with \texttt{QRUN} sky flats.
-Compared to \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}, \texttt{QRUN} sky flats clearly do not capture flat field evolution that occurs over the course of 90-minutes, yielding systematically evolving realizations of bulge-dominated surface brightness in detector \#2 (lower-right). In the more sky-dominated regions of the image (detector \#4), \texttt{QRUN} sky flats produce images with similar stability to \texttt{FW100K} sky flats, indicating that the limit of additive uncertainties associated with sky or instrumental background variations is reached here.}
-\label{fig:frame_residuals_M31-37_Ks_QRUN}
-% made with wircam/shape/frame_block_residuals/plot_field_slices.py
-\end{figure*}
-
-\subsection{Distributions of frame shape residuals}
-\label{sec:frameblockresidualhist}
-
-We now extend the previous analysis analysis across the entire dataset.
-In \Fig{frame_diffs_skyfrac} we plot the distribution of frame-block residual shape amplitudes, measured at the 95\% difference interval.
-In essence, this measures the consistency of imaging the shape of each M31 block.
-As in our test of median sky frame flatness (\Sec{medianskyshapes}), we see that the consistency of frame shapes is $\sim 0.3\%$ of the background level.
-This result is seen for both \texttt{QRUN} and \texttt{FW100K} sky flat pipelines and for 2007B and 2009B observing schemes, agreeing with our observation in \Sec{frameblockresiduals} that in background dominated regimes (as most of our blocks are) frame shape consistency is \emph{not} correlated with flat field bias.
-Rather, we interpret \Fig{frame_diffs_skyfrac} as measuring the amplitudes of \emph{additive} stochastic background shapes originating either from the sky, or associated with the instrumentation itself.
-Effectively, \Fig{frame_diffs_skyfrac} illustrates the \emph{flatness limit} of WIRCam frames observed with large sky-target nods, sky flat fielding, and median sky subtraction.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figs/frame_residuals/framediffs_skyfrac_cdf}
-\caption{Cumulative distributions of scalar difference amplitudes between individual frames and blocks in the $J$ (top) and $K_s$ (bottom) mosaics, measured as a dispersion of pixel differences at the 95\% level.
-Whether processed with \texttt{QRUN} (red) or \texttt{FW100k} (blue) sky flats, or observed in 2007B (solid lines) or 2009B (dotted lines), the residual amplitude differences between frames and blocks are similarly distributed.
-The expected amplitude difference is $0.3\%$ of the $J$ background brightness ($0.2\%$ in $K_s$).
-}
-% Made with andpipe/wircam/shape/frame_block_residuals/plot_frame_residuals_hists.py
-\label{fig:frame_diffs_skyfrac}
-\end{figure}
-
-% \mycomment{Note that shape variability appears uncorrelated with sky level or time since sunset (unlike sky level; see \texttt{python andpipe/wircam/skyanalysis/shapevar\_correlations.py}.
-% There may be a correlation against airmass, but it is weak.}
 
 \subsection{Section Summary}
 \label{sec:shapeconclusions}
