@@ -559,18 +559,25 @@ The bottom panel shows zeropoint differences computed for each \texttt{FW100K} s
 % \end{figure}
 
 A key advantage of sky flats is their close temporal correspondence to the data.
-At the limit, our \texttt{FW100K} flats are updated with moving windows of approximately 30~minutes.
+Taken to the extreme, our \texttt{FW100K} flats are updated with moving windows of approximately 30~minutes.
 Here we investigate the nature of evolution in the `real-time` \texttt{FW100K} flats throughout a night.
-In doing so, we can assess whether sky flat evolution is driven by proportional effects, or additive contamination from a thermal background or scattered light.
+% In doing so, we can assess whether sky flat evolution is driven by proportional effects, or additive contamination such as a thermal background or scattered light.
+In \Fig{fw100k_movie} we show the evolution of \texttt{FW100K} sky flats relative to a single \texttt{NIGHT} sky flat over the course of three hours on a single night.
+This observing sequence, unlike the typical observing patterns, consisted of consecutive integrations on sky fields, without nodding to the M31 disk, so that an uninterrupted view of sky flat evolution could be visualized.
+Over the course of three hours, we see a large-scale shape perturbation move across the detectors from left to right.
+In the same timescale, the background \emph{level} has changed by as much as 30\% (\Fig{fw100k_movie} middle panel).
 
-In \Fig{fw100k_movie} we show percent difference images between \texttt{FW100K} sky flats made at intervals of 15, 30, 60 and 90 minutes after an initial sky flat.
-After just 30~minutes, the shape of the \texttt{FW100K} skyflats deviates by 0.5\% from the initial flat field shape.
-By 60 minutes, the deviation exceeds 1\%.
-Evidently, our WIRCam skyflats are stable on timescales less than 30 minutes---much less than a queue run.
+Although \Fig{fw100k_movie} clearly demonstrates that real-time \texttt{FW100K} sky flat evolve smoothly, it does not prove that the evolution is driven by proportional effects, or additive contamination such as a thermal background or scattered light.
+However, we do note that the patterns are similar to those observed in the CFHT-IR by \cite{Vaduvescu:2004}, who claim a thermal background contamination.
 
-Nonetheless, the spatio-temporal evolution takes many forms.
-In some cases (\Fig{fw100k_movie}b) the flat field deviations are axisymmetric, while in others there is a distinct East-West pattern (\Fig{fw100k_movie}ac).
-We interpret these as instabilities in the WIRCam illumination function on the scale of minutes.
+% In \Fig{fw100k_movie} we show percent difference images between \texttt{FW100K} sky flats made at intervals of 15, 30, 60 and 90 minutes after an initial sky flat.
+% After just 30~minutes, the shape of the \texttt{FW100K} skyflats deviates by 0.5\% from the initial flat field shape.
+% By 60 minutes, the deviation exceeds 1\%.
+% Evidently, our WIRCam skyflats are stable on timescales less than 30 minutes---much less than a queue run.
+
+% Nonetheless, the spatio-temporal evolution takes many forms.
+% In some cases (\Fig{fw100k_movie}b) the flat field deviations are axisymmetric, while in others there is a distinct East-West pattern (\Fig{fw100k_movie}ac).
+% We interpret these as instabilities in the WIRCam illumination function on the scale of minutes.
 
 An alternative interpretation is that these sky flat deviations are instabilities in the WIRCam detector electronics.
 The dominant macroscopic electronic feature in WIRCam flat fields are the amplifier bands.
