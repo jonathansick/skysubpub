@@ -521,48 +521,42 @@ Again, since $m_0$ is fit for sky images, zeropoints for science images are inte
 Near-infrared sky flat fields are fraught with \emph{additive} contaminants from thermal emission and scattered light.
 Although we regard a perfect near-infrared flat field as unattainable, we can test which flat field prescription (\texttt{QRUN}, \texttt{NIGHT} or \texttt{FW100K}) performs best, and assess whether the final quality of our NIR M31 mosaics are limited by uncertainties from flat fielding or from ST-nodding background subtraction uncertainties.
 
-\subsection{Detector-to-Detector zeropoint consistency}
-\label{sec:detector_zp}
-
-Our sky flats are designed to unify the zeropoints of the four WIRCam detectors by scaling according to the modal background levels seen on each detector, which assumes that the flux in flat field images are dominated by sky light, rather than thermal backgrounds.
-The accuracy of this calibration can be verified by comparing photometric zeropoint estimates for individual WIRCam detectors.
-As we will describe in \Sec{photcal}, we use 2MASS stars in our images to photometrically calibrate each image.
-Figure~\ref{fig:fw100k_chip_to_chip} shows the distribution of mean detector-to-detector zeropoints offsets observed in images processed by real-time sky flats. We find that zeropoints are consistent within $\pm 0.1$ mag, although we detect a possible systematic bias between detectors \#1 and \#4 at the level of $0.03$~mag.
-% \mycomment{JS: this method of verifying zeropoint consistency needs work. Single-detector zeropoint uncertainty is $\sim 0.05$ mag, so the uncertainty of the difference measurement is 0.07 mag. But \Fig{fw100k_chip_to_chip} actually measures the mean zeropoint offset within among the images in each sky flat. This reduces the statistical uncertainty; making the 0.1 mag scatter in \Fig{fw100k_chip_to_chip} quite significant}
-This result confirms that our sky flats \emph{are} contaminated by a thermal background.
-\todo{Is this significant?}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figs/fw100k/fw100k_chip_to_chip}
-\caption{Distribution of mean detector-to-detetector zeropoint offsets for sky images processed by real-time sky flats. Zeropoint offsets between detectors \#1--\#2, --\#3, and --\#4 are plotted as
-red, green and blue histograms, respectively, for the $J$-band (top) and $K_s$-band (bottom).}
-\label{fig:fw100k_chip_to_chip}
-% andpipe/wircam/calibset/photcal/singleimg/chip_consistency_zp_fixa.py
-\end{figure}
 
 \subsection{Evolution of Real Time Sky Flats}
 \label{sec:flatevo}
 
+% \begin{figure*}[t]
+% \centering
+% \includegraphics[width=\textwidth]{figs/fw100k/fw100k_movie}
+% \caption{Spatio-temporal evolution of \texttt{FW100K} sky flats, shown as percent difference of the flat fields 15, 30, 60 and 90 minutes after the initial sky flat of the night.
+% Sky flat evolution on three nights is shown: (a) 2009B $K_s$ observing block with the telescope staring at a sky field, (b) 2009B $K_s$ observing block with regular sky-target nodding, and (c) a 2007B observing block with sky-target nodding.}
+% \label{fig:fw100k_movie}
+% % made with andpipe/wircam/skyflat/plot/flatratio.py
+% \end{figure*}
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{figs/fw100k/fw100k_movie}
-\caption{Spatio-temporal evolution of \texttt{FW100K} sky flats, shown as percent difference of the flat fields 15, 30, 60 and 90 minutes after the initial sky flat of the night.
-Sky flat evolution on three nights is shown: (a) 2009B $K_s$ observing block with the telescope staring at a sky field, (b) 2009B $K_s$ observing block with regular sky-target nodding, and (c) a 2007B observing block with sky-target nodding.}
+\includegraphics[width=\textwidth]{figs/55136_Ks_fw100k_night_grid}
+\caption{
+Evolution of \texttt{FW100K} $K_s$-band sky flats over the course of three hours.
+Percent difference maps of \texttt{FW100K} sky flats relative to the \texttt{NIGHT} sky flat are shown in the upper grid (time evolves left to right, from the top row).
+Colors in the percent difference maps show $\pm2\%$ variation.
+The bottom panels show the background level observed in each detector as a function of time.
+The bottom panel shows zeropoint differences computed for each \texttt{FW100K} sky flat as a function of time since the first \texttt{FW100K} flat between detector \#1 and detectors \#2, 3 and 4 respectively.
+}
 \label{fig:fw100k_movie}
 % made with andpipe/wircam/skyflat/plot/flatratio.py
 \end{figure*}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figs/fw100k/fw100k_globalamp_timeseries_55136_Ks}
-\caption{Time evolution of the mean flat field level of amplifier bands in the four WIRCam detectors in \texttt{FW100K} sky flats made over three hours.
-Amplifier bands are colour-coded according to their order on the array: red lines at the bottom, green in the middle, and blue at the top.
-Although the levels of individual amplifiers differ by 10\%, their order is consistent, indicating that amplifier gain is extremely stable.
-The jitter is due to detector-to-detector zeropoint normalization (\Sec{flatbuilding}) uncertainty, or measurement biases.}
-\label{fig:fw100k_globalamp_timeseries_55136_Ks}
-% wircam/skyflat/plots/amp_level_global.py
-\end{figure}
+% \begin{figure}[t]
+% \centering
+% \includegraphics[width=\columnwidth]{figs/fw100k/fw100k_globalamp_timeseries_55136_Ks}
+% \caption{Time evolution of the mean flat field level of amplifier bands in the four WIRCam detectors in \texttt{FW100K} sky flats made over three hours.
+% Amplifier bands are colour-coded according to their order on the array: red lines at the bottom, green in the middle, and blue at the top.
+% Although the levels of individual amplifiers differ by 10\%, their order is consistent, indicating that amplifier gain is extremely stable.
+% The jitter is due to detector-to-detector zeropoint normalization (\Sec{flatbuilding}) uncertainty, or measurement biases.}
+% \label{fig:fw100k_globalamp_timeseries_55136_Ks}
+% % wircam/skyflat/plots/amp_level_global.py
+% \end{figure}
 
 A key advantage of sky flats is their close temporal correspondence to the data.
 At the limit, our \texttt{FW100K} flats are updated with moving windows of approximately 30~minutes.
@@ -582,10 +576,28 @@ An alternative interpretation is that these sky flat deviations are instabilitie
 The dominant macroscopic electronic feature in WIRCam flat fields are the amplifier bands.
 Each WIRCam detector is divided into 32 horizontal bands (each 64 pixels high) that are read out into independent amplifiers.
 These amplifiers have gains that result in levels that differ by 10\% in flat field images.
-Still, these different gains appear stable: over the course of an observing block, the mean flat field level of each amplifier band evolved by less than 0.1\% relative to other amplifiers (see \Fig{fw100k_globalamp_timeseries_55136_Ks}) over three hours.
-Indeed, the amplifier band signature is absent from the \texttt{FW100K} skyflat difference images (\Fig{fw100k_movie}).\footnote{Quite unlike \Fig{domeflatratio} that compared dome flat and \texttt{QRUN} sky flat shapes.}
+However, we find that the gain of each amplifier band is stable throughout the night, at a level of $<0.1\%$ relative to other amplifiers.
 Thus sky flat evolution is not driven by WIRCam gain instabilities, but by large scale variations in the flat field function or an additive background component.
 
+\subsection{Detector-to-Detector zeropoint consistency}
+\label{sec:detector_zp}
+
+Our sky flats are designed to unify the zeropoints of the four WIRCam detectors by scaling according to the modal background levels seen on each detector, which assumes that the flux in flat field images are dominated by sky light, rather than thermal backgrounds.
+The accuracy of this calibration can be verified by comparing photometric zeropoint estimates for individual WIRCam detectors.
+As we will describe in \Sec{photcal}, we use 2MASS stars in our images to photometrically calibrate each image.
+Figure~\ref{fig:fw100k_chip_to_chip} shows the distribution of mean detector-to-detector zeropoints offsets observed in images processed by real-time sky flats. We find that zeropoints are consistent within $\pm 0.1$ mag, although we detect a possible systematic bias between detectors \#1 and \#4 at the level of $0.03$~mag.
+% \mycomment{JS: this method of verifying zeropoint consistency needs work. Single-detector zeropoint uncertainty is $\sim 0.05$ mag, so the uncertainty of the difference measurement is 0.07 mag. But \Fig{fw100k_chip_to_chip} actually measures the mean zeropoint offset within among the images in each sky flat. This reduces the statistical uncertainty; making the 0.1 mag scatter in \Fig{fw100k_chip_to_chip} quite significant}
+This result confirms that our sky flats \emph{are} contaminated by a thermal background.
+\todo{Is this significant?}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/fw100k/fw100k_chip_to_chip}
+\caption{Distribution of mean detector-to-detetector zeropoint offsets for sky images processed by real-time sky flats. Zeropoint offsets between detectors \#1--\#2, --\#3, and --\#4 are plotted as
+red, green and blue histograms, respectively, for the $J$-band (top) and $K_s$-band (bottom).}
+\label{fig:fw100k_chip_to_chip}
+% andpipe/wircam/calibset/photcal/singleimg/chip_consistency_zp_fixa.py
+\end{figure}
 \subsection{Frame residuals shapes}
 \label{sec:frameblockresiduals}
 
