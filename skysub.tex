@@ -432,6 +432,7 @@ Here we describe the technical details of sky flat fielding and median backgroun
 Recall from \Fig{flowchart} that the inputs of flat field construction are `de-flattened' images that retain the linearity and dark-current subtraction of the \iiwione\ pipeline.
 
 \subsubsection{Sky Flat Construction}
+\label{sec:skyflatconstruction}
 
 According to the type of sky flat being constructed, \texttt{QRUN}, \texttt{NIGHT} and \texttt{FW100K}, ensembles of sky images are formed.
 Given an ensemble of sky integrations, our next task is to scale the intensity of each image.
@@ -602,15 +603,15 @@ We can test real-time sky flats are tracking evolution in the intrinsic WIRCam f
 Recall that our sky flats are designed to unify the zeropoints of the four WIRCam detectors by scaling according to the model background levels seen in each detector.
 Doing so requires that the flux in flat field images are dominated by sky glow that is proportional to the flat field function, rather than an additive background (thermal or scattered light), which is not.
 
-\hrule
+First, in \Fig{fw100k_zpdiff} we examine the zeropoint differences implied by the modal background values in real-time \texttt{FW100K} sky flats, which are computed as $-2.5 \log_{10}(\beta_i / \beta_1)$ from the discussion in \Sec{skyflatconstruction}.
+From \Fig{fw100k_zpdiff} we see that the estimated zeropoint differences between detectors can be variable over a range of 0.05~mag in the $K_s$-band.
+This variability is more prominent in $K_s$-band sky flats than in $J$-band as any thermal background should be more significant in the $K_s$ band.
 
-Our sky flats are designed to unify the zeropoints of the four WIRCam detectors by scaling according to the modal background levels seen on each detector, which assumes that the flux in flat field images are dominated by sky light, rather than thermal backgrounds.
-The accuracy of this calibration can be verified by comparing photometric zeropoint estimates for individual WIRCam detectors.
-As we will describe in \Sec{photcal}, we use 2MASS stars in our images to photometrically calibrate each image.
-Figure~\ref{fig:fw100k_chip_to_chip} shows the distribution of mean detector-to-detector zeropoints offsets observed in images processed by real-time sky flats. We find that zeropoints are consistent within $\pm 0.1$ mag, although we detect a possible systematic bias between detectors \#1 and \#4 at the level of $0.03$~mag.
-% \mycomment{JS: this method of verifying zeropoint consistency needs work. Single-detector zeropoint uncertainty is $\sim 0.05$ mag, so the uncertainty of the difference measurement is 0.07 mag. But \Fig{fw100k_chip_to_chip} actually measures the mean zeropoint offset within among the images in each sky flat. This reduces the statistical uncertainty; making the 0.1 mag scatter in \Fig{fw100k_chip_to_chip} quite significant}
+We can test the validity of these zeropoint transformations by verifying the photometric zeropoints of individual detectors against 2MASS stars, as was done in \Sec{photcal}.
+Figure~\ref{fig:fw100k_chip_to_chip} shows the distribution of mean detector-to-detector zeropoints offsets observed in images processed by real-time sky flats.
+We find that zeropoints are consistent within $\pm 0.1$ mag, although we detect a possible systematic bias between detectors \#1 and \#4 at the level of $0.03$~mag.
 This result confirms that our sky flats \emph{are} contaminated by a thermal background.
-\todo{Is this significant?}
+However, the systematic photometric bias at the level of $0.03$~mag is negligible compared to the photometric uncertainty of individual stars.
 
 \subsection{Frame residuals shapes}
 \label{sec:frameblockresiduals}
