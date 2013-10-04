@@ -621,6 +621,8 @@ This result is seen for both \texttt{QRUN} and \texttt{FW100K} sky flat pipeline
 Rather, we interpret \Fig{frame_diffs_skyfrac} as measuring the amplitudes of \emph{additive} stochastic background shapes originating either from the sky, or associated with the instrumentation itself.
 Effectively, \Fig{frame_diffs_skyfrac} illustrates the \emph{flatness limit} of WIRCam frames observed with large sky-target nods, sky flat fielding, and median sky subtraction.
 
+\todo{Update with NIGHT flats}.
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figs/frame_residuals/framediffs_skyfrac_cdf}
@@ -634,43 +636,36 @@ The expected amplitude difference is $0.3\%$ of the $J$ background brightness ($
 
 % \mycomment{Note that shape variability appears uncorrelated with sky level or time since sunset (unlike sky level; see \texttt{python andpipe/wircam/skyanalysis/shapevar\_correlations.py}.
 % There may be a correlation against airmass, but it is weak.}
-\subsection{Shapes of Median Sky Frames}
+
+\subsection{Shapes of Median Background Frames}
 \label{sec:medianskyshapes}
 
 Another test of sky flats is their ability to produce an unbiased sky background, up to the level of intrinsic sky variations.
-This test can be made by examining the median sky frames (\Sec{mediansky}) produced by \texttt{QRUN} and \texttt{FW100K} sky flats, as shown in \Fig{median_sky_images}.
-\texttt{QRUN} sky flats clearly produce biased sky shapes, evidently caused by changes in the CFHT/WIRCam optical path and electronics over a queue run, rather than intrinsic variations in the sky itself.
+This test can be made by examining the median background frames (\Sec{mediansky}) produced by \texttt{QRUN}, \texttt{NIGHT} and \texttt{FW100K}-processed data sets.
+We measure the amplitude of shapes across the $10\arcmin \times 10\arcmin$ WIRCam frame as the 2-standard deviation interval (95\%) of each median sky image's pixel distribution: $2 \sigma(\mathrm{med~sky})$.
+In \Fig{mediansky_amplitude} the cumulative distribution functions of the background shape amplitudes are presented for each set of flat fielded data, in each band and for each semester.
 
-To quantitatively compare the bias of \texttt{QRUN} versus \texttt{FW100K} sky flats, we measure the amplitude of shapes across the $10\arcmin \times 10\arcmin$ WIRCam frame as the 2-standard deviation interval (95\%) of each median sky image's pixel distribution: $2 \sigma(\mathrm{med~sky})$.
-These distributions of sky shape amplitude are plotted in \Fig{mediansky_amplitude}.
-As expected from \Fig{median_sky_images}, \texttt{QRUN} median sky frames have typical biases of 1\% of the sky level, while sky frames from real-time \texttt{FW100K} sky flats are much flatter, $\lesssim 0.3\%$ of the sky level, and more consistently so.
+\texttt{QRUN} sky flats, which are known to be incorrect (\Sec{frameblockresiduals}), produce median backgrounds with the largest amplitudes---as much as 3\% of the background.
+Compared to the other flats, the \texttt{QRUN} sky flats are biasing the background shape, relying upon the median background subtraction process to effectively flatten the sky background.
+\texttt{FW100K} sky flats have the opposite effect.
+The temporal windows from which \texttt{FW100K} sky flats are constructed are nearly the same span as that for median background images, so the background amplitude is unsurprisingly negative.
+\texttt{FW100K} sky flats divide all structure in images, be they multiplicative or additive in origin.
+\texttt{NIGHT} flats produce median backgrounds with moderate amplitudes, and, unlike the \texttt{FW100K} data set, these amplitudes are similar in both bandpasses.
+The slightly larger background amplitude in the $K_s$-band \texttt{NIGHT} data set may reflect an additional thermal background observed beyond the sky glow observed in both bands.
 
-Although \texttt{FW100k} sky flats are better than \texttt{QRUN} flats, we can still wonder if the 0.3\% flatness limit of median sky images is a consequence of intrinsic sky background shapes or due to limits in the WIRCam flat field accuracy.
+A surprising result from \Fig{mediansky_amplitude} is that backgrounds in 2009B images are not flatter than in 2007B.
 Recall that median sky images are composed of five sky frames taken closest to a disk frame.
 In 2007B, all sky frames were sampled from the same coordinate on the sky, and span a 12~minute window covering sky integrations taken before and after a disk image (for both $J$ and $K_s$ sky-target nods).
 In 2009B, sky frames were sampled from randomly chosen sites along the sky field ring (\Fig{fieldmap}) with a window typically spanning 15 minutes.
 Thus both 2007B and 2009B median sky images span similar time windows, although the 2009B strategy attempts to marginalize over five distinct sites  on the sky (and thus sky background shapes) while 2007B median sky images do not.
-If the spatial skyglow pattern and WIRCam flatness function were stationary, we expect the instantaneous shape of the sky (in the sky field) to be captured in the 2007B median sky frames, while the 2009B sky frames should marginalize over five random sky shapes and thus be flatter by up to a factor of $1/\sqrt{5}$ (for a Gaussian shape distribution).
-That this \emph{does not} occur indicates either that (a) sky background shapes are correlated over 15~minutes and 3\arcdeg\ of sky, (b) skyglow patterns have sufficient temporal variability to be effectively uncorrelated over 15~minute windows across a WIRCam frame so that both observing patterns marginalize over sky background shapes equally, or (c) the flatness of median sky images is limited at the 0.3\% level by background variations associated with WIRCam itself over 15~minutes.
-Wide-field movies of the NIR sky \citep{Adams:1996} suggest option (a) to be false.
-From this test alone, then, we cannot distinguish between instrumental background variability or stochasticity in the sky background as the cause of the 0.3\% background shape amplitudes seen by WIRCam median sky images.
-Further, this test cannot distinguish between proportional instrumental variability in the flat field (\eg \Fig{fw100k_movie}) or additive background variability \citep[as seen in the CFHT-IR camera,][]{Vaduvescu:2004}.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figs/1129459_1129489_Ks_medsky}
-\caption{Comparison of a typical median sky frames in $2\times 2$ WIRCam array in the $K_s$-band from images calibrated with \texttt{QRUN} (left) and \texttt{FW100K} (right) sky flats.
-Amplitudes of shapes in these median sky images are plotted as a fraction of the mean sky brightness.
-While the real-time sky flat produces very flat median sky images, \texttt{QRUN}-calibrated data produce sky biases on the order of 1\% of the background level.
-}
-\label{fig:median_sky_images}
-% made with wircam/shape/median_sky_movie.py
-\end{figure}
+From \Fig{mediansky_amplitude} we conclude that this marginalization does not effectively occur, implying that the background shapes sampled from distinct sites on the sky \emph{are} correlated.
+Wide-field movies of the NIR sky \citep{Adams:1996} suggest that this should not be true, implying that much of the structure in the median background images is an instrumental background.
+Similar backgrounds are seen by \cite{Vaduvescu:2004} in the CFHT-IR camera.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figs/mediansky_amplitude_cdf}
-\caption{Cumulative distribution function of background level amplitudes across median sky images processed with \texttt{QRUN} (black) and \texttt{FW100K} (blue) sky flats for the $J$ (top) and $K_s$ (bottom) bands. Real-time (\texttt{FW100k}) sky flats produce much flatter median sky frames, with expected shape amplitudes of 0.3\% ($J$) to 0.1\% ($K_s$) of the NIR sky level, while the expected amplitude of \texttt{QRUN}-flat processed sky images is 0.5\% of the background level, and as high as 3\% of the background level.
+\caption{Cumulative distribution function of background level amplitudes across median sky images processed with \texttt{QRUN} (red), \texttt{NIGHT} (green) and \texttt{FW100K} (blue) sky flats for the $J$ (top) and $K_s$ (bottom) bands. Real-time (\texttt{FW100k}) sky flats produce much flatter median sky frames, with expected shape amplitudes of 0.3\% ($J$) to 0.1\% ($K_s$) of the NIR sky level, while the expected amplitude of \texttt{QRUN}-flat processed sky images is 0.5\% of the background level, and as high as 3\% of the background level. \texttt{NIGHT} flat-processed data generate shape amplitudes similar to the frame-block residuals observed in \Fig{frame_diffs_skyfrac}.
 }
 \label{fig:mediansky_amplitude}
 % made with $andpipe/wircam/shape/mediansky_amplitude.py
