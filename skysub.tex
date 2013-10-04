@@ -153,11 +153,10 @@ Because such a large mosaic has never before been assembled in a ST nodding WIRC
 This includes: finding the optimal ST nodding cadence, defining the appropriate data reduction procedures for a WIRCam surface brightness reduction, and finally presenting an analysis of the surface brightness accuracy in wide-field WIRCam mosaics.
 
 Section~\ref{sec:Observations} describes the novel observational strategies used to reduce background subtraction uncertainties.
-Section~\ref{sec:reduction} presents the image reduction pipeline; with night sky flat fielding in Section~\ref{sec:flats}, median background subtraction in Section~\ref{sec:mediansky}, and zeropoint calibration practises in Section~\ref{sec:photocal}.
+Section~\ref{sec:reduction} presents the image reduction pipeline; with night sky flat fielding and median background subrtaction in Section~\ref{sec:flats}, and zeropoint calibration practises in Section~\ref{sec:photocal}.
+The accuracy of our WIRCam image calibrations are analyzed in Section~\ref{sec:flatanalysis}.
 In Section~\ref{sec:scalar} we present our method for recovering the galaxy surface brightness by minimizing image-to-image differences across the mosaic, while in Section~\ref{sec:scalaranalysis} we analyze the results of this algorithm.
 We estimate the systematic uncertainties in our mosaic solution in Section~\ref{sec:systematics}, where we also compare our technique to the Montage package \citep{Berriman:2008} and the Spitzer/IRAC mosaics.
-In Section~\ref{sec:skyflatstability} we consider the accuracy of the surface brightness \emph{shapes} recovered by our pipeline.
-Ultimately we seek the observation and reduction method that maximizes surface brightness accuracy.
 Finally in Section~\ref{sec:conclusions} we summarize the uncertainty of NIR background subtraction on the scale of M31 and outline our ideal observation and reduction method.
 
 \section{Observations}
@@ -482,7 +481,42 @@ This median background image is then additively scaled back to the original leve
 Each science image is background subtracted by first identifying the median background frame whose primary image was taken most closely in time.
 That paired median background frame is subtracted from the image.
 
+\section{Photometric calibration}
+\label{sec:photocal}
+
+Our flat field procedure necessitates a revision of photometric zeropoints.
+Since our program is observed in short ($\sim 1$ hour) blocks in CFHT's queue service observing, we do not have the necessary airmass baseline to solve for nightly zeropoint and atmospheric extinction terms for each band.
+Instead, we estimate photometric zeropoints by directly bootstrapping against sources from the Two Micron All Sky Survey (2MASS) Point Source Catalog (PSC) \citep{Skrutskie:2006}.
+Although these are not standards, the ensemble of 2MASS stars may be treated as such.
+Since the disk of M31 is crowded, and 2MASS has poor resolution ($1\arcsec$~per pixel), we choose to directly estimate zeropoints only in the sky images.
+Then moving window average of sky image zeropoint are applied to paired disk images (analogous to the median background subtraction procedure, described in Section \ref{sec:mediansky}).
+
+Specifically, instrumental photometry of stars in the uncrowded sky fields is obtained with Source Extractor \citep{Bertin:1996}.
+We use the \texttt{AUTO} photometry mode to capture the full stellar light without using aperture corrections.
+Objects in the 2MASS PSC are matched to Source Extractor detections by position using J. Sick's \sw{Mo'Astro}\footnote{\url{http://moastro.jonathansick.ca}} Python package, that manages the full 2MASS PSC in a MongoDB database.
+The 2MASS PSC contains many galaxies, and many 2MASS sources are saturated in our deeper WIRCam images.
+Thus we select stars with $m_J < 14$ or $m_{K_s} < 15$ magnitudes, and stars with FWHM $<1$\arcsec.
+Additionally, we select sources with $J-K_s < 0.8$ (typical of foreground Milky Way stars) as we observe larger zeropoint residuals in redder stars.
+After filtering, typically 200 matched 2MASS sources remain in typical WIRCam images.
+
+Given sample of matching 2MASS and instrumental photometry (in ADU) in a specific sky image, an instrumental zeropoint is estimated as median:
+
+\begin{equation}
+  \label{eq:photcal}
+  m_0 = \langle m_\mathrm{2MASS} + 2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) \rangle.
+\end{equation}
+
+We do not find a trend in zeropoint vs $J-K_s$ colour index in our own data.
+Hence, following practice at CFHT, we assume that there is no colour transformation between 2MASS and WIRCam bandpasses.
+Internal testing at CFHT with synthetic photometry indicates that colour transformation coefficients may be $A_J = 0.05$ and $A_{K_s}=-0.005$ (K. Thanjuvar, priv.\ comm.)
+For typical M31 RGB stars with $J-K_s\sim 1$, this colour transformation would be a $< 0.1$~mag effect.
+
+Given that 2MASS stars in each image have photometric uncertainties $0.05 \lesssim \sigma_{\mathrm{2MASS~mag}} \lesssim 0.3$, the typical statistical zeropoint uncertainty, $\sigma_{m_0}$, is 0.1~mag in a single image.
+Again, since $m_0$ is fit for sky images, zeropoints for science images are interpolated as the median of a sliding window of sky images large enough for the statistical uncertainty of the median $m_0$ to be reduced below 0.01 mag.
+% see $andpipe/wircam/calibset/photcal/singleimg/uncertainty_dists.py for photometry properties 
+
 \section{Analysis of Sky Flat Fielding and Background Subtraction Methods}
+\label{sec:flatanalysis}
 
 Near-infrared sky flat fields are fraught with \emph{additive} contaminants from thermal emission and scattered light.
 Although we regard a perfect near-infrared flat field as unattainable, we can test which flat field prescription (\texttt{QRUN}, \texttt{NIGHT} or \texttt{FW100K}) performs best, and assess whether the final quality of our NIR M31 mosaics are limited by uncertainties from flat fielding or from ST-nodding background subtraction uncertainties.
@@ -687,41 +721,6 @@ These background shapes cannot be removed with median sky frame subtraction (whi
 \end{enumerate}
 
 We find the latter to be the limiting surface brightness accuracy across a $10\arcmin \times 10\arcmin$ WIRCam frame.
-
-\section{Photometric calibration}
-\label{sec:photocal}
-
-Our flat field procedure necessitates a revision of photometric zeropoints.
-Since our program is observed in short ($\sim 1$ hour) blocks in CFHT's queue service observing, we do not have the necessary airmass baseline to solve for nightly zeropoint and atmospheric extinction terms for each band.
-Instead, we estimate photometric zeropoints by directly bootstrapping against sources from the Two Micron All Sky Survey (2MASS) Point Source Catalog (PSC) \citep{Skrutskie:2006}.
-Although these are not standards, the ensemble of 2MASS stars may be treated as such.
-Since the disk of M31 is crowded, and 2MASS has poor resolution ($1\arcsec$~per pixel), we choose to directly estimate zeropoints only in the sky images.
-Then moving window average of sky image zeropoint are applied to paired disk images (analogous to the median background subtraction procedure, described in Section \ref{sec:mediansky}).
-
-Specifically, instrumental photometry of stars in the uncrowded sky fields is obtained with Source Extractor \citep{Bertin:1996}.
-We use the \texttt{AUTO} photometry mode to capture the full stellar light without using aperture corrections.
-Objects in the 2MASS PSC are matched to Source Extractor detections by position using J. Sick's \sw{Mo'Astro}\footnote{\url{http://moastro.jonathansick.ca}} Python package, that manages the full 2MASS PSC in a MongoDB database.
-The 2MASS PSC contains many galaxies, and many 2MASS sources are saturated in our deeper WIRCam images.
-Thus we select stars with $m_J < 14$ or $m_{K_s} < 15$ magnitudes, and stars with FWHM $<1$\arcsec.
-Additionally, we select sources with $J-K_s < 0.8$ (typical of foreground Milky Way stars) as we observe larger zeropoint residuals in redder stars.
-After filtering, typically 200 matched 2MASS sources remain in typical WIRCam images.
-
-Given sample of matching 2MASS and instrumental photometry (in ADU) in a specific sky image, an instrumental zeropoint is estimated as median:
-
-\begin{equation}
-  \label{eq:photcal}
-  m_0 = \langle m_\mathrm{2MASS} + 2.5 \log_{10}(\mathrm{ADU}/T_\mathrm{exp}) \rangle.
-\end{equation}
-
-We do not find a trend in zeropoint vs $J-K_s$ colour index in our own data.
-Hence, following practice at CFHT, we assume that there is no colour transformation between 2MASS and WIRCam bandpasses.
-Internal testing at CFHT with synthetic photometry indicates that colour transformation coefficients may be $A_J = 0.05$ and $A_{K_s}=-0.005$ (K. Thanjuvar, priv.\ comm.)
-For typical M31 RGB stars with $J-K_s\sim 1$, this colour transformation would be a $< 0.1$~mag effect.
-
-Given that 2MASS stars in each image have photometric uncertainties $0.05 \lesssim \sigma_{\mathrm{2MASS~mag}} \lesssim 0.3$, the typical statistical zeropoint uncertainty, $\sigma_{m_0}$, is 0.1~mag in a single image.
-Again, since $m_0$ is fit for sky images, zeropoints for science images are interpolated as the median of a sliding window of sky images large enough for the statistical uncertainty of the median $m_0$ to be reduced below 0.01 mag.
-% see $andpipe/wircam/calibset/photcal/singleimg/uncertainty_dists.py for photometry properties 
-
 
 \section{Sky Offset Optimization}
 \label{sec:scalar}
