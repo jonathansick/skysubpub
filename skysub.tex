@@ -607,10 +607,12 @@ First, in \Fig{fw100k_zpdiff} we examine the zeropoint differences implied by th
 From \Fig{fw100k_zpdiff} we see that the estimated zeropoint differences between detectors can be variable over a range of 0.05~mag in the $K_s$-band.
 This variability is more prominent in $K_s$-band sky flats than in $J$-band as any thermal background should be more significant in the $K_s$ band.
 
-We can test the validity of these zeropoint transformations by verifying the photometric zeropoints of individual detectors against 2MASS stars, as was done in \Sec{photcal}.
+We can test the validity of these zeropoint transformations by verifying the photometric zeropoints of individual detectors against 2MASS stars, as was done in \Sec{photocal}.
 Figure~\ref{fig:fw100k_chip_to_chip} shows the distribution of mean detector-to-detector zeropoints offsets observed in images processed by real-time sky flats.
 We find that zeropoints are consistent within $\pm 0.1$ mag, although we detect a possible systematic bias between detectors \#1 and \#4 at the level of $0.03$~mag.
-This result confirms that our sky flats \emph{are} contaminated by a thermal background.
+The origin of the this zeropoint bias can be seen in the bottom panel of \Fig{fw100k_movie}, which tracks the detector-to-detector zeropoint evolution estimated from each real-time \texttt{FW100K} sky flat over the course of 3~hours.
+The relative zeropoints slowly shift by $\lesssim 0.05$~mag in concert with evolution in the shapes of \texttt{FW100K} sky flats due to time-varying additive contamination (upper panel of \Fig{fw100k_movie}).
+These results confirm that our sky flats \emph{are} contaminated by a thermal background.
 However, the systematic photometric bias at the level of $0.03$~mag is negligible compared to the photometric uncertainty of individual stars.
 
 \subsection{Frame residuals shapes}
