@@ -735,18 +735,19 @@ Similar backgrounds are seen by \cite{Vaduvescu:2004} in the CFHT-IR camera.
 \subsection{Section Summary}
 \label{sec:shapeconclusions}
 
-We summarize our findings on the accuracy of surface brightness shapes reproduced by WIRCam in a sky-target nodding observing program:
+We have thus far described how individual WIRCam frames of the M31 disk are calibrated according to the pipeline outlined in \Fig{flowchart}.
+In this section we have analyzed the performance of our flat field, median background subtract and photometric calibration prescriptions.
+Here we summarize our findings on the accuracy of surface brightness shapes reproduced by WIRCam in a sky-target nodding observing program.
 
-\begin{enumerate}
-\item Surface brightness perturbations can be decomposed into multiplicative processes (flat field biases) and additive processes (stochastic sky and instrumental backgrounds) by observing residual shapes of individual WIRCam frames again the median M31 mosaic in high and low surface brightness regimes; we find evidence for both processes occurring.
-\item The WIRCam flat field function can vary by approximately 1\% across a $10\arcmin \times 10\arcmin$ frame in 1~hour.
-Building sky flats concurrently with observations is necessary to minimize systematic surface brightness bias.
-This, however, is only a concern in signal-dominated pixels (such as galaxy centres, or point sources); otherwise median sky subtraction is effective at hiding flat field bias in low-surface brightness features.
-\item In low surface brightness regimes, we observe stochastic variations of $\pm 0.2$\% in the background amplitude.
-These background shapes cannot be removed with median sky frame subtraction (which itself has shape amplitudes on the order of $0.3\%$ of the NIR background level).
-\end{enumerate}
+Night sky flat fields are preferable to dome flats because sky flats properly calibrate dust, detector surface, and gain structures.
+Such flats can be easily made from programme data.
+Specifically, we advocate \texttt{NIGHT} flats, which are built from all sky images taken over a single night, because they capture night-to-night variations in the WIRCam flat field not captured by \texttt{QRUN} flats (compare Figs.~\ref{fig:frame_residuals_M31-37_Ks_nightset} and~\ref{fig:frame_residuals_M31-37_Ks_QRUN}).
 
-We find the latter to be the limiting surface brightness accuracy across a $10\arcmin \times 10\arcmin$ WIRCam frame.
+Although we confirm that night sky flats are afflicted by an \emph{additive} contamination (\ie thermal background, or scattered light) that varies on sub-hour timescales (\Fig{fw100k_movie}), this contamination impacts the photometric zeropoint at a level of $0.03$~mag, but this \emph{does not} impact the overall surface brightness fidelity of our mosaic.
+Since the \androids /WIRCam mosaic of M31 is almost entirely background dominated, we are principally limited by background subtraction, which is non-trivial since the background is not directly measured on the M31 disk given our sky-target nodding observing strategy.
+Ultimately we find that the \emph{shape} of the background on the disk can be known to within 0.3\% of the NIR background levels (\Fig{frame_diffs_skyfrac}).
+By comparison, the typical amplitude of median sky images is TODO\% and TODO\% of the $J$ and $K_s$ background levels, respectively.
+Note that it is impossible for a NIR observing program with large ST nods to subtract background shapes better than the 0.3\% we find here: the shape of the background at the target will always be distinct from background shapes measured at designated sky fields.
 
 \section{Sky Offset Optimization}
 \label{sec:scalar}
