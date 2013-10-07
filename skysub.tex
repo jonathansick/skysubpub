@@ -763,24 +763,14 @@ Note that it is impossible for a NIR observing program with large ST nods to sub
 % + skysubpub/raw_mosaic.py
 \end{figure}
 
-Despite our attention thus far to real-time sky flat fielding, and median background image subtraction, we have yet to recover the true NIR surface brightness of M31.
-In \Fig{raw_mosaics}, we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed with the pipeline discussed in \Sec{reduction}--\Sec{photocal}.
-Although these basic image preparations dramatically improve image quality compared to the \iiwione\ pipeline (particularly with regards to flat fielding performance), classical NIR background subtraction still fundamentally limits accuracy.
-Classically, the true value of the background on M31's disk is lost by the temporal and spatial variations of skyglow between disk and sky field observations.
+In \Fig{raw_mosaics}, we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed with the pipeline discussed in \Sec{reduction}--\Sec{photocal} and adopting the \texttt{NIGHT} sky flat prescription.
+Although these image preparations can constrain the surface brightness \emph{shape} of a WIRCam frame by $\lesssim 0.3\%$ of the sky level, \Fig{raw_mosaics} demonstrates that the true level of the background on M31's disk is lost by the temporal and spatial of sky glow between disk and sky field observations.
+This results in the distinct field-to-field surface brightness discontinuities seen in \Fig{raw_mosaics}.
+However, we can use the constraint all overlapping pairs of images composed in our mosaic should have equal surface brightness in their intersections.
+To enforce this constraint, we solve for a \emph{sky offset} for each image: a small scalar nudge of intensity that can be added or subtracted from each image so that all images in the mosaic have continuous surface brightnesses.
+Note that we use the term sky offset for these intensity adjustments, but in practise these offsets are agnostic of the background subtraction error that they correct.
+Since our mosaics are made from so many inter-connected images (3924 $J$ and 4972 $K_s$ image frames), our optimization of sky offsets can provide powerful constraints on the true level of the background at the M31 disk.
 
-We now demonstrate how the residual background bias in each observation can be inferred from information in the overlaps of image pairs in the mosaic.
-Each classically background subtracted image of the M31 disk is a combination of the true surface intensity, $I_i$, and a residual background intensity, $\epsilon_i$.
-Consider a pair of images, $i$ and $j$, that overlaps the galaxy: their difference is $(I_i+\epsilon_i) - (I_j+\epsilon_j) = \epsilon_i - \epsilon_j$.
-Given this measurement $\epsilon_i - \epsilon_j$ of residual background intensity, we introduce \emph{sky offsets}, $\Delta$, for each observation so that
-
-\begin{equation}
-    (I_i + \epsilon_i - \Delta_i) - (I_j + \epsilon_j - \Delta_i) \rightarrow 0,
-\end{equation}
-
-\noindent and the intrinsic intensities cancel, $I_i - I_j = 0$.
-Given a single pair of images, the inference of $\Delta_i$ and $\Delta_j$ is degenerate given the single difference image, $\epsilon_i-\epsilon_j$.
-In a mosaic, each image is coupled with many other images, and the mosaic itself can be considered as a network of coupled images.
-Thus by optimizing a set of sky offsets for all images simultaneously that minimizes all image-to-image differences in a mosaic, a robust of set of $\Delta_i$ can be established.
 
 \subsection{Implementations}
 \label{sec:offset_algos}
