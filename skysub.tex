@@ -769,30 +769,40 @@ This results in the distinct field-to-field surface brightness discontinuities s
 However, we can use the constraint all overlapping pairs of images composed in our mosaic should have equal surface brightness in their intersections.
 To enforce this constraint, we solve for a \emph{sky offset} for each image: a small scalar nudge of intensity that can be added or subtracted from each image so that all images in the mosaic have continuous surface brightnesses.
 Note that we use the term sky offset for these intensity adjustments, but in practise these offsets are agnostic of the background subtraction error that they correct.
-Since our mosaics are made from so many inter-connected images (3924 $J$ and 4972 $K_s$ image frames), our optimization of sky offsets can provide powerful constraints on the true level of the background at the M31 disk.
-
-
-\subsection{Implementations}
-\label{sec:offset_algos}
-
-The sky offset optimization summarized above is difficult to implement because it is over-constrained, requiring a non-linear optimization.
-Any single image shares a network with others, and any error in the surface brightness \emph{shapes} of fields will result in an imperfect match.
-In this work, we consider two implementations of sky offset optimization.
-First, we review the \sw{Montage} software package in \Sec{montage_algo}, and then introduce an alternative in \Sec{msrnm_algo}.
-
-\subsubsection{Montage}
-\label{sec:montage_algo}
+Since our mosaics are made from many inter-connected images (3924 $J$ and 4972 $K_s$ image frames), our optimization of sky offsets can provide powerful constraints on the true level of the background at the M31 disk.
 
 \sw{Montage} is a FITS mosaicing package \citep{Berriman:2008} originally written for the 2MASS survey that includes sky offset estimation (background rectification, in their terminology) functionality.
-Images are rectified onto a mosaic pixel grid, and difference images are computed among overlapping images.
+\sw{Montage} can solve sky offsets either as scalar levels, or as planes.
 Sky offsets are then chosen iteratively by looping through each image pair and choosing the offset needed to minimize the difference image of that pair, counting previous sky offset estimates.
-That is, at each step the background levels of the two images are increased and decreased by half the total intensity difference.
 Sky offsets are refined over several loops through the entire set of overlapping image pairs until convergence is reached (that is, once incremental adjustments to sky offsets diminish below user-specified threshold).
 Although this iterative implementation of sky offset optimization is elegant, its accuracy has never been formally analyzed in literature, to our knowledge.
 In particular, we are interested in the robustness of Montage sky offsets against local minima in the $N$-dimensional solution space of sky offsets, given a mosaic of $N$ independent images.
+Further, the optimization was slow, given the several thousand frames in our mosaics.
+Thus we decided to implement our own sky offset algorithm, although a comparison to the \sw{Montage} solution is given in \Sec{systematics}.
 
-\subsubsection{A New Implementation based on the Multi-Start Reconverging Downhill Simplex}
+\subsection{Sky Offset Implementation}
 \label{sec:msrnm_algo}
+
+Our sky offset algorithm is based on two features that distinguish it from the \sw{Montage} implementation.
+First, the optimization is carried out in three hierarchical stages to accommodate the large number of images.
+Second, we use a downhill simplex algorithm \cite[][hereafter, NM]{Nelder:1965} with re-convergence checks rather than the iterative approach of the \sw{Montage} sky offset solver.
+We begin with \texttt{NIGHT}-sky flat calibrated, median sky subtracted, and photometrically calibrated image set that are resampled using \sw{Swarp} to a common pixel in an Aitoff equal-area project with the native WIRCam pixel scale of 0\farcs 3~pix$^{-1}$.
+
+We address the sky offset optimization hierarchically by considering the geometry of the WIRCam detectors in a $2 \times 2$ grid and arrangement of 39 WIRCam fields on the M31 disk (See \Fig{fieldmap}).
+The first stage of optimization is to stack all \emph{detector frames} (images taken with a given detector, at a given field) into \emph{stacks}.
+The offsets applied to WIRCam frames to build stacks are labelled $\Delta_F$.
+Next, we solve for the offsets $\Delta_S$ ensure surface brightness continuity across the four stacks in a WIRCam field.
+We call the combined unit of four stacks a \emph{block}.
+The last stage of optimization solves for the offsets $\Delta_B$ applied to each block to ensure surface brightness continuity across the mosaic.
+The net scalar sky offset applied to each frame is thus $\Delta_\Sigma = \Delta_F + \Delta_S + \Delta_B$.
+After each stage of optimization, the scalar sky offsets are added to the WIRCam frames, stacks and blocks and Swarp is used to median co-add the images to generate stacks, blocks and a mosaic, respectively.
+Using this hierarchical scheme ensures that at worst, the number of dimensions in our optimizations is 39, as opposed to the number of WIRCam frames (a factor $10^2$ reduction).
+
+Note that for detector field stacks it is sufficient to simply compute a mean surface brightness across all frames, and directly compute offsets ($\Delta_F$) between between the levels of each frame and the mean level.
+
+% TODO Frame offset solution
+
+% TODO Discuss simplex optimization with stacks and blocks
 
 As an alternative to the iterative algorithm used by \sw{Montage}, we introduce here an implementation based on the Downhill Simplex algorithm \cite[][hereafter, NM]{Nelder:1965}.
 Like \sw{Montage}, our pipeline begins with a set of images resampled to a common pixel grid in an Aitoff projection with the native WIRCam pixel scale (0\farcs 3 per pixel).
@@ -868,30 +878,6 @@ Like $\sigma_\mathrm{start}$, there is flexibility in choosing $\sigma_\mathrm{r
 
 Note that each simplex start and series of subsequent restarts can be performed in parallel.
 Once all simplex runs are complete, the set of sky offsets belonging to the run that yielded the smallest value of the objective function is adopted.
-
-\subsection{Hierarchical sky offset optimization}
-\label{sec:hierarchical_algo}
-
-Sky offset optimization is challenging because of dimensionality.
-Each image frame, and the associated scalar sky offset $\Delta_i$, represents an additional dimension in the optimization.
-Considering that the WIRCam array produces four image frames for every exposure, the combined 2007B and 2009B data sets consist of 3924 $J$ and 4972 $K_s$ image frames covering the disk of M31.
-Such a large optimization is computationally ambitious, but also unnecessary.
-Our background optimization algorithm breaks the optimization of sky offsets into three sequential steps, which we call \emph{hierarchical sky offset optimization}.
-
-The 2007B and 2009B WIRCam surveys include a total of 39 \emph{fields} across the M31 disk (illustrated in \Fig{fieldmap}).
-Each WIRCam field is imaged with four detectors, arranged in a $2\times 2$ grid.
-Let us define a \emph{detector field} as the collection of images taken with a given detector, at a given field.
-Images in a detector field all have the greatly simplifying property of overlapping across a common section of the image frame.
-
-Thus our M31 WIRCam mosaics are assembled by applying sky offsets in three levels of hierarchy.
-In the first level we combine the frames in a detector field to produce a \emph{detector field stack}; these offsets are labelled as $\Delta_F$.
-The combined 2007B and 2009B surveys have 156 such stacks per filter.
-In the second level, the four detector field stacks within each field can be fitted into a \emph{block} using offsets labelled as $\Delta_S$.
-A block is a fundamental unit of the mosaic, as all images that are combined within a block were observed under contemporaneous sky conditions.
-Finally, in the third level, the 39 blocks can be fitted into a galaxy-wide mosaic for each filter using offsets labelled as $\Delta_B$.
-The net scalar sky offset applied to each frame is thus $\Delta_\Sigma = \Delta_F + \Delta_S + \Delta_B$.
-In both the second and third levels, we use the MSRNM scheme to optimize the set of $\Delta_S$ and $\Delta_B$ offsets, respectively.
-Note that for detector field stacks it is sufficient to simply compute a mean surface brightness across all frames, and directly compute offsets ($\Delta_F$) between between the levels of each frame and the mean level.
 
 \section{Analysis of Scalar Sky Offsets}
 \label{sec:scalaranalysis}
