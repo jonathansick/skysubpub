@@ -804,7 +804,6 @@ Thus it is sufficient to simply compute a mean surface brightness across all fra
 In the last two stages, stacks are blocks, respectively, are arranged in networks of overlapping pairs.
 For this case we introduce our NM simplex-based offset optimization algorithm.
 
-
 We identify overlaps between images in a brute-force fashion according to their frames in the mosaic pixel space, defined by the \texttt{CRPIX}, \texttt{NAXIS1} and \texttt{NAXIS2} header values of the resampled images.
 For each overlapping image pair, we compute a difference image, and ultimately a median difference, $\langle \vect{I}_i - \vect{I}_j \rangle$.
 While computing the median difference, we mask bad pixels using weight maps (propagated by \sw{Swarp}) and expand this mask with sigma clipping.
@@ -843,29 +842,21 @@ The NM algorithm is naturally multi-dimensional and does not require knowledge o
 Instead, the NM algorithm operates by constructing a geometric simplex of $N+1$ dimensions that samples the sky offset parameter space.
 By evaluating the objective function at each vertex of the simplex, the NM algorithm adapts the simplex shape to ultimately contract upon a minimum.
 
-Note that the NM algorithm will converge into any local minimum without necessarily seeking the global minimum of the objective function.
-We resolve this issue with two practices: ensuring re-convergence, and sampling different starting conditions.
+Since the NM algorithm will converge into any local minimum without necessarily seeking the global minimum of the objective function.
+We resolve this issue with two methods: ensuring re-convergence, and sampling different starting conditions.
 
 The practice of of ensuring reconvergence in a downhill optimization is suggested by \cite{Press:2007}.
-% As suggested in \cite{Press:2007}, we restart the converged simplex to ensure reconvergence and protect against false minima.
 Upon each convergence, the optimal point in the simplex, $\vect{p}$, is recorded.
 A new simplex is then generated where one vertex is $\vect{p}$, and the rest are $\vect{p}+\vect{\delta}$ where $\vect{\delta}$ is a normal random variable of mean zero, and standard deviation $\sigma_\mathrm{restart}$.
 That is, the simplex of the restart retains one vertex upon the previously found minimum, while the other vertices surround that minimum.
-If the minimum is indeed the global minimum, then the NM algorithm will quickly reconverge.
-More often than not, the other random vertices will probe an even better parameter space, causing the NM restart to converge upon a new minimum.
-When a new minimum is found, the process of restarting is repeated until the same minimum is consecutively arrived upon.
-Our sky offset optimizations for 39 blocks typically require $\sim1000$ restarts before converging definitively.
-Given the large number of restarts, we find that this reconvergence feature is extremely effective at eluding false minima in our optimizations.
 We set $\sigma_\mathrm{restart}$ to $2\times$ the dispersion of image-to-image differences.
-Like $\sigma_\mathrm{start}$, there is flexibility in choosing $\sigma_\mathrm{restart}$; generally $\sigma_\mathrm{start}$ should be on the order of the observed image-to-image difference dispersion, not necessarily as large as $\sigma_\mathrm{start}$.
+Our optimization iterative converges and re-converges simplexes until the same minimum is consecutively arrived upon, indicating that the NM algorithm has arrived upon a robust solution.
+Our sky offset optimizations for 39 blocks typically require $\sim1000$ restarts before converging definitively.
 
-A second practice we employ to find global minima is start start several independent NM simplex optimizations from random starting points in parameters space.
+Besides ensuring reconvergence, we also start several independent NM simplex optimizations from random starting points in parameters space to seek a globally optimal sky offset solution.
 We find that $N_s=50$, and possibly fewer, starts are quite sufficient for an optimization with 39 sky offset parameters (such as the fitting of $\Delta_B$ block offsets in mosaic).
 For each start, an initial simplex is generated randomly.
-Since each point in the $N$ by $N+1$ simplex is a suggested sky offset for a given field, each offset is randomly sampled from the expected distribution of image-to-image sky offsets.
-That is, a normal distribution of mean zero intensity, and standard deviation of $\sigma_\mathrm{start}$.
-To ensure that the parameter space is well covered, we design $\sigma_\mathrm{start}$ to be $3\times$ greater than the dispersion of image-to-image differences.
-
+Since each point in the $N$ by $N+1$ simplex is a suggested sky offset for a given field, each offset is randomly sampled from a normal distribution whose dispersion is $3\times$ the standard deviation of image-to-image differences to ensure parameter space is well covered.
 Note that each simplex start and series of subsequent restarts can be performed in parallel.
 Once all simplex runs are complete, the set of sky offsets belonging to the run that yielded the smallest value of the objective function is adopted.
 
