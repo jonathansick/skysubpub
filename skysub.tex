@@ -898,8 +898,8 @@ It is this level of uncertainty that sky offset optimization must diminish to tr
 
 Note that offsets to fit a stack into a block ($\Delta_S$) of four detector field stacks are smallest: 0.1\% of the background level.
 This suggests that on the scale of the $2\times 2$ WIRCam array, the contemporaneously observed detector frames are subjected to nearly identical biases in background.
-Stack offsets, then, arise from uncertainties in the pipeline's measurement of the background level from single frames in two stages: estimating detector-to-detector zeropoint offsets from frame background levels (\Sec{flatbuilding}) and again when subtracting a median background frame (\Sec{mediansky}).
-Indeed, in \Sec{skyflatstability} we show that median background images have shape amplitudes of 0.3\% of the background level and that individual frames have surface brightness shapes that are uncertainty at a level of 0.2\%; $\Delta_S$ sky offsets are thus a consequence of the limited surface brightness flatness across a WIRCam frame.
+Stack offsets, then, arise from uncertainties in the pipeline's measurement of the background level from single frames in two stages: estimating detector-to-detector zeropoint offsets from frame background levels (\Sec{skyflatconstruction}) and again when subtracting a median background frame (\Sec{mediansky}).
+Indeed, in \Sec{flatanalysis} we show that median background images have shape amplitudes of 0.3\% of the background level and that individual frames have surface brightness shapes that are uncertainty at a level of 0.2\%; $\Delta_S$ sky offsets are thus a consequence of the limited surface brightness flatness across a WIRCam frame.
 
 A comparison between the net sky offsets applied to the 2007B and 2009B data sets is provocative.
 Although the 2009B dataset employed rapid sky-target nodding to minimize temporal lags between disk and sky sampling, the magnitude of sky offsets in the 2007B and 2009B semesters is comparable.
@@ -968,14 +968,11 @@ The poor fit is driven primarily by diminishing disk signal, rather than poor co
 This can be seen by plotting the magnitude of block-to-block residuals (in units of background brightness) in \Fig{fw100k_medsky_scalar_resid_skyfrac}.
 There, significant residuals are distributed throughout the disk, rather than the low-SB periphery of the mosaic.
 
-Of course, it is precisely this residual image level difference whose minimization was sought as part of the optimization's objective function (\Eq{objf}).
-The inability of scalar sky offset optimization to eliminate residual image differences should not be interpreted as a failure to detect the global minimum; the MSRNM optimization algorithm appears robust in yielding this offset solution set.
+However, the inability of scalar sky offset optimization to eliminate residual image differences should not be interpreted as a failure to detect the global minimum; the sky offset optimization algorithm (\Sec{msrnm_algo}) appears robust in yielding this offset solution set.
 Evidence of this can be seen in \Fig{fw100k_medsky_scalar_resid_sigmafrac}, where block-to-block network connections are coloured by the ratio of the residual block-to-block intensity difference to the uncertainty in the block-to-block difference image.
-The sky offsets solved by the MSRNM algorithm are within the uncertainties of the difference images themselves; better scalar sky offsets \emph{cannot} be made with the WIRCam blocks that our pipeline has produced.
-Nonetheless, block-to-block surface brightness discontinuities are still evident in \Fig{scalar_mosaics}.
-
-An interpretation of this predicament is that background residuals are not entirely scalar across WIRCam blocks.
-Our discussion in \Sec{skyflatstability} indicates that flat field variability, and background variability, can affect the shape of WIRCam fields.
+The sky offsets solved by the NM simplex algorithm are within the uncertainties of the difference images themselves; better scalar sky offsets \emph{cannot} be made with the WIRCam blocks that our pipeline has produced.
+Our ability to produce a continuous NIR mosaic are fundamentally limited by our ability to the subtract the true background shape seen at the M31 disk.
+As described in \Sec{flatanalysis}, sky-target nodding on the scale of M31 introduces an intrinsic shape uncertainty of 0.3\% of the NIR background levels.
 
 \begin{table}[t]
 \centering
@@ -1017,9 +1014,6 @@ Differences are presented as a percent of the mean background level seen by obse
 
 \subsection{The Growth of Sky Offsets in Time and Space}
 \label{sec:offsetevo}
-
-% More than the absolute level of the near-infrared sky, we are also interested in the variability of that level in time.
-% This impacts the magnitude of sky offsets, and in turn, the absolute zeropoint variability of the NIR mosaics (\Sec{systematics}).
 
 How does our sky-target nodding program affect the magnitude of the sky offsets?
 This was partially addressed in \Sec{offset_amplitudes}, where both the 2007B and 2009B observing programs resulted in similar net offset distributions (\Tab{offset_hierarchy}).
