@@ -727,7 +727,7 @@ Similar backgrounds are seen by \cite{Vaduvescu:2004} in the CFHT-IR camera.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figs/mediansky_amplitude_cdf}
-\caption{Cumulative distribution function of background level amplitudes across median sky images processed with \texttt{QRUN} (red), \texttt{NIGHT} (green) and \texttt{FW100K} (blue) sky flats for the $J$ (top) and $K_s$ (bottom) bands. Real-time (\texttt{FW100k}) sky flats produce much flatter median sky frames, with expected shape amplitudes of 0.3\% ($J$) to 0.1\% ($K_s$) of the NIR sky level, while the expected amplitude of \texttt{QRUN}-flat processed sky images is 0.5\% of the background level, and as high as 3\% of the background level. \texttt{NIGHT} flat-processed data generate shape amplitudes similar to the frame-block residuals observed in \Fig{frame_diffs_skyfrac}.
+\caption{Cumulative distribution function of background level amplitudes across median sky images processed with \texttt{QRUN} (red), \texttt{NIGHT} (green) and \texttt{FW100K} (blue) sky flats for the $J$ (top) and $K_s$ (bottom) bands. Real-time (\texttt{FW100k}) sky flats produce much flatter median sky frames, with expected shape amplitudes of 0.3\% ($J$) to 0.1\% ($K_s$) of the NIR sky level, while the expected amplitude of \texttt{QRUN}-flat processed sky images is 1.5\% of the background level, and as high as 3\% of the background level. \texttt{NIGHT} flat-processed data generate expected shape amplitudes of $\sim 0.6\%$ of the background level.
 }
 \label{fig:mediansky_amplitude}
 % made with $andpipe/wircam/shape/mediansky_amplitude.py
@@ -748,7 +748,7 @@ Specifically, we advocate \texttt{NIGHT} flats, which are built from all sky ima
 Although we confirm that night sky flats are afflicted by an \emph{additive} contamination (\ie thermal background, or scattered light) that varies on sub-hour timescales (\Fig{fw100k_movie}), this contamination impacts the photometric zeropoint at a level of $0.03$~mag, but this \emph{does not} impact the overall surface brightness fidelity of our mosaic.
 Since the \androids /WIRCam mosaic of M31 is almost entirely background dominated, we are principally limited by background subtraction, which is non-trivial since the background is not directly measured on the M31 disk given our sky-target nodding observing strategy.
 Ultimately we find that the \emph{shape} of the background on the disk can be known to within 0.3\% of the NIR background levels (\Fig{frame_diffs_skyfrac}).
-By comparison, the typical amplitude of median sky images is TODO\% and TODO\% of the $J$ and $K_s$ background levels, respectively.
+By comparison, the typical amplitude of median sky images is $\sim 0.6\%$ of both the $J$ and $K_s$ background levels.
 Note that it is impossible for a NIR observing program with large ST nods to subtract background shapes better than the 0.3\% we find here: the shape of the background at the target will always be distinct from background shapes measured at designated sky fields.
 
 \section{Sky Offset Optimization}
