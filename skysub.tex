@@ -798,30 +798,26 @@ The net scalar sky offset applied to each frame is thus $\Delta_\Sigma = \Delta_
 After each stage of optimization, the scalar sky offsets are added to the WIRCam frames, stacks and blocks and Swarp is used to median co-add the images to generate stacks, blocks and a mosaic, respectively.
 Using this hierarchical scheme ensures that at worst, the number of dimensions in our optimizations is 39, as opposed to the number of WIRCam frames (a factor $10^2$ reduction).
 
-Note that for detector field stacks it is sufficient to simply compute a mean surface brightness across all frames, and directly compute offsets ($\Delta_F$) between between the levels of each frame and the mean level.
+We use two algorithms for solving sky offsets.
+Solving $\Delta_F$ offsets in the first stage is trivial since all frames simultaneously overlap.
+Thus it is sufficient to simply compute a mean surface brightness across all frames, and directly compute offsets ($\Delta_F$) between between the levels of each frame and the mean level.
+In the last two stages, stacks are blocks, respectively, are arranged in networks of overlapping pairs.
+For this case we introduce our NM simplex-based offset optimization algorithm.
 
-% TODO Frame offset solution
 
-% TODO Discuss simplex optimization with stacks and blocks
-
-As an alternative to the iterative algorithm used by \sw{Montage}, we introduce here an implementation based on the Downhill Simplex algorithm \cite[][hereafter, NM]{Nelder:1965}.
-Like \sw{Montage}, our pipeline begins with a set of images resampled to a common pixel grid in an Aitoff projection with the native WIRCam pixel scale (0\farcs 3 per pixel).
-For this we use \sw{Swarp} in resample-only mode.
 We identify overlaps between images in a brute-force fashion according to their frames in the mosaic pixel space, defined by the \texttt{CRPIX}, \texttt{NAXIS1} and \texttt{NAXIS2} header values of the resampled images.
-
 For each overlapping image pair, we compute a difference image, and ultimately a median difference, $\langle \vect{I}_i - \vect{I}_j \rangle$.
 While computing the median difference, we mask bad pixels using weight maps (propagated by \sw{Swarp}) and expand this mask with sigma clipping.
 Along with a difference estimate, we also record the area $A_{ij}$ of unmasked pixels in the overlap, and the standard deviation of the difference, $\sigma_{ij}$.
 
-Let us define the objective function that encapsulates the effect of scalar sky offsets on reducing the intensity difference between coupled images:
+We can estimate the optimal set of scalar sky offsets, $\Delta_i$, for each image $i$ by minimizing the objective function:
 
 \begin{equation}
-    \mathcal{F} \left(\Delta_1,\ldots,\Delta_n \right) = \sum_{i,j} \mathcal{W}_{ij} \left( \langle \vect{I}_i - \vect{I}_j \rangle - \Delta_i + \Delta_j \right)^2,
+    \mathcal{F} \left(\Delta_1,\ldots,\Delta_n \right) = \sum_{i,j} \mathcal{W}_{ij} \left( \langle \vect{I}_i - \vect{I}_j \rangle - \Delta_i + \Delta_j \right)^2.
     \label{eq:objf}
 \end{equation}
 
-\noindent which we intend to minimize by finding the optimal set of scalar sky offsets $\Delta_i$ for each of the detector fields $i$.
-Note that each coupled image pair is its own term in the objective summation, and that there are as many degrees of freedom ($\Delta_i$) as there are images in the mosaic.
+\noindent Note that each coupled image pair is its own term in the objective summation, and that there are as many degrees of freedom ($\Delta_i$) as there are images in the mosaic.
 Each coupling is tempered by a weighting term $\mathcal{W}_{ij}$:
 
 \begin{equation}
@@ -830,7 +826,7 @@ Each coupling is tempered by a weighting term $\mathcal{W}_{ij}$:
 
 \noindent so that more priority is given to couplings of larger areas ($A_{ij}$), and small standard deviations of their difference images ($\sigma_{ij}$).
 
-Note that the objective function in \Eq{objf} puts no constraint on the net sky offset: $\sum \Delta_i$.
+The objective function in \Eq{objf} puts no constraint on the net sky offset: $\sum \Delta_i$.
 Assuming that background subtraction errors are normally distributed, and not biased, sky subtraction offsets should not add a net amount of flux to the mosaic.
 Fortunately, it is possible to impose this constraint \textit{post facto} by subtracting the mean offset from the sky offsets:
 
@@ -842,29 +838,16 @@ Fortunately, it is possible to impose this constraint \textit{post facto} by sub
 \noindent In the limit that sky offsets $\Delta_i$ are drawn from a Gaussian distribution, with standard deviation $\sigma_\Delta$, the absolute brightness of the whole mosaic will be uncertain by $\sigma_\Delta / \sqrt{N_\mathrm{images}}$.
 The consequences of this uncertainty are revisited in \Sec{systematics}.
 
-Given the image coupling records, we optimize the set of $\Delta_i$ using the NM downhill simplex.
-This NM algorithm is naturally multi-dimensional and does not require knowledge of the gradient of the objective function.
+Given the image coupling records, we optimize the set of $\Delta_i$ by applying the object function (\Eq{objf}) to NM downhill simplex algorithm.
+The NM algorithm is naturally multi-dimensional and does not require knowledge of the gradient of the objective function.
 Instead, the NM algorithm operates by constructing a geometric simplex of $N+1$ dimensions that samples the sky offset parameter space.
 By evaluating the objective function at each vertex of the simplex, the NM algorithm adapts the simplex shape to ultimately contract upon a minimum.
 
-However, NM has two weaknesses.
-First, it is a greedy optimizer that will converge into any local minimum, without necessarily seeking the global minimum.
-Second, for high-dimension optimizations (many fields in the mosaic), the NM may fail to converge in a reasonable number of objective function evaluations \citep{Neumann:2006}.
-Without solving these issues, a minimization of \Eq{objf} with an off-the-shelf NM code yields a mosaic with obvious discontinuities across fields.
-To solve the first problem, we develop a Multi-Start Reconverging NM (MSRNM) downhill simplex driver.
-This algorithm, outlined below, allows the NM to cumulatively cover a larger portion of parameter space to probabilistically ensure convergence into a global optimum.
+Note that the NM algorithm will converge into any local minimum without necessarily seeking the global minimum of the objective function.
+We resolve this issue with two practices: ensuring re-convergence, and sampling different starting conditions.
 
-\paragraph{Multi-start} To cover a large portion of parameter space, and protect against starting near a false minimum, we start several independent simplex runs from random points in parameter space.
-We find that $N_s=50$, and possibly fewer, starts are quite sufficient for an optimization with 39 sky offset parameters (such as the fitting of $\Delta_B$ block offsets in mosaic, see \Sec{hierarchical_algo}).
-For each start, an initial simplex is generated randomly.
-Since each point in the $N$ by $N+1$ simplex is a suggested sky offset for a given field, each offset is randomly sampled from the expected distribution of image-to-image sky offsets.
-That is, a normal distribution of mean zero intensity, and standard deviation of $\sigma_\mathrm{start}$.
-To ensure that the parameter space is well covered, we design $\sigma_\mathrm{start}$ to be $3\times$ greater than the dispersion of image-to-image differences.
-
-Each initial simplex is allowed to converge according to the NM algorithm.
-A simplex is deemed to have converged once each point has changed by no more than $10^{-6}$ of the previous iteration.
-
-\paragraph{Restart} As suggested in \cite{Press:2007}, we restart the converged simplex to ensure reconvergence and protect against false minima.
+The practice of of ensuring reconvergence in a downhill optimization is suggested by \cite{Press:2007}.
+% As suggested in \cite{Press:2007}, we restart the converged simplex to ensure reconvergence and protect against false minima.
 Upon each convergence, the optimal point in the simplex, $\vect{p}$, is recorded.
 A new simplex is then generated where one vertex is $\vect{p}$, and the rest are $\vect{p}+\vect{\delta}$ where $\vect{\delta}$ is a normal random variable of mean zero, and standard deviation $\sigma_\mathrm{restart}$.
 That is, the simplex of the restart retains one vertex upon the previously found minimum, while the other vertices surround that minimum.
@@ -875,6 +858,13 @@ Our sky offset optimizations for 39 blocks typically require $\sim1000$ restarts
 Given the large number of restarts, we find that this reconvergence feature is extremely effective at eluding false minima in our optimizations.
 We set $\sigma_\mathrm{restart}$ to $2\times$ the dispersion of image-to-image differences.
 Like $\sigma_\mathrm{start}$, there is flexibility in choosing $\sigma_\mathrm{restart}$; generally $\sigma_\mathrm{start}$ should be on the order of the observed image-to-image difference dispersion, not necessarily as large as $\sigma_\mathrm{start}$.
+
+A second practice we employ to find global minima is start start several independent NM simplex optimizations from random starting points in parameters space.
+We find that $N_s=50$, and possibly fewer, starts are quite sufficient for an optimization with 39 sky offset parameters (such as the fitting of $\Delta_B$ block offsets in mosaic).
+For each start, an initial simplex is generated randomly.
+Since each point in the $N$ by $N+1$ simplex is a suggested sky offset for a given field, each offset is randomly sampled from the expected distribution of image-to-image sky offsets.
+That is, a normal distribution of mean zero intensity, and standard deviation of $\sigma_\mathrm{start}$.
+To ensure that the parameter space is well covered, we design $\sigma_\mathrm{start}$ to be $3\times$ greater than the dispersion of image-to-image differences.
 
 Note that each simplex start and series of subsequent restarts can be performed in parallel.
 Once all simplex runs are complete, the set of sky offsets belonging to the run that yielded the smallest value of the objective function is adopted.

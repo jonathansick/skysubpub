@@ -1,4 +1,4 @@
-\begin{thebibliography}{42}
+\begin{thebibliography}{41}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
@@ -138,9 +138,6 @@
 
 \bibitem[{Nelder \& Mead(1965)}]{Nelder:1965}
 Nelder, J.~A., \& Mead, R. 1965, {The Computer Journal}, 7, 308
-
-\bibitem[{{Neumann} \& {Han}(2006)}]{Neumann:2006}
-{Neumann}, M., \& {Han}, L. 2006, {Optimization Methods and Software}, 21, 1055
 
 \bibitem[{{Olsen} {et~al.}(2006){Olsen}, {Blum}, {Stephens}, {Davidge},
   {Massey}, {Strom}, \& {Rigaut}}]{Olsen:2006}
