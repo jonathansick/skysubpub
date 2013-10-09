@@ -1166,11 +1166,9 @@ There is, however, an uncertainty in our net zero offset, of order $\sim \sigma_
 This zeropoint can ultimately be established using resolved stellar populations, the subject of a forthcoming \androids\ study.
 
 The shape of a WIRCam frame can be affected by both flat field uncertainties and additive background uncertainties.
-First, we have discovered that the WIRCam flat field function can change by 1\% in 60~minutes.
-This effect is predominantly influential in the signal-dominated regime of the M31 bulge; though it is also significant for resolved stellar photometry.
-We thus find that constructing real-time sky flats is essential for calibrating WIRCam images.
-In sky-dominated regimes, the 2D SB shapes of individual WIRCam frames ($20\arcmin\times20\arcmin$) are uncertain by 0.2\% of the background intensity, centre-to-edge.
-These background fluctuations present a lower limit in the surface brightness uncertainty across a WIRCam frame since they appear to be caused by skyglow variations in target images that cannot be fully corrected with median sky subtraction.
+We recommend using sky flats built from images collected every night to calibrate WIRCam images since these capture the gain structure of WIRCam detectors (unlike dome flats).
+Although an additive background contaminates these flats, the influence of flat fielding errors on surface brightness shapes is minimal across the background-dominated mosaic.
+Instead, we find that the surface brightness across WIRCam frames is uncertain by 0.3\% of the background intensity due to variations in the background between sky and target fields.
 
 We now summarize our analysis of the data taking and reduction methods developed in this work, and in doing so, formulate a set of best practices for similar wide-field NIR surveys employing sky-target nodding.
 
