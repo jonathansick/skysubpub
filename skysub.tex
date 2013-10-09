@@ -1172,24 +1172,24 @@ Instead, we find that the surface brightness across WIRCam frames is uncertain b
 
 We now summarize our analysis of the data taking and reduction methods developed in this work, and in doing so, formulate a set of best practices for similar wide-field NIR surveys employing sky-target nodding.
 
-\subsection{Recommendations for Conducting a Wide-field NIR Survey with Sky-Target Nodding}
+% \subsection{Recommendations for Conducting a Wide-field NIR Survey with Sky-Target Nodding}
 
-We first recommend that the sky-target nodding cadence be set to effectively build real-time sky flats, rather than simply track background level evolution.
-Such a program would involve sufficient sky frames to build a sky flat within a window of 20--30 minutes, where the sky is observed in several epochs at different locations in a sampling ring to minimize biases.
+% We first recommend that the sky-target nodding cadence be set to effectively build real-time sky flats, rather than simply track background level evolution.
+% Such a program would involve sufficient sky frames to build a sky flat within a window of 20--30 minutes, where the sky is observed in several epochs at different locations in a sampling ring to minimize biases.
 
-In the $K_s$ band this objective is efficiently achieved, since the mean background flux on a WIRCam pixel is $450 \pm 80$ ADU~$\mathrm{s^{-1}}$.
-Given $T_\mathrm{exp}=25$~s, a $\mathrm{[S^3T^6]^3}$ program yields the necessary 9 sky integrations within 20~minutes and a maximum sky-target latency of 2~minutes.
-Each sky flat would be built from observations at three sites along the sky ring.
+% In the $K_s$ band this objective is efficiently achieved, since the mean background flux on a WIRCam pixel is $450 \pm 80$ ADU~$\mathrm{s^{-1}}$.
+% Given $T_\mathrm{exp}=25$~s, a $\mathrm{[S^3T^6]^3}$ program yields the necessary 9 sky integrations within 20~minutes and a maximum sky-target latency of 2~minutes.
+% Each sky flat would be built from observations at three sites along the sky ring.
 
-Lower background flux in the $J$ band ($120 \pm 30$~ADU~s$^{-1}$) requires additional sky integration to achieve comparable sky flat $S/N$ as the $K_s$ band.
-Given $T_\mathrm{exp}=45$~s, a $\mathrm{[S^4T^4]^5}$ program yields the necessary 20 sky integrations in $\sim 40$ minutes, with a maximum sky-target latency of 2.2~minutes.
+% Lower background flux in the $J$ band ($120 \pm 30$~ADU~s$^{-1}$) requires additional sky integration to achieve comparable sky flat $S/N$ as the $K_s$ band.
+% Given $T_\mathrm{exp}=45$~s, a $\mathrm{[S^4T^4]^5}$ program yields the necessary 20 sky integrations in $\sim 40$ minutes, with a maximum sky-target latency of 2.2~minutes.
 
-Sky offset optimization is aided by having more independent blocks covering the target, since our net zero offset assertion is uncertain by $\sigma_{\Delta_B} / \sqrt{N_\mathrm{blocks}}$.
-Given that $\sigma_B$ cannot be reduced, increasing the number of \emph{independent} blocks (observed hours or even a night apart to decouple sky and instrumental biases) is the most reliable way to establish the absolute surface brightness accuracy of the mosaic.
-Since sky offsets are further biased by any shape errors in blocks (realized as our inability to diminish block-to-block offsets below $\sim 0.1\%$ of background brightness), we propose that blocks be interlaced by 50\% (so that one detector completely overlaps a detector from an adjacent blocks).
-This interlacing pattern would thus enable the marginalization of shape errors across the entire detector frame.
-By doubling the number of blocks, each with individually halved exposure times, the mosaic could be reproduced with an equivalent net integration time.
-% \todo{Would this scheme increase the uncertainty in the sky level of each block, since there would be only half as many blocks? Then again, we double the number of blocks, so the uncertainty should be unchanged. Verify this.}
+% Sky offset optimization is aided by having more independent blocks covering the target, since our net zero offset assertion is uncertain by $\sigma_{\Delta_B} / \sqrt{N_\mathrm{blocks}}$.
+% Given that $\sigma_B$ cannot be reduced, increasing the number of \emph{independent} blocks (observed hours or even a night apart to decouple sky and instrumental biases) is the most reliable way to establish the absolute surface brightness accuracy of the mosaic.
+% Since sky offsets are further biased by any shape errors in blocks (realized as our inability to diminish block-to-block offsets below $\sim 0.1\%$ of background brightness), we propose that blocks be interlaced by 50\% (so that one detector completely overlaps a detector from an adjacent blocks).
+% This interlacing pattern would thus enable the marginalization of shape errors across the entire detector frame.
+% By doubling the number of blocks, each with individually halved exposure times, the mosaic could be reproduced with an equivalent net integration time.
+% % \todo{Would this scheme increase the uncertainty in the sky level of each block, since there would be only half as many blocks? Then again, we double the number of blocks, so the uncertainty should be unchanged. Verify this.}
 
 \bigskip We thank Loic Albert and Karun Thanjavur, previously from CFHT, for their help with WIRCam I'iwi data products and procedures and the CFHT staff for many informative discussions and their diligence in performing the queue service observations. We are grateful for the Spitzer 3.6~$\mu$m mapping provided by Pauline Barmby (University of Western Ontario).
 J.S. and S.C. acknowledge support through respective Graduate Scholarship and Discovery grants from the Natural Sciences and Engineering Research Council of Canada.
