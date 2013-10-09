@@ -1167,10 +1167,11 @@ This zeropoint can ultimately be established using resolved stellar populations,
 
 The shape of a WIRCam frame can be affected by both flat field uncertainties and additive background uncertainties.
 We recommend using sky flats built from images collected every night to calibrate WIRCam images since these capture the gain structure of WIRCam detectors (unlike dome flats).
-Although an additive background contaminates these flats, the influence of flat fielding errors on surface brightness shapes is minimal across the background-dominated mosaic.
+We also tested sky flats built on longer time spans (across a WIRCam queue run) or shorter (updated every half hour), but find that these either introduce flat fielding biases or become responsive only to changes in additive background contamination, respectively.
+Although an additive background (\eg thermal or scattered light) contaminates these flats, the influence of flat fielding errors on surface brightness shapes is minimal across the background-dominated mosaic.
 Instead, we find that the surface brightness across WIRCam frames is uncertain by 0.3\% of the background intensity due to variations in the background between sky and target fields.
 
-We now summarize our analysis of the data taking and reduction methods developed in this work, and in doing so, formulate a set of best practices for similar wide-field NIR surveys employing sky-target nodding.
+% We now summarize our analysis of the data taking and reduction methods developed in this work, and in doing so, formulate a set of best practices for similar wide-field NIR surveys employing sky-target nodding.
 
 % \subsection{Recommendations for Conducting a Wide-field NIR Survey with Sky-Target Nodding}
 
