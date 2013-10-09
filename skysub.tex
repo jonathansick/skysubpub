@@ -69,25 +69,20 @@
 We present wide-field near-infrared $J$ and $K_s$ images of the Andromeda Galaxy taken with WIRCam on the Canada-France-Hawaii Telescope (CFHT) as part of the Andromeda Optical and Infrared Disk Survey (\androids).
 This data set allows simultaneous observations of resolved stars and NIR surface brightness across M31's \emph{entire} bulge and disk (within $R=22$~kpc), permitting a direct test of the stellar composition of near-infrared light in a nearby galaxy.
 Our survey complements the similar Panchromatic Hubble Andromeda Treasury survey by covering M31's entire disk, rather than a single quadrant, at similar wavelengths, albeit with lower spatial resolution.
-The primary concern of this work is the development of NIR observation and reduction methods to recover a uniform surface brightness map across the $3\arcdeg \times 1\arcdeg$ disk of M31.
-This necessitates sky-target nodding across 27 WIRCam fields.
+Here we develop NIR observation and reduction methods to recover a uniform surface brightness map across the $3\arcdeg \times 1\arcdeg$ disk of M31 with 27 WIRCam fields.
 Two sky-target nodding strategies were tested, and we find that strictly minimizing sky sampling latency does not maximize background subtraction accuracy, which is at best 2\% of the background level.
-The mean surface brightness difference between blocks in our mosaic can be reduced from 1\% to 0.1\% of the background brightness by introducing scalar sky offsets to each image.
-We test the popular \sw{Montage} package, and also develop an independent method of estimating sky offsets using simplex optimization; we show these two optimization schemes to differ by up to 0.5~mag~arcsec$^{-2}$ in the outer disk.
-We find that planar sky offsets are not acceptable for subtracting residual backgrounds across WIRCam fields that are much smaller than the mosaic area.
+The mean surface brightness difference between blocks in our mosaic can be reduced from 1\% to 0.1\% of the background brightness by introducing scalar sky offsets to each image that optimize surface brightness continuity across overlapping pairs of images.
 The true surface brightness of M31 can be known to within a statistical zeropoint of 0.15\% of the background level (0.2 mag arcsec$^{-2}$ uncertainty at $R=15$~kpc). 
-We also find that the surface brightness across individual WIRCam frames is limited by both WIRCam instrumental background evolution and residual background shapes.
-\todo{Revise description of shape uncertainties; background evolution; stochasticity}.
-% Due either to atmospheric or instrumental variations, the individual WIRCam frames have typical residual shapes with amplitudes of 0.2\% of the sky after real-time flat fielding and median sky subtraction.
-% To overcome flat field variability of order 1\% over 30 minutes, we find that WIRCam data should be calibrated with real-time sky flats.
+We advocate using flats built from night sky images over a single night, rather than dome flats that do not capture the WIRCam gain structure.
+Contamination in these flats from scattered light and thermal background has a minimal effect on the surface brightness shape of WIRCam frames.
+Rather the surface brightness shapes of WIRCam frames are uncertain by 0.3\% of the background level due to stochastic differences in background shape in sky and disk fields.
+This limited background shape accuracy prevents planar sky offsets, made with the \sw{Montage} package, from improving the mosaic's surface brightness stability.
 We present our WIRCam reduction pipeline and performance analysis here as a template for future near-infrared observers needing wide-area surface brightness maps with sky-target nodding, and give specific recommendations for improving photometry of all CFHT/WIRCam programs.
 \end{abstract}
 \keywords{methods: observational, techniques: photometric}
 % ============================================================================
 \section{Introduction}
 \label{sec:intro}
-
-\todo{Can we compress much of the astrophysical motivation in this introduction?}
 
 Thanks largely to its proximity, kinship with the Milky Way, and being an ideal foil for modern galaxy formation models, the Andromeda galaxy has been the focus of numerous investigations of galaxy structure \citep{Ibata:2005,Irwin:2005,McConnachie:2009,Courteau:2011} and stellar populations \citep{Williams:2002,Worthey:2005,Saglia:2010}.
 The shapes, ages, kinematics and relative fraction of galaxy components (bulge, disk, halo) in large spiral galaxies like our own reveal precious information about their formation, accretion, and merging histories \citep[see the review of][]{Kormendy:2004}.
