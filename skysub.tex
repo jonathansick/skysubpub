@@ -1059,8 +1059,8 @@ Mean and 95\% levels of sky offsets in the 2007B semester are plotted as large b
 \section{Systematic Uncertainties in Surface Brightness Reconstruction}
 \label{sec:systematics}
 
-Sky offsets produce a mosaic that is rigorously optimal only in the sense of field-to-field surface brightness continuity---not absolute background subtraction. In this section, we attempt to gauge the systematic surface brightness error inherent in the sky offset technique.
-
+Sky offsets produce a mosaic that is rigorously optimal only in the sense of field-to-field surface brightness continuity---not absolute background subtraction.
+In this section, we attempt to gauge the systematic surface brightness error inherent in the sky offset technique.
 
 \subsection{Comparison to \sw{Montage}-fitted images}
 
@@ -1072,8 +1072,7 @@ Sky offsets produce a mosaic that is rigorously optimal only in the sense of fie
     % make with skysubpub/diffplots.py
 \end{figure}
 
-One means of testing for systematic errors in mosaic construction is to compare results from different methods.
-Besides the simplex method developed in \Sec{msrnm_algo}--\Sec{hierarchical_algo} and analyzed in detail in Section~\ref{sec:scalaranalysis}, we also tested the \sw{Montage} code that uses an iterative algorithm to solve either scalar or planar sky offsets (see \Sec{montage_algo}).
+Besides the simplex method developed in \Sec{msrnm_algo} and analyzed in detail in \Sec{scalaranalysis}, we also tested the \sw{Montage} code that uses an iterative algorithm to solve either scalar or planar sky offsets.
 Figure~\ref{fig:simplex_scalarmontage_comp} shows the surface brightness difference between our simplex solution and the iterative \sw{Montage} mosaic solution assuming scalar sky offsets.
 Despite an identical dataset, the two methods yield systematically differences of up to $\sim 0.5$~mag~arcsec$^{-2}$ at 20~kpc, though the solutions are consistent in their treatment of the inner disk.
 Although the simplex and \sw{Montage} scalar-offset mosaics \emph{appear} equivalently valid to the eye, a unique and optimal sky offset solution either does not exist, or is extremely difficult for our optimization algorithms to find.
@@ -1089,7 +1088,7 @@ Although the simplex and \sw{Montage} scalar-offset mosaics \emph{appear} equiva
 \sw{Montage} is also capable of fitting planar sky offsets to images, which is a tempting solution to the field-to-field discontinuities that persist between scalar-offset blocks.
 The result of planar fitting is shown in \Fig{montage_planar_mosaics}.
 We see that planar sky offsets, in this case, do little to improve the mosaics, and indeed, have a dramatic effect on the systematic surface brightness of the mosaic (by more than 1~mag~arcsec$^{-2}$ in the $K_s$ band).
-Planar sky offsets may be amenable for observations acquired in long strips (such as 2MASS or SDSS), however, the small and square WIRCam fields do not provide the necessary leverage to prevent systematic error propagation from planar offsets.
+Since our uncertainty on the shape of individual frames (0.3\% of the background level across a WIRCam frame) is significant compared to the uncertainty in background level, fitting planar offsets to each WIRCam field introduces additional systematic error propagation compared to scalar sky offsets.
 \textit{We thus recommend against using planar, or higher-order, sky offsets in wide-field WIRCam mosaics.}
 
 \subsection{Comparison to Spitzer/IRAC Images}
