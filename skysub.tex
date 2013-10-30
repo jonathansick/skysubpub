@@ -300,7 +300,7 @@ This non-repetitive sampling of sky fields yielded two possible advantages: 1) w
 \end{figure*}
 
 While CFHT distributes calibrated WIRCam data products, we haven chosen to replace much of their data reduction recipes with our own to optimize and explore the limitations of wide-field NIR surface brightness maps.
-An overview of the pipeline is shown \Fig{flowchart}; the principle steps are 1) astrometry, 2) source masking, 3) night sky flat fielding, 4) zero-point estimation against 2MASS sources, 5) median sky frame construction, 6) image calibration with zero-points and median sky subtraction and 7) background optimization and mosaic production in three hierarchical steps.
+An overview of the pipeline is shown in \Fig{flowchart}; the principle steps are 1) astrometry, 2) source masking, 3) night sky flat fielding, 4) zero-point estimation against 2MASS sources, 5) median sky frame construction, 6) image calibration with zero-points and median sky subtraction and 7) background optimization and mosaic production in three hierarchical steps.
 
 \subsection{Choice of Starting Point}
 
@@ -311,7 +311,7 @@ Nonetheless, two \iiwione\ processing stages included in \texttt{*s.fits} produc
 \paragraph{Cross-talk correction} WIRCam integrations prior to March 2008 (includes the 2007B data set, not the 2009B data) suffered from electronic cross talk within the detector.
 This cross talk is manifested in repeating rings above and below saturated stars.\footnote{See \url{http://cfht.hawaii.edu/Instruments/Imaging/WIRCam/WIRCamCrosstalks.html}.}
 By default, the \iiwione\ pipeline removes this cross talk by subtracting a median of the 32 amplifier slices.
-Unfortunately, this algorithm fails in cases where the background has a surface brightness gradient (such as on the disk of M31) and produces an brightness gradient that is stronger than the galaxy surface brightness itself.
+Unfortunately, this algorithm fails in cases where the background has a surface brightness gradient (such as on the disk of M31) and produces a brightness gradient that is stronger than the galaxy surface brightness itself.
 Loic Albert (then at CFHT) kindly re-processed our 2007B data set with the cross-talk correction omitted.
 
 \paragraph{Flat fielding} A pecularity of \texttt{*s.fits} images is that even though they are flat fielded using dome flats as CFHT, those products still exhibit strong non-uniformity, dust artifacts and surface defects.
@@ -326,8 +326,8 @@ Loic Albert (then at CFHT) kindly re-processed our 2007B data set with the cross
 % Flat-on. Each flat-on has the final flat-off subtracted from it. Then the same rejection criteria as for flat-off images are used. Then all flat-on images are normalized to one before being put in a cube. Finally, the median of the cube is obtained (through the third dimension). This produces the final processed dome flat image.
 % Flat fields show mostly a radially increasing flux level and, fortunately, no high spatial frequency fringes. The pixel to pixel quantum efficieciency variations are of the order of a few percents.
 We note that CFHT produces dome flats (for each queue run) from median stacks of 15 images taken under a tungsten lamp, subtracted from images of the same integration time taken with the lamp off.
-This procedure should remote the additive thermal background from the flat, ensuring that the flat field is a purely multiplicative calibration.
-Despite this, the presence of dust artifacts betrays the fact that dome flats do not calibrate the same illumination pattern as sky photons.
+This procedure should remove the additive thermal background from the flat, ensuring that the flat field is a purely multiplicative calibration.
+Despite this, the presence of dust artifacts betrays the fact that dome flats do not reproduce the same illumination pattern as sky photons.
 Similarly, the presence of surface defects in dome-calibrated images could be caused by disparities in both the optical path and the colour of the tungsten lamp versus the night sky background.
 In this work, we find that WIRCam images can be adequately flat fielded using night sky flats.
 We give a visual demonstration of the superiority of night sky flat fielding in \Fig{flattenedimage_comparison}: surface defects left by dome flat fielding are removed with night sky flat fielding.
@@ -354,7 +354,7 @@ While \sw{SCAMP} is capable of also fitting a photometric solution for each fram
 \subsection{Non-Sky Pixel Masking}
 
 A second preliminary pipeline stage is source masking.
-For each sky image we build masks that yield only blank pixels to aide with background level estimation, sky flat construction (\Sec{flats}) and median sky frame construction (\Sec{mediansky}).
+For each sky image we build masks that yield only blank pixels to aid with background level estimation, sky flat construction (\Sec{flats}) and median sky frame construction (\Sec{mediansky}).
 These masks are built by a combination of \sw{Source Extractor} object maps (detected in \texttt{*p.fits} images) and hand-drawn polygon regions that cover the diffraction spikes and halos of very bright foreground stars.
 These masks, along with the \iiwione\ bad pixel mask, are combined with \sw{WeightWatcher} \citep{Marmo:2008}.
 
