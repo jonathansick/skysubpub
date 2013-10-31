@@ -1,5 +1,5 @@
 % \documentclass{aastex}
-\documentclass[iop]{emulateapj}
+\documentclass[iop,tighten]{emulateapj}
 \usepackage[utf8]{inputenc}
 \usepackage{apjfonts}
 \usepackage{multirow}
@@ -747,7 +747,7 @@ By comparison, the typical amplitude of median sky images is $\sim 0.6\%$ of bot
 Note that it is impossible for a NIR observing program with large ST nods to subtract background shapes better than the 0.3\% we find here: the shape of the background at the target will always be distinct from background shapes measured at designated sky fields.
 
 To summarize, we have spent considerable effort demonstrating that \texttt{NIGHT} sky flats are appropriate for our application, and the impact of thermal background and scattered light on flat fields and zero-points are negligible compared to background uncertainties due to NIR sky glow.
-In the following sections we assemble NIR mosaics of M31 using images processed according to the preceding sections, using \texttt{NIGHT} sky flats.
+In the following sections we assemble NIR mosaics of M31 using images processed according to the preceding sections, using \texttt{NIGHT} sky flats and show that the single most important calibration for wide-field NIR mosaicing is sky offset optimization.
 
 \section{Sky Offset Optimization}
 \label{sec:scalar}
@@ -755,7 +755,7 @@ In the following sections we assemble NIR mosaics of M31 using images processed 
 \begin{figure}[t]
 \centering
 \includegraphics[width=3.5in]{figs/raw_mosaics}
-\caption{Median background subtracted WIRCam $J$ (left) and $K_s$ (right) mosaics of M31.}
+\caption{Median background subtracted WIRCam $J$ (left) and $K_s$ (right) mosaics of M31 processed according to \Sec{reduction}--\Sec{photocal} using \texttt{NIGHT} sky flats.}
 \label{fig:raw_mosaics}
 % made with skysubpub/mosaic_plots.py
 % + skysubpub/raw_mosaic.py
@@ -764,9 +764,9 @@ In the following sections we assemble NIR mosaics of M31 using images processed 
 In \Fig{raw_mosaics}, we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed with the pipeline discussed in \Sec{reduction}--\Sec{photocal} and adopting the \texttt{NIGHT} sky flat prescription favored in \Sec{shapeconclusions}.
 Although these image preparations can constrain the surface brightness \emph{shape} of a WIRCam frame by $\lesssim 0.3\%$ of the sky level, \Fig{raw_mosaics} demonstrates that the true level of the background on M31's disk is lost by the temporal and spatial of sky glow between disk and sky field observations.
 This results in the distinct field-to-field surface brightness discontinuities seen in \Fig{raw_mosaics}.
-However, we can use the constraint all overlapping pairs of images composed in our mosaic should have equal surface brightness in their intersections.
+However, we can use the constraint that all overlapping pairs of images composed in our mosaic should have equal surface brightness in their intersections.
 To enforce this constraint, we solve for a \emph{sky offset} for each image: a small scalar nudge of intensity that can be added or subtracted from each image so that all images in the mosaic have continuous surface brightnesses.
-Note that we use the term sky offset for these intensity adjustments, but in practise these offsets are agnostic of the background subtraction error that they correct.
+Note that we use the term sky offset for these intensity adjustments, but in practise these offsets are agnostic of the cause of background subtraction error that they correct.
 Since our mosaics are made from many inter-connected images (3924 $J$ and 4972 $K_s$ image frames), our optimization of sky offsets can provide powerful constraints on the true level of the background at the M31 disk.
 
 \sw{Montage} is a FITS mosaicing package \citep{Berriman:2008} originally written for the 2MASS survey that includes sky offset estimation (background rectification, in their terminology) functionality.
@@ -775,7 +775,7 @@ Sky offsets are then chosen iteratively by looping through each image pair and c
 Sky offsets are refined over several loops through the entire set of overlapping image pairs until convergence is reached (that is, once incremental adjustments to sky offsets diminish below user-specified threshold).
 Although this iterative implementation of sky offset optimization is elegant, its accuracy has never been formally analyzed in literature, to our knowledge.
 In particular, we are interested in the robustness of Montage sky offsets against local minima in the $N$-dimensional solution space of sky offsets, given a mosaic of $N$ independent images.
-Further, the optimization was slow, given the several thousand frames in our mosaics.
+Further, the optimization is slow, given the several thousand frames in our mosaics.
 Thus we decided to implement our own sky offset algorithm, although a comparison to the \sw{Montage} solution is given in \Sec{systematics}.
 
 \subsection{Sky Offset Implementation}
@@ -792,8 +792,14 @@ The offsets applied to WIRCam frames to build stacks are labelled $\Delta_F$.
 Next, we solve for the offsets $\Delta_S$ ensure surface brightness continuity across the four stacks in a WIRCam field.
 We call the combined unit of four stacks a \emph{block}.
 The last stage of optimization solves for the offsets $\Delta_B$ applied to each block to ensure surface brightness continuity across the mosaic.
-The net scalar sky offset applied to each frame is thus $\Delta_\Sigma = \Delta_F + \Delta_S + \Delta_B$.
-After each stage of optimization, the scalar sky offsets are added to the WIRCam frames, stacks and blocks and Swarp is used to median co-add the images to generate stacks, blocks and a mosaic, respectively.
+The net scalar sky offset applied to each frame is thus
+
+\begin{equation}
+  \Delta_\Sigma = \Delta_F + \Delta_S + \Delta_B.
+  \label{eq:netoffset}
+\end{equation}
+
+\noindent After each stage of optimization, the scalar sky offsets are added to the WIRCam frames, stacks and blocks and Swarp is used to median co-add the images to generate stacks, blocks and a mosaic, respectively.
 Using this hierarchical scheme ensures that at worst, the number of dimensions in our optimizations is 39, as opposed to the number of WIRCam frames (a factor $10^2$ reduction).
 
 We use two algorithms for solving sky offsets.
@@ -840,10 +846,10 @@ The NM algorithm is naturally multi-dimensional and does not require knowledge o
 Instead, the NM algorithm operates by constructing a geometric simplex of $N+1$ dimensions that samples the sky offset parameter space.
 By evaluating the objective function at each vertex of the simplex, the NM algorithm adapts the simplex shape to ultimately contract upon a minimum.
 
-Since the NM algorithm will converge into any local minimum without necessarily seeking the global minimum of the objective function.
+The NM algorithm will converge into any local minimum without necessarily seeking the global minimum of the objective function.
 We resolve this issue with two methods: ensuring re-convergence, and sampling different starting conditions.
 
-The practice of of ensuring reconvergence in a downhill optimization is suggested by \cite{Press:2007}.
+The practice of ensuring reconvergence in a downhill optimization is suggested by \cite{Press:2007}.
 Upon each convergence, the optimal point in the simplex, $\vect{p}$, is recorded.
 A new simplex is then generated where one vertex is $\vect{p}$, and the rest are $\vect{p}+\vect{\delta}$ where $\vect{\delta}$ is a normal random variable of mean zero, and standard deviation $\sigma_\mathrm{restart}$.
 That is, the simplex of the restart retains one vertex upon the previously found minimum, while the other vertices surround that minimum.
@@ -861,14 +867,14 @@ Once all simplex runs are complete, the set of sky offsets belonging to the run 
 \section{Analysis of Scalar Sky Offsets}
 \label{sec:scalaranalysis}
 
-The fruits of our WIRCam pipeline and sky offset optimization are presented in \Fig{scalar_mosaics}.
+Figure~\ref{fig:scalar_mosaics} presents the fruits of our WIRCam pipeline and sky offset optimization.
 Compared to our mosaics without sky offsets, \Fig{raw_mosaics}, the sky offset optimization is clearly essential for assembling wide-field NIR mosaics.
-Note that these mosaics are not yet perfect; field-to-field discontinuities at a level of 0.05\% of background remain, and large-scale background residuals perturb the outer M31 disk.
+These mosaics are not yet perfect; field-to-field discontinuities at a level of 0.05\% of background remain, and large-scale background residuals perturb the outer M31 disk.
 
 \begin{figure}[t]
 	\centering
 		\includegraphics[width=3.5in]{figs/scalar_mosaics}
-	\caption{Scalar-sky fitted WIRCam $J$ (left) and $K_s$ (right) mosaics of M31. Note the qualitative improvement compared to the original, median background-subtracted, images in \Fig{raw_mosaics}.}
+	\caption{Scalar-sky fitted WIRCam $J$ (left) and $K_s$ (right) mosaics of M31. Note the significant qualitative improvement compared to the original, median background-subtracted, images in \Fig{raw_mosaics}.}
 	\label{fig:scalar_mosaics}
 	% made with skysubpub/mosaic_plots.py
 \end{figure}
@@ -909,9 +915,8 @@ Reducing this latency, and this nodding distance, is impossible in WIRCam observ
 \begin{table}[t]
 \centering
 \caption[Hierarchy of scalar sky offsets]{Hierarchy of scalar sky offsets (using \texttt{FW100K} RT flat fielding, and median background subtraction).
-The `Total' sky offsets track the net offset of individual WIRCam image frames into the fitted mosaic.
-$\langle I_\mathrm{sky}\rangle$ is taken as the instantaneous background level for the images being sampled (see \Fig{net_sky_level} for the distribution of levels).
-Offset distributions are also presented in units of the WIRCam mosaics, DN, corresponding to a zero-point of 25 mag.}
+  Each level of sky offset is defined in \Eq{netoffset}.
+$\langle I_\mathrm{sky}\rangle$ is taken as the instantaneous background level for the images being sampled (see \Fig{net_sky_level} for the distribution of background levels).}
 \label{tab:offset_hierarchy}
 % made with $andpipe/wircam/calibset/mosaic/scalar_offset_hierarchy.py
 \input{tables/fw100k_medsky_offset_hierarchy.tex}
