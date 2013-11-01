@@ -153,8 +153,10 @@ Nelder, J.~A., \& Mead, R. 1965, {The Computer Journal}, 7, 308
 \bibitem[{{Pforr} {et~al.}(2012){Pforr}, {Maraston}, \& {Tonini}}]{Pforr:2012}
 {Pforr}, J., {Maraston}, C., \& {Tonini}, C. 2012, \mnras, 422, 3285
 
-\bibitem[{Press(2007)}]{Press:2007}
-Press, W.~H. 2007, Numerical recipes: the art of scientific computing, 3rd edn.
+\bibitem[{{Press} {et~al.}(2007){Press}, {Tuekolsky}, {Vetterling}, \&
+  {Flannery}}]{Press:2007}
+{Press}, W.~H., {Tuekolsky}, S.~A., {Vetterling}, W.~T., \& {Flannery}, B.~P.
+  2007, Numerical recipes: the art of scientific computing, 3rd edn.
   (Cambridge, UK: Cambridge University Press)
 
 \bibitem[{{Puget} {et~al.}(2004){Puget}, {Stadler}, {Doyon}, {Gigan},
