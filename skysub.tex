@@ -66,16 +66,15 @@
 
 % ============================================================================
 \begin{abstract}
-  We present wide-field near-infrared $J$ and $K_s$ images of the Andromeda Galaxy (M31) taken with WIRCam at the Canada-France-Hawaii Telescope (CFHT) as part of the Andromeda Optical and Infrared Disk Survey (\androids).
-This data set allows simultaneous observations of resolved stars and NIR surface brightness across M31's \emph{entire} bulge and disk (within $R=22$~kpc), permitting a direct test of the stellar composition of near-infrared light in a nearby galaxy.
-Our survey complements the similar Panchromatic Hubble Andromeda Treasury survey by covering M31's entire disk, rather than a single quadrant, at similar wavelengths, albeit with lower spatial resolution.
+We present wide-field near-infrared $J$ and $K_s$ images of the Andromeda Galaxy (M31) taken with WIRCam at the Canada-France-Hawaii Telescope (CFHT) as part of the Andromeda Optical and Infrared Disk Survey (\androids).
+This data set allows simultaneous observations of resolved stars and near-infrared (NIR) surface brightness across M31's \emph{entire} bulge and disk (within $R=22$~kpc), permitting a direct test of the stellar composition of near-infrared light in a nearby galaxy.
+% Our survey complements the similar Panchromatic Hubble Andromeda Treasury survey by covering M31's entire disk, rather than a single quadrant, at similar wavelengths, albeit with lower spatial resolution.
 Here we develop NIR observation and reduction methods to recover a uniform surface brightness map across the $3\arcdeg \times 1\arcdeg$ disk of M31 with 27 WIRCam fields.
-Two sky-target nodding strategies are tested, and we find that strictly minimizing sky sampling latency does not maximize background subtraction accuracy, which is at best 2\% of the background level.
-The mean surface brightness difference between observation blocks in our mosaic can be reduced from 1\% to 0.1\% of the background brightness by introducing scalar sky offsets to each image that optimize surface brightness continuity across overlapping pairs of images.
-The true surface brightness of M31 can be known to within a statistical zero-point of 0.15\% of the background level (0.2 mag arcsec$^{-2}$ uncertainty at $R=15$~kpc). 
-We advocate using flats built from night sky images over a single night, rather than dome flats that do not capture the WIRCam gain structure.
-Contamination in these flats from scattered light and thermal background has a minimal effect on the surface brightness shape of WIRCam frames.
-Rather the surface brightness shapes of WIRCam frames are uncertain by 0.3\% of the background level due to stochastic differences in background shape in sky and galaxy disk fields.
+Two sky-target nodding strategies are tested, and we find that strictly minimizing sky sampling latency does not enhance background subtraction accuracy, which is at best 2\% of the background level.
+We fully describe our WIRCam reduction pipeline and advocate using flats built from night sky images over a single night, rather than dome flats that do not capture the WIRCam gain structure.
+Contamination from scattered light and thermal background in sky flats has a negligible effect on the surface brightness shape compared to stochastic differences in background shape between sky and galaxy disk fields, which are on the order of 0.3\% of the background level.
+The most dramatic calibration step is the introduction of scalar sky offsets to each image that optimizes surface brightness continuity.
+This step reduces the mean surface brightness difference between observation blocks from 1\% to $<0.1$\% of the background level, though the absolute background level remains statistically uncertain to 0.15\% of the background level.
 We present our WIRCam reduction pipeline and performance analysis here as a template for future near-infrared observers needing wide-area surface brightness maps with sky-target nodding, and give specific recommendations for improving photometry of all CFHT/WIRCam programs.
 \end{abstract}
 \keywords{methods: observational, techniques: photometric}
