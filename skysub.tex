@@ -696,17 +696,17 @@ The mean amplitude difference is $0.3\%$ of the $J$ background brightness ($0.2\
 \label{sec:medianskyshapes}
 
 Another test of sky flats is their ability to produce an unbiased sky background, up to the level of intrinsic sky variations.
-This test can be made by examining the median background frames (\Sec{mediansky}) produced by \texttt{QRUN}, \texttt{NIGHT} and \texttt{FW100K}-processed data sets.
+This test can be made by examining amplitude of median background frames (\Sec{mediansky}) produced by \texttt{QRUN}, \texttt{NIGHT} and \texttt{FW100K}-processed data sets.
 We measure the amplitude of shapes across the $10\arcmin \times 10\arcmin$ WIRCam frame as the 2-standard deviation interval (95\%) of each median sky image's pixel distribution: $2 \sigma(\mathrm{med~sky})$.
 In \Fig{mediansky_amplitude} the cumulative distribution functions of the background shape amplitudes are presented for each set of flat fielded data, in each band and for each semester.
 
 \texttt{QRUN} sky flats, which are known to be incorrect (\Sec{frameblockresiduals}), produce median backgrounds with the largest amplitudes---as much as 3\% of the background.
 Compared to the other flats, the \texttt{QRUN} sky flats are biasing the background shape, relying upon the median background subtraction process to effectively flatten the sky background.
 \texttt{FW100K} sky flats have the opposite effect.
-The temporal windows from which \texttt{FW100K} sky flats are constructed are nearly the same span as that for median background images, so the background amplitude is unsurprisingly negative.
-\texttt{FW100K} sky flats divide all structure in images, be they multiplicative or additive in origin.
-\texttt{NIGHT} flats produce median backgrounds with moderate amplitudes, and, unlike the \texttt{FW100K} data set, these amplitudes are similar in both bandpasses.
-The slightly larger background amplitude in the $K_s$-band \texttt{NIGHT} data set may reflect an additional thermal background observed beyond the sky glow observed in both bands.
+The temporal windows from which \texttt{FW100K} sky flats are constructed have nearly the same span as those for median background images, so the background amplitude is unsurprisingly (and unrealistically) flat.
+Thus \texttt{FW100K} sky flats are incorrect as they divide all structure in images, be they multiplicative or additive in origin.
+\texttt{NIGHT} flats produce median backgrounds with moderate, realistic amplitudes.
+% The slightly larger background amplitude in the $K_s$-band \texttt{NIGHT} data set may reflect an additional thermal background observed beyond the sky glow observed in both bands.
 
 A surprising result from \Fig{mediansky_amplitude} is that backgrounds in 2009B images are not flatter than in 2007B.
 Recall that median sky images are composed of five sky frames taken closest to a disk frame.
@@ -721,6 +721,8 @@ Similar backgrounds are seen by \cite{Vaduvescu:2004} in the CFHT-IR camera.
 \centering
 \includegraphics[width=\columnwidth]{figs/mediansky_amplitude_cdf}
 \caption{Cumulative distribution function of background level amplitudes across median sky images processed with \texttt{QRUN} (red), \texttt{NIGHT} (green) and \texttt{FW100K} (blue) sky flats for the $J$ (top) and $K_s$ (bottom) bands. Real-time (\texttt{FW100K}) sky flats produce much flatter median sky frames, with mean shape amplitudes of 0.3\% ($J$) to 0.1\% ($K_s$) of the NIR sky level, while the mean amplitude of \texttt{QRUN}-flat processed sky images is 1.5\% of the background level, and as high as 3\% of the background level. \texttt{NIGHT} flat-processed data generate mean shape amplitudes of $\sim 0.6\%$ of the background level.
+We interpret this as \texttt{QRUN} flats introducing a bias in background shapes, while \texttt{FW100K} flats create unrealistically flat backgrounds by dividing sky glow structure that should be left for background subtraction.
+\texttt{NIGHT} flats have realistic background amplitudes that are similar in both bandpasses.
 }
 \label{fig:mediansky_amplitude}
 % made with $andpipe/wircam/shape/mediansky_amplitude.py
