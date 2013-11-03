@@ -934,26 +934,26 @@ The sky offsets are indeed distributed within the uncertainty budgeted by $\sigm
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/fw100k_medsky/offsetratiomap}
+\includegraphics[width=\columnwidth]{figs/offsetratiomap}
 \caption{Acceptability of $J$ and $K_s$ scalar sky offsets between blocks, as measured by the ratio of $\Delta_B/\sigma_{\Delta_F}$, plotted as histograms and field maps. Shaded blue and red-outlined histograms distinguish blocks observed in 2007B and 2009B, respectively. Scalar sky offsets required for blocks are consistent with the background level uncertainties of single frames, given sky-target nodding background subtraction.}
 \label{fig:offset_ratio_map}
-% made with wircam/calibset/mossaic/offsetratiomap.py
+% made with andpipe/wircam/calibset/mosaic/offsetratiomap.py
 \end{figure}
 
-Another demonstration of the veracity of these sky offsets is given in \Fig{skylevel_timeseries}, where we plot a time series of both directly measured background levels, and background levels interpolated on disk observations via sky offsets.
-Note the remarkable continuities of the background level from sky-to-disk observation; compared to the background level time series of stationary sky fields, the variations in the background level interpolated on the disk appear real.
+One can also see the veracity of these sky offsets by plotting a time series of both directly measured background levels and background levels interpolated on disk observations via sky offsets.
+In such plots we see remarkable continuities of the background level as estimated from sky offsets.
 Through the sky target nodding and sky offset optimization, we \emph{have} effectively measured the background level on M31.
 The variability of the background in these time series will be further examined in \Sec{offsetevo}.
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{figs/skylevel_timeseries_all}
-\caption{Background level time series for selected nights in the $J$ (top) and $K_s$ bands (bottom) as a percent difference of each night's initial background level (with a 10\% offset between nights).
-Individual nights are tagged by a modified Julian date (MJD).
-Directly measured background levels are plotted in black, while background levels estimated on the disk (with scalar sky offsets) are coloured dots. The continuity between real and estimated background levels demonstrates the validity of sky offsets.}
-\label{fig:skylevel_timeseries}
-% made with andpipe/wircam/skyanalysis/allnights_skylevel_timeseries.py
-\end{figure*}
+% \begin{figure*}[t]
+% \centering
+% \includegraphics[width=\textwidth]{figs/skylevel_timeseries_all}
+% \caption{Background level time series for selected nights in the $J$ (top) and $K_s$ bands (bottom) as a percent difference of each night's initial background level (with a 10\% offset between nights).
+% Individual nights are tagged by a modified Julian date (MJD).
+% Directly measured background levels are plotted in black, while background levels estimated on the disk (with scalar sky offsets) are coloured dots. The continuity between real and estimated background levels demonstrates the validity of sky offsets.}
+% \label{fig:skylevel_timeseries}
+% % made with andpipe/wircam/skyanalysis/allnights_skylevel_timeseries.py
+% \end{figure*}
 
 \subsection{Residual Image Level Differences}
 \label{sec:residual_diffs}
@@ -1022,7 +1022,7 @@ How does our sky-target nodding program affect the magnitude of the sky offsets?
 This was partially addressed in \Sec{offset_amplitudes}, where both the 2007B and 2009B observing programs resulted in similar net offset distributions (\Tab{offset_hierarchy}).
 In this section, we directly map the observed sky offsets as a function of time latency relative to the sky observation.
 
-First, we must realize that sky offsets are born not only from temporal variability in the background level (\eg \Fig{skylevel_timeseries}), but also from spatial structure in the NIR skyglow.
+First, we must realize that sky offsets are born not only from temporal variability in the background level, but also from spatial structure in the NIR skyglow.
 Thus as a fiducial, we first build a function of mean background level variation as a function of time measured at stationary site on the sky (a single sky field), without telescope nodding.
 In \Fig{nodding_stationary_skyvar_skyfrac} we plot the mean and 95\% growth of background level variations as a function of time.
 In agreement with \cite{Vaduvescu:2004}, we see a mean background level variation of $\sim 0.5\%$ in 1~minute in both $J$ and $K_s$ bands.
