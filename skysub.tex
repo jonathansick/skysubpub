@@ -769,7 +769,7 @@ In the following sections we assemble NIR mosaics of M31 using images processed 
 % \end{figure}
 
 In \Fig{mosaics}a, we plot mosaics (assembled using \sw{Swarp}) from \androids\ frames processed with the pipeline discussed in \Sec{reduction}--\Sec{photocal} and adopting the \texttt{NIGHT} sky flat prescription favored in \Sec{shapeconclusions}.
-Although these image preparations can constrain the surface brightness \emph{shape} of a WIRCam frame by $\lesssim 0.3\%$ of the sky level, \Fig{mosaics}a demonstrates that the true level of the background on M31's disk is lost by the temporal and spatial of sky glow between disk and sky field observations.
+Although these image preparations can constrain the surface brightness \emph{shape} of a WIRCam frame by $\lesssim 0.3\%$ of the sky level, \Fig{mosaics}a demonstrates that the true level of the background on M31's disk is lost by the temporal and spatial variation of sky glow between disk and sky field observations.
 This results in the distinct field-to-field surface brightness discontinuities seen in \Fig{mosaics}a.
 However, we can use the constraint that all overlapping pairs of images composed in our mosaic should have equal surface brightness in their intersections.
 To enforce this constraint, we solve for a \emph{sky offset} for each image: a small scalar nudge of intensity that can be added or subtracted from each image so that all images in the mosaic have continuous surface brightnesses.
@@ -1113,7 +1113,7 @@ Since our uncertainty on the shape of individual frames (0.3\% of the background
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/sbdiff/scalar_irac36_sbdiff}
+\includegraphics[width=\columnwidth]{figs/scalar_irac36_sbdiff}
 \caption{Maps of $J-[3.6]$ and $K_s-[3.6]$ surface colour inferred from the simplex scalar-sky fitted WIRCam mosaics and Spitzer/IRAC 3.6~$\mu$m image \citep{Barmby:2006}.
 Note that the IRAC map crops the \androids/WIRCam footprint.}
 \label{fig:scalar_irac36_sbdiff}
