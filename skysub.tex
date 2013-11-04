@@ -807,7 +807,7 @@ The net scalar sky offset applied to each frame is thus
 \end{equation}
 
 \noindent After each stage of optimization, the scalar sky offsets are added to the WIRCam frames, stacks and blocks and Swarp is used to median co-add the images to generate stacks, blocks and a mosaic, respectively.
-Using this hierarchical scheme ensures that at worst, the number of dimensions in our optimizations is 39, as opposed to the number of WIRCam frames (a factor $10^2$ reduction).
+Using this hierarchical scheme ensures, that at worst, the number of dimensions in our optimizations is 39 as opposed to the number of WIRCam frames (a factor $10^2$ reduction).
 
 We use two algorithms for solving sky offsets.
 Solving $\Delta_F$ offsets in the first stage is trivial since all frames simultaneously overlap.
