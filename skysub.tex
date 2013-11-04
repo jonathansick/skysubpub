@@ -1077,21 +1077,29 @@ Mean and 95\% levels of sky offsets in the 2007B semester are plotted as large b
 \section{Systematic Uncertainties in Surface Brightness Reconstruction}
 \label{sec:systematics}
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/sbdiffs}
+\caption{Surface brightness difference maps, showing systematic uncertainties in surface brightness reconstruction. (a) difference maps between our simplex scalar-fit mosaics (\Fig{mosaics}b) and \sw{Montage} scalar-fit mosaics. (b) Maps of $J-[3.6]$ and $K_s-[3.6]$ surface colour inferred from the simplex scalar-sky fitted WIRCam mosaics and Spitzer/IRAC 3.6~$\mu$m image \citep{Barmby:2006}.
+Note that the IRAC map crops the \androids/WIRCam footprint.}
+\label{fig:sbdiffs}
+\end{figure}
+
 Sky offsets produce a mosaic that is rigorously optimal only in the sense of field-to-field surface brightness continuity---not absolute background subtraction.
 In this section, we attempt to gauge the systematic surface brightness error inherent in the sky offset technique.
 
 \subsection{Comparison to \sw{Montage}-fitted images}
 
-\begin{figure}[t]
-    \centering
-        \includegraphics[width=3.5in]{figs/sbdiff/simplex_scalarmontage_comp}
-        \caption{Surface brightness difference maps between our simplex scalar-fit mosaics (\Fig{mosaics}b) and \sw{Montage} scalar-fit mosaics.}
-    \label{fig:simplex_scalarmontage_comp}
-    % make with andpipe/skysubpub/diffmaps.py
-\end{figure}
+% \begin{figure}[t]
+%     \centering
+%         \includegraphics[width=3.5in]{figs/sbdiff/simplex_scalarmontage_comp}
+%         \caption{Surface brightness difference maps between our simplex scalar-fit mosaics (\Fig{mosaics}b) and \sw{Montage} scalar-fit mosaics.}
+%     \label{fig:simplex_scalarmontage_comp}
+%     % make with andpipe/skysubpub/diffmaps.py
+% \end{figure}
 
 Besides the simplex method developed in \Sec{msrnm_algo} and analyzed in detail in \Sec{scalaranalysis}, we also tested the \sw{Montage} code that uses an iterative algorithm to solve either scalar or planar sky offsets.
-Figure~\ref{fig:simplex_scalarmontage_comp} shows the surface brightness difference between our simplex solution and the iterative \sw{Montage} mosaic solution assuming scalar sky offsets.
+Figure~\ref{fig:sbdiffs}a shows the surface brightness difference between our simplex solution and the iterative \sw{Montage} mosaic solution assuming scalar sky offsets.
 Despite an identical dataset, the two methods yield systematic differences of up to $\sim 0.5$~mag~arcsec$^{-2}$ at 20~kpc, though the solutions are consistent in their treatment of the inner disk.
 Although the simplex and \sw{Montage} scalar-offset mosaics \emph{appear} comparable to the eye, a unique and optimal sky offset solution either does not exist, or is extremely difficult for our optimization algorithms to find.
 
@@ -1111,18 +1119,18 @@ Since our uncertainty on the shape of individual frames (0.3\% of the background
 
 \subsection{Comparison to Spitzer/IRAC Images}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figs/scalar_irac36_sbdiff}
-\caption{Maps of $J-[3.6]$ and $K_s-[3.6]$ surface colour inferred from the simplex scalar-sky fitted WIRCam mosaics and Spitzer/IRAC 3.6~$\mu$m image \citep{Barmby:2006}.
-Note that the IRAC map crops the \androids/WIRCam footprint.}
-\label{fig:scalar_irac36_sbdiff}
-\end{figure}
+% \begin{figure}[t]
+% \centering
+% \includegraphics[width=\columnwidth]{figs/scalar_irac36_sbdiff}
+% \caption{Maps of $J-[3.6]$ and $K_s-[3.6]$ surface colour inferred from the simplex scalar-sky fitted WIRCam mosaics and Spitzer/IRAC 3.6~$\mu$m image \citep{Barmby:2006}.
+% Note that the IRAC map crops the \androids/WIRCam footprint.}
+% \label{fig:scalar_irac36_sbdiff}
+% \end{figure}
 
 We also explore systematic uncertainties in our WIRCam mosaics with comparisons against well-calibrated images of M31.
 A template for the NIR disk is the 3.6~$\mu$m Spitzer/IRAC map, presented in \cite{Barmby:2006}.
 Note that although Spitzer data avoid background subtraction issues caused by the NIR sky, planar sky offsets were used by \citeauthor{Barmby:2006}, though presumably of a smaller magnitude than our WIRCam sky offsets.
-In \Fig{scalar_irac36_sbdiff}, we compare our simplex scalar-fitted mosaics against the 3.6~$\mu$m image.
+In \Fig{sbdiffs}b, we compare our simplex scalar-fitted mosaics against the 3.6~$\mu$m image.
 Generally the $J-[3.6]$ and $K_s-[3.6]$ colors decrease with disk radius, but increase in the star-forming regions due to hot dust emission.
 However both colour maps (coincidentally) become redder in the south western disk beyond the 10~kpc star forming ring.
 We interpret this as a systematic over-subtraction of background in these regions on the order of $\gtrsim 1$ mag~arcsec$^{-2}$.
