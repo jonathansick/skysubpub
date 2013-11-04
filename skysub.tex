@@ -902,15 +902,15 @@ Recall that sky offsets are optimized hierarchically: WIRCam frames are fitted t
 Note that the sky offsets, as a percentage of background level, are comparable in the $J$ and $K_s$ bands, despite the background being $\sim 4\times$ brighter in $K_s$ than $J$ (see \Fig{net_sky_level}).
 This indicates that spatio-temporal variations in the NIR background are monochromatic.
 
-Within the hierarchy of background fitting, simply fitting frames to a stack (with $\Delta_F$) is most significant: a correction on the order of 2\% of the background intensity.
+Within the hierarchy of background fitting, simply fitting frames to a stack (with $\Delta_F$) is a correction on the order of 2\% of the background intensity.
 Fitting blocks into a mosaic ($\Delta_B$) is a further $\sim 1$\% correction.
-Overall, the temporal and spatial lags of sky-target nodding induce a 2\% uncertainty in the background level at the target.
+Overall, the temporal and spatial lags of sky-target nodding induce a 2\% uncertainty in the background level at the target (see \Tab{offset_hierarchy}).
 It is this level of uncertainty that sky offset optimization must diminish to transform uncorrected mosaics (\Fig{mosaics}a) into ones that reproduce the disk with fidelity (\Fig{mosaics}b).
 
 Note that offsets to fit a stack into a block ($\Delta_S$) of four detector field stacks are smallest: 0.1\% of the background level.
 This suggests that on the scale of the $2\times 2$ WIRCam array, the contemporaneously observed detector frames are subjected to nearly identical biases in background.
 Stack offsets, then, arise from uncertainties in the pipeline's measurement of the background level from single frames in two stages: estimating detector-to-detector zero-point offsets from frame background levels (\Sec{skyflatconstruction}) and again when subtracting a median background frame (\Sec{mediansky}).
-Indeed, in \Sec{flatanalysis} we show that median background images have shape amplitudes of 0.3\% of the background level and that individual frames have surface brightness shapes that are uncertainty at a level of 0.2\%; $\Delta_S$ sky offsets are thus a consequence of the limited surface brightness flatness across a WIRCam frame.
+Indeed, in \Sec{flatanalysis} we showed that median background images have shape amplitudes of 0.3\% of the background level and that individual frames have surface brightness shapes that are uncertain at a level of 0.2\%; $\Delta_S$ sky offsets are thus a consequence of the limited surface brightness flatness across a WIRCam frame.
 
 A comparison between the net sky offsets applied to the 2007B and 2009B data sets is provocative.
 Although the 2009B dataset employed rapid sky-target nodding to minimize temporal lags between disk and sky sampling, the magnitude of sky offsets in the 2007B and 2009B semesters is comparable.
@@ -933,7 +933,7 @@ $\langle I_\mathrm{sky}\rangle$ is taken as the instantaneous background level f
 \label{sec:offset_acceptability}
 
 Recall that scalar sky offsets were initially introduced as intensity increments to overcome uncertainty in the background level of detector field stacks.
-For sky offsets to be considered acceptable, we demand that the offsets applied to blocks, $\Delta_B$ be consistent with the background level uncertainty of the blocks themselves.
+For sky offsets to be considered acceptable, we demand that the offsets applied to blocks, $\Delta_B$, be consistent with the background level uncertainty of the blocks themselves.
 We can conservatively measure the background uncertainty as the dispersion of $\Delta_F$ frame offsets in a stack: $\sigma_{\Delta_F}$.
 If sky offsets fitted between blocks are statistically permissible, then $\Delta_B \lesssim \sigma_{\Delta_F}$.
 In \Fig{offset_ratio_map}, we plot field maps (in the same spatial configuration as \Fig{fieldmap}) painted with the values of $\Delta_B / \sigma_{\Delta_F}$ for each block in the $J$ and $K_s$ mosaics.
@@ -965,8 +965,8 @@ The variability of the background in these time series will be further examined 
 \subsection{Residual Image Level Differences}
 \label{sec:residual_diffs}
 
-Although scalar sky offsets are statistically valid, they are not perfect prescriptions against the background subtraction uncertainties of each image stack---that much is visually true.
-A measure of the limitation of sky offset fitting are the residual image level differences between coupled blocks, $(\vect{I}_i - \Delta_{B,i}) - (\vect{I}_j - \Delta_{B,j})$, after the sky offsets $\Delta_{B,i}$ have been optimally fitted to each block.
+Although scalar sky offsets are statistically valid, they are imperfect prescriptions against the background subtraction uncertainties of each image stack---that much is visually true.
+A measure of the limitation of sky offset fitting are the residual image level differences between coupled blocks $i$ and $j$, $(\vect{I}_i - \Delta_{B,i}) - (\vect{I}_j - \Delta_{B,j})$, after the sky offsets $\Delta_{B,i}$ have been optimally fitted to each block.
 
 \Tab{nightset_medsky_scalar_resid_diffs} lists distributions of both image level differences between coupled blocks, before and after the application of scalar sky offsets.
 Uncorrected, the ensemble of coupled blocks have a mean intensity difference of $\sim 1\%$ of the typical background intensity.
@@ -1038,7 +1038,7 @@ How does our sky-target nodding program affect the magnitude of the sky offsets?
 This was partially addressed in \Sec{offset_amplitudes}, where both the 2007B and 2009B observing programs resulted in similar net offset distributions (\Tab{offset_hierarchy}).
 In this section, we directly map the observed sky offsets as a function of time latency relative to the sky observation.
 
-First, we must realize that sky offsets are born not only from temporal variability in the background level, but also from spatial structure in the NIR skyglow.
+First, sky offsets are born not only from temporal variability in the background level but also from spatial structure in the NIR sky glow.
 Thus as a fiducial, we first build a function of mean background level variation as a function of time measured at stationary site on the sky (a single sky field), without telescope nodding.
 In \Fig{nodding_stationary_skyvar_skyfrac} we plot the mean and 95\% growth of background level variations as a function of time.
 In agreement with \cite{Vaduvescu:2004}, we see a mean background level variation of $\sim 0.5\%$ in 1~minute in both $J$ and $K_s$ bands.
@@ -1061,8 +1061,7 @@ Sky-target nodding with CFHT implies typical time latencies of 60--70~seconds, a
 Both of these elements prevent the true level of the background on M31's disk, in any single frame, from being known to an accuracy greater than 2\%.
 
 \Fig{nodding_stationary_skyvar_skyfrac} also shows that the 2009B observing strategy of minimizing sky nodding latency would maximize background level certainty.
-The rather shallow slopes of the mean background variance seen in sky-target nodding demonstrates the modest gain background certainty by capping sky sampling latency at 1.2 minutes (\ie 2009B) compared to allowing latencies of 5 minutes (\ie 2007B).
-This also better explains \Tab{offset_hierarchy}.
+The rather shallow slopes of the mean background variance seen in sky-target nodding demonstrates the modest gain background certainty by capping sky sampling latency at 1.2 minutes in 2009B compared to allowing latencies of 5 minutes in 2007B (see also \Tab{offset_hierarchy}).
 
 \begin{figure}[t]
 \centering
@@ -1088,13 +1087,13 @@ In this section, we attempt to gauge the systematic surface brightness error inh
         \includegraphics[width=3.5in]{figs/sbdiff/simplex_scalarmontage_comp}
         \caption{Surface brightness difference maps between our simplex scalar-fit mosaics (\Fig{mosaics}b) and \sw{Montage} scalar-fit mosaics.}
     \label{fig:simplex_scalarmontage_comp}
-    % make with skysubpub/diffplots.py
+    % make with andpipe/skysubpub/diffmaps.py
 \end{figure}
 
 Besides the simplex method developed in \Sec{msrnm_algo} and analyzed in detail in \Sec{scalaranalysis}, we also tested the \sw{Montage} code that uses an iterative algorithm to solve either scalar or planar sky offsets.
 Figure~\ref{fig:simplex_scalarmontage_comp} shows the surface brightness difference between our simplex solution and the iterative \sw{Montage} mosaic solution assuming scalar sky offsets.
-Despite an identical dataset, the two methods yield systematically differences of up to $\sim 0.5$~mag~arcsec$^{-2}$ at 20~kpc, though the solutions are consistent in their treatment of the inner disk.
-Although the simplex and \sw{Montage} scalar-offset mosaics \emph{appear} equivalently valid to the eye, a unique and optimal sky offset solution either does not exist, or is extremely difficult for our optimization algorithms to find.
+Despite an identical dataset, the two methods yield systematic differences of up to $\sim 0.5$~mag~arcsec$^{-2}$ at 20~kpc, though the solutions are consistent in their treatment of the inner disk.
+Although the simplex and \sw{Montage} scalar-offset mosaics \emph{appear} comparable to the eye, a unique and optimal sky offset solution either does not exist, or is extremely difficult for our optimization algorithms to find.
 
 % \begin{figure}[t]
 % \centering
@@ -1123,11 +1122,11 @@ Note that the IRAC map crops the \androids/WIRCam footprint.}
 We also explore systematic uncertainties in our WIRCam mosaics with comparisons against well-calibrated images of M31.
 A template for the NIR disk is the 3.6~$\mu$m Spitzer/IRAC map, presented in \cite{Barmby:2006}.
 Note that although Spitzer data avoid background subtraction issues caused by the NIR sky, planar sky offsets were used by \citeauthor{Barmby:2006}, though presumably of a smaller magnitude than our WIRCam sky offsets.
-In \Fig{scalar_irac36_sbdiff} we compare our simplex scalar-fitted mosaics against the 3.6~$\mu$m image.
+In \Fig{scalar_irac36_sbdiff}, we compare our simplex scalar-fitted mosaics against the 3.6~$\mu$m image.
 Generally the $J-[3.6]$ and $K_s-[3.6]$ colors decrease with disk radius, but increase in the star-forming regions due to hot dust emission.
 However both colour maps (coincidentally) become redder in the south western disk beyond the 10~kpc star forming ring.
 We interpret this as a systematic over-subtraction of background in these regions on the order of $\gtrsim 1$ mag~arcsec$^{-2}$.
-Evidently, our scalar sky offset mosaics are not systematically reliable beyond the bright disk of M31, toward $R>15$~kpc.
+Evidently, our scalar sky offset mosaics are not systematically reliable beyond the bright disk of M31 with $R>15$~kpc.
 
 \subsection{Monte Carlo Analysis of Systematic Surface Brightness Uncertainties}
 \label{sec:montecarlo}
@@ -1144,9 +1143,9 @@ White contours identify RMS levels of 0.05 (solid), 0.1 (dashed) and 0.2 (dash-d
 The difference images presented in the previous section illustrate how the surface brightness reconstructions of identical data can vary depending on the optimization algorithm.
 Here we pose a slightly different question: how are reconstructions affected by the initial conditions of background errors?
 That is, given the possible sets of background level biases affecting the blocks, what is the distribution of surface brightness reconstructions?
-We answer this with a realistic Monte Carlo analysis.
+We answer this with a realistic Monte Carlo (MC) analysis.
 
-A Monte Carlo (MC) realization is generated by perturbing the surface brightness of the corrected blocks with a background error drawn (with replacement) from the ensemble of block sky offsets observed in the original mosaic (\Fig{mosaics}b).
+Our MC realization is generated by perturbing the surface brightness of the corrected blocks with a background error drawn (with replacement) from the ensemble of block sky offsets observed in the original mosaic (\Fig{mosaics}b).
 Using the scalar-sky fitting procedure, sky offsets  are optimized against the known sky background perturbations; 100 such realizations are made to compile an ensemble of mosaics in both bands.
 
 Figure~\ref{fig:bootstrap_sb_rms} shows the RMS deviation of MC mosaic surface brightness against the original scalar-fitted mosaics.
@@ -1169,7 +1168,7 @@ Since no absolutely-calibrated NIR photometry of M31's surface brightness exists
 
 We have presented near-infrared ($J$ and $K_s$) images of M31's entire bulge and disk with CFHT/WIRCam.
 These maps surpass the 2MASS \citep{Beaton:2007} and Spitzer \citep{Barmby:2006} mosaics with superior resolution that permits the identification of individual stars throughout M31's mid and outer disk.
-The dataset is also complementary to the HST/WF3 PHAT survey \citep{Dalcanton:2012} by providing complete coverage of M31's disk within $R=22$~kpc, and by offering a broader NIR colour baseline ($J-K_s$) than is offered by WF3 (approximately $J-H$).
+The dataset is also complementary to the HST/WF3 PHAT survey \citep{Dalcanton:2012} by providing complete coverage of M31's entire disk within $R=22$~kpc, and by offering a broader NIR colour baseline ($J-K_s$) than is offered by WF3 (approximately $J-H$).
 NIR mosaics of M31 have crucial applications for studies of the nearly attenuation-free stellar structure of our nearest spiral neighbour, and for tests of stellar population synthesis models in NIR regimes.
 
 Our focus in this paper has been the establishment of procedures for accurately recovering the NIR surface brightness across 3~sq.~deg.\ of the M31 disk using a sky-target nodding observing strategy with WIRCam on CFHT\@.
@@ -1189,6 +1188,9 @@ We recommend using sky flats built from images collected every night to calibrat
 We also tested sky flats built on longer time spans (across a WIRCam queue run) or shorter (updated every half hour), but find that these either introduce flat fielding biases or become responsive only to changes in additive background contamination, respectively.
 Although an additive background (\eg thermal or scattered light) contaminates these flats, the influence of flat fielding errors on surface brightness shapes is minimal across the background-dominated mosaic.
 Instead, we find that the surface brightness across WIRCam frames is uncertain by 0.3\% of the background intensity due to variations in the background between sky and target fields.
+
+\todo{Segue to future work}
+\todo{Re-integrate recommendations for similar surveys}
 
 % We now summarize our analysis of the data taking and reduction methods developed in this work, and in doing so, formulate a set of best practices for similar wide-field NIR surveys employing sky-target nodding.
 
