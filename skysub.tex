@@ -617,55 +617,59 @@ This effect should be exacerbated in signal- (not sky-) dominated fields as flat
 
 Our 2009B observations of field M31-37 in the $K_s$ band are ideal for this experiment: a single detector in that field covers the core of M31, and observations were taken into two blocks, covering a total window of 2~hours (most blocks for this program are observed by the CFHT queue in a half hour).
 Both the high surface brightness and wide time baseline in this field should highlight flat field bias and variation.
-Figures~\ref{fig:frame_residuals_M31-37_Ks_fw100k_medsky}--\ref{fig:frame_residuals_M31-37_Ks_QRUN} we show the residual shapes of individual WIRCam frames against the median shape of the mosaic, given \texttt{FW100K}, \texttt{NIGHT} and \texttt{QRUN} sky flattening, respectively, in field M31-37 in the $K_s$ band.
-% That is, we produce difference images between each WIRCam frame and the block mosaic.
-To analyze the shapes of these difference images we marginalize the difference images along rows (left side of \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}), and columns (right side of \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}).
+In \Fig{frame_residuals} we show the residual shapes of individual WIRCam frames against the median shape of the mosaic, given \texttt{FW100K}, \texttt{NIGHT} and \texttt{QRUN} sky flattening of $K_s$-band images at the M31-37 field.
+To analyze the shapes of these difference images we marginalize the difference images along rows (left side of \Fig{frame_residuals}), and columns (right side of \Fig{frame_residuals}).
 Note that these marginalizations are done for each detector in the $2\times2$ WIRCam array; the core of M31 resides in detector \#2 (lower-right).
 In that high surface brightness region, there are strong surface brightness residuals that clearly point out flaws in the flat field itself.
 
-Comparing Figures~\ref{fig:frame_residuals_M31-37_Ks_fw100k_medsky},~\ref{fig:frame_residuals_M31-37_Ks_nightset}~and~\ref{fig:frame_residuals_M31-37_Ks_QRUN}, we see that both \texttt{FW100K} and \texttt{NIGHT} sky flats have similar performance, where frames vary in surface brightness $\pm 0.5\%$ at the core of M31.
+Comparing panels in \Fig{frame_residuals}, we see that both \texttt{FW100K} and \texttt{NIGHT} sky flats have similar performance, where frames vary in surface brightness $\pm 0.5\%$ at the core of M31.
 The exception are \texttt{QRUN}-treated frames that show an evolution on the order of $\pm 1\%$ of the $K_s$-band sky brightness over a similar time scale as indicated in \Fig{fw100k_movie}.
 This indicates that \texttt{QRUN} sky flats, which are built over several nights of data, are unsuitable for capturing the WIRCam flat field function.
 While this indicates that the intrinsic WIRCam flat field function varies detectably from night-to-night, the performance equivalence of \texttt{FW100K} and \texttt{NIGHT} sky flats indicates that the WIRCam flat \emph{does not} vary throughout the night.
 % Again, we conclude that spatial variability tracked by the \texttt{FW100K} sky flats, and visualized in \Fig{fw100k_movie}, must reflect additive contamination (thermal background or scattered light) that can easily vary throughout the night.
 
 It is useful to contrast the frame shape residuals seen in detector \#2 with those in other detectors, where the disk surface brightness is lower.
-There, both \texttt{FW100K} (\Fig{frame_residuals_M31-37_Ks_fw100k_medsky}) and \texttt{QRUN} (\Fig{frame_residuals_M31-37_Ks_QRUN}) show similar residual distributions, on the order of $\lesssim 0.2$\% of the NIR background brightness.
+There, \texttt{FW100K} (\Fig{frame_residuals}a), \texttt{NIGHT} (\Fig{frame_residuals}b) and \texttt{QRUN} (\Fig{frame_residuals}c) show similar residual distributions, on the order of $\lesssim 0.2$\% of the NIR background brightness.
 Further, the results are not monotonically varying in time, as they are in detector \#2, and indeed appear to vary essentially randomly.
 We interpret this frame residual behaviour as being caused by random additive background processes, distinct from flat field biases that are proportional to surface brightness.
 We extend this analysis across the entire data set below.
 
 \begin{figure*}[p]
 \centering
-\includegraphics[width=\textwidth]{figs/frame_residuals/M31-37_Ks_fw100k_medsky}
-\caption{Residual shapes of individual \texttt{FW100K} sky flat-processed WIRCam integrations of the M31 disk to the median (mosaic) shape for the field M31-37, $K_s$-band, observed in the 2009B semester.
-Residuals have been marginalized across the $x$ (left) and ($y$) (right) axes to provide 1D views.
+\includegraphics[width=\textwidth]{figs/frame_residuals}
+\caption{Comparison of frame shape residual variations for images processed with (a) \texttt{FW100K}, (b) \texttt{NIGHT} and (c) \texttt{QRUN} sky flats. Residuals are the difference of an individual frame to the median (mosaic) shape.
+Images are from the M31-37 field, $K_s$-band, observed in the 2009B semester.
+Residuals have been marginalized across the $x$ (left) and $y$ (right) axes to provide 1D views.
 Axes match WIRCam's $2\times2$ detector footprint.
-Individual integrations are coloured by their time after the first disk integration.
-The centre of M31 is located in the lower-right detector (\#2); surface brightness bias in these regions betray the presence of flat field bias. Lower surface brightness regions are dominated by shape variations on the order of $\pm 0.2\%$ of background level, interpreted as additive uncertainties associated either with the detector, skyglow, or both.}
-\label{fig:frame_residuals_M31-37_Ks_fw100k_medsky}
-% made with wircam/shape/frame_block_residuals/plot_field_slices.py
-\end{figure*}
-
-\begin{figure*}[p]
-\centering
-\includegraphics[width=\textwidth]{figs/frame_residuals/M31-37_Ks_nightset_medsky}
-\caption{Residual shapes of individual of the M31-37 $K_s$ field, processed with \texttt{NIGHT} sky flats.
-Compared to \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}, \texttt{NIGHT} sky flats capture reliable the shape in the signal-dominated detector \#2 as well, if not better, than \texttt{FW100K} flats.
-The WIRCam flat field function is the stable over the course of a night.
+Individual integrations are colored by their time after the first disk integration.
+The centre of M31 is located in the lower-right detector (\#2); surface brightness bias in these regions betray the presence of flat field bias. Lower surface brightness regions are dominated by shape variations on the order of $\pm 0.2\%$ of background level, interpreted as additive uncertainties associated either with the detector, skyglow, or both.
+\texttt{NIGHT} sky flats reliably capture the disk shape in the signal-dominated detector \#2 as well, if not better, than \texttt{FW100K} flats.
+Hence the WIRCam flat field function is stable over a night.
+\texttt{QRUN} sky flats introduce large biases in the bulge-dominated surface brightness in detector \#2 (lower-right). In the more sky-dominated regions of the image (detector \#4), \texttt{QRUN} sky flats produce images with similar stability to \texttt{FW100K} and \texttt{NIGHT} sky flats, indicating that the limit of additive uncertainties associated with sky or instrumental background variations is reached here.
 }
-\label{fig:frame_residuals_M31-37_Ks_nightset}
+\label{fig:frame_residuals}
 % made with wircam/shape/frame_block_residuals/plot_field_slices.py
 \end{figure*}
 
-\begin{figure*}[p]
-\centering
-\includegraphics[width=\textwidth]{figs/frame_residuals/M31-37_Ks_queuesky_medsky}
-\caption{Residual shapes of individual of the M31-37 $K_s$ field, processed with \texttt{QRUN} sky flats.
-Compared to Figs.~\ref{fig:frame_residuals_M31-37_Ks_fw100k_medsky} and~\ref{fig:frame_residuals_M31-37_Ks_nightset}, \texttt{QRUN} sky flats clearly do not capture flat field evolution that occurs over the course of 90-minutes, yielding systematically evolving realizations of bulge-dominated surface brightness in detector \#2 (lower-right). In the more sky-dominated regions of the image (detector \#4), \texttt{QRUN} sky flats produce images with similar stability to \texttt{FW100K} and \texttt{NIGHT} sky flats, indicating that the limit of additive uncertainties associated with sky or instrumental background variations is reached here.}
-\label{fig:frame_residuals_M31-37_Ks_QRUN}
-% made with wircam/shape/frame_block_residuals/plot_field_slices.py
-\end{figure*}
+% \begin{figure*}[p]
+% \centering
+% \includegraphics[width=\textwidth]{figs/frame_residuals/M31-37_Ks_nightset_medsky}
+% \caption{Residual shapes of individual of the M31-37 $K_s$ field, processed with \texttt{NIGHT} sky flats.
+% Compared to \Fig{frame_residuals_M31-37_Ks_fw100k_medsky}, \texttt{NIGHT} sky flats capture reliable the shape in the signal-dominated detector \#2 as well, if not better, than \texttt{FW100K} flats.
+% The WIRCam flat field function is the stable over the course of a night.
+% }
+% \label{fig:frame_residuals_M31-37_Ks_nightset}
+% % made with wircam/shape/frame_block_residuals/plot_field_slices.py
+% \end{figure*}
+
+% \begin{figure*}[p]
+% \centering
+% \includegraphics[width=\textwidth]{figs/frame_residuals/M31-37_Ks_queuesky_medsky}
+% \caption{Residual shapes of individual of the M31-37 $K_s$ field, processed with \texttt{QRUN} sky flats.
+% Compared to Figs.~\ref{fig:frame_residuals_M31-37_Ks_fw100k_medsky} and~\ref{fig:frame_residuals_M31-37_Ks_nightset}, \texttt{QRUN} sky flats clearly do not capture flat field evolution that occurs over the course of 90-minutes, yielding systematically evolving realizations of bulge-dominated surface brightness in detector \#2 (lower-right). In the more sky-dominated regions of the image (detector \#4), \texttt{QRUN} sky flats produce images with similar stability to \texttt{FW100K} and \texttt{NIGHT} sky flats, indicating that the limit of additive uncertainties associated with sky or instrumental background variations is reached here.}
+% \label{fig:frame_residuals_M31-37_Ks_QRUN}
+% % made with wircam/shape/frame_block_residuals/plot_field_slices.py
+% \end{figure*}
 
 \subsection{Distributions of frame shape residuals}
 \label{sec:frameblockresidualhist}
@@ -737,7 +741,7 @@ Here we summarize our findings on the accuracy of surface brightness shapes repr
 
 Night sky flat fields are preferable to dome flats because sky flats properly calibrate dust, detector surface, and gain structures thank to a proper illumination of the entrance pupil.
 Such flats can be easily made from programme data.
-Specifically, we advocate \texttt{NIGHT} flats, which are built from all sky images taken over a single night, because they capture night-to-night variations in the WIRCam flat field not captured by \texttt{QRUN} flats (compare Figs.~\ref{fig:frame_residuals_M31-37_Ks_nightset} and~\ref{fig:frame_residuals_M31-37_Ks_QRUN}).
+Specifically, we advocate \texttt{NIGHT} flats, which are built from all sky images taken over a single night, because they capture night-to-night variations in the WIRCam flat field not captured by \texttt{QRUN} flats (compare Figs.~\ref{fig:frame_residuals}b and~\ref{fig:frame_residuals}c).
 
 Although we confirm that night sky flats are afflicted by an \emph{additive} contamination (\ie thermal background, or scattered light) that varies on sub-hour timescales (\Fig{fw100k_movie}), this contamination impacts the photometric zero-point at a level of $0.03$~mag. 
 This \emph{does not} impact the overall surface brightness fidelity of our mosaic.
