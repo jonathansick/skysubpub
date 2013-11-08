@@ -75,7 +75,7 @@ We fully describe our WIRCam reduction pipeline and advocate using flats built f
 Contamination from scattered light and thermal background in sky flats has a negligible effect on the surface brightness shape compared to the stochastic differences in background shape between sky and galaxy disk fields, which are $\sim 0.3$\% of the background level.
 The most dramatic calibration step is the introduction of scalar sky offsets to each image that optimizes surface brightness continuity.
 This step reduces the mean surface brightness difference between observation blocks from 1\% to $<0.1$\% of the background level, though the absolute background level remains statistically uncertain to 0.15\% of the background level.
-We present our WIRCam reduction pipeline and performance analysis as a template for future NIR observers needing wide-area surface brightness maps with sky-target nodding, and give specific recommendations for the improvement of all NIR wide-field imaging methods.
+We present our WIRCam reduction pipeline and performance analysis to give specific recommendations for the improvement of NIR wide-field imaging methods.
 \end{abstract}
 \keywords{methods: observational, techniques: photometric}
 % ============================================================================
@@ -83,7 +83,7 @@ We present our WIRCam reduction pipeline and performance analysis as a template 
 \label{sec:intro}
 
 Thanks largely to its proximity, kinship with the Milky Way, and being an ideal foil for modern galaxy formation models, the Andromeda Galaxy (M31) has been the focus of numerous investigations of galaxy structure \citep{Ibata:2005,Irwin:2005,McConnachie:2009,Courteau:2011} and stellar populations \citep{Williams:2002,Worthey:2005,Saglia:2010}.
-The shapes, ages, kinematics and relative fraction of galaxy components (bulge, disk, halo) in large spiral galaxies like our own reveal precious information about their formation, accretion, and merging histories \citep[\eg see the review of][]{Kormendy:2004}.
+The shapes, ages, kinematics and relative fraction of galaxy components (bulge, disk, halo) in large spiral galaxies like our own reveal precious information about their formation, accretion, and merging histories \citep[see the review of][]{Kormendy:2004}.
 
 Unfortunately, the fundamental task of disentangling galaxy components---which typically involves light profile decompositions, colour gradients and mass modelling---remains non-trivial.
 Stellar population studies of spiral galaxies are thwarted by a three-fold degeneracy between stellar age ($A$), metallicity ($Z$) and ISM dust that can only be lifted by combining, at the very least, optical and infrared images with realistic dust models \citep{de-Jong:1996b,MacArthur:2004,Pforr:2012}.
@@ -114,26 +114,26 @@ Those observations were also used by \cite{Athanassoula:2006} as evidence for a 
 Beyond the bulge, the 2MASS 6X images have limited utility; background level uncertainties restrict their use to inferring structural and photometric properties of the disk.
 Further, the pixel scale of 1\arcsec\ and integration depth of 46.8 seconds prevent point source measurements of M31 stars in the 2MASS 6X images.
 As a result, the then state-of-the-art NIR view of M31 is the 3.6 $\mu$m Spitzer/IRAC map of \cite{Barmby:2006}.
-While Spitzer reduces uncertainties in background estimation, the pixel scale of 0\farcs86 prevents point source measurements of individual stars in the M31 disk.
+While Spitzer reduces uncertainties in background estimation, the pixel scale of 0\farcs86 still prevents point source measurements of individual stars in the M31 disk.
 
 Decompositions of M31's stellar populations have been made with high-resolution Hubble Space Telescope (HST) observations \citep{Brown:2003,Brown:2006,Brown:2008}.
 These authors detected an intermediate age population in the inner halo of M31, and even disentangled debris associated with the Giant Stream around M31 in six fields sampling the outer disk, halo, and Giant Stream around M31 \citep{Brown:2009a}.
-Similarly, though in the near-infrared, \cite{Olsen:2006} derived star formation histories within $22\farcs5\times22\farcs5$ fields in M31's inner disk and bulge with ground-based adaptive optics observations with the Gemini ALTAIR/NIRI instrument.
+Similarly, though in the near-infrared, \cite{Olsen:2006} derived star formation histories within $22\farcs5\times22\farcs5$ fields in M31's inner disk and bulge using ground-based adaptive optics observations with the Gemini ALTAIR/NIRI instrument.
 However these pencil beam surveys cannot be construed as representative of the entire Andromeda Galaxy.
 Thus the boldest step forward in understanding M31's stellar populations is coming from the Panchromatic Hubble Andromeda Treasury Survey \citep[PHAT,][]{Dalcanton:2012}.
-PHAT provides wide-field coverage from M31's centre to the $10$~kpc star forming ring, a panchromatic view of stellar populations from 3000\AA--17000\AA, and resolution of stars in very crowded environments such as the bulge.
+PHAT provides wide-field coverage from M31's centre to just beyond the $10$~kpc star forming ring, a panchromatic view of stellar populations from 3000\AA--17000\AA, and resolution of stars in very crowded environments such as the bulge.
 Note that PHAT only covers a single quadrant of M31 making any global conclusions about M31's stellar populations incomplete.
 Further, the wavelength coverage of HST/WF3 falls short of the $2.2$~$\mu$m $K$-band, making empirical calibration of the common NIR bands used by wide-field NIR surveys ($JHK$) impossible.
 Thus there is good cause, even in the era of PHAT, to revisit M31 with a ground-based survey that covers the entire disk of M31 at NIR wavelengths, while using the best natural seeing in the northern hemisphere (on Mauna Kea) to resolve stars even more effectively than the previous ground-based survey of M31's disk (LGGS).
 
-We present such a survey, the first instalment of the Andromeda Optical and Infrared Disk Survey (\androids), in this paper.
+We present the first instalment of such a survey, the Andromeda Optical and Infrared Disk Survey (\androids), in this paper.
 ANDROIDS uses the WIRCam instrument \citep{Puget:2004} on the Canada-France-Hawaii Telescope (CFHT), which is among the first generation of wide-field ground-based NIR detector arrays, covering a $21\farcm 5 \times 21\farcm 5$ field of view.
 Indeed, the advent of detectors such as WIRCam makes such a wide-field, high-resolution survey of an object as vast as M31 possible.
 The excellent natural seeing (0\farcs 65) on Mauna Kea is sufficient for resolving giant-branch stars throughout the disk of M31.
 
 Recovering the true NIR surface brightness map of M31 is, however, technically challenging.
 The NIR background (from both atmospheric fluorescence and instrumental thermal emission) is $\sim 10^3\times$ brighter than the NIR surface brightness of M31 at $R=20$~kpc, demanding exceptional background characterization.
-Whereas most NIR galaxy surveys can measure the instantaneous background from blank sky pixels surrounding the galaxy on a detector array, M31's extended size requires physically nodding of the telescope away from the galaxy by 1\arcdeg--3\arcdeg\ to sample blank sky (called Sky-Target, or ST, nodding).
+Whereas most NIR galaxy surveys can measure the instantaneous background from blank sky pixels surrounding the galaxy on a detector array, M31's extended size requires physically nodding the telescope away from the galaxy by 1\arcdeg--3\arcdeg\ to sample blank sky (called Sky-Target, or ST, nodding).
 That we can never observe the instantaneous background on the disk of M31, but rather sample the sky at both a different location and time, introduces additional complications.
 \cite{Adams:1996} clearly showed, with $9\arcdeg \times 9\arcdeg$ movies of the sky, that NIR sky emission has coherent spatial structure that moves across the sky over those scales, akin to a cirrus cloud system.
 This assures that background sampled from a sky field \emph{will not} correspond directly to the sky affecting disk observations.
@@ -146,7 +146,7 @@ Because such a large mosaic has never before been assembled in a ST nodding WIRC
 This includes: finding the optimal ST nodding cadence, defining the appropriate data reduction procedures for a WIRCam surface brightness reduction, and finally presenting an analysis of the surface brightness accuracy in wide-field WIRCam mosaics.
 
 Section~\ref{sec:Observations} describes the novel observational strategies used to reduce background subtraction uncertainties.
-Section~\ref{sec:reduction} presents the image reduction pipeline; with night sky flat fielding and median background subrtaction in Section~\ref{sec:flats}, and zero-point calibration practises in Section~\ref{sec:photocal}.
+Section~\ref{sec:reduction} presents the image reduction pipeline; with night sky flat fielding and median background subtraction in Section~\ref{sec:flats}, and zero-point calibration practises in Section~\ref{sec:photocal}.
 The accuracy of our WIRCam image calibrations are analyzed in Section~\ref{sec:flatanalysis}.
 In Section~\ref{sec:scalar} we present our method for recovering the galaxy surface brightness by minimizing image-to-image differences across the mosaic, while in Section~\ref{sec:scalaranalysis} we analyze the results of this algorithm.
 We estimate the systematic uncertainties in our mosaic solution in Section~\ref{sec:systematics}, where we also compare our technique to the Montage package \citep{Berriman:2008} and the Spitzer/IRAC mosaics.
@@ -160,8 +160,8 @@ In a future instalment we use resolved star counts to establish the NIR surface 
 \centering
 \includegraphics[width=\columnwidth]{figs/fieldmap_colour}
 \caption{\androids\ WIRCam field positions on M31.
-Central blue fields are the 27 disk fields observed in 2007B, surrounded by 4 sky fields (blue with solid black outlines).
-Red fields at center are the 12 disk fields observed in 2009B.
+Central blue tiles are the 27 disk fields observed in 2007B, surrounded by 4 sky fields (blue with solid black outlines).
+Red tiles at center are the 12 disk fields observed in 2009B.
 The red ring of 53 fields is the 2009B sky sampling ring.
 The dashed yellow ellipse marks the M31 disk at $R=20$ kpc along the major axis.
 Coordinates are centered on the nucleus of M31 with North up, and East is left.}
@@ -206,7 +206,7 @@ Observations were carried out in the NIR $J$ ($\lambda_0 \sim 1.2 \mu\mathrm{m}$
 WIRCam is an array of four HgCdTe HAWAII-RG2 detectors \citep{Puget:2004}.
 Each detector comprises $2048\times 2048$ pixels, with a scale of 0\farcs 3~pix$^{-1}$, which critically samples CFHT's typical seeing of 0\farcs 65.
 WIRCam's detectors are arranged in a $2\times 2$ grid with 45\arcsec~gaps, so that the entire instrument covers $21.5\arcmin \times 21.5\arcmin$ of sky.
-It is truly the advent of NIR focal plane arrays, like WIRCam, that has enabled wide-field studies of M31 in the NIR.
+It is truly the advent of NIR focal plane arrays, like WIRCam, that has enabled wide-field NIR studies of M31.
 
 The \androids\ WIRCam survey is designed to simultaneously resolve stars and recover the integrated surface brightness of the entire M31 disk.
 As discussed in \Sec{intro}, NIR observations require frequent monitoring of the background.
@@ -238,13 +238,13 @@ As such, a given disk field only samples roughly half of the full sky ring.}
 % made with skysubpub/obs_run_stats.py
 \end{figure}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figs/sky_level_hist}
-\caption{Background levels observed in the 2007B and 2009B programs, as applied to each target field.}
-\label{fig:net_sky_level}
-% made with skyoffset/net_sky_level.py
-\end{figure}
+% \begin{figure}[t]
+% \centering
+% \includegraphics[width=\columnwidth]{figs/sky_level_hist}
+% \caption{Background levels observed in the 2007B and 2009B programs, as applied to each target field.}
+% \label{fig:net_sky_level}
+% % made with skyoffset/net_sky_level.py
+% \end{figure}
 
 \subsection{2007B Semester}
 \label{sec:obs7}
@@ -285,6 +285,7 @@ Second, we also increased the number of repetitions on each field, so that each 
 Finally, we employ a pseudo-randomized sky-target nodding pattern where no sky field is used repeatedly for a disk field.
 In order to maintain rapid telescope nods, only northern sky fields serviced the northern disk, and similarly for the southern fields; the maximum offset on the sky was 3\arcdeg\ (see \Fig{sky_target_dist}).
 This non-repetitive sampling of sky fields yielded two possible advantages: 1) when a median background image is constructed, many \emph{background shapes} are combined, possibly yielding an intrinsically flatter background image (see \Sec{mediansky}), and 2) if there is a coherent structure in the NIR background, sampling sky fields degrees apart in rapid succession should average out these systematic biases in estimating the background level \emph{on the galaxy disk}.
+Given these observations, we now consider how to properly construct a wide-field NIR surface brightness mosaic of M31.
 
 \section{Image Preparation}
 \label{sec:reduction}
@@ -903,7 +904,7 @@ Recall that sky offsets are optimized hierarchically: WIRCam frames are fitted t
 % But note that in WIRCam instrumental ADU/s, teh mean sky levels are:
 % J: 122 ADU/s, Ks: 488 ADU/s. see $andpipe/wircam/skyanalysis/mean_sky_level.py
 
-Note that the sky offsets, as a percentage of background level, are comparable in the $J$ and $K_s$ bands, despite the background being $\sim 4\times$ brighter in $K_s$ than $J$ (see \Fig{net_sky_level}).
+Note that the sky offsets, as a percentage of background level, are comparable in the $J$ and $K_s$ bands, despite the background being $\sim 4\times$ brighter in $K_s$ than $J$.
 This indicates that spatio-temporal variations in the NIR background are monochromatic.
 
 Within the hierarchy of background fitting, simply fitting frames to a stack (with $\Delta_F$) is a correction on the order of 2\% of the background intensity.
@@ -927,7 +928,7 @@ Reducing this latency, and this nodding distance, is impossible in WIRCam observ
 \centering
 \caption[Hierarchy of scalar sky offsets]{Hierarchy of scalar sky offsets (using \texttt{NIGHT} flat fielding, and median background subtraction).
   Each level of sky offset is defined in \Eq{netoffset}.
-$\langle I_\mathrm{sky}\rangle$ is taken as the instantaneous background level for the images being sampled (see \Fig{net_sky_level} for the distribution of background levels).}
+$\langle I_\mathrm{sky}\rangle$ is taken as the instantaneous background level for the images being sampled.}
 \label{tab:offset_hierarchy}
 % made with $andpipe/wircam/calibset/mosaic/scalar_offset_hierarchy.py
 \input{tables/nightset_medsky_offset_hierarchy.tex}
