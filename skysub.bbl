@@ -1,4 +1,4 @@
-\begin{thebibliography}{43}
+\begin{thebibliography}{45}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
@@ -112,12 +112,19 @@
 {MacArthur}, L.~A., {Courteau}, S., {Bell}, E., \& {Holtzman}, J.~A. 2004,
   \apjs, 152, 175
 
+\bibitem[{{Maraston}(1998)}]{Maraston:1998}
+{Maraston}, C. 1998, \mnras, 300, 872
+
 \bibitem[{{Maraston}(2005)}]{Maraston:2005}
-{Maraston}, C. 2005, \mnras, 362, 799
+---. 2005, \mnras, 362, 799
 
 \bibitem[{{Maraston} {et~al.}(2006){Maraston}, {Daddi}, {Renzini}, {Cimatti},
   {Dickinson}, {Papovich}, {Pasquali}, \& {Pirzkal}}]{Maraston:2006}
 {Maraston}, C., {Daddi}, E., {Renzini}, A., {et~al.} 2006, \apj, 652, 85
+
+\bibitem[{{Marigo} {et~al.}(2008){Marigo}, {Girardi}, {Bressan}, {Groenewegen},
+  {Silva}, \& {Granato}}]{Marigo:2008}
+{Marigo}, P., {Girardi}, L., {Bressan}, A., {et~al.} 2008, \aap, 482, 883
 
 \bibitem[{{Marmo} \& {Bertin}(2008)}]{Marmo:2008}
 {Marmo}, C., \& {Bertin}, E. 2008, in Astronomical Society of the Pacific
