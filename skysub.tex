@@ -274,7 +274,7 @@ To improve background subtraction fidelity, we recognized challenges not fully a
 Not only does the background change rapidly in time, it possess a significant spatial structure on the scale of WIRCam fields and larger.
 This has two ramifications: the background level sampled at a sky field \emph{will not} necessarily reflect the background present at the disk, and that the background in each WIRCam frame has a 2D shape, not simply a scalar level.
 
-This resulted in three principle changes to the observing strategy. First, we chose to minimize latency between sky and target observations with a ST$^2$S pattern. That is, each target observation was directly paired with a sky observation taken within 1.5 minutes (\Fig{sky_target_lag}).
+This resulted in three principal changes to the observing strategy. First, we chose to minimize latency between sky and target observations with a ST$^2$S pattern. That is, each target observation was directly paired with a sky observation taken within 1.5 minutes (\Fig{sky_target_lag}).
 
 Second, we also increased the number of repetitions on each field, so that each field is observed 40 times in each band in a [ST$^2$]$^{20}$S pattern. This repetition enables averaging over spatial sky background structures on the scale of WIRCam fields.
 
@@ -295,7 +295,7 @@ Given these observations, we now consider how to properly construct a wide-field
 \end{figure*}
 
 While CFHT distributes calibrated WIRCam data products, we haven chosen to replace much of their data reduction recipes with our own to optimize and explore the limitations of wide-field NIR surface brightness maps.
-An overview of the pipeline is shown in \Fig{flowchart}; the principle steps are 1) astrometry, 2) source masking, 3) night sky flat fielding, 4) zero-point estimation against 2MASS sources, 5) median sky frame construction, 6) image calibration with zero-points and median sky subtraction and 7) background optimization and mosaic production in three hierarchical steps.
+An overview of the pipeline is shown in \Fig{flowchart}; the principal steps are 1) astrometry, 2) source masking, 3) night sky flat fielding, 4) zero-point estimation against 2MASS sources, 5) median sky frame construction, 6) image calibration with zero-points and median sky subtraction and 7) background optimization and mosaic production in three hierarchical steps.
 
 \subsection{Choice of Starting Point}
 
