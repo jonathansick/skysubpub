@@ -398,12 +398,12 @@ Then science images could be flat fielded, and additive contaminants in science 
 Note that both dome flats and twilight flat fields can distinguish additive contaminants from the multiplicative flat field function.
 Dome flats are built from the differences of images taken with the lamp on and off, directly removing any thermal component from the flat field.
 Twilight flats can also treat additive contamination by capturing images at different levels of sky illumination so that linear fits to each pixel allow any additive bias to be removed.
-In the case of sky flat fielding, however, we \emph{cannot} disentangle additive from multiplicative processes in images.
+In the case of sky flat fielding, however, we \emph{cannot} disentangle additive from multiplicative processes in images so that the sky flat field and median background subtraction steps presented here are not in fact separable and independent operations.
 Figure~\ref{fig:flatratio} shows a ratio of sky flats (using the \texttt{NIGHT} prescription; see below) and dome flat.
 This ratio effectively sets an approximate upper limit on the systematic accuracy of a WIRCam flat field. 
 Thus we can expect our flats to be correct within a few percent.
 To proceed, we must accept that our sky flats are not purely proportional calibrations, possibly up to the limit of few percent, and instead are a first step in our combined flux calibration and background subtraction pipeline.
-In the following sections, we test this assumption to verify that sky flats are an adequate tool for calibrating WIRCam images.
+In \Sec{flatanalysis} we analyze the combined performance of our night sky flat fielding and median background subtraction procedure to find that frame-by-frame surface brightness shape errors are dominated by rapid variations in the background itself.
 
 A second assumption built into sky flat construction is that sky glow is uniform across the detector.
 Wide-field images of the near-infrared night sky show that sky glow has rich spatial and temporal variations.
@@ -679,8 +679,7 @@ Hence the WIRCam flat field function is stable over a night.
 \subsection{Distributions of frame shape residuals}
 \label{sec:frameblockresidualhist}
 
-\Fig{frame_diffs_skyfrac} shows the distribution of frame-block residual shape amplitudes, measured at the 95\% difference interval.
-In essence, this measures the consistency of capture the shape of each M31 block.
+\Fig{frame_diffs_skyfrac} shows the distribution of frame-block residual shape amplitudes, measured at the 95\% difference interval to measure the reliability of measuring the surface brightness shape in individual WIRCam frames.
 As in our test of median sky frame flatness (\Sec{medianskyshapes}), we see that the consistency of frame shapes is $\sim 0.3\%$ of the background level.
 This result is seen universally amongst the \texttt{QRUN}, \texttt{NIGHT}  and \texttt{FW100K} sky flat pipelines and for 2007B and 2009B observing schemes, agreeing with our observation in \Sec{frameblockresiduals} that in background dominated regimes (as most of our blocks are) frame shape consistency is \emph{not} correlated with flat field bias.
 Rather, we interpret \Fig{frame_diffs_skyfrac} as measuring the amplitudes of \emph{additive} stochastic background shapes originating either from the sky, or associated with the instrumentation itself.
@@ -722,7 +721,7 @@ In 2007B, all sky frames were sampled from the same coordinate on the sky and sp
 In 2009B, sky frames were sampled from randomly chosen sites along the sky field ring (\Fig{fieldmap}) with a window typically spanning 15 minutes.
 Thus both 2007B and 2009B median sky images span similar time windows, although the 2009B strategy attempts to marginalize over five distinct sites  on the sky (and thus sky background shapes) while 2007B median sky images do not.
 From \Fig{mediansky_amplitude} we conclude that this marginalization does not effectively occur, implying that the background shapes sampled from distinct sites on the sky \emph{are} correlated.
-Since wide-field movies of the NIR sky \citep{Adams:1996} suggest that this should not be true, there much of the structure in the median background images is an instrumental background.
+Since wide-field movies of the NIR sky \citep{Adams:1996} suggest that this should not be true, much of the structure in the median background images is an instrumental background.
 Similar backgrounds are seen by \cite{Vaduvescu:2004} in the CFHT-IR camera.
 
 \begin{figure}[t]
