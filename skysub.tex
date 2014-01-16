@@ -922,13 +922,6 @@ This suggests that on the scale of the $2\times 2$ WIRCam array, the contemporan
 Stack offsets, then, arise from uncertainties in the pipeline's measurement of the background level from single frames in two stages: estimating detector-to-detector zero-point offsets from frame background levels (\Sec{skyflatconstruction}) and again when subtracting a median background frame (\Sec{mediansky}).
 Indeed, in \Sec{flatanalysis} we showed that median background images have shape amplitudes of 0.3\% of the background level and that individual frames have surface brightness shapes that are uncertain at a level of 0.2\%; $\Delta_S$ sky offsets are thus a consequence of the limited surface brightness flatness across a WIRCam frame.
 
-A comparison between the net sky offsets applied to the 2007B and 2009B data sets is provocative.
-Although the 2009B dataset employed rapid sky-target nodding to minimize temporal lags between disk and sky sampling, the magnitude of sky offsets in the 2007B and 2009B semesters is comparable.
-This implies a limit to the absolute background level accuracy that can be expected: the minimal 40~sec lag between sky and target samples, combined with a 1--$2\arcdeg$ nod across the sky, allows the background level to change by 2\%.
-Reducing this latency, and this nodding distance, is impossible in WIRCam observations of M31.
-\emph{Thus, by the metric of \Tab{offset_hierarchy}, the expensive 2009B observing approach did not pay off.}
-
-
 \begin{table}[t]
 \centering
 \caption[Hierarchy of scalar sky offsets]{Hierarchy of scalar sky offsets (using \texttt{NIGHT} flat fielding, and median background subtraction).
@@ -960,7 +953,6 @@ The sky offsets are indeed distributed within the uncertainty budgeted by $\sigm
 One can also see the veracity of these sky offsets by plotting a time series of both directly measured background levels and background levels interpolated on disk observations via sky offsets.
 In such plots we see remarkable continuities of the background level as estimated from sky offsets.
 Through the sky target nodding and sky offset optimization, we \emph{have} effectively measured the background level on M31.
-The variability of the background in these time series will be further examined in \Sec{offsetevo}.
 
 % \begin{figure*}[t]
 % \centering
@@ -976,19 +968,18 @@ The variability of the background in these time series will be further examined 
 \label{sec:residual_diffs}
 
 Although scalar sky offsets are statistically valid, they are imperfect prescriptions against the background subtraction uncertainties of each image stack---that much is visually true.
-A measure of the limitation of sky offset fitting are the residual image level differences between coupled blocks $i$ and $j$, $(\vect{I}_i - \Delta_{B,i}) - (\vect{I}_j - \Delta_{B,j})$, after the sky offsets $\Delta_{B,i}$ have been optimally fitted to each block.
-
-\Tab{nightset_medsky_scalar_resid_diffs} lists distributions of both image level differences between coupled blocks, before and after the application of scalar sky offsets.
+We quantify the limited effectiveness of sky offset fitting as as the residual image level differences between coupled blocks $i$ and $j$, $(\vect{I}_i - \Delta_{B,i}) - (\vect{I}_j - \Delta_{B,j})$, after the sky offsets $\Delta_{B,i}$ have been optimally fitted to each block. 
+\Tab{nightset_medsky_scalar_resid_diffs} lists distributions of both image level differences before and after the application of scalar sky offsets.
 Uncorrected, the ensemble of coupled blocks have a mean intensity difference of $\sim 1\%$ of the typical background intensity.
 Scalar sky offsets decrease the differences between overlapping fields to $\sim 0.2\%$.
 
 \Fig{scalar_resid}a shows the block-to-block residual differences as a fraction of the local surface brightness.
-Note that throughout the bright inner disk of M31, block-to-block residuals are negligible compared to the disk signal, at the mosaic periphery ($R\sim 20$~kpc), field-to-field residuals become comparable to, or greater than, the disk surface brightness.
+Note that throughout the bright inner disk of M31, block-to-block residuals are negligible compared to the disk signal; at the mosaic periphery ($R\sim 20$~kpc), field-to-field residuals become comparable to, or greater than, the disk surface brightness.
 The poor fit is driven primarily by diminishing disk signal, rather than poor convergence of sky offsets.
 This can be seen by plotting the magnitude of block-to-block residuals (in units of background brightness) in \Fig{scalar_resid}b.
 There, significant residuals are distributed throughout the disk, rather than the low-SB periphery of the mosaic.
 
-However, the inability of scalar sky offset optimization to eliminate residual image differences should not be interpreted as a failure to detect the global minimum; the sky offset optimization algorithm (\Sec{msrnm_algo}) appears robust in yielding this offset solution set.
+The inability of scalar sky offset optimization to eliminate residual image differences should not be interpreted as a failure to detect the global minimum; the sky offset optimization algorithm (\Sec{msrnm_algo}) appears robust in yielding this offset solution set.
 Evidence of this can be seen in \Fig{scalar_resid}c, where block-to-block network connections are colored by the ratio of the residual block-to-block intensity difference to the uncertainty in the block-to-block difference image.
 The sky offsets solved by the NM simplex algorithm are within the uncertainties of the difference images themselves; better scalar sky offsets \emph{cannot} be made with the WIRCam blocks that our pipeline has produced.
 Our ability to produce a continuous NIR mosaic are fundamentally limited by our ability to the subtract the true background shape seen at the M31 disk.
@@ -1041,44 +1032,47 @@ These graphs mimic the spatial distribution of the 2007B and 2009B WIRCam fields
 % \end{figure}
 
 
-\subsection{The Growth of Sky Offsets in Time and Space}
+\subsection{The Growth of Sky Offsets in Time and Space and Effectiveness of the 2009B Strategy}
 \label{sec:offsetevo}
 
-How does our sky-target nodding program affect the magnitude of the sky offsets?
-This was partially addressed in \Sec{offset_amplitudes}, where both the 2007B and 2009B observing programs resulted in similar net offset distributions (\Tab{offset_hierarchy}).
-In this section, we directly map the observed sky offsets as a function of time latency relative to the sky observation.
+Previously we have established the usefulness of sky offsets, here we address the value of 2007B and 2009B sky-target nodding observing strategies (introduced in \Sec{Observations}) when confronted with the realized sky offset distributions.
+A key question is determining if the 2009B strategy to minimize background level uncertainty by minimizing the latency between sky and target samples to $\sim 1.2$~minutes is justified.
+Overall the 2009B semester reduced sky offsets by 30\% (\Tab{offset_hierarchy}), at the cost of a roughly 50\% reduction in observational efficiency (see~\Tab{obssummary}).
+Here we show that the background certainty of any sky-target nodding campaign is limited both by this minimum sky sampling latency, and also be the spatial structure of the sky background.
 
-First, sky offsets are born not only from temporal variability in the background level but also from spatial structure in the NIR sky glow.
-Thus as a fiducial, we first build a function of mean background level variation as a function of time measured at stationary site on the sky (a single sky field), without telescope nodding.
-In \Fig{nodding_stationary_skyvar_skyfrac} we plot the mean and 95\% growth of background level variations as a function of time.
-In agreement with \cite{Vaduvescu:2004}, we see a mean background level variation of $\sim 0.5\%$ in 1~minute in both $J$ and $K_s$ bands.
+To test and distinguish temporal and spatial variations in the sky background, we plot the growth of background level variations versus time in \Fig{nodding_stationary_skyvar_skyfrac}.
+As a fiducial for the intrinsic behaviour of background variations, we measure the mean and 95\% background change as function of time at a stationary site on the sky (that is, a single sky field, without telescope nodding).
+In agreement with \cite{Vaduvescu:2004}, we see a mean background level variation of $\sim 0.5\%$ in 1~minute for both $J$ and $K_s$ bands.
 After 5~minutes, the intrinsic background level variation typically grows to 2\%.
-At worst, we see a background variation (measured at the 95\% level of the sample distribution) of 5\% in 5 minutes.
+At worst, we see background variations (measured at the 95\% level of the sample distribution) of 5\% in 5 minutes.
 
 Individual points in \Fig{nodding_stationary_skyvar_skyfrac} are net sky offsets of disk images plotted against the time latency to the paired sky sample.
-The periodic time structure in \Fig{nodding_stationary_skyvar_skyfrac} is a consequence of the 2007B and 2009B sky-target nodding schemes (see \Tab{obssummary}); indeed the circles and `x' marks in \Fig{nodding_stationary_skyvar_skyfrac} denote the mean and 95\% level of background variation, respectively, in each cluster.
+The periodic time structure in \Fig{nodding_stationary_skyvar_skyfrac} is a consequence of the 2007B and 2009B sky-target nodding schemes (see \Tab{obssummary}); the circles and `x' marks in \Fig{nodding_stationary_skyvar_skyfrac} denote the mean and 95\% level of background variation, respectively, in each cluster.
 Recall that all 2009B disk integrations have equal sky sample latency due to the \emph{sky-target-target-sky} nodding pattern.
-
 In both $J$ and $K_s$ bands, we see that nodding the telescope between sky and target \emph{generates} additional background level uncertainty beyond that expected from strictly temporal sky background evolution.
 This makes sense in the context of spatial sky variations \citep{Adams:1996}.
-As shown in \Fig{nodding_stationary_skyvar_skyfrac}, the process of sky-target nodding can inflate sky background variations by 1.5--2 times the background variability expected at a stationary site on the sky.
+As shown in \Fig{nodding_stationary_skyvar_skyfrac}, the process of sky-target nodding can inflate sky background variations by 1.5--2 times the background variability expected at a stationary site on the sky on short time scales.
 On longer time scales, the nodding and stationary sky variance converge, perhaps indicative of the timescales that NIR skyglow structures move across a nodding distance ($1\arcdeg$--$2\arcdeg$ on the sky).
-
-% \mycomment{Note how bad the 09B sky reliability is!}
 
 This analysis underscores the challenge of accurately recovering surface brightness in a wide-field NIR mosaic.
 Sky-target nodding with CFHT implies typical time latencies of 60--70~seconds, and nodding distances of $1\arcdeg$--$2\arcdeg$.
 Both of these elements prevent the true level of the background on M31's disk, in any single frame, from being known to an accuracy greater than 2\%.
 
-\Fig{nodding_stationary_skyvar_skyfrac} also shows that the 2009B observing strategy of minimizing sky nodding latency would maximize background level certainty.
-The rather shallow slopes of the mean background variance seen in sky-target nodding demonstrates the modest gain background certainty by capping sky sampling latency at 1.2 minutes in 2009B compared to allowing latencies of 5 minutes in 2007B (see also \Tab{offset_hierarchy}).
+This also points out why the 2009B program could only reduce the distribution of sky offsets by 30\%.
+The rather shallow slopes of the mean background variance seen in sky-target nodding demonstrates the modest gain in background certainty by capping sky sampling latency at 1.2 minutes in 2009B compared to allowing latencies of 5 minutes in 2007B (see also \Tab{offset_hierarchy}).
+We also note that the expected 2009B sky offsets, at $\sim1.2$~minute latency, are 10\% larger than those from 2007B in both $J$ and $K_s$ bands.
+While this could indicate different physical behaviours in the background between the 2007B and 2009B semesters, we also note that the nods employed in 2009B were larger than in 2007B (\Fig{sky_target_dist}).
+Had the 2009B campaign used the same sky fields as in 2007B, rather than the pseudo-random sky ring, the performance of the 2009B sky offsets listed in \Tab{offset_hierarchy} could be more impressive.
+Ultimately, future NIR observers with similar large sky-target nodding programs may choose to implement 2007B- or 2009B-like observing strategies depending on the priority of observational efficiency or absolute certainty of the background level.
+Figure~\ref{fig:nodding_stationary_skyvar_skyfrac} should be useful in planning such programs.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figs/nodding_sationary_skyvar_skyfrac}
-\caption{Comparison of background variation distribution functions measured as sky offset amplitudes and between pairs of sky images for $J$ (top) and $K_s$ (bottom) bands.
-Mean and 95\% levels of background variation are plotted as solid and dashed black lines, respectively.
-Mean and 95\% levels of sky offsets in the 2007B semester are plotted as large blue circles and X symbols, respectively, while the same for the 2009B semester is plotted as red symbols where sky latency was constrained to 1.2~minutes in both bands.}
+\caption{Temporal growth of background level variations observed at stationary sites on the sky versus with sky target nodding.
+Solid and dashed back lines mark the mean and 95\% levels, respectively, of background variation observed in a single field without telescope nodding.
+Small blue and red dots show the net sky offset levels in 2007B and 2009B, effectively indicating the variation in background sky level seen as the telescope is nodded.
+Mean and 95\% levels of sky offsets in the 2007B semester are plotted as large blue circles and `x' symbols, respectively, while the same for the 2009B semester is plotted as red symbols where sky latency was constrained to 1.2~minutes in both bands.}
 \label{fig:nodding_stationary_skyvar_skyfrac}
 % python $andpipe/wircam/skyanalysis/nodding_stationary_skyvariability.py
 \end{figure}
@@ -1200,13 +1194,13 @@ Although an additive background (\eg thermal or scattered light) contaminates th
 Instead, we find that the surface brightness across WIRCam frames is uncertain by 0.3\% of the background intensity due to variations in the background between sky and target fields.
 
 The necessity of nodding between sky and target fields limits our direct knowledge of the background level on the disk by $\gtrsim 2$\% of the background level.
-Strictly minimizing latency between sky and disk integrations (as in the 2009B program) provides only limited improvement in our knowledge of the background level on the disk because of the overhead in nodding the telescope, and spatial structure in the NIR sky glow itself.
+Strictly minimizing latency between sky and disk integrations (as in the 2009B program) provides a 30\% reduction in sky offsets, but is ultimately limited by overheads in nodding the telescope, and spatial structure in the NIR sky glow itself.
 Sky offset optimization is successful in reducing block-to-block surface brightness differences to $<0.1$\% of the background level.
 Our optimization algorithm reliably finds a consistent sky offset solution, so any errors in surface brightness shape across the mosaic are caused by errors in the shapes of individual blocks.
 There is, however, an uncertainty in the zero point of sky offsets, of order $\sim \sigma_{\Delta_B} / \sqrt{N_\mathrm{blocks}}$; 0.16\% of the background level.
 This zero-point will ultimately be established using resolved star counts, the subject of a forthcoming \androids\ study.
 
-Our experience suggests that wide-field NIR programs that require large sky-target nods must tune their observing strategies with sky offset optimization in mind, rather than simply minimizing sky sampling latency.
+Our experience suggests that wide-field NIR programs that require large sky-target nods must tune their observing strategies with sky offset optimization in mind, besides simply minimizing sky sampling latency.
 Sky offset optimization is aided by having many independent blocks covering the target to decrease the statistical zero-point uncertainty.
 Increasing the number of independent blocks (observed hours or even a night apart to decouple sky and instrumental biases) is the most reliable way to establish the absolute surface brightness accuracy of the mosaic.
 Since sky offsets are further biased by any surface brightness shape errors in blocks (realized as our inability to diminish block-to-block offsets below $\sim 0.1\%$ of background brightness), we propose that blocks be interlaced by 50\% (so that one detector completely overlaps a detector from an adjacent blocks).
@@ -1217,26 +1211,6 @@ In future work we shall use these NIR mosaics to characterize the structure, ste
 We are also compiling a panchromatic catalog of resolved stars across the M31 disk.
 By directly identifying the stars that contribute to the NIR light of a galaxy, we will assess long-standing tensions between NIR isochrones and broadband SED modelling of galaxies.
 
-% We now summarize our analysis of the data taking and reduction methods developed in this work, and in doing so, formulate a set of best practices for similar wide-field NIR surveys employing sky-target nodding.
-
-% \subsection{Recommendations for Conducting a Wide-field NIR Survey with Sky-Target Nodding}
-
-% We first recommend that the sky-target nodding cadence be set to effectively build real-time sky flats, rather than simply track background level evolution.
-% Such a program would involve sufficient sky frames to build a sky flat within a window of 20--30 minutes, where the sky is observed in several epochs at different locations in a sampling ring to minimize biases.
-
-% In the $K_s$ band this objective is efficiently achieved, since the mean background flux on a WIRCam pixel is $450 \pm 80$ ADU~$\mathrm{s^{-1}}$.
-% Given $T_\mathrm{exp}=25$~s, a $\mathrm{[S^3T^6]^3}$ program yields the necessary 9 sky integrations within 20~minutes and a maximum sky-target latency of 2~minutes.
-% Each sky flat would be built from observations at three sites along the sky ring.
-
-% Lower background flux in the $J$ band ($120 \pm 30$~ADU~s$^{-1}$) requires additional sky integration to achieve comparable sky flat $S/N$ as the $K_s$ band.
-% Given $T_\mathrm{exp}=45$~s, a $\mathrm{[S^4T^4]^5}$ program yields the necessary 20 sky integrations in $\sim 40$ minutes, with a maximum sky-target latency of 2.2~minutes.
-
-% Sky offset optimization is aided by having more independent blocks covering the target, since our net zero offset assertion is uncertain by $\sigma_{\Delta_B} / \sqrt{N_\mathrm{blocks}}$.
-% Given that $\sigma_B$ cannot be reduced, increasing the number of \emph{independent} blocks (observed hours or even a night apart to decouple sky and instrumental biases) is the most reliable way to establish the absolute surface brightness accuracy of the mosaic.
-% Since sky offsets are further biased by any shape errors in blocks (realized as our inability to diminish block-to-block offsets below $\sim 0.1\%$ of background brightness), we propose that blocks be interlaced by 50\% (so that one detector completely overlaps a detector from an adjacent blocks).
-% This interlacing pattern would thus enable the marginalization of shape errors across the entire detector frame.
-% By doubling the number of blocks, each with individually halved exposure times, the mosaic could be reproduced with an equivalent net integration time.
-% % \todo{Would this scheme increase the uncertainty in the sky level of each block, since there would be only half as many blocks? Then again, we double the number of blocks, so the uncertainty should be unchanged. Verify this.}
 
 \bigskip We thank Loic Albert and Karun Thanjavur, previously from CFHT, for their help with WIRCam I'iwi data products and procedures and the CFHT staff for many informative discussions and their diligence in performing the queue service observations. We are grateful for the Spitzer 3.6~$\mu$m mapping provided by Pauline Barmby (University of Western Ontario).
 J.S. and S.C. acknowledge support through respective Graduate Scholarship and Discovery grants from the Natural Sciences and Engineering Research Council of Canada.
