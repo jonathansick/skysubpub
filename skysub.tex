@@ -402,7 +402,7 @@ In the case of sky flat fielding, however, we \emph{cannot} disentangle additive
 Figure~\ref{fig:flatratio} shows a ratio of sky flats (using the \texttt{NIGHT} prescription; see below) and dome flat.
 This ratio effectively sets an approximate upper limit on the systematic accuracy of a WIRCam flat field. 
 Thus we can expect our flats to be correct within a few percent.
-To proceed, we must accept that our sky flats are not purely proportional calibrations, possibly up to the limit of few percent, and instead are a first step in our combined flux calibration and background subtraction pipeline.
+To proceed, we must accept that our sky flats are not purely proportional calibrations, possibly up to the limit of a few percent, and instead are a first step in our combined flux calibration and background subtraction pipeline.
 In \Sec{flatanalysis} we analyze the combined performance of our night sky flat fielding and median background subtraction procedure to find that frame-by-frame surface brightness shape errors are dominated by rapid variations in the background itself.
 
 A second assumption built into sky flat construction is that sky glow is uniform across the detector.
@@ -739,7 +739,7 @@ We interpret this as \texttt{QRUN} flats introducing a bias in background shapes
 \subsection{Section Summary}
 \label{sec:shapeconclusions}
 
-In this section we have analyzed the performance of our flat field, median background subtraction and photometric calibration procedures that were outlined in \Fig{flowchart}.
+In this section we have analyzed the performance of our flat field, median background subtraction and photometric calibration procedures outlined in \Fig{flowchart}.
 Here we summarize our findings on the accuracy of surface brightness shapes reproduced by WIRCam in a sky-target nodding observing program.
 
 Night sky flat fields are preferable to dome flats because sky flats properly calibrate dust, detector surface, and gain structures thank to a proper illumination of the entrance pupil.
@@ -965,7 +965,7 @@ Through the sky target nodding and sky offset optimization, we \emph{have} effec
 \label{sec:residual_diffs}
 
 Although scalar sky offsets are statistically valid, they are imperfect prescriptions against the background subtraction uncertainties of each image stack---that much is visually true.
-We quantify the limited effectiveness of sky offset fitting as as the residual image level differences between coupled blocks $i$ and $j$, $(\vect{I}_i - \Delta_{B,i}) - (\vect{I}_j - \Delta_{B,j})$, after the sky offsets $\Delta_{B,i}$ have been optimally fitted to each block. 
+We quantify the limited effectiveness of sky offset fitting as the image differences between coupled blocks $i$ and $j$, $(\vect{I}_i - \Delta_{B,i}) - (\vect{I}_j - \Delta_{B,j})$, after the sky offsets $\Delta_{B,i}$ have been optimally fitted to each block. 
 \Tab{nightset_medsky_scalar_resid_diffs} lists distributions of both image level differences before and after the application of scalar sky offsets.
 Uncorrected, the ensemble of coupled blocks have a mean intensity difference of $\sim 1\%$ of the typical background intensity.
 Scalar sky offsets decrease the differences between overlapping fields to $\sim 0.2\%$.
@@ -1035,7 +1035,7 @@ These graphs mimic the spatial distribution of the 2007B and 2009B WIRCam fields
 Previously we have established the usefulness of sky offsets, here we address the value of 2007B and 2009B sky-target nodding observing strategies (introduced in \Sec{Observations}) when confronted with the realized sky offset distributions.
 A key question is determining if the 2009B strategy to minimize background level uncertainty by minimizing the latency between sky and target samples to $\sim 1.2$~minutes is justified.
 Overall the 2009B semester reduced sky offsets by 30\% (\Tab{offset_hierarchy}), at the cost of a roughly 50\% reduction in observational efficiency (see~\Tab{obssummary}).
-Here we show that the background certainty of any sky-target nodding campaign is limited both by this minimum sky sampling latency, and also be the spatial structure of the sky background.
+Here we show that the background certainty of any sky-target nodding campaign is limited both by this minimum sky sampling latency, and also by the spatial structure of the sky background.
 
 To test and distinguish temporal and spatial variations in the sky background, we plot the growth of background level variations versus time in \Fig{nodding_stationary_skyvar_skyfrac}.
 As a fiducial for the intrinsic behaviour of background variations, we measure the mean and 95\% background change as function of time at a stationary site on the sky (that is, a single sky field, without telescope nodding).
@@ -1055,7 +1055,7 @@ This analysis underscores the challenge of accurately recovering surface brightn
 Sky-target nodding with CFHT implies typical time latencies of 60--70~seconds, and nodding distances of $1\arcdeg$--$2\arcdeg$.
 Both of these elements prevent the true level of the background on M31's disk, in any single frame, from being known to an accuracy greater than 2\%.
 
-This also points out why the 2009B program could only reduce the distribution of sky offsets by 30\%.
+This also highlights why the 2009B program could only reduce the distribution of sky offsets by 30\%.
 The rather shallow slopes of the mean background variance seen in sky-target nodding demonstrates the modest gain in background certainty by capping sky sampling latency at 1.2 minutes in 2009B compared to allowing latencies of 5 minutes in 2007B (see also \Tab{offset_hierarchy}).
 We also note that the expected 2009B sky offsets, at $\sim1.2$~minute latency, are 10\% larger than those from 2007B in both $J$ and $K_s$ bands.
 While this could indicate different physical behaviours in the background between the 2007B and 2009B semesters, we also note that the nods employed in 2009B were larger than in 2007B (\Fig{sky_target_dist}).
