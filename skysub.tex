@@ -530,7 +530,7 @@ The middle panel shows the background level observed in each detector as a funct
 The bottom panel shows zero-point differences computed for each \texttt{FW100K} sky flat as a function of time since the first \texttt{FW100K} flat between detector \#1 and detectors \#2, 3 and 4 respectively.
 }
 \label{fig:fw100k_movie}
-% made with andpipe/wircam/skyflat/plot/flatratio.py
+% made with andpipe/wircam/skyflat/plot/flat_evo_grid.py
 \end{figure*}
 
 % \begin{figure}[t]
@@ -922,7 +922,7 @@ Indeed, in \Sec{flatanalysis} we showed that median background images have shape
 \centering
 \caption[Hierarchy of scalar sky offsets]{Hierarchy of scalar sky offsets (using \texttt{NIGHT} flat fielding, and median background subtraction).
   Each level of sky offset is defined in \Eq{netoffset}.
-$\langle I_\mathrm{sky}\rangle$ is taken as the instantaneous background level for the images being sampled.}
+$\langle I_\mathrm{bkg}\rangle$ is taken as the instantaneous background level for the images being sampled.}
 \label{tab:offset_hierarchy}
 % made with $andpipe/wircam/calibset/mosaic/scalar_offset_hierarchy.py
 \input{tables/nightset_medsky_offset_hierarchy.tex}
