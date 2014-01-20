@@ -2,7 +2,8 @@
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Adams} \& {Skrutskie}(1996)}]{Adams:1996}
-{Adams}, J.~D., \& {Skrutskie}, M.~F. 1996, Airglow and 2MASS Survey Strategy
+{Adams}, J.~D., \& {Skrutskie}, M.~F. 1996, Airglow and 2MASS Survey Strategy,
+  \url{http://astsun.astro.virginia.edu/~mfs4n/2mass/airglow/airglow.html}
 
 \bibitem[{{Athanassoula} \& {Beaton}(2006)}]{Athanassoula:2006}
 {Athanassoula}, E., \& {Beaton}, R.~L. 2006, \mnras, 370, 1499
@@ -24,12 +25,12 @@
 {Berriman}, G.~B., {Good}, J.~C., {Laity}, A.~C., \& {Kong}, M. 2008, in
   Astronomical Society of the Pacific Conference Series, Vol. 394, Astronomical
   Data Analysis Software and Systems XVII, ed. {R.~W.~Argyle, P.~S.~Bunclark,
-  \& J.~R.~Lewis}, 83--+
+  \& J.~R.~Lewis}, 83
 
 \bibitem[{{Bertin}(2006)}]{Bertin:2006}
 {Bertin}, E. 2006, in Astronomical Society of the Pacific Conference Series,
   Vol. 351, Astronomical Data Analysis Software and Systems XV, ed.
-  {C.~Gabriel, C.~Arviset, D.~Ponz, \& S.~Enrique}, 112--+
+  {C.~Gabriel, C.~Arviset, D.~Ponz, \& S.~Enrique}, 112
 
 \bibitem[{{Bertin} \& {Arnouts}(1996)}]{Bertin:1996}
 {Bertin}, E., \& {Arnouts}, S. 1996, \aaps, 117, 393
@@ -39,7 +40,7 @@
 {Bertin}, E., {Mellier}, Y., {Radovich}, M., {et~al.} 2002, in Astronomical
   Society of the Pacific Conference Series, Vol. 281, Astronomical Data
   Analysis Software and Systems XI, ed. {D.~A.~Bohlender, D.~Durand, \&
-  T.~H.~Handley}, 228--+
+  T.~H.~Handley}, 228
 
 \bibitem[{{Brown} {et~al.}(2003){Brown}, {Ferguson}, {Smith}, {Kimble},
   {Sweigart}, {Renzini}, {Rich}, \& {VandenBerg}}]{Brown:2003}
@@ -63,7 +64,7 @@
 {Bruzual}, G. 2007, astro-ph/0703052
 
 \bibitem[{{Conroy}(2013)}]{Conroy:2013}
-{Conroy}, C. 2013, ArXiv e-prints
+{Conroy}, C. 2013, \araa, 51, 393
 
 \bibitem[{{Conroy} \& {Gunn}(2010)}]{Conroy:2010b}
 {Conroy}, C., \& {Gunn}, J.~E. 2010, \apj, 712, 833
@@ -129,7 +130,7 @@
 \bibitem[{{Marmo} \& {Bertin}(2008)}]{Marmo:2008}
 {Marmo}, C., \& {Bertin}, E. 2008, in Astronomical Society of the Pacific
   Conference Series, Vol. 394, Astronomical Data Analysis Software and Systems
-  XVII, ed. {R.~W.~Argyle, P.~S.~Bunclark, \& J.~R.~Lewis}, 619--+
+  XVII, ed. {R.~W.~Argyle, P.~S.~Bunclark, \& J.~R.~Lewis}, 619
 
 \bibitem[{{Massey} {et~al.}(2006){Massey}, {Olsen}, {Hodge}, {Strong},
   {Jacoby}, {Schlingman}, \& {Smith}}]{Massey:2006}
@@ -177,7 +178,7 @@ Nelder, J.~A., \& Mead, R. 1965, {The Computer Journal}, 7, 308
 
 \bibitem[{{Saglia} {et~al.}(2010){Saglia}, {Fabricius}, {Bender}, {Montalto},
   {Lee}, {Riffeser}, {Seitz}, {Morganti}, {Gerhard}, \& {Hopp}}]{Saglia:2010}
-{Saglia}, R.~P., {Fabricius}, M., {Bender}, R., {et~al.} 2010, \aap, 509, A61+
+{Saglia}, R.~P., {Fabricius}, M., {Bender}, R., {et~al.} 2010, \aap, 509, A61
 
 \bibitem[{{Sick} {et~al.}(2013){Sick}, {Courteau}, \&
   {Cuillandre}}]{Sick:2013a}
