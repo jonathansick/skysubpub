@@ -5,4 +5,4 @@ What are best-practices for sky-target nodding? for sky flat fielding? for build
 
 Accepted January 21, 2014 to the Astronomical Journal. Cite as [arxiv:1303.6290](http://arxiv.org/abs/1303.6290).
 
-Copyright 2014 Jonathan Sick, Stéphane Courteau, Michael McDonald, Roelof de Jong and R. Brent Tully. All rights reserved.
+Copyright 2014 Jonathan Sick, Stéphane Courteau, Jean-Charles Cuillandre, Michael McDonald, Roelof de Jong and R. Brent Tully. All rights reserved.
