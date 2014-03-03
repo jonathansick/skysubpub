@@ -154,13 +154,14 @@ In a future instalment we use resolved star counts to establish the NIR surface 
 \begin{figure}[t]
 \centering
 % \includegraphics[width=\columnwidth]{figs/fieldmap_colour}
-\includegraphics[width=\columnwidth]{figs/bw/f1}
+\includegraphics[width=\columnwidth]{figs/bw2/f1}
 \caption{\androids\ WIRCam field positions on M31.
-Central light gray tiles are the 27 disk fields observed in 2007B, surrounded by 4 sky fields.
-Dark tiles at center are the 12 disk fields observed in 2009B.
+Central blue tiles are the 27 disk fields observed in 2007B, surrounded by 4 sky fields.
+Dark red tiles at center are the 12 disk fields observed in 2009B.
 The outer ring of 53 fields is the 2009B sky sampling ring.
 The dashed ellipse marks the M31 disk at $R=20$ kpc along the major axis.
-Coordinates are centered on the nucleus of M31 with North up, and East is left.}
+Coordinates are centered on the nucleus of M31 with North up, and East is left.
+See the online version for color versions of this and all subsequent figures.}
 \label{fig:fieldmap}
 % skysubpub/chart.py
 \end{figure}
@@ -216,7 +217,7 @@ An objective of this study is to determine how observational design can improve 
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/bw/f2}
+\includegraphics[width=\columnwidth]{figs/bw2/f2}
 \caption{Time latency between target observations and sky field sampling in the 2007B and 2009B WIRCam observing runs.
 The 2009B program was designed to ensure that no disk sample would be removed by more than 1.5 minutes from a sky sample by using a STTS nodding pattern.}
 \label{fig:sky_target_lag}
@@ -225,7 +226,7 @@ The 2009B program was designed to ensure that no disk sample would be removed by
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/bw/f3}
+\includegraphics[width=\columnwidth]{figs/bw2/f3}
 \caption{Distance between sky and target observations in the 2007B and 2009B WIRCam observing runs.
 The larger nodding distance of 2009B is a consequence of sky ring sampling.
 The maximum nodding distance across the sky ring was purposely set to $\sim 3$\arcdeg\ to avoid excessive time overheads (see \Fig{fieldmap}).
@@ -386,7 +387,8 @@ This is a distinct advantage over dome flats, which CFHT builds at the beginning
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/bw/f6}
+% \includegraphics[width=\columnwidth]{figs/bw2/f6}
+\includegraphics[width=\columnwidth]{figs/flat_ratio_55136_Ks}
 \caption{Ratio of corresponding $K_s$ band \texttt{NIGHT} sky flat and dome sky flats.
 This ratio provides an approximate upper limit on the systematic uncertainty of flat fielding with WIRCam.
 Note that the \texttt{NIGHT} sky flats have been renormalized to remove the chip-to-chip zero-point correction described in \Sec{skyflatconstruction}.}
@@ -522,7 +524,8 @@ Although we regard a perfect near-infrared flat field as unattainable, we can te
 % \end{figure*}
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{figs/55136_Ks_fw100k_night_grid}
+% \includegraphics[width=\textwidth]{figs/55136_Ks_fw100k_night_grid}
+\includegraphics[width=\textwidth]{figs/bw2/f7}
 \caption{
 Evolution of \texttt{FW100K} $K_s$-band sky flats over the course of three hours.
 Percent difference maps of \texttt{FW100K} sky flats relative to the \texttt{NIGHT} sky flat are shown in the upper grid (time evolves left to right, from the top row).
@@ -577,7 +580,7 @@ Thus sky flat evolution is not driven by WIRCam gain instabilities, but by large
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/bw/f8}
+\includegraphics[width=\columnwidth]{figs/bw2/f8}
 \caption{Distribution of real-time sky flat scaling factors, measuring detector-to-detector zero-point differences relative to detector \#1 (gray: \#2, solid outline: \#3, dotted outline: \#4) in $J$ and $K_s$ bands.
 }
 \label{fig:fw100k_zpdiff}
@@ -586,7 +589,7 @@ Thus sky flat evolution is not driven by WIRCam gain instabilities, but by large
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/bw/f9}
+\includegraphics[width=\columnwidth]{figs/bw2/f9}
 \caption{Distribution of mean detector-to-detector zero-point offsets for sky images processed by real-time sky flats.
 Zero-point offsets between detectors \#1 \& \#2, \#1 \& \#3, and \#1 \& \#4 are plotted as
 gray, solid outline and dotted outline histograms, respectively, for the $J$-band (top) and $K_s$-band (bottom).}
@@ -687,9 +690,10 @@ Effectively, \Fig{frame_diffs_skyfrac} illustrates the \emph{flatness limit} of 
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/framediffs_skyfrac_cdf}
+% \includegraphics[width=\columnwidth]{figs/framediffs_skyfrac_cdf}
+\includegraphics[width=\columnwidth]{figs/bw2/f11}
 \caption{Cumulative distributions of scalar difference amplitudes between individual frames and blocks in the $J$ (top) and $K_s$ (bottom) mosaics, measured as a dispersion of pixel differences at the 95\% level.
-  Whether processed with \texttt{QRUN} (red), \texttt{NIGHT} (green) or \texttt{FW100K} (blue) sky flats, or observed in 2007B (solid lines) or 2009B (dotted lines), the residual amplitude differences between frames and blocks are similarly distributed.
+  Whether processed with \texttt{QRUN} (red), \texttt{NIGHT} (black) or \texttt{FW100K} (blue) sky flats, or observed in 2007B (solid lines) or 2009B (dotted lines), the residual amplitude differences between frames and blocks are similarly distributed.
 The mean amplitude difference is $0.3\%$ of the $J$ background brightness ($0.2\%$ in $K_s$).
 }
 % Made with andpipe/wircam/shape/frame_block_residuals/plot_frame_residuals_hists.py
@@ -726,8 +730,9 @@ Similar backgrounds are seen by \cite{Vaduvescu:2004} in the CFHT-IR camera.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/mediansky_amplitude_cdf}
-\caption{Cumulative distribution function of background level amplitudes across median sky images processed with \texttt{QRUN} (red), \texttt{NIGHT} (green) and \texttt{FW100K} (blue) sky flats for the $J$ (top) and $K_s$ (bottom) bands. Real-time (\texttt{FW100K}) sky flats produce much flatter median sky frames, with mean shape amplitudes of 0.3\% ($J$) to 0.1\% ($K_s$) of the NIR sky level, while the mean amplitude of \texttt{QRUN}-flat processed sky images is 1.5\% of the background level, and as high as 3\% of the background level. \texttt{NIGHT} flat-processed data generate mean shape amplitudes of $\sim 0.6\%$ of the background level.
+% \includegraphics[width=\columnwidth]{figs/mediansky_amplitude_cdf}
+\includegraphics[width=\columnwidth]{figs/bw2/f12}
+\caption{Cumulative distribution function of background level amplitudes across median sky images processed with \texttt{QRUN} (red), \texttt{NIGHT} (black) and \texttt{FW100K} (blue) sky flats for the $J$ (top) and $K_s$ (bottom) bands. Real-time (\texttt{FW100K}) sky flats produce much flatter median sky frames, with mean shape amplitudes of 0.3\% ($J$) to 0.1\% ($K_s$) of the NIR sky level, while the mean amplitude of \texttt{QRUN}-flat processed sky images is 1.5\% of the background level, and as high as 3\% of the background level. \texttt{NIGHT} flat-processed data generate mean shape amplitudes of $\sim 0.6\%$ of the background level.
 We interpret this as \texttt{QRUN} flats introducing a bias in background shapes, while \texttt{FW100K} flats create unrealistically flat backgrounds by dividing skyglow structure that should be left for background subtraction.
 \texttt{NIGHT} flats have realistic background amplitudes that are similar in both bandpasses.
 }
@@ -941,8 +946,8 @@ The sky offsets are indeed distributed within the uncertainty budgeted by $\sigm
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/bw/f14}
-\caption{Acceptability of $J$ and $K_s$ scalar sky offsets between blocks, as measured by the ratio of $\Delta_B/\sigma_{\Delta_F}$, plotted as histograms and field maps. Shaded blue and red-outlined histograms distinguish blocks observed in 2007B and 2009B, respectively. Scalar sky offsets required for blocks are consistent with the background level uncertainties of single frames, given sky-target nodding background subtraction.}
+\includegraphics[width=\columnwidth]{figs/bw2/f14}
+\caption{Acceptability of $J$ and $K_s$ scalar sky offsets between blocks, as measured by the ratio of $\Delta_B/\sigma_{\Delta_F}$, plotted as histograms and field maps. Shaded and black-outlined histograms distinguish blocks observed in 2007B and 2009B, respectively. Scalar sky offsets required for blocks are consistent with the background level uncertainties of single frames, given sky-target nodding background subtraction.}
 \label{fig:offset_ratio_map}
 % made with andpipe/wircam/calibset/mosaic/offsetratiomap.py
 \end{figure}
@@ -998,7 +1003,9 @@ Differences are presented as a percent of the mean background level seen by obse
 \centering
 \includegraphics[width=\columnwidth]{figs/scalar_resid}
 \caption{Map of residual block-to-block surface brightness differences after sky offsets: (a) as a fraction of the mean local surface brightness, (b) as a fraction of background level, (c) as a fraction of the standard deviation of the difference image.
-These graphs mimic the spatial distribution of the 2007B and 2009B WIRCam fields (\Fig{fieldmap}), with the footprints exploded to allow room for lines to connect coupled blocks.}
+Thicker lines denote larger residual differences between overlapping fields (see also the color mapping).
+These graphs mimic the spatial distribution of the 2007B and 2009B WIRCam fields (\Fig{fieldmap}), with the footprints exploded to allow room for lines to connect coupled blocks.
+Fields observed in 2009B are plotted as darker squares than those observed in 2007B.}
 \label{fig:scalar_resid}
 \end{figure}
 
@@ -1066,7 +1073,7 @@ Figure~\ref{fig:nodding_stationary_skyvar_skyfrac} should be useful in planning 
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/nodding_sationary_skyvar_skyfrac}
+\includegraphics[width=\columnwidth]{figs/bw2/f16}
 \caption{Temporal growth of background level variations observed at stationary sites on the sky versus with sky target nodding.
 Solid and dashed back lines mark the mean and 95\% levels, respectively, of background variation observed in a single field without telescope nodding.
 Small blue and red dots show the net sky offset levels in 2007B and 2009B, effectively indicating the variation in background sky level seen as the telescope is nodded.
@@ -1081,7 +1088,7 @@ Mean and 95\% levels of sky offsets in the 2007B semester are plotted as large b
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/bw/f17}
+\includegraphics[width=\columnwidth]{figs/bw2/f17}
 \caption{Surface brightness difference maps, showing systematic uncertainties in surface brightness reconstruction. (a) difference maps between our simplex scalar-fit mosaics (\Fig{mosaics}b) and \sw{Montage} scalar-fit mosaics. (b) Maps of $J-[3.6]$ and $K_s-[3.6]$ surface color inferred from the simplex scalar-sky fitted WIRCam mosaics and Spitzer/IRAC 3.6~$\mu$m image \citep{Barmby:2006}.
 Note that the IRAC map crops the \androids/WIRCam footprint.}
 \label{fig:sbdiffs}
@@ -1143,7 +1150,8 @@ Evidently, our scalar sky offset mosaics are not systematically reliable beyond 
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figs/bw/f18}
+% \includegraphics[width=\columnwidth]{figs/bw2/f18}
+\includegraphics[width=\columnwidth]{figs/bootstrap_sb_rms}
 \caption{Mosaic maps of bootstrap RMS surface brightness in $J$ (left) and $K_s$ (right).
 White contours identify RMS levels of 0.05 (solid), 0.1 (dashed) and 0.2 (dash-dot) mag arcsec$^{-2}$.}
 \label{fig:bootstrap_sb_rms}
